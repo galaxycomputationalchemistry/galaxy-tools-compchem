@@ -1,0 +1,42 @@
+# Template for packmol in Galaxy
+#  
+
+tolerance {{ allparams.tolerance }}
+nloop  {{ allparams.nloop }} 
+maxit  {{ allparams.maxit }} 
+seed  {{ allparams.seed }} 
+filetype {{packmol_format.selected_format}} 
+output {{outfile}}
+
+{% for struct in packmol_format.packmol_inputs %}
+structure {{struct.file}}
+# Galaxy datasetname - {{struct.datasetname}}
+  number {{struct.structureparams.number}}
+  radius {{struct.structureparams.radius}}
+  resnumbers {{struct.structureparams.resnumbers}} 
+{% for c in struct.structureparams.constraints_repeat %}
+  {% if c.constraints.constraint == 'fixed' %}
+   {% if c.constraints.center == 'Yes' %}
+  center
+   {% endif %}
+  {{c.constraints.constraint}} {{c.constraints.x}} {{c.constraints.y}} {{c.constraints.z}} {{c.constraints.a}} {{c.constraints.b}} {{c.constraints.g}}
+  {% elif c.constraints.constraint == 'cube' %}
+  {{c.constraints.placement}} {{c.constraints.constraint}} {{c.constraints.xmin}} {{c.constraints.ymin}} {{c.constraints.zmin}} {{c.constraints.d}}
+  {% elif c.constraints.constraint == 'box' %}
+  {{c.constraints.placement}} {{c.constraints.constraint}} {{c.constraints.xmin}} {{c.constraints.ymin}} {{c.constraints.zmin}} {{c.constraints.xmax}} {{c.constraints.ymax}} {{c.constraints.zmax}} 
+  {% elif c.constraints.constraint == 'sphere' %}
+  {{c.constraints.placement}} {{c.constraints.constraint}} {{c.constraints.a}} {{c.constraints.b}} {{c.constraints.c}} {{c.constraints.d}}
+  {% elif c.constraints.constraint == 'ellipsoid' %}
+  {{c.constraints.placement}} {{c.constraints.constraint}} {{c.constraints.a1}} {{c.constraints.b1}} {{c.constraints.c1}} {{c.constraints.a2}} {{c.constraints.b2}} {{c.constraints.c2}} {{c.constraints.d}} 
+  {% elif c.constraints.constraint == 'plane' %}
+  {{c.constraints.placement}} {{c.constraints.constraint}} {{c.constraints.a}} {{c.constraints.b}} {{c.constraints.c}} {{c.constraints.d}}
+  {% elif c.constraints.constraint == 'cylinder' %}
+  {{c.constraints.placement}} {{c.constraints.constraint}} {{c.constraints.a1}} {{c.constraints.b1}} {{c.constraints.c1}} {{c.constraints.a2}} {{c.constraints.b2}} {{c.constraints.c2}} {{c.constraints.d}} {{c.constraints.l}}
+  {% else %}
+ unknowntype specified {{c.constraints}}
+{% endif %}
+{% endfor %}
+end structure
+
+{% endfor %}
+

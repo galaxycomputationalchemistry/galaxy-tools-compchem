@@ -1,0 +1,172 @@
+<tool id="galaxy_packmol" name="Galaxy Packmol" version="0.1">
+    <description>Initial configurations for Molecular Dynamics Simulations by packing optimization</description>
+    <macros>
+        <import>macros.xml</import>
+        <import>macros_packmol.xml</import>
+    </macros>
+    <requirements>
+      <requirement type="package" version="1!18.013">packmol</requirement>
+    </requirements>
+    <expand macro="stdio" />
+    <command>
+        <![CDATA[
+        python "$packmol_script" '$inputs' 
+        ]]>
+    </command>
+    <configfiles>
+        <inputs name="inputs" />
+        <configfile name="packmol_script">
+            <![CDATA[
+import sys
+import json
+
+
+input_json_path = sys.argv[1]
+params = json.load(open(input_json_path, "r"))
+
+# get the inputs
+input_iter = []
+#for $i, $s in enumerate( $packmol_format.packmol_inputs )
+pmfile_index=$i 
+pmfile_path="${s.input.file_name}"
+input_iter.append(pmfile_path)
+params["packmol_format"]["packmol_inputs"][pmfile_index]["file"]=pmfile_path
+params["packmol_format"]["packmol_inputs"][pmfile_index]["datasetname"]="${s.input.name}"
+#end for        
+
+params["outfile"]="$outfile" 
+
+import os
+from jinja2 import Environment, FileSystemLoader
+
+currentpath="/scratch/cbarnett/planemo/docker-version/packmol"
+template_environment = Environment(loader=FileSystemLoader(currentpath),lstrip_blocks=True, trim_blocks=True)
+template = template_environment.get_template('template.j2')
+print(params)
+
+with open("$parameteroutfile",'w+') as f:
+    f.write(template.render(params))
+
+os.system("packmol < "+"$parameteroutfile")
+
+            ]]>
+        </configfile>
+    </configfiles>
+    <inputs>
+        <conditional name="packmol_format">
+            <param name="selected_format" type="select" label="Select a file format:">
+                <option value="pdb" selected="true">pdb</option>
+                <option value="xyz">xyz</option>
+                <option value="tinker">tinker</option>
+                <option value="moldy">moldy</option>
+            </param>
+            <when value="pdb">
+                <expand macro="multiple_input" name="packmol_inputs" format="pdb" label="pdb input with molecule type" help_text="Select a pdb file in .pdb format"/>
+            </when>
+            <when value="xyz">
+                <expand macro="multiple_input" name="packmol_inputs" format="xyz" label="xyz input with molecule type" help_text="Select a xyz file in .xyz format"/>
+            </when>
+            <when value="tinker">
+                <expand macro="multiple_input" name="packmol_inputs" format="tinker" label="tinker input with molecule type" help_text="Select a tinker file in .tinker format"/>
+            </when>
+            <when value="moldy">
+                <expand macro="multiple_input" name="packmol_inputs" format="moldy" label="moldy input with molecule type" help_text="Select a moldy file in .moldy format"/>
+            </when>
+        </conditional>
+    <section name="allparams" title="General Parameters" expanded="false">
+        <param name="tolerance" type="float" value="2.0" label="distance tolerance" />
+        <param name="nloop" type="integer" value="20" label="maximum number of optimisation loops" />
+        <param name="maxit" type="integer" value="20" label="maximum number of gencan iterations per loop" />
+        <param name="seed" type="integer" value="-1" label="random number generator seed, default of -1 used the computer time to set the seed" />
+    </section>
+
+
+    </inputs>
+    <outputs>
+        <data format="pdb" name="outfile" label="${tool.name}: structure output">
+        <change_format>
+            <when input="selected_format" value="pdb" format="pdb"/>
+            <when input="selected_format" value="xyz" format="xyz"/>
+            <when input="selected_format" value="tinker" format="tinker"/>
+            <when input="selected_format" value="moldy" format="moldy"/>
+        </change_format>
+        </data>
+        <data format="txt" name="parameteroutfile" label="${tool.name}: parameter output"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="selected_format" value="pdb"/>
+            <param name="packmol_inputs_0|input" value="water.pdb" ftype="pdb"/>
+            <param name="allparams.seed" value="101"/>
+            <output name="outfile" file="packmol_outfile1.pdb" compare="sim_size" delta="100000">
+             <assert_contents>
+              <has_text text="HETATM  300  O   HOH"/>
+             </assert_contents>
+            </output>
+            <output name="parameteroutfile" file="packmol_parameteroutfile_1.txt" compare="diff" lines_diff="6"/>
+        </test>
+        <test>
+            <param name="selected_format" value="pdb"/>
+            <param name="packmol_inputs_0|input" value="water.pdb" ftype="pdb"/>
+            <param name="packmol_inputs_1|input" value="urea.pdb" ftype="pdb"/>
+            <param name="packmol_inputs_0|structureparams|number" value="1000"/>
+            <param name="packmol_inputs_1|structureparams|number" value="400"/>
+            <param name="packmol_inputs_0|structureparams|constraints_repeat0|constraints0|constraint" value="box"/>
+            <param name="packmol_inputs_1|structureparams|constraints_repeat0|constraint" value="box"/>
+            <param name="allparams.seed" value="-1"/>
+            <output name="outfile" file="packmol_outfile2.pdb" compare="sim_size" delta="100000">
+             <assert_contents>
+              <has_text text="HETATM 3000  O   HOH"/>
+              <has_text text="HETATM 6200  H     2 B"/>
+             </assert_contents>
+            </output>
+            <output name="parameteroutfile" file="packmol_parameteroutfile_2.txt" compare="diff" lines_diff="6"/>
+        </test>
+    </tests>
+    <help>
+        <![CDATA[
+**What it does**
+
+Packmol creates initial MD configurations from input molecules.
+
+**How it works**
+
+- Select a molecule file type e.g. pdb,xyz
+- Select single molecule from your history (can select multiple)
+- For each molecule:
+   - choose how many to create (number variable)
+   - optionally choose:
+       - molecular radius
+       - how to number the molecules (resnumber variable)
+   - choose one or more placement constraint(s). Each constraint has different parameters:
+       - for example, specify placement inside a cube of size 40 Angstroms placed at the origin
+       - all units are in Angstroms for distances and degrees for angles
+
+**User guide and documentation**
+
+- Packmol `userguide`_
+- Calculating the number of molecules using the `volume guesser`_
+
+**Features not included**
+
+- xyz,tinker,moldy datatypes
+- more than 3 multiple constraints per structure
+- atom constraints per structure
+- constrain rotations
+- solvate large molecules with solvate.tcl script
+- change chains
+- restart files
+- convergence problem options to try
+- additional input options and keywords e.g. add_amber_ter, seed
+- nloop,maxit is general, not included per structure
+
+**Known issues**
+
+- fixed constraint only allows 1 atom but this is not set for the user. user has to set this. Job may fail.
+
+.. _`userguide`: http://m3g.iqm.unicamp.br/packmol/userguide.shtml#more
+.. _`volume guesser`: http://m3g.iqm.unicamp.br/packmol/utilities.shtml
+
+        ]]>
+    </help>
+</tool>

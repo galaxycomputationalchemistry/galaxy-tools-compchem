@@ -1,0 +1,8 @@
+<macros>
+  <xml name="multiple_input" token_name="input_files" token_max_num="10" token_format="txt" token_label="Sparse matrix file (.mtx, .txt)" token_help_text="Specify a sparse matrix file in .txt format.">
+    <repeat name="@NAME@" min="1" max="@MAX_NUM@" title="Select input file(s):">
+        <param name="input" type="data" format="@FORMAT@" label="@LABEL@" help="@HELP_TEXT@"/>
+    </repeat>
+  </xml>
+</macros>
+
