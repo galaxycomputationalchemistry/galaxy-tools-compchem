@@ -1,68 +1,79 @@
-<tool id="bio3d_PCA_analysis" name="PCA" version="0.1.2">
-    <description>Principle component analysis using Bio3D</description>
+<tool id="bio3d_rmsd_analytics" name="RMSD Analysis" version="0.1.2">
+    <description>RMSD using Bio3D</description>
     <requirements>
           <requirement type="package" version="2.3_3">r-bio3d</requirement>
     </requirements>
-    <stdio>
-        <exit_code range="1:" />
-    </stdio>
-    <command interpreter="Rscript">
+    <command detect_errors="exit_code">
 <![CDATA[ 
-    bio3d_pca.R 
-        $dcdin 
-        $pdbin
-        $method
-        #if $pca.sele == "calpha":
-        "string"
-        $pca.calpha
+     Rscript '$__tool_directory__/bio3d_rmsd.R' 
+        '$dcdin'  
+        '$pdbin'
+        #if $rmsd.sele == "calpha":
+          "string"
+          '$rmsd.calpha'
         #end if
-        #if $pca.sele == "cbeta":
-        "string"
-        $pca.cbeta
+        #if $rmsd.sele == "cbeta":
+          "string"
+          '$rmsd.cbeta'
         #end if
-        #if $pca.sele == "backbone":
-        "string"
-        $pca.backbone
+        #if $rmsd.sele == "backbone":
+          "string"
+          '$rmsd.backbone'
         #end if
-        #if $pca.sele == "sidechain":
-        "string"
-        $pca.sidechain
+        #if $rmsd.sele == "sidechain":
+          "string"
+          '$rmsd.sidechain'
         #end if
-        #if $pca.sele == "protein":
-        "string"
-        $pca.protein
+        #if $rmsd.sele == "protein":
+          "string"
+          '$rmsd.protein'
         #end if
-        #if $pca.sele == "ligand":
-        "string"
-        $pca.ligand
+        #if $rmsd.sele == "ligand":
+          "string"
+          '$rmsd.ligand'
         #end if
-        #if $pca.sele == "nucleic":
-        "string"
-        $pca.nucleic
+        #if $rmsd.sele == "nucleic":
+          "string"
+          '$rmsd.nucleic'
         #end if
-        #if $pca.sele == "elety":
-        "elety"
-        $pca.elety
+        #if $rmsd.sele == "water":
+          "string"
+          '$rmsd.water'
         #end if
-        #if $pca.sele == "resid":
-        "resid"
-        $pca.resid
+        #if $rmsd.sele == "hyd":
+          "string"
+          '$rmsd.hyd'
         #end if
-        #if $pca.sele == "segid":
-        "segid"
-        $pca.segid
+        #if $rmsd.sele == "noh":
+          "string"
+          '$rmsd.noh'
         #end if
-        $output 
-        $pca_plot 
-        $pca_cluster 
-        $pc1_rmsf
+        #if $rmsd.sele == "loop":
+          "resno"
+          '$rmsd.res1'
+          '$rmsd.res2'
+        #end if
+        #if $rmsd.sele == "elety":
+          "elety"
+          '$rmsd.elety'
+        #end if
+        #if $rmsd.sele == "resid":
+          "resid"
+          '$rmsd.resid'
+        #end if
+        #if $rmsd.sele == "segid":
+          "segid"
+          '$rmsd.segid'
+        #end if
+        '$output'
+        '$rmsd_plot' 
+        '$rmsd_hist_plot'
     2>&1
 ]]></command>
     <inputs>
         <param format="dcd" name="dcdin" type="data" label="dcd trajectory input"/>
         <param format="pdb" name="pdbin" type="data" label="pdb input"/>
-        <param name="method" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="false" label="Use singular value decomposition (SVD) instead of default eigenvalue decomposition ?" help="Default: No" />
-        <conditional name="pca">
+        <conditional name="rmsd">
            <param name="sele" type="select" label="Select domains">
              <option value="calpha">Calpha</option>
              <option value="cbeta">Cbeta</option>
@@ -71,6 +82,10 @@
              <option value="protein">Protein</option>
              <option value="ligand">Ligand</option>
              <option value="nucleic">Nucleic Acids</option>
+             <option value="loop">Loop</option>
+             <option value="water">Water</option>
+             <option value="hyd">Hydrogens</option>
+             <option value="noh">Non Hydrogens</option>
              <option value="elety">Atom Names</option>
              <option value="resid">Resid</option>
              <option value="segid">Segid</option>
@@ -96,6 +111,19 @@
            <when value="nucleic">
              <param name="nucleic" type="text" value="nucleic"/>
            </when>
+           <when value="loop">
+             <param name="res1"  type="text" label="Resid of the loop starting residue"/>
+             <param name="res2"  type="text" label="Resid of the loop ending residue"/>
+           </when>
+           <when value="water">
+              <param name="water" type="text" value="water"/>
+           </when>
+           <when value="hyd">
+            <param name="hyd" type="text"  value="h"/>
+          </when>
+          <when value="noh">
+            <param name="noh" type="text" value="noh"/>
+          </when> 
           <when value="elety">
             <param name="elety"  type="text" value="CA" label="Atom Name"/>
           </when>
@@ -108,18 +136,16 @@
         </conditional>
     </inputs>
     <outputs>
-        <data format="csv" name="output" label="PCA raw data"/>
-        <data format="png" name="pca_plot" label="PCA plot"/>
-        <data format="png" name="pca_cluster" label="PCA Cluster Plot"/>
-        <data format="png" name="pc1_rmsf" label="PC1 on RMSF"/>
+        <data format="csv" name="output" label="RMSD raw data"/>
+        <data format="png" name="rmsd_plot" label="RMSD plot"/>
+        <data format="png" name="rmsd_hist_plot" label="RMSD Histogram Plot"/>
     </outputs>
     <tests>
         <test>
             <param name="dcdin" value="test.dcd"/>
             <param name="pdbin" value="test.pdb"/>
-            <param name="method" value="FALSE"/>
             <param name="sele" value="calpha"/>
-            <output name="output" file='PCA_raw_data.csv' ftype="csv"/>
+            <output name="output" file='RMSD_raw_data.csv' ftype="csv" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -127,7 +153,7 @@
 
 **What it does**
         
-PCA can be used to determine the relationship between statistically meaningful conformations (major global motions) sampled during the trajectory. 
+The Root Mean Square Deviation (RMSD) is a standard measure of structural distance between coordinates. This tool can calculate and plot the RMSD of the selected section.
       
 _____
 
@@ -145,9 +171,8 @@ _____
 
 **Output**
 
-       - .png of the pca plot.
-       - .png of the pca clusterd plot.
-       - .png of the PC1 plotted on RMSF.
+       - .png of the rmsd plot.
+       - .png of the rmsd histogram plot.
        - .csv of raw data.
     ]]></help>
    <citations>

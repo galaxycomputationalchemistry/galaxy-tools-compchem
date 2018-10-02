@@ -3,73 +3,70 @@
     <requirements>
           <requirement type="package" version="2.3_3">r-bio3d</requirement>
     </requirements>
-    <stdio>
-        <exit_code range="1:" />
-    </stdio>
-    <command interpreter="Rscript">
+    <command detect_errors="exit_code">
 <![CDATA[ 
-    bio3d_rmsf.R 
-        $dcdin  
-        $pdbin
+    Rscript '$__tool_directory__/bio3d_rmsf.R' 
+        '$dcdin'  
+        '$pdbin'
         #if $rmsf.sele == "calpha":
-        "string"
-        $rmsf.calpha
+          "string"
+          '$rmsf.calpha'
         #end if
         #if $rmsf.sele == "cbeta":
-        "string"
-        $rmsf.cbeta
+          "string"
+          '$rmsf.cbeta'
         #end if
         #if $rmsf.sele == "backbone":
-        "string"
-        $rmsf.backbone
+          "string"
+          '$rmsf.backbone'
         #end if
         #if $rmsf.sele == "sidechain":
-        "string"
-        $rmsf.sidechain
+          "string"
+          '$rmsf.sidechain'
         #end if
         #if $rmsf.sele == "protein":
-        "string"
-        $rmsf.protein
+          "string"
+          '$rmsf.protein'
         #end if
         #if $rmsf.sele == "ligand":
-        "string"
-        $rmsf.ligand
+          "string"
+          '$rmsf.ligand'
         #end if
         #if $rmsf.sele == "nucleic":
-        "string"
-        $rmsf.nucleic
+          "string"
+          '$rmsf.nucleic'
         #end if
         #if $rmsf.sele == "water":
-        "string"
-        $rmsf.water
+          "string"
+          '$rmsf.water'
         #end if
         #if $rmsf.sele == "hyd":
-        "string"
-        $rmsf.hyd
+          "string"
+          '$rmsf.hyd'
         #end if
         #if $rmsf.sele == "noh":
-        "string"
-        $rmsf.noh
+          "string"
+          '$rmsf.noh'
         #end if
         #if $rmsf.sele == "loop":
-        "resno"
-        $rmsf.res1
-        $rmsf.res2
+          "resno"
+          '$rmsf.res1'
+          '$rmsf.res2'
         #end if
         #if $rmsf.sele == "elety":
-        "elety"
-        $rmsf.elety
+          "elety"
+          '$rmsf.elety'
         #end if
         #if $rmsf.sele == "resid":
-        "resid"
-        $rmsf.resid
+          "resid"
+          '$rmsf.resid'
         #end if
         #if $rmsf.sele == "segid":
-        "segid"
-        $rmsf.segid
+          "segid"
+          '$rmsf.segid'
         #end if
-        $output
-        $rmsf_plot 
+        '$output'
+        '$rmsf_plot' 
     2>&1
 ]]></command>
     <inputs>
