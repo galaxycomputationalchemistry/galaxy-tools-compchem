@@ -1,0 +1,185 @@
+<tool id="bio3d_rmsd_analytics" name="RMSD Analysis" version="0.1.2">
+    <description>RMSD using Bio3D</description>
+    <requirements>
+          <requirement type="package" version="2.3_3">r-bio3d</requirement>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command interpreter="Rscript">
+<![CDATA[ 
+    bio3d_rmsd.R 
+        $dcdin  
+        $pdbin
+        #if $rmsd.sele == "calpha":
+        "string"
+        $rmsd.calpha
+        #end if
+        #if $rmsd.sele == "cbeta":
+        "string"
+        $rmsd.cbeta
+        #end if
+        #if $rmsd.sele == "backbone":
+        "string"
+        $rmsd.backbone
+        #end if
+        #if $rmsd.sele == "sidechain":
+        "string"
+        $rmsd.sidechain
+        #end if
+        #if $rmsd.sele == "protein":
+        "string"
+        $rmsd.protein
+        #end if
+        #if $rmsd.sele == "ligand":
+        "string"
+        $rmsd.ligand
+        #end if
+        #if $rmsd.sele == "nucleic":
+        "string"
+        $rmsd.nucleic
+        #end if
+        #if $rmsd.sele == "water":
+        "string"
+        $rmsd.water
+        #end if
+        #if $rmsd.sele == "hyd":
+        "string"
+        $rmsd.hyd
+        #end if
+        #if $rmsd.sele == "noh":
+        "string"
+        $rmsd.noh
+        #end if
+        #if $rmsd.sele == "loop":
+        "resno"
+        $rmsd.res1
+        $rmsd.res2
+        #end if
+        #if $rmsd.sele == "elety":
+        "elety"
+        $rmsd.elety
+        #end if
+        #if $rmsd.sele == "resid":
+        "resid"
+        $rmsd.resid
+        #end if
+        #if $rmsd.sele == "segid":
+        "segid"
+        $rmsd.segid
+        #end if
+        $output
+        $rmsd_plot 
+        $rmsd_hist_plot
+    2>&1
+]]></command>
+    <inputs>
+        <param format="dcd" name="dcdin" type="data" label="dcd trajectory input"/>
+        <param format="pdb" name="pdbin" type="data" label="pdb input"/>
+        <conditional name="rmsd">
+           <param name="sele" type="select" label="Select domains">
+             <option value="calpha">Calpha</option>
+             <option value="cbeta">Cbeta</option>
+             <option value="backbone">Backbone</option>
+             <option value="sidechain">Sidechain</option>
+             <option value="protein">Protein</option>
+             <option value="ligand">Ligand</option>
+             <option value="nucleic">Nucleic Acids</option>
+             <option value="loop">Loop</option>
+             <option value="water">Water</option>
+             <option value="hyd">Hydrogens</option>
+             <option value="noh">Non Hydrogens</option>
+             <option value="elety">Atom Names</option>
+             <option value="resid">Resid</option>
+             <option value="segid">Segid</option>
+           </param>
+           <when value="calpha">
+              <param name="calpha" type="text" value="calpha"/>
+           </when>
+           <when value="cbeta">
+             <param name="cbeta" type="text" value="cbeta"/>
+           </when>
+           <when value="backbone">
+             <param name="backbone" type="text" value="backbone"/>
+           </when> 
+           <when value="sidechain">
+             <param name="sidechain" type="text" value="sidechain"/>
+           </when>
+           <when value="protein">
+             <param name="protein" type="text"  value="protein"/>
+           </when>
+           <when value="ligand">
+             <param name="ligand" type="text" value="ligand"/>
+           </when>
+           <when value="nucleic">
+             <param name="nucleic" type="text" value="nucleic"/>
+           </when>
+           <when value="loop">
+             <param name="res1"  type="text" label="Resid of the loop starting residue"/>
+             <param name="res2"  type="text" label="Resid of the loop ending residue"/>
+           </when>
+           <when value="water">
+              <param name="water" type="text" value="water"/>
+           </when>
+           <when value="hyd">
+            <param name="hyd" type="text"  value="h"/>
+          </when>
+          <when value="noh">
+            <param name="noh" type="text" value="noh"/>
+          </when> 
+          <when value="elety">
+            <param name="elety"  type="text" value="CA" label="Atom Name"/>
+          </when>
+          <when value="resid">
+            <param name="resid"  type="text" value="BGLC" label="Resid"/>
+          </when>
+          <when value="segid">
+            <param name="segid"  type="text" value="SUBS" label="Segid"/>
+          </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data format="csv" name="output" label="RMSD raw data"/>
+        <data format="png" name="rmsd_plot" label="RMSD plot"/>
+        <data format="png" name="rmsd_hist_plot" label="RMSD Histogram Plot"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="dcdin" value="test.dcd"/>
+            <param name="pdbin" value="test.pdb"/>
+            <param name="sele" value="calpha"/>
+            <output name="output" file='RMSD_raw_data.csv' ftype="csv" compare="sim_size"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+        
+The Root Mean Square Deviation (RMSD) is a standard measure of structural distance between coordinates. This tool can calculate and plot the RMSD of the selected section.
+      
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - .pdb input file 
+       - .dcd input file
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - .png of the rmsd plot.
+       - .png of the rmsd histogram plot.
+       - .csv of raw data.
+    ]]></help>
+   <citations>
+      <citation type="doi">10.1093/bioinformatics/btl461</citation>
+    </citations>
+</tool>
+
