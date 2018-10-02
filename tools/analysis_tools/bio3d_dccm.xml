@@ -7,13 +7,13 @@
     <stdio>
         <exit_code range="1:" />
     </stdio>
-    <command interpreter="Rscript">
+    <command>
 <![CDATA[ 
-    bio3d_dccm.R 
-        $dcdin 
-        $pdbin 
-        $output
-        $dccm_plot
+    Rscript '$__tool_directory__/bio3d_dccm.R' 
+        '$dcdin' 
+        '$pdbin' 
+        '$output'
+        '$dccm_plot'
     2>&1
 ]]></command>
     <inputs>
