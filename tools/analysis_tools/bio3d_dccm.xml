@@ -1,4 +1,4 @@
-<tool id="bio3d_dccm_analytics" name="DCCM Analysis" version="0.1.2">
+<tool id="bio3d_dccm_analytics" name="DCCM Analysis" version="2.3.3">
     <description>Dynamical Cross-Correlation Map using Bio3D (DCCM)</description>
     <requirements>
           <requirement type="package" version="2.3_3">r-bio3d</requirement>
