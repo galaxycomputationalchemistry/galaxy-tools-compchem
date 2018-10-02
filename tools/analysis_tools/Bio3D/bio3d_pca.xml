@@ -1,4 +1,4 @@
-<tool id="bio3d_PCA_analysis" name="PCA" version="0.1.2">
+<tool id="bio3d_PCA_analysis" name="PCA" version="2.3.3">
     <description>Principle component analysis using Bio3D</description>
     <requirements>
           <requirement type="package" version="2.3_3">r-bio3d</requirement>

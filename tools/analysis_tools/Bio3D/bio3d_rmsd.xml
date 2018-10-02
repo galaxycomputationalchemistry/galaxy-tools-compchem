@@ -1,4 +1,4 @@
-<tool id="bio3d_rmsd_analytics" name="RMSD Analysis" version="0.1.2">
+<tool id="bio3d_rmsd_analytics" name="RMSD Analysis" version="2.3.3">
     <description>RMSD using Bio3D</description>
     <requirements>
           <requirement type="package" version="2.3_3">r-bio3d</requirement>
