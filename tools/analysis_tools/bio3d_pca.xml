@@ -1,0 +1,157 @@
+<tool id="bio3d_PCA_analysis" name="PCA" version="0.1.2">
+    <description>Principle component analysis using Bio3D</description>
+    <requirements>
+          <requirement type="package" version="2.3_3">r-bio3d</requirement>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command interpreter="Rscript">
+<![CDATA[ 
+    bio3d_pca.R 
+        $dcdin 
+        $pdbin
+        $method
+        #if $pca.sele == "calpha":
+        "string"
+        $pca.calpha
+        #end if
+        #if $pca.sele == "cbeta":
+        "string"
+        $pca.cbeta
+        #end if
+        #if $pca.sele == "backbone":
+        "string"
+        $pca.backbone
+        #end if
+        #if $pca.sele == "sidechain":
+        "string"
+        $pca.sidechain
+        #end if
+        #if $pca.sele == "protein":
+        "string"
+        $pca.protein
+        #end if
+        #if $pca.sele == "ligand":
+        "string"
+        $pca.ligand
+        #end if
+        #if $pca.sele == "nucleic":
+        "string"
+        $pca.nucleic
+        #end if
+        #if $pca.sele == "elety":
+        "elety"
+        $pca.elety
+        #end if
+        #if $pca.sele == "resid":
+        "resid"
+        $pca.resid
+        #end if
+        #if $pca.sele == "segid":
+        "segid"
+        $pca.segid
+        #end if
+        $output 
+        $pca_plot 
+        $pca_cluster 
+        $pc1_rmsf
+    2>&1
+]]></command>
+    <inputs>
+        <param format="dcd" name="dcdin" type="data" label="dcd trajectory input"/>
+        <param format="pdb" name="pdbin" type="data" label="pdb input"/>
+        <param name="method" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="false" label="Use singular value decomposition (SVD) instead of default eigenvalue decomposition ?" help="Default: No" />
+        <conditional name="pca">
+           <param name="sele" type="select" label="Select domains">
+             <option value="calpha">Calpha</option>
+             <option value="cbeta">Cbeta</option>
+             <option value="backbone">Backbone</option>
+             <option value="sidechain">Sidechain</option>
+             <option value="protein">Protein</option>
+             <option value="ligand">Ligand</option>
+             <option value="nucleic">Nucleic Acids</option>
+             <option value="elety">Atom Names</option>
+             <option value="resid">Resid</option>
+             <option value="segid">Segid</option>
+           </param>
+           <when value="calpha">
+              <param name="calpha" type="text" value="calpha"/>
+           </when>
+           <when value="cbeta">
+             <param name="cbeta" type="text" value="cbeta"/>
+           </when>
+           <when value="backbone">
+             <param name="backbone" type="text" value="backbone"/>
+           </when> 
+           <when value="sidechain">
+             <param name="sidechain" type="text" value="sidechain"/>
+           </when>
+           <when value="protein">
+             <param name="protein" type="text"  value="protein"/>
+           </when>
+           <when value="ligand">
+             <param name="ligand" type="text" value="ligand"/>
+           </when>
+           <when value="nucleic">
+             <param name="nucleic" type="text" value="nucleic"/>
+           </when>
+          <when value="elety">
+            <param name="elety"  type="text" value="CA" label="Atom Name"/>
+          </when>
+          <when value="resid">
+            <param name="resid"  type="text" value="BGLC" label="Resid"/>
+          </when>
+          <when value="segid">
+            <param name="segid"  type="text" value="SUBS" label="Segid"/>
+          </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data format="csv" name="output" label="PCA raw data"/>
+        <data format="png" name="pca_plot" label="PCA plot"/>
+        <data format="png" name="pca_cluster" label="PCA Cluster Plot"/>
+        <data format="png" name="pc1_rmsf" label="PC1 on RMSF"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="dcdin" value="test.dcd"/>
+            <param name="pdbin" value="test.pdb"/>
+            <param name="method" value="FALSE"/>
+            <param name="sele" value="calpha"/>
+            <output name="output" file='PCA_raw_data.csv' ftype="csv"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+        
+PCA can be used to determine the relationship between statistically meaningful conformations (major global motions) sampled during the trajectory. 
+      
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - .pdb input file 
+       - .dcd input file
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - .png of the pca plot.
+       - .png of the pca clusterd plot.
+       - .png of the PC1 plotted on RMSF.
+       - .csv of raw data.
+    ]]></help>
+   <citations>
+      <citation type="doi">10.1093/bioinformatics/btl461</citation>
+    </citations>
+</tool>
+
