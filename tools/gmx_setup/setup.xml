@@ -1,0 +1,88 @@
+<tool id="setup" name="Create initial files: topology and GRO structure file." version="0.1.0">
+    <requirements>
+        <requirement type="package">gromacs</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+
+        ln -s '$pdb_input' ./pdb_input.pdb &&
+        gmx pdb2gmx -f ./pdb_input.pdb -o processed.gro -p topol.top -i posres.itp -water $water -ff $ff -${ignore_h}ignh &>> verbose.txt &&
+        gmx editconf -f processed.gro -o newbox.gro -c -d $box_d -bt $box_type &>> verbose.txt
+
+    ]]></command>
+
+    <inputs>
+        <!-- PDB2GMX VARS -->
+        <param argument="pdb_input" type="data" format='pdb' label="PDB input file."/>
+        <param argument="water" type="select" label="Water model" help="">
+            <option value="tip3p" selected="true">TIP3P</option>
+            <option value="tip4p">TIP4P</option>
+            <option value="tips3p">TIPS3P</option>
+            <option value="tip5p">TIP5P</option>
+            <option value="spc">SPC</option>
+            <option value="spce">SPC/E</option>
+            <option value="none">None</option>
+        </param>
+
+        <param argument="ff" type="select" label="Force field">
+            <option value="oplsaa" selected="true">OPLS/AA</option>
+            <option value="gromos43a1">GROMOS43A1</option>
+            <option value="amber96">AMBER96</option>
+            <option value="gromos53a6">GROMOS53A6</option>
+            <option value="amber99sb-ildn">AMBER99SB-ILDN</option>
+            <option value="amber99sb">AMBER99SB</option>
+            <option value="gromos53a5">GROMOS53A5</option>
+            <option value="gromos43a2">GROMOS43A2</option>
+            <option value="amberGS">AMBERGS</option>
+            <option value="charmm27">CHARMM27</option>
+            <option value="amber03">AMBER03</option>
+            <option value="gromos54a7">GROMOS54A7</option>
+            <option value="gromos45a3">GROMOS45A3</option>
+            <option value="amber99">AMBER99</option>
+            <option value="amber94">AMBER94</option>
+        </param>
+
+        <param argument="ignore_h" type="boolean" label="Ignore hydrogens" truevalue="" falsevalue="no" help="Ignore hydrogen atoms that are in the coordinate file." />
+        
+        <!-- EDITCONF VARS -->
+        <param argument="box_d" type="float" label="Box dimensions in nanometers." value="0.0" min="0.0" max="10.0" help="Box dimensions" />
+        <param argument="box_type" type="select" label="Box type"
+            help="triclinic is a triclinic box, cubic is a rectangular box with all sides equal dodecahedron represents a rhombic dodecahedron and octahedron is a truncated octahedron. The last two are special cases of a triclinic box. The length of the three box vectors of the truncated octahedron is the shortest distance between two opposite hexagons. Relative to a cubic box with some periodic image distance, the volume of a dodecahedron with this same periodic distance is 0.71 times that of the cube, and that of a truncated octahedron is 0.77 times.">
+            <option value="cubic">Rectangular box with all sides equal</option>
+            <option value="triclinic">Triclinic</option>
+            <option value="dodecahedron">represents a rhombic dodecahedron</option>
+            <option value="octahedron">truncated octahedron</option>
+        </param>
+
+        <param name="capture_log" type="boolean" value="false" label="Generate Detailed Log" help="Generate detailed log information that can be summarized with ParseLog."/>
+
+    </inputs>
+    <outputs>
+        <data name="output1" format="top" from_work_dir="topol.top"/>
+        <data name="output2" format="gro" from_work_dir="newbox.gro"/>
+        <data name="output3" format="itp" from_work_dir="posres.itp"/>
+        <data name="report" format="txt" from_work_dir="verbose.txt">
+            <filter>capture_log</filter>
+        </data>
+    </outputs>
+    <tests>
+        <test>
+            <param name="pdb_input" value="1AKI.pdb" />
+            <param name="water" value="spce" />
+            <param name="ff" value="oplsaa" />
+            <param name="ignore_h" value="no" />
+            <param name="box_d" value="1.0" />
+            <param name="box_type" value="cubic" />
+            <output name="output1" file="topol.top" ftype="top" compare="diff" lines_diff="10"/>
+            <output name="output2" file="newbox.gro" ftype="gro"/>
+            <output name="output3" file="posres.itp" ftype="itp"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+Initial setup. Upload a structure in PDB format and produce a topology and a structure in GRO format contained in a box of defined shape and dimensions.
+
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1016/j.softx.2015.06.001</citation>
+    </citations>
+</tool>

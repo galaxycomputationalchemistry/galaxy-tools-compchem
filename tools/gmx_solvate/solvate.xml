@@ -1,0 +1,70 @@
+<tool id="solvate" name="Add solvent (water) and ions." version="0.1.0">
+    <requirements>
+        <requirement type="package">gromacs</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+
+        ln -s '$ions' ./ions.mdp &&
+        ln -s '$gro_input' ./gro_input.gro &&
+        ln -s '$top_input' ./top_input.top &&
+
+        gmx solvate -cp ./gro_input.gro -cs ${water_model}.gro -o solv.gro -p ./top_input.top &>> verbose.txt &&
+
+        gmx grompp -f ./ions.mdp -c solv.gro -p ./top_input.top -o ions.tpr -maxwarn 1 &>> verbose.txt &&
+
+        echo 'SOL' | gmx genion -s ions.tpr -o solv_ions.gro -p ./top_input.top -pname NA -nname CL -neutral &>> verbose.txt
+    
+    ]]></command>
+        <configfiles>
+            <!-- .mdp file for the gromacs simulation -->
+            <configfile name="ions">
+: Parameters are not so important here as no simulation is run
+integrator  = steep
+emtol    = 1000.0
+emstep      = 0.01 
+nsteps    = 1
+nstlist        = 1
+cutoff-scheme   = Verlet
+ns_type        = grid
+coulombtype      = PME
+rcoulomb      = 1.0
+rvdw        = 1.0
+pbc            = xyz
+            </configfile>
+        </configfiles>
+    <inputs>
+        <param argument="gro_input" type="data" format='gro' label="GRO structure file."/>
+        <param argument="top_input" type="data" format='top' label="Topology (TOP) file."/>
+        <param name="water_model" type="select"  label="Water model for solvation.">
+            <option value="tip3p">TIP3P</option>
+            <option value="tip4p">TIP4P</option>
+            <option value="spc216">SPC</option>
+        </param>
+        <param name="capture_log" type="boolean" value="false" label="Generate Detailed Log" help="Generate detailed log information that can be summarized with ParseLog."/>
+
+    </inputs>
+    <outputs>
+        <data name="output1" format="gro" from_work_dir="solv_ions.gro"/>
+        <data name="output2" format="top" from_work_dir="./top_input.top"/>
+        <data name="report" format="txt" from_work_dir="verbose.txt">
+            <filter>capture_log</filter>
+        </data>
+    </outputs>
+    <tests>
+        <test>
+            <param name="gro_input" value="newbox.gro" />
+            <param name="top_input" value="topol.top" />
+            <param name="water_model" value="spc216" />
+            <output name="output1" file="solv_ions.gro" ftype="gro" compare="sim_size"/>
+            <output name="output2" file="topol2.top" ftype="top"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+Select a water model - consistent with the one selected in system set-up and provide GRO and TOP files to be updated with the added water molecules. In addition, sodium or chloride ions are added if necessary to ensure the system is charge-neutral.
+
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1016/j.softx.2015.06.001</citation>
+    </citations>
+</tool>
