@@ -1,7 +1,10 @@
 <tool id="protein" name="Energy minimization." version="0.1.0">
-    <requirements>
-        <requirement type="package">gromacs</requirement>
-    </requirements>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements" />
+
     <command detect_errors="exit_code"><![CDATA[
 
         #if $mdp.mdpfile == 'custom':
@@ -114,7 +117,6 @@
 Upload GRO and TOP files for energy minimisation. To take advantage of all GROMACS features, upload an MDP file with simulation parameters. Otherwise, choose parameters through the Galaxy interface. See http://manual.gromacs.org/online/mdp_opt.html for more information on the options.
 
     ]]></help>
-    <citations>
-        <citation type="doi">10.1016/j.softx.2015.06.001</citation>
-    </citations>
+
+    <expand macro="citations" />
 </tool>

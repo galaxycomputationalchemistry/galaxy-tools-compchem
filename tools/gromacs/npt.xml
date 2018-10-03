@@ -1,7 +1,10 @@
 <tool id="protein" name="NPT." version="0.1.0">
-    <requirements>
-        <requirement type="package">gromacs</requirement>
-    </requirements>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements" />
+
     <command detect_errors="exit_code"><![CDATA[
         #if $mdp.mdpfile == "custom":
             ln -s '$mdp.mdp_input' ./npt.mdp &&
@@ -31,7 +34,7 @@
                     define    = -DPOSRES  ; position restrain the protein
                     ; Run parameters
                     integrator  = $mdp.integrator    ; leap-frog integrator
-                    nsteps    = $mdp.npt_steps    ; 2 * 50000 = 100 ps
+                    nsteps    = $mdp.md_steps    ; 2 * 50000 = 100 ps
                     dt        = $mdp.step_length    ; 2 fs
                     ; Output control
                     nstxout    = $mdp.write_freq    ; save coordinates every 1.0 ps
@@ -85,63 +88,7 @@
         <param argument="cpt_input" type="data" format='cpt' label="Checkpoint (CPT) file from NVT run."/>
         <param argument="itp_input" type="data" format='itp' label="Position restraint file."/>
         
-        <conditional name="mdp">
-            <param name="mdpfile" type="select" label="Parameter input">
-                <option value="custom">Upload own MDP file</option>
-                <option value="default">Use default (partially customisable) setting</option>
-            </param>
-            <when value="custom">
-                <param argument="mdp_input" type="data" format='mdp' label="MD parameters (MDP) file (optional; default settings if not set)."/>
-            </when>
-            <when value="default">
-                <param argument="npt_steps" type="integer" label="Number of steps for the NPT equilibration" value="0" min="0" max="1000000" help="NPT steps" />
-                <param argument="integrator" type="select" label="Choice of integrator.">
-                    <option value="md">A leap-frog algorithm for integrating Newton's equations of motion.</option>
-                    <option value="sd">Stochastic dynamics integrator</option>
-                    <option value="bd">An Euler integrator for Brownian or position Langevin dynamics.</option>
-                </param>
-                <param argument="constraints" type="select" label="Bond constraints (constraints).">
-                    <option value="none">No constraints except for those defined explicitly in the topology (none).</option>
-                    <option value="h-bonds">Bonds with H-atoms. (h-bonds).</option>
-                    <option value="all-bonds">All bonds (all-bonds).</option>
-                    <option value="h-angles">Bonds and angles with H-atoms. (h-angles).</option>
-                    <option value="all-angles">All bonds and angles (all-angles).</option>
-                </param>
-                <param argument="cutoffscheme" type="select" label="Neighbor searching.">
-                    <option value="Verlet">Generate a pair list with buffering.</option>
-                    <option value="group">Generate a pair list for groups of atoms.</option>
-                </param>
-                <param argument="coulombtype" type="select" label="Electrostatics.">
-                    <option value="PME">Fast smooth Particle-Mesh Ewald (SPME) electrostatics.</option>
-                    <option value="P3M-AD">Particle-Particle Particle-Mesh algorithm with analytical derivative.</option>
-                    <option value="Reaction-Field-zero">Reaction field electrostatics.</option>
-                </param>
-                <param argument="temperature" type="integer" label="Temperature /K" value="0" min="0" max="1000000" help="Temperature" />
-                <param argument="step_length" type="float" label="Step length in ps" value="0" min="0.0001" max="1.0" help="Step length in ps." />
-                <param argument="write_freq" type="integer" label="Number of steps that elapse between saving data points (velocities, forces, energies)" value="0" min="0" max="1000000" help="Step length in ps." />
-                <param argument="rcoulomb" value="1.0" type="float" label="Distance for the Coulomb cut-off."/>
-                <param argument="rlist" value="1.0" type="float" label="Cut-off distance for the short-range neighbor list. Ignored if the Verlet cutoff scheme is set."/>
-                <param argument="rvdw" value="1.0" type="float" label="Short range van der Waals cutoff."/>
-
-            </when>
-        </conditional>
-        
-        <param argument="traj" type="select" label="Trajectory output.">
-            <option value='none'>Return no trajectory output</option>
-            <option value='xtc'>Return .xtc file (reduced precision)</option>
-            <option value='trr'>Return .trr file (full precision)</option>
-            <option value='both'>Return both .xtc and .trr files</option>
-        </param>
-
-         <param argument="str" type="select" label="Structure output.">
-            <option value='none'>Return no trajectory output</option>
-            <option value='gro'>Return .gro file</option>
-            <option value='pdb'>Return .pdb file</option>
-            <option value='both'>Return both .gro and .pdb files</option>
-        </param>
-
-        <param name="capture_log" type="boolean" value="false" label="Generate Detailed Log" help="Generate detailed log information that can be summarized with ParseLog."/>
-
+        <expand macro="md_inputs"/>
     </inputs>
     <outputs>
         <data name="output1" format="gro" from_work_dir="npt.gro">
@@ -168,17 +115,11 @@
             <param name="top_input" value="topol_solv.top" />
             <param name="cpt_input" value="nvt.cpt" />
             <param name="itp_input" value="posres.itp" />
-            <param name="mdpfile" value="default" />
-            <param name="step_length" value="0.002"/>
-            <param name="npt_steps" value="500"/>
-            <param name="write_freq" value="50"/>
-            <param name="temperature" value="300"/>
             <param name="traj" value="xtc"/>
             <param name="str" value="both"/>
-            <param name="integrator" value="md" />
-            <param name="constraints" value="all-bonds"/>
-            <param name="cutoffscheme" value="Verlet" />
-            <param name="coulombtype" value="PME" />
+            
+            <expand macro="test_params"/>
+            
             <output name="output1" file="npt.gro" ftype="gro" compare="sim_size"/>
             <output name="output2" file="npt.cpt" ftype="cpt" compare="sim_size"/>
             <output name="output4" file="npt.xtc" ftype="xtc" compare="sim_size"/>
@@ -190,17 +131,11 @@
             <param name="top_input" value="topol_solv.top" />
             <param name="cpt_input" value="nvt.cpt" />
             <param name="itp_input" value="posres.itp" />
-            <param name="mdpfile" value="default" />
-            <param name="step_length" value="0.002"/>
-            <param name="npt_steps" value="500"/>
-            <param name="write_freq" value="50"/>
-            <param name="temperature" value="300"/>
             <param name="traj" value="xtc"/>
             <param name="str" value="pdb"/>
-            <param name="integrator" value="md" />
-            <param name="constraints" value="all-bonds"/>
-            <param name="cutoffscheme" value="Verlet" />
-            <param name="coulombtype" value="PME" />
+            
+            <expand macro="test_params"/>
+            
             <output name="output2" file="npt.cpt" ftype="cpt" compare="sim_size"/>
             <output name="output4" file="npt.xtc" ftype="xtc" compare="sim_size"/>
             <output name="output5" file="npt.pdb" ftype="pdb" compare="sim_size"/>
@@ -211,17 +146,11 @@
             <param name="top_input" value="topol_solv.top" />
             <param name="cpt_input" value="nvt.cpt" />
             <param name="itp_input" value="posres.itp" />
-            <param name="mdpfile" value="default" />
-            <param name="step_length" value="0.002"/>
-            <param name="npt_steps" value="500"/>
-            <param name="write_freq" value="50"/>
-            <param name="temperature" value="300"/>
-            <param name="integrator" value="md" />
-            <param name="constraints" value="all-bonds"/>
-            <param name="cutoffscheme" value="Verlet" />
-            <param name="coulombtype" value="PME" />
             <param name="str" value="none"/>
             <param name="traj" value="trr"/>
+            
+            <expand macro="test_params"/>
+            
             <output name="output2" file="npt.cpt" ftype="cpt" compare="sim_size"/>
             <output name="output3" file="npt.trr" ftype="trr" compare="sim_size"/>
         </test>
@@ -244,7 +173,7 @@
 Upload GRO, TOP and ITP (position restraint) files for equilibration under an NPT ensemble, as well as the checkpoint (CPT) file from the NVT equilibration. To take advantage of all GROMACS features, upload an MDP file with simulation parameters. Otherwise, choose parameters through the Galaxy interface. See http://manual.gromacs.org/online/mdp_opt.html for more information on the options.
 
     ]]></help>
-    <citations>
-        <citation type="doi">10.1016/j.softx.2015.06.001</citation>
-    </citations>
-</tool>
+
+        <expand macro="citations" />
+    
+    </tool>

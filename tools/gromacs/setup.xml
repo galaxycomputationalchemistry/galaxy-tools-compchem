@@ -1,7 +1,10 @@
 <tool id="setup" name="Create initial files: topology and GRO structure file." version="0.1.0">
-    <requirements>
-        <requirement type="package">gromacs</requirement>
-    </requirements>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements" />
+
     <command detect_errors="exit_code"><![CDATA[
 
         ln -s '$pdb_input' ./pdb_input.pdb &&
@@ -82,7 +85,6 @@
 Initial setup. Upload a structure in PDB format and produce a topology and a structure in GRO format contained in a box of defined shape and dimensions.
 
     ]]></help>
-    <citations>
-        <citation type="doi">10.1016/j.softx.2015.06.001</citation>
-    </citations>
+
+    <expand macro="citations" />
 </tool>

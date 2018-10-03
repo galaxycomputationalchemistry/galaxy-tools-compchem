@@ -1,7 +1,10 @@
 <tool id="solvate" name="Add solvent (water) and ions." version="0.1.0">
-    <requirements>
-        <requirement type="package">gromacs</requirement>
-    </requirements>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements" />
+
     <command detect_errors="exit_code"><![CDATA[
 
         ln -s '$ions' ./ions.mdp &&
@@ -64,7 +67,6 @@ pbc            = xyz
 Select a water model - consistent with the one selected in system set-up and provide GRO and TOP files to be updated with the added water molecules. In addition, sodium or chloride ions are added if necessary to ensure the system is charge-neutral.
 
     ]]></help>
-    <citations>
-        <citation type="doi">10.1016/j.softx.2015.06.001</citation>
-    </citations>
+
+    <expand macro="citations" />
 </tool>
