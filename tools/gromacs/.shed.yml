@@ -1,4 +1,5 @@
 name: gromacs
+owner: chemteam
 description: "GROMACS is a package for performing molecular dynamics, primarily designed for biochemical molecules such as proteins, lipids and nucleic acids."
 homepage_url: https://github.com/gromacs
 long_description: |
