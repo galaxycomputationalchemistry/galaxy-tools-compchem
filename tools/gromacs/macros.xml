@@ -1,7 +1,8 @@
 <macros>
+    <token name="@VERSION@">2018.2</token>
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="2018">gromacs</requirement>
+            <requirement type="package" version="@VERSION@">gromacs</requirement>
         </requirements>
     </xml>
     <xml name="citations">

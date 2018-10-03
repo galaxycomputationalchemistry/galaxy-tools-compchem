@@ -1,4 +1,5 @@
-<tool id="setup" name="Create initial files: topology and GRO structure file." version="0.1.0">
+<tool id="gmx_setup" name="Gromacs initial setup" version="@VERSION@">
+    <description>of topology and GRO structure file</description>
     <macros>
         <import>macros.xml</import>
     </macros>
@@ -82,7 +83,7 @@
     </tests>
     <help><![CDATA[
 
-Initial setup. Upload a structure in PDB format and produce a topology and a structure in GRO format contained in a box of defined shape and dimensions.
+Initial GROMACS setup. Upload a structure in PDB format and produce a topology and a structure in GRO format contained in a box of defined shape and dimensions.
 
     ]]></help>
 
