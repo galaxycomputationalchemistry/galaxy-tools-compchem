@@ -31,13 +31,14 @@
         </test>
     </tests>
     <help><![CDATA[
+
 .. class:: infomark
 
 **What it does**
         
 The extent to which the atomic fluctuations/displacements of a system are correlated with one another can be assessed by examining the magnitude of all pairwise cross-correlation coefficients.
 The DCCM Analysis tool can plot the atom-wise cross-correlations using the Bio3D package. The negative values (negative correlation) indicate the atoms moves in opposite directions and the positive values (positive correlation) indicate the atoms moves in same directions.
-      
+
 _____
 
 
@@ -47,15 +48,17 @@ _____
 
        - .pdb input file 
        - .dcd input file
+
 _____
 
-        
 .. class:: infomark
+
 
 **Output**
 
        - .png of the DCCM plot.
        - .csv ofraw data.
+
     ]]></help>
     <expand macro="citations" />
 </tool>

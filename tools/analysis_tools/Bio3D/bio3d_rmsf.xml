@@ -138,14 +138,15 @@
         </test>
     </tests>
     <help><![CDATA[
+
 .. class:: infomark
 
 **What it does**
-        
-The Root Mean Square Fluctuation (RMSF) conformational variance that analysis can analyze the portions of structure that are fluctuating from their mean structure the most (or least). This tool can calculate and plot the RMSF of the selected section.
-      
-_____
 
+The Root Mean Square Fluctuation (RMSF) conformational variance that analysis can analyze the
+portions of structure that are fluctuating from their mean structure the most (or least). This tool can calculate and plot the RMSF of the selected section.
+
+_____
 
 .. class:: infomark
 
@@ -153,15 +154,18 @@ _____
 
        - .pdb input file 
        - .dcd input file
+
 _____
 
-        
 .. class:: infomark
 
 **Output**
 
        - .png of the rmsf plot.
        - .csv of raw data.
+
+
+
     ]]></help>
     <expand macro="citations" />
 </tool>

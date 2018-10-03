@@ -1,18 +1,11 @@
 <tool id="bio3d_PCA_visualize" name="PCA visualization" version="0.1.2">
     <description>Visualize principle components of motions</description>
-<<<<<<< HEAD
     <macros>
         <import>macros.xml</import>
     </macros>
     <expand macro="requirements">
           <requirement type="package" version="1.16">r-ncdf4</requirement>
     </expand>
-=======
-    <requirements>
-          <requirement type="package" version="2.3_3">r-bio3d</requirement>
-          <requirement type="package" version="1.16">r-ncdf4</requirement>
-    </requirements>
->>>>>>> 20ada05f3b9badf5551db26c11287e3912dec67e
     <command detect_errors="exit_code">
 <![CDATA[ 
      Rscript '$__tool_directory__/bio3d_visualize_pc.R' 
@@ -130,10 +123,10 @@
 .. class:: infomark
 
 **What it does**
-        
+
 This tool can generate small trajectories of first three principle components.
 The .pdb of the .nc files can be visualized using a visualization software such as VMD.
-      
+
 _____
 
 
@@ -146,14 +139,14 @@ _____
 
 _____
 
-        
+
 .. class:: infomark
 
 **Output**
 
        - .pdbs of the first thee PCAs.
        - .ncs of the first thee PCAs.
- 
+
     ]]></help>
     <expand macro="citations" />
 </tool>

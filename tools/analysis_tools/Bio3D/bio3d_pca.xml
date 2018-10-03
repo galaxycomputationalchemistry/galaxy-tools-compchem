@@ -117,9 +117,9 @@
 .. class:: infomark
 
 **What it does**
-        
+
 PCA can be used to determine the relationship between statistically meaningful conformations (major global motions) sampled during the trajectory. 
-      
+
 _____
 
 
@@ -129,9 +129,10 @@ _____
 
        - .pdb input file 
        - .dcd input file
+
 _____
 
-        
+
 .. class:: infomark
 
 **Output**
@@ -140,6 +141,7 @@ _____
        - .png of the pca clusterd plot.
        - .png of the PC1 plotted on RMSF.
        - .csv of raw data.
+
     ]]></help>
     <expand macro="citations" />
 </tool>

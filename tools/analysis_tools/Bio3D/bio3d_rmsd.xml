@@ -140,12 +140,14 @@
         </test>
     </tests>
     <help><![CDATA[
+
 .. class:: infomark
 
 **What it does**
-        
-The Root Mean Square Deviation (RMSD) is a standard measure of structural distance between coordinates. This tool can calculate and plot the RMSD of the selected section.
-      
+
+The Root Mean Square Deviation (RMSD) is a standard measure of structural distance between coordinates.
+This tool can calculate and plot the RMSD of the selected section.
+
 _____
 
 
@@ -155,9 +157,10 @@ _____
 
        - .pdb input file 
        - .dcd input file
+
 _____
 
-        
+
 .. class:: infomark
 
 **Output**
@@ -165,7 +168,7 @@ _____
        - .png of the rmsd plot.
        - .png of the rmsd histogram plot.
        - .csv of raw data.
+
     ]]></help>
     <expand macro="citations" />
 </tool>
-
