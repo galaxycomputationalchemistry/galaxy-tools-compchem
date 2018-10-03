@@ -1,79 +1,80 @@
-<tool id="bio3d_rmsf_analytics" name="RMSF Analysis" version="2.3.3">
-    <description>rmsf using Bio3D</description>
+<tool id="bio3d_rmsd" name="RMSD Analysis" version="@VERSION@">
+    <description>RMSD using Bio3D</description>
     <macros>
         <import>macros.xml</import>
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code">
 <![CDATA[ 
-    Rscript '$__tool_directory__/bio3d_rmsf.R' 
+     Rscript '$__tool_directory__/rmsd.R'
         '$dcdin'  
         '$pdbin'
-        #if $rmsf.sele == 'calpha':
+        #if $rmsd.sele == 'calpha':
           "string"
           "calpha"
         #end if
-        #if $rmsf.sele == 'cbeta':
+        #if $rmsd.sele == 'cbeta':
           "string"
-          '$rmsf.cbeta'
+          "cbeta"
         #end if
-        #if $rmsf.sele == 'backbone':
+        #if $rmsd.sele == 'backbone':
           "string"
           "backbone"
         #end if
-        #if $rmsf.sele == 'sidechain':
+        #if $rmsd.sele == 'sidechain':
           "string"
-          '$rmsf.sidechain'
+          "sidechain"
         #end if
-        #if $rmsf.sele == 'protein':
+        #if $rmsd.sele == 'protein':
           "string"
           "protein"
         #end if
-        #if $rmsf.sele == 'ligand':
+        #if $rmsd.sele == 'ligand':
           "string"
           "ligand"
         #end if
-        #if $rmsf.sele == 'nucleic':
+        #if $rmsd.sele == 'nucleic':
           "string"
           "nucleic"
         #end if
-        #if $rmsf.sele == 'water':
+        #if $rmsd.sele == 'water':
           "string"
           "water"
         #end if
-        #if $rmsf.sele == 'hyd':
+        #if $rmsd.sele == 'hyd':
           "string"
           "hyd"
         #end if
-        #if $rmsf.sele == 'noh':
+        #if $rmsd.sele == 'noh':
           "string"
           "noh"
         #end if
-        #if $rmsf.sele == 'loop':
+        #if $rmsd.sele == "loop":
           "resno"
-          '$rmsf.res1'
-          '$rmsf.res2'
+          '$rmsd.res1'
+          '$rmsd.res2'
         #end if
-        #if $rmsf.sele == "elety":
+        #if $rmsd.sele == "elety":
           "elety"
-          '$rmsf.elety'
+          '$rmsd.elety'
         #end if
-        #if $rmsf.sele == "resid":
+        #if $rmsd.sele == "resid":
           "resid"
-          '$rmsf.resid'
+          '$rmsd.resid'
         #end if
-        #if $rmsf.sele == "segid":
+        #if $rmsd.sele == "segid":
           "segid"
-          '$rmsf.segid'
+          '$rmsd.segid'
         #end if
         '$output'
-        '$rmsf_plot' 
+        '$rmsd_plot' 
+        '$rmsd_hist_plot'
     2>&1
 ]]></command>
     <inputs>
         <param format="dcd" name="dcdin" type="data" label="dcd trajectory input"/>
         <param format="pdb" name="pdbin" type="data" label="pdb input"/>
-        <conditional name="rmsf">
+        <conditional name="rmsd">
            <param name="sele" type="select" label="Select domains">
              <option value="calpha">Calpha</option>
              <option value="cbeta">Cbeta</option>
@@ -126,15 +127,16 @@
         </conditional>
     </inputs>
     <outputs>
-        <data format="csv" name="output" label="rmsf raw data"/>
-        <data format="png" name="rmsf_plot" label="rmsf plot"/>
+        <data format="csv" name="output" label="RMSD raw data"/>
+        <data format="png" name="rmsd_plot" label="RMSD plot"/>
+        <data format="png" name="rmsd_hist_plot" label="RMSD Histogram Plot"/>
     </outputs>
     <tests>
         <test>
             <param name="dcdin" value="test.dcd"/>
             <param name="pdbin" value="test.pdb"/>
             <param name="sele" value="calpha"/>
-            <output name="rmsf_plot" file='rmsf_plot.png' ftype="png" compare="sim_size"/>
+            <output name="output" file='RMSD_raw_data.csv' ftype="csv" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -143,10 +145,11 @@
 
 **What it does**
 
-The Root Mean Square Fluctuation (RMSF) conformational variance that analysis can analyze the
-portions of structure that are fluctuating from their mean structure the most (or least). This tool can calculate and plot the RMSF of the selected section.
+The Root Mean Square Deviation (RMSD) is a standard measure of structural distance between coordinates.
+This tool can calculate and plot the RMSD of the selected section.
 
 _____
+
 
 .. class:: infomark
 
@@ -157,16 +160,15 @@ _____
 
 _____
 
+
 .. class:: infomark
 
 **Output**
 
-       - .png of the rmsf plot.
+       - .png of the rmsd plot.
+       - .png of the rmsd histogram plot.
        - .csv of raw data.
-
-
 
     ]]></help>
     <expand macro="citations" />
 </tool>
-

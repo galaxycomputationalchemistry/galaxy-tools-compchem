@@ -1,4 +1,4 @@
-<tool id="bio3d_dccm_analytics" name="DCCM Analysis" version="2.3.3">
+<tool id="bio3d_dccm" name="DCCM Analysis" version="@VERSION@">
     <description>Dynamical Cross-Correlation Map using Bio3D (DCCM)</description>
      <macros>
         <import>macros.xml</import>
@@ -8,7 +8,7 @@
     </expand>
     <command detect_errors="exit_code">
 <![CDATA[ 
-    Rscript '$__tool_directory__/bio3d_dccm.R' 
+    Rscript '$__tool_directory__/dccm.R' 
         '$dcdin' 
         '$pdbin' 
         '$output'

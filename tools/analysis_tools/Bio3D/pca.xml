@@ -1,63 +1,59 @@
-<tool id="bio3d_PCA_visualize" name="PCA visualization" version="0.1.2">
-    <description>Visualize principle components of motions</description>
+<tool id="bio3d_pca" name="PCA" version="@VERSION@">
+    <description>Principle component analysis using Bio3D</description>    
     <macros>
         <import>macros.xml</import>
-    </macros>
-    <expand macro="requirements">
-          <requirement type="package" version="1.16">r-ncdf4</requirement>
-    </expand>
+    </macros>   
+    <expand macro="requirements" />
     <command detect_errors="exit_code">
 <![CDATA[ 
-     Rscript '$__tool_directory__/bio3d_visualize_pc.R' 
+   Rscript '$__tool_directory__/pca.R'
         '$dcdin' 
         '$pdbin'
         '$method'
         #if $pca.sele == 'calpha':
-        "string"
-        "calpha"
+          "string"
+           "calpha"
         #end if
         #if $pca.sele == 'cbeta':
-        "string"
-         "cbeta"
+          "string"
+          '$pca.cbeta'
         #end if
         #if $pca.sele == 'backbone':
-        "string"
-        "backbone"
+          "string"
+          "backbone"
         #end if
         #if $pca.sele == 'sidechain':
-        "string"
-        "sidechain"
+          "string"
+          "sidechain"
         #end if
         #if $pca.sele == 'protein':
-        "string"
-        "protein"
+          "string"
+          "protein"
         #end if
         #if $pca.sele == 'ligand':
-        "string"
-        "ligand"
+          "string"
+          "ligand"
         #end if
         #if $pca.sele == 'nucleic':
-        "string"
-        "nucleic"
+          "string"
+          "nucleic"
         #end if
         #if $pca.sele == 'elety':
-        "elety"
-        '$pca.elety'
+          "elety"
+          '$pca.elety'
         #end if
         #if $pca.sele == 'resid':
-        "resid"
-        '$pca.resid'
+          "resid"
+          '$pca.resid'
         #end if
         #if $pca.sele == 'segid':
-        "segid"
-        '$pca.segid'
-        #end if  
-        '$pdb1'  
-        '$pc1' 
-        '$pdb2' 
-        '$pc2'
-        '$pdb3'
-        '$pc3'
+          "segid"
+          '$pca.segid'
+        #end if
+        '$output' 
+        '$pca_plot' 
+        '$pca_cluster' 
+        '$pc1_rmsf'
     2>&1
 ]]></command>
     <inputs>
@@ -103,12 +99,10 @@
         </conditional>
     </inputs>
     <outputs>
-        <data format="pdb" name="pdb1" label="PC1_PDB"/>
-        <data format="netcdf" name="pc1" label="PC1 motion"/>
-        <data format="pdb" name="pdb2" label="PC2_PDB"/>
-        <data format="netcdf" name="pc2" label="PC2 motion"/>
-        <data format="pdb" name="pdb3" label="PC3_PDB"/>
-        <data format="netcdf" name="pc3" label="PC3 motion"/>
+        <data format="csv" name="output" label="PCA raw data"/>
+        <data format="png" name="pca_plot" label="PCA plot"/>
+        <data format="png" name="pca_cluster" label="PCA Cluster Plot"/>
+        <data format="png" name="pc1_rmsf" label="PC1 on RMSF"/>
     </outputs>
     <tests>
         <test>
@@ -116,7 +110,7 @@
             <param name="pdbin" value="test.pdb"/>
             <param name="method" value="FALSE"/>
             <param name="sele" value="calpha"/>
-            <output name="pdb1" file='PC1_PDB.pdb' ftype="pdb" />
+            <output name="output" file='PCA_raw_data.csv' ftype="csv"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -124,8 +118,7 @@
 
 **What it does**
 
-This tool can generate small trajectories of first three principle components.
-The .pdb of the .nc files can be visualized using a visualization software such as VMD.
+PCA can be used to determine the relationship between statistically meaningful conformations (major global motions) sampled during the trajectory. 
 
 _____
 
@@ -144,8 +137,10 @@ _____
 
 **Output**
 
-       - .pdbs of the first thee PCAs.
-       - .ncs of the first thee PCAs.
+       - .png of the pca plot.
+       - .png of the pca clusterd plot.
+       - .png of the PC1 plotted on RMSF.
+       - .csv of raw data.
 
     ]]></help>
     <expand macro="citations" />
