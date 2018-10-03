@@ -1,0 +1,11 @@
+name: MDAnalysis
+owner: chemteam
+description: https://www.mdanalysis.org/
+homepage_url: ttp://thegrantlab.org/bio3d/index.php
+long_description: |
+  MDAnalysis is an object-oriented Python library to analyze trajectories from molecular dynamics (MD) simulations. It can write most of these formats, too, together with atom selections suitable for visualization or native analysis tools.
+  MDAnalysis allows one to read particle-based trajectories (including individual coordinate frames such as biomolecules in the PDB format) and access the atomic coordinates through NumPy arrays.
+remote_repository_url: https://github.com/MDAnalysis/mdanalysis
+type: unrestricted
+categories:
+- Trajectory analysis 
