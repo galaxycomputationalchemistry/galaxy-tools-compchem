@@ -56,7 +56,7 @@ pbc            = xyz
             <param name="top_input" value="topol.top" />
             <param name="water_model" value="spc216" />
             <output name="output1" file="solv_ions.gro" ftype="gro" compare="sim_size"/>
-            <output name="output2" file="topol2.top" ftype="top"/>
+            <output name="output2" file="topol_solv.top" ftype="top"/>
         </test>
     </tests>
     <help><![CDATA[

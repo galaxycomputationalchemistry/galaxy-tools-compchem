@@ -87,7 +87,7 @@
     <tests>
         <test>
             <param name="gro_input" value="solv_ions.gro" />
-            <param name="top_input" value="topol.top" />
+            <param name="top_input" value="topol_solv.top" />
             <param name="mdpfile" value="default" />
             <param name="integrator" value="steep" />
             <param name="cutoffscheme" value="Verlet" />
@@ -102,7 +102,7 @@
         </test>
         <test>
             <param name="gro_input" value="solv_ions.gro" />
-            <param name="top_input" value="topol.top" />
+            <param name="top_input" value="topol_solv.top" />
             <param name="mdpfile" value="custom" />
             <param name="mdp_input" value="minim.mdp" />
             <output name="output1" file="em.gro" ftype="gro" compare="sim_size"/>

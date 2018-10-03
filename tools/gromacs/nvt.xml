@@ -157,7 +157,7 @@
     <tests>
         <test>
             <param name="gro_input" value="em.gro" />
-            <param name="top_input" value="topol.top" />
+            <param name="top_input" value="topol_solv.top" />
             <param name="itp_input" value="posres.itp" />
             <param name="mdpfile" value="default" />
             <param name="step_length" value="0.002"/>
@@ -178,7 +178,7 @@
         </test>
         <test>
             <param name="gro_input" value="em.gro" />
-            <param name="top_input" value="topol.top" />
+            <param name="top_input" value="topol_solv.top" />
             <param name="itp_input" value="posres.itp" />
             <param name="mdpfile" value="default" />
             <param name="step_length" value="0.002"/>
@@ -198,7 +198,7 @@
         </test>
         <test>
             <param name="gro_input" value="em.gro" />
-            <param name="top_input" value="topol.top" />
+            <param name="top_input" value="topol_solv.top" />
             <param name="itp_input" value="posres.itp" />
             <param name="mdpfile" value="default" />
             <param name="step_length" value="0.002"/>
@@ -217,7 +217,7 @@
         </test>
         <test>
             <param name="gro_input" value="em.gro" />
-            <param name="top_input" value="topol.top" />
+            <param name="top_input" value="topol_solv.top" />
             <param name="itp_input" value="posres.itp" />
             <param name="mdpfile" value="custom" />
             <param name="mdp_input" value="nvt.mdp" />
