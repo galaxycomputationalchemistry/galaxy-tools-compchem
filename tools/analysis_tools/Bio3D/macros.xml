@@ -1,0 +1,12 @@
+<macros>
+    <xml name="requirements">
+        <requirements>
+            <requirement type="package" version="2.3_3">r-bio3d</requirement>
+        </requirements>
+    </xml>
+    <xml name="citations">
+        <citations>
+            <citation type="doi">10.1093/bioinformatics/btl461</citation>
+        </citations>
+    </xml>
+</macros>

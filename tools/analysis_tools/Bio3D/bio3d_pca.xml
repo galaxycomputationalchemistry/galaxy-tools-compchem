@@ -1,8 +1,9 @@
 <tool id="bio3d_PCA_analysis" name="PCA" version="2.3.3">
-    <description>Principle component analysis using Bio3D</description>
-    <requirements>
-          <requirement type="package" version="2.3_3">r-bio3d</requirement>
-    </requirements>
+    <description>Principle component analysis using Bio3D</description>    
+    <macros>
+        <import>macros.xml</import>
+    </macros>   
+    <expand macro="requirements" />
     <command detect_errors="exit_code">
 <![CDATA[ 
    Rscript '$__tool_directory__/bio3d_pca.R'  
@@ -140,8 +141,6 @@ _____
        - .png of the PC1 plotted on RMSF.
        - .csv of raw data.
     ]]></help>
-   <citations>
-      <citation type="doi">10.1093/bioinformatics/btl461</citation>
-    </citations>
+    <expand macro="citations" />
 </tool>
 

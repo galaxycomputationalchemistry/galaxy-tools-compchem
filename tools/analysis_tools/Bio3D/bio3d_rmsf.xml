@@ -1,8 +1,9 @@
 <tool id="bio3d_rmsf_analytics" name="RMSF Analysis" version="2.3.3">
     <description>rmsf using Bio3D</description>
-    <requirements>
-          <requirement type="package" version="2.3_3">r-bio3d</requirement>
-    </requirements>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
     <command detect_errors="exit_code">
 <![CDATA[ 
     Rscript '$__tool_directory__/bio3d_rmsf.R' 
@@ -162,8 +163,6 @@ _____
        - .png of the rmsf plot.
        - .csv of raw data.
     ]]></help>
-   <citations>
-      <citation type="doi">10.1093/bioinformatics/btl461</citation>
-    </citations>
+    <expand macro="citations" />
 </tool>
 

@@ -1,9 +1,11 @@
 <tool id="bio3d_PCA_visualize" name="PCA visualization" version="0.1.2">
     <description>Visualize principle components of motions</description>
-    <requirements>
-          <requirement type="package" version="2.3_3">r-bio3d</requirement>
-          <requirement type="package" version="1.15">r-ncdf4</requirement>
-    </requirements>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements">
+          <requirement type="package" version="1.16">r-ncdf4</requirement>
+    </expand>
     <command detect_errors="exit_code">
 <![CDATA[ 
      Rscript '$__tool_directory__/bio3d_visualize_pc.R' 
@@ -146,8 +148,6 @@ _____
        - .ncs of the first thee PCAs.
  
     ]]></help>
-   <citations>
-      <citation type="doi">10.1093/bioinformatics/btl461</citation>
-    </citations>
+    <expand macro="citations" />
 </tool>
 
