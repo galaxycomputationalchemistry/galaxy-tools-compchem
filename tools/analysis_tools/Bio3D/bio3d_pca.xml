@@ -9,43 +9,43 @@
         '$dcdin' 
         '$pdbin'
         '$method'
-        #if $pca.sele == "calpha":
+        #if $pca.sele == 'calpha':
           "string"
-          '$pca.calpha'
+           "calpha"
         #end if
-        #if $pca.sele == "cbeta":
+        #if $pca.sele == 'cbeta':
           "string"
           '$pca.cbeta'
         #end if
-        #if $pca.sele == "backbone":
+        #if $pca.sele == 'backbone':
           "string"
-          '$pca.backbone'
+          "backbone"
         #end if
-        #if $pca.sele == "sidechain":
+        #if $pca.sele == 'sidechain':
           "string"
-          '$pca.sidechain'
+          "sidechain"
         #end if
-        #if $pca.sele == "protein":
+        #if $pca.sele == 'protein':
           "string"
-          '$pca.protein'
+          "protein"
         #end if
-        #if $pca.sele == "ligand":
+        #if $pca.sele == 'ligand':
           "string"
-          '$pca.ligand'
+          "ligand"
         #end if
-        #if $pca.sele == "nucleic":
+        #if $pca.sele == 'nucleic':
           "string"
-          '$pca.nucleic'
+          "nucleic"
         #end if
-        #if $pca.sele == "elety":
+        #if $pca.sele == 'elety':
           "elety"
           '$pca.elety'
         #end if
-        #if $pca.sele == "resid":
+        #if $pca.sele == 'resid':
           "resid"
           '$pca.resid'
         #end if
-        #if $pca.sele == "segid":
+        #if $pca.sele == 'segid':
           "segid"
           '$pca.segid'
         #end if
@@ -73,25 +73,18 @@
              <option value="segid">Segid</option>
            </param>
            <when value="calpha">
-              <param name="calpha" type="text" value="calpha"/>
            </when>
            <when value="cbeta">
-             <param name="cbeta" type="text" value="cbeta"/>
            </when>
            <when value="backbone">
-             <param name="backbone" type="text" value="backbone"/>
            </when> 
            <when value="sidechain">
-             <param name="sidechain" type="text" value="sidechain"/>
            </when>
            <when value="protein">
-             <param name="protein" type="text"  value="protein"/>
            </when>
            <when value="ligand">
-             <param name="ligand" type="text" value="ligand"/>
            </when>
            <when value="nucleic">
-             <param name="nucleic" type="text" value="nucleic"/>
            </when>
           <when value="elety">
             <param name="elety"  type="text" value="CA" label="Atom Name"/>
