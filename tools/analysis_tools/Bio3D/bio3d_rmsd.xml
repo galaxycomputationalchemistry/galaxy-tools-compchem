@@ -8,45 +8,45 @@
      Rscript '$__tool_directory__/bio3d_rmsd.R' 
         '$dcdin'  
         '$pdbin'
-        #if $rmsd.sele == "calpha":
+        #if $rmsd.sele == 'calpha':
           "string"
-          '$rmsd.calpha'
+          "calpha"
         #end if
-        #if $rmsd.sele == "cbeta":
+        #if $rmsd.sele == 'cbeta':
           "string"
-          '$rmsd.cbeta'
+          "cbeta"
         #end if
-        #if $rmsd.sele == "backbone":
+        #if $rmsd.sele == 'backbone':
           "string"
-          '$rmsd.backbone'
+          "backbone"
         #end if
-        #if $rmsd.sele == "sidechain":
+        #if $rmsd.sele == 'sidechain':
           "string"
-          '$rmsd.sidechain'
+          "sidechain"
         #end if
-        #if $rmsd.sele == "protein":
+        #if $rmsd.sele == 'protein':
           "string"
-          '$rmsd.protein'
+          "protein"
         #end if
-        #if $rmsd.sele == "ligand":
+        #if $rmsd.sele == 'ligand':
           "string"
-          '$rmsd.ligand'
+          "ligand"
         #end if
-        #if $rmsd.sele == "nucleic":
+        #if $rmsd.sele == 'nucleic':
           "string"
-          '$rmsd.nucleic'
+          "nucleic"
         #end if
-        #if $rmsd.sele == "water":
+        #if $rmsd.sele == 'water':
           "string"
-          '$rmsd.water'
+          "water"
         #end if
-        #if $rmsd.sele == "hyd":
+        #if $rmsd.sele == 'hyd':
           "string"
-          '$rmsd.hyd'
+          "hyd"
         #end if
-        #if $rmsd.sele == "noh":
+        #if $rmsd.sele == 'noh':
           "string"
-          '$rmsd.noh'
+          "noh"
         #end if
         #if $rmsd.sele == "loop":
           "resno"
@@ -91,38 +91,28 @@
              <option value="segid">Segid</option>
            </param>
            <when value="calpha">
-              <param name="calpha" type="text" value="calpha"/>
            </when>
            <when value="cbeta">
-             <param name="cbeta" type="text" value="cbeta"/>
            </when>
            <when value="backbone">
-             <param name="backbone" type="text" value="backbone"/>
            </when> 
            <when value="sidechain">
-             <param name="sidechain" type="text" value="sidechain"/>
            </when>
            <when value="protein">
-             <param name="protein" type="text"  value="protein"/>
            </when>
            <when value="ligand">
-             <param name="ligand" type="text" value="ligand"/>
            </when>
            <when value="nucleic">
-             <param name="nucleic" type="text" value="nucleic"/>
            </when>
            <when value="loop">
              <param name="res1"  type="text" label="Resid of the loop starting residue"/>
              <param name="res2"  type="text" label="Resid of the loop ending residue"/>
            </when>
            <when value="water">
-              <param name="water" type="text" value="water"/>
            </when>
            <when value="hyd">
-            <param name="hyd" type="text"  value="h"/>
           </when>
           <when value="noh">
-            <param name="noh" type="text" value="noh"/>
           </when> 
           <when value="elety">
             <param name="elety"  type="text" value="CA" label="Atom Name"/>

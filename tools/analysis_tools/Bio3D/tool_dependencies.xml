@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<tool_dependency>
+    <package name="r-bio3d" version="2.3_3">
+        <repository name="package_r-bio3d_2_3_3" owner="r" prior_installation_required="True" />
+    </package>
+    <package name="r-lattice" version="0.20_35">
+        <repository name="package_r-lattice_2_3_3" owner="r" prior_installation_required="True" />
+    </package>
+    <package name="r-ncdf4" version="1.16">
+        <repository name="package_r-ncdf4_1_16" owner="conda-forge" prior_installation_required="True" />
+    </package>
+</tool_dependency>

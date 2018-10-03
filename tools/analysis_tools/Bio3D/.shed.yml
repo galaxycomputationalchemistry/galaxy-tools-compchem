@@ -1,0 +1,11 @@
+name: bio3d
+owner: tsenapathi
+description: Bio3d is a program that can be used to analyse molecular dynamics trajectories.
+homepage_url: http://bioinf.uni-greifswald.de/augustus/
+long_description: |
+  Bio3D is an R package containing utilities for the analysis of protein structure, sequence and trajectory data.
+  http://thegrantlab.org/bio3d/index.php
+remote_repository_url: https://github.com/Grantlab/bio3d.git
+type: unrestricted
+categories:
+- Trajectory analysis 
