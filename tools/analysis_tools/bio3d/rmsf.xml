@@ -105,8 +105,8 @@
            <when value="nucleic">
            </when>
            <when value="loop">
-             <param name="res1"  type="text" label="Resid of the loop starting residue"/>
-             <param name="res2"  type="text" label="Resid of the loop ending residue"/>
+             <param name="res1" type="text" label="Resid of the loop starting residue"/>
+             <param name="res2" type="text" label="Resid of the loop ending residue"/>
            </when>
            <when value="water">
            </when>
@@ -163,7 +163,6 @@ _____
 
        - .png of the rmsf plot.
        - .csv of raw data.
-
 
 
     ]]></help>

@@ -12,49 +12,49 @@
         '$dcdin' 
         '$pdbin'
         '$method'
-        #if $pca.sele == 'calpha':
-        "string"
-        "calpha"
+        #if $pca.pca_select == 'calpha':
+            "string"
+            "calpha"
         #end if
-        #if $pca.sele == 'cbeta':
-        "string"
-         "cbeta"
+        #if $pca.pca_select == 'cbeta':
+            "string"
+            "cbeta"
         #end if
-        #if $pca.sele == 'backbone':
-        "string"
-        "backbone"
+        #if $pca.pca_select == 'backbone':
+            "string"
+            "backbone"
         #end if
-        #if $pca.sele == 'sidechain':
-        "string"
-        "sidechain"
+        #if $pca.pca_select == 'sidechain':
+            "string"
+            "sidechain"
         #end if
-        #if $pca.sele == 'protein':
-        "string"
-        "protein"
+        #if $pca.pca_select == 'protein':
+            "string"
+            "protein"
         #end if
-        #if $pca.sele == 'ligand':
-        "string"
-        "ligand"
+        #if $pca.pca_select == 'ligand':
+            "string"
+            "ligand"
         #end if
-        #if $pca.sele == 'nucleic':
-        "string"
-        "nucleic"
+        #if $pca.pca_select == 'nucleic':
+            "string"
+            "nucleic"
         #end if
-        #if $pca.sele == 'elety':
-        "elety"
-        '$pca.elety'
+        #if $pca.pca_select == 'elety':
+            "elety"
+            '$pca.elety'
         #end if
-        #if $pca.sele == 'resid':
-        "resid"
-        '$pca.resid'
+        #if $pca.pca_select == 'resid':
+            "resid"
+            '$pca.resid'
         #end if
-        #if $pca.sele == 'segid':
-        "segid"
-        '$pca.segid'
-        #end if  
-        '$pdb1'  
-        '$pc1' 
-        '$pdb2' 
+        #if $pca.pca_select == 'segid':
+            "segid"
+            '$pca.segid'
+        #end if
+        '$pdb1'
+        '$pc1'
+        '$pdb2'
         '$pc2'
         '$pdb3'
         '$pc3'
@@ -63,9 +63,10 @@
     <inputs>
         <param format="dcd" name="dcdin" type="data" label="dcd trajectory input"/>
         <param format="pdb" name="pdbin" type="data" label="pdb input"/>
-        <param name="method" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="false" label="Use singular value decomposition (SVD) instead of default eigenvalue decomposition ?" help="Default: No" />
+        <param name="method" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="false"
+            label="Use singular value decomposition (SVD) instead of default eigenvalue decomposition ?" help="Default: No" />
         <conditional name="pca">
-           <param name="sele" type="select" label="Select domains">
+           <param name="pca_select" type="select" label="Select domains">
              <option value="calpha">Calpha</option>
              <option value="cbeta">Cbeta</option>
              <option value="backbone">Backbone</option>
@@ -92,13 +93,13 @@
            <when value="nucleic">
            </when>
           <when value="elety">
-            <param name="elety"  type="text" value="CA" label="Atom Name"/>
+            <param name="elety" type="text" value="CA" label="Atom Name"/>
           </when>
           <when value="resid">
-            <param name="resid"  type="text" value="BGLC" label="Resid"/>
+            <param name="resid" type="text" value="BGLC" label="Resid"/>
           </when>
           <when value="segid">
-            <param name="segid"  type="text" value="SUBS" label="Segid"/>
+            <param name="segid" type="text" value="SUBS" label="Segid"/>
           </when>
         </conditional>
     </inputs>
