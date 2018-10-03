@@ -1,0 +1,15 @@
+name: gromacs
+description: "GROMACS is a package for performing molecular dynamics, primarily designed for biochemical molecules such as proteins, lipids and nucleic acids."
+homepage_url: https://github.com/gromacs
+long_description: |
+    GROMACS is a versatile package to perform molecular dynamics, i.e. simulate the Newtonian equations of motion for systems with hundreds to millions of particles.
+    It is primarily designed for biochemical molecules like proteins, lipids and nucleic acids that have a lot of complicated bonded interactions, but since GROMACS is extremely fast at calculating the nonbonded interactions (that usually dominate simulations) many groups are also using it for research on non-biological systems, e.g. polymers.
+    GROMACS supports all the usual algorithms you expect from a modern molecular dynamics implementation (check the online reference or manual for details).
+remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/tools/gromacs
+type: unrestricted
+categories:
+- Molecular Dynamics
+- Computational Chemistry
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the gromacs package: {{ tool_name }}"

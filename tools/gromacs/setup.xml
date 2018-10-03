@@ -75,7 +75,7 @@
             <param name="ignore_h" value="no" />
             <param name="box_d" value="1.0" />
             <param name="box_type" value="cubic" />
-            <output name="output1" file="topol.top" ftype="top" compare="diff" lines_diff="10"/>
+            <output name="output1" file="topol.top" ftype="top" compare="diff" lines_diff="20"/>
             <output name="output2" file="newbox.gro" ftype="gro"/>
             <output name="output3" file="posres.itp" ftype="itp"/>
         </test>

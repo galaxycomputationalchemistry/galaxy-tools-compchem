@@ -4,11 +4,11 @@ integrator	= md		; leap-frog integrator
 nsteps		= 500	; 2 * 500000 = 1000 ps (1 ns)
 dt		    = 0.002		; 2 fs
 ; Output control
-nstxout		        = 5000		; save coordinates every 10.0 ps
-nstvout		        = 5000		; save velocities every 10.0 ps
-nstenergy	        = 5000		; save energies every 10.0 ps
-nstlog		        = 5000		; update log file every 10.0 ps
-nstxout-compressed  = 5000      ; save compressed coordinates every 10.0 ps
+nstxout		        = 50		; save coordinates every 10.0 ps
+nstvout		        = 50		; save velocities every 10.0 ps
+nstenergy	        = 50		; save energies every 10.0 ps
+nstlog		        = 50		; update log file every 10.0 ps
+nstxout-compressed  = 50      ; save compressed coordinates every 10.0 ps
                                 ; nstxout-compressed replaces nstxtcout
 compressed-x-grps   = System    ; replaces xtc-grps
 ; Bond parameters

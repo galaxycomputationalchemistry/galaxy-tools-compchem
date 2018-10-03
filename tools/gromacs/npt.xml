@@ -1,4 +1,4 @@
-<tool id="protein" name="NPT." version="0.1.0">
+<tool id="gmx_npt" name="NPT." version="0.1.0">
     <macros>
         <import>macros.xml</import>
     </macros>
@@ -160,7 +160,7 @@
             <param name="top_input" value="topol_solv.top" />
             <param name="cpt_input" value="nvt.cpt" />
             <param name="itp_input" value="posres.itp" />
-            <param name="mdp.mdpfile" value="custom" />
+            <param name="mdpfile" value="custom" />
             <param name="mdp_input" value="npt.mdp" />
             <param name="traj" value="none"/>
             <param name="str" value="gro"/>

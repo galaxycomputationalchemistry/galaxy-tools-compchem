@@ -1,4 +1,4 @@
-<tool id="protein" name="MD production simulation." version="0.1.0">
+<tool id="gmx_md" name="MD production simulation." version="0.1.0">
     <macros>
         <import>macros.xml</import>
     </macros>
