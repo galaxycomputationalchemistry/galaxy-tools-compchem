@@ -113,8 +113,8 @@
     </outputs>
     <tests>
         <test>
-            <param name="dcdin" value="test.dcd"/>
-            <param name="pdbin" value="test.pdb"/>
+            <param name="dcdin" value="test.dcd" ftype="dcd" />
+            <param name="pdbin" value="test.pdb" ftype="pdb"/>
             <param name="method" value="FALSE"/>
             <param name="sele" value="calpha"/>
             <output name="pdb1" file='PC1_PDB.pdb' ftype="pdb" />

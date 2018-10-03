@@ -133,8 +133,8 @@
     </outputs>
     <tests>
         <test>
-            <param name="dcdin" value="test.dcd"/>
-            <param name="pdbin" value="test.pdb"/>
+            <param name="dcdin" value="test.dcd" ftype="dcd"/>
+            <param name="pdbin" value="test.pdb" ftype="pdb"/>
             <param name="sele" value="calpha"/>
             <output name="output" file='RMSD_raw_data.csv' ftype="csv" compare="sim_size"/>
         </test>

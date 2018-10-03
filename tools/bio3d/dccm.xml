@@ -25,8 +25,8 @@
     </outputs>
     <tests>
         <test>
-            <param name="dcdin" value="test.dcd"/>
-            <param name="pdbin" value="test.pdb"/>
+            <param name="dcdin" value="test.dcd" ftype="dcd"/>
+            <param name="pdbin" value="test.pdb" ftype="pdb"/>
             <output name="output" file='DCCM_raw_data.csv' ftype="csv"/>
         </test>
     </tests>
