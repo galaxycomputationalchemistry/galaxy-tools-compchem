@@ -6,6 +6,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import argparse
+import MDAnalysis
 import numpy.linalg
 
 def parse_command_line(argv):
