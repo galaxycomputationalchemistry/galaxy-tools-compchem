@@ -5,9 +5,6 @@
 The start of something exciting (!) computational chemistry tools in Galaxy. 
 
 Where are the tools? Not yet on the master branch. 
-
-See the branch 'dev/cb/tools/alpha'
-
 At present please see the development branches or a forked development repository e.g. 
  *  [Chris MD tools](https://github.com/chrisbarnettster/galaxy-tools-compchem)
 
