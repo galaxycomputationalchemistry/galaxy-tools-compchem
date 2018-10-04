@@ -3,9 +3,7 @@
     <macros>
         <import>macros.xml</import>
     </macros>
-
     <expand macro="requirements" />
-
     <command detect_errors="exit_code"><![CDATA[
         #if $mdp.mdpfile == "custom":
             ln -s '$mdp.mdp_input' ./md.mdp &&
