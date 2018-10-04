@@ -1,4 +1,4 @@
-<tool id="mda_distance_analysis" name="Distance Analysis" version="0.18">
+<tool id="distance" name="Distance Analysis" version="@VERSION@">
     <description>Time series using MDAnalysis</description>
     <macros>
         <import>macros.xml</import>

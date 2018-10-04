@@ -1,4 +1,4 @@
-<tool id="mda_dihedral_analysis" name="Dihedral Analysis" version="@VERSION@">
+<tool id="dihedral" name="Dihedral Analysis" version="@VERSION@">
     <description>Time series of dihedrals</description>
     <macros>
         <import>macros.xml</import>

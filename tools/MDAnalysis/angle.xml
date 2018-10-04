@@ -1,4 +1,4 @@
-<tool id="mda_angle_analysis" name="Angle Analysis" version="@VERSION@">
+<tool id="angle" name="Angle Analysis" version="@VERSION@">
     <description>Time series of Angles</description>
     <macros>
         <import>macros.xml</import>

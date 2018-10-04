@@ -1,4 +1,4 @@
-<tool id="mda_RDF_analysis" name="RDF Analysis" version="@VERSION@">
+<tool id="rdf" name="RDF Analysis" version="@VERSION@">
     <description>Radial Distribution Function between two atoms</description>
     <macros>
         <import>macros.xml</import>
