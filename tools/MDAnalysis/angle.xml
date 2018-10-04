@@ -1,4 +1,4 @@
-<tool id="angle" name="Angle Analysis" version="@VERSION@">
+<tool id="mdanalysis_angle" name="Angle Analysis" version="@VERSION@">
     <description>Time series of Angles</description>
     <macros>
         <import>macros.xml</import>
@@ -7,18 +7,18 @@
     <command detect_errors="exit_code">
 <![CDATA[
     python '$__tool_directory__/md_analysis_angle.py' 
-        --idcd '$dcdin' 
-        --ipdb '$pdbin' 
-        --isegid1 '$segid1' 
-        --iresid1 '$resid1' 
-        --iname1 '$name1' 
-        --isegid2 '$segid2' 
-        --iresid2 '$resid2' 
-        --iname2 '$name2' 
-        --isegid3 '$segid3' 
-        --iresid3 '$resid3' 
-        --iname3 '$name3' 
-        --output '$output' 
+        --idcd '$dcdin'
+        --ipdb '$pdbin'
+        --isegid1 '$segid1'
+        --iresid1 '$resid1'
+        --iname1 '$name1'
+        --isegid2 '$segid2'
+        --iresid2 '$resid2'
+        --iname2 '$name2'
+        --isegid3 '$segid3'
+        --iresid3 '$resid3'
+        --iname3 '$name3'
+        --output '$output'
         --oangle_plot '$angle_plot'
     2>&1
 ]]></command>
@@ -85,8 +85,6 @@ _____
 
 
     ]]></help>
-    <citations>
-      <citation type="doi">10.1002/jcc.21787</citation>
-    </citations>
+    <expand macro="citations" />
 </tool>
 

@@ -1,4 +1,4 @@
-<tool id="dihedral" name="Dihedral Analysis" version="@VERSION@">
+<tool id="mdanalysis_dihedral" name="Dihedral Analysis" version="@VERSION@">
     <description>Time series of dihedrals</description>
     <macros>
         <import>macros.xml</import>
@@ -94,8 +94,6 @@ _____
 
 
     ]]></help>
-    <citations>
-      <citation type="doi">10.1002/jcc.21787</citation>
-    </citations>
+    <expand macro="citations" />
 </tool>
 

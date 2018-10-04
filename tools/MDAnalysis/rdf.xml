@@ -1,4 +1,4 @@
-<tool id="rdf" name="RDF Analysis" version="@VERSION@">
+<tool id="mdanalysis_rdf" name="RDF Analysis" version="@VERSION@">
     <description>Radial Distribution Function between two atoms</description>
     <macros>
         <import>macros.xml</import>
@@ -84,7 +84,5 @@ _____
        - .png of the RDF plot.
 
     ]]></help>
-    <citations>
-      <citation type="doi">10.1002/jcc.21787</citation>
-    </citations>
+    <expand macro="citations" />
 </tool>
