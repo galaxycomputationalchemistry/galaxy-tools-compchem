@@ -3,9 +3,11 @@
 import argparse
 import sys
 
+import MDAnalysis as mda
+
 import matplotlib
 import matplotlib.pyplot as plt
-import MDAnalysis as mda
+
 import numpy as np
 
 matplotlib.use('Agg')
