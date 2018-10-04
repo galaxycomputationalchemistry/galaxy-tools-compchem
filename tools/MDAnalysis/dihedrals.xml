@@ -1,25 +1,28 @@
-<tool id="mda_angle_analysis" name="Angle Analysis" version="@VERSION@">
-    <description>Time series of Angles</description>
+<tool id="mda_dihedral_analysis" name="Dihedral Analysis" version="@VERSION@">
+    <description>Time series of dihedrals</description>
     <macros>
         <import>macros.xml</import>
     </macros>   
     <expand macro="requirements" />
     <command detect_errors="exit_code">
 <![CDATA[
-    python '$__tool_directory__/md_analysis_angle.py' 
+    python '$__tool_directory__/dihedrals.py'
         --idcd '$dcdin' 
         --ipdb '$pdbin' 
         --isegid1 '$segid1' 
         --iresid1 '$resid1' 
         --iname1 '$name1' 
         --isegid2 '$segid2' 
-        --iresid2 '$resid2' 
+        --iresid2 '$resid2'
         --iname2 '$name2' 
         --isegid3 '$segid3' 
-        --iresid3 '$resid3' 
+        --iresid3 '$resid3'
         --iname3 '$name3' 
-        --output '$output' 
-        --oangle_plot '$angle_plot'
+        --isegid4 '$segid4' 
+        --iresid4 '$resid4' 
+        --iname4 '$name4'
+        --output '$output'  
+        --odihedral_plot '$dihedral_plot'
     2>&1
 ]]></command>
     <inputs>
@@ -34,10 +37,13 @@
         <param name="segid3"  type="text" value="HET" label="Segid of atom 3"/>
         <param name="resid3"  type="text" value="3" label="Resid of atom 3"/>
         <param name="name3"  type="text" value="C2" label="Atom name of atom 3"/>
+        <param name="segid4"  type="text" value="HET" label="Segid of atom 4"/>
+        <param name="resid4"  type="text" value="3" label="Resid of atom 4"/>
+        <param name="name4"  type="text" value="C3" label="Atom name of atom 4"/>
     </inputs>
     <outputs>
-        <data format="csv" name="output" label="Angle Analysis raw data"/>
-        <data format="png" name="angle_plot" label="Angle Analysis Plot"/>
+        <data format="csv" name="output" label="Dihedral analysis raw data"/>
+        <data format="png" name="dihedral_plot" label="Dihedral Analysis Plot"/>
     </outputs>
     <tests>
         <test>
@@ -52,7 +58,10 @@
             <param name="segid3" value="HET"/>
             <param name="resid3" value="3"/>
             <param name="name3" value="C2"/>
-            <output name="angle_plot" file='Angle_Analysis_Plot.png' ftype="png" />
+            <param name="segid3" value="HET"/>
+            <param name="resid3" value="3"/>
+            <param name="name3" value="C3"/>
+            <output name="dihedral_plot" file='Dihedral_Analysis_Plot.png' ftype="png"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -60,7 +69,7 @@
 
 **What it does**
         
-This tool calculates and plot angle between three atoms.
+This tool calculates and plots dihedral angles (angle between two intersecting planes) between four atoms.
 
 _____
 
@@ -71,7 +80,7 @@ _____
 
        - Trajectory file  (DCD).
        - PDB file.
-       - Segids, resids and names of the three atoms to calculate angles.
+       - Segids, resids and names of the four atoms to calculate dihedral angle.
      
 _____
 
@@ -80,7 +89,7 @@ _____
 
 **Output**
 
-       - .csv file of raw data of angle between three atoms calculated for each frame.
+       - .csv file of raw data of the dihedral angle between two intersecting planes calculated for each frame.
        - .png of the time series graph.
 
 
