@@ -57,8 +57,6 @@ u = mda.Universe(args.ipdb, args.idcd, topology_format="PDB", format="DCD")
 data = np.array([(u.trajectory.frame, theta(u)) for ts in u.trajectory])
 frame, theta = data.T
 
-zip(frame, theta)
-
 with open(args.output, 'w') as f:
     writer = csv.writer(f, delimiter='\t')
     writer.writerows(zip(frame, theta))
