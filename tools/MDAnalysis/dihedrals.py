@@ -11,7 +11,6 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 import numpy as np
-from numpy.linalg import norm
 
 matplotlib.use('Agg')
 
@@ -25,7 +24,7 @@ def parse_command_line(argv):
     parser.add_argument('--iname1', help='name 1')
     parser.add_argument('--isegid2', help='segid 2')
     parser.add_argument('--iresid2', help='resid 2')
-    parser.add_argument('--iname2', help='name 2') 
+    parser.add_argument('--iname2', help='name 2')
     parser.add_argument('--isegid3', help='segid 3')
     parser.add_argument('--iresid3', help='resid 3')
     parser.add_argument('--iname3', help='name 3')
@@ -47,6 +46,7 @@ atom3 = "(segid %s and resid %s and name %s)" % \
     (args.isegid3, args.iresid3, args.iname3)
 atom4 = "(segid %s and resid %s and name %s)" % \
     (args.isegid4, args.iresid4, args.iname4)
+
 
 def psi(u):
     A = u.select_atoms(atom1).positions
