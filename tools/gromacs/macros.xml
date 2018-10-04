@@ -10,8 +10,6 @@
             <citation type="doi">10.1016/j.softx.2015.06.001</citation>
         </citations>
     </xml>
-    
-    
     <xml name="md_inputs">
         <conditional name="mdp">
             <param name="mdpfile" type="select" label="Parameter input">
