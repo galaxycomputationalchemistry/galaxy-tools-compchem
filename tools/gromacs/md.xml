@@ -1,5 +1,5 @@
-<tool id="gmx_md" name="MD production simulation" version="@VERSION@">
-    <description></description>
+<tool id="gmx_md" name="GROMACS production simulation" version="@VERSION@">
+    <description>for data collection</description>
     <macros>
         <import>macros.xml</import>
     </macros>

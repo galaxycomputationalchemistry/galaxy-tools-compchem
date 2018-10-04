@@ -1,5 +1,5 @@
-<tool id="gmx_npt" name="Gromacs NPT" version="@VERSION@">
-    <description></description>
+<tool id="gmx_npt" name="GROMACS NPT equilibration" version="@VERSION@">
+    <description>- constant-temperature and -pressure equilibration of a system</description>
     <macros>
         <import>macros.xml</import>
     </macros>

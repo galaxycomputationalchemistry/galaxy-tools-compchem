@@ -1,5 +1,5 @@
-<tool id="gmx_em" name="Energy minimization" version="@VERSION@">
-    <description></description>
+<tool id="gmx_em" name="GROMACS energy minimization" version="@VERSION@">
+    <description>of the system prior to equilibration and production MD</description>
     <macros>
         <import>macros.xml</import>
     </macros>

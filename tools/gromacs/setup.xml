@@ -1,4 +1,4 @@
-<tool id="gmx_setup" name="Gromacs initial setup" version="@VERSION@">
+<tool id="gmx_setup" name="GROMACS initial setup" version="@VERSION@">
     <description>of topology and GRO structure file</description>
     <macros>
         <import>macros.xml</import>

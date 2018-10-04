@@ -1,5 +1,5 @@
-<tool id="gmx_nvt" name="NVT." version="@VERSION@">
-    <description></description>
+<tool id="gmx_nvt" name="GROMACS NVT equilibration" version="@VERSION@">
+    <description>- constant-temperature and -volume equilibration of a system</description>
     <macros>
         <import>macros.xml</import>
     </macros>

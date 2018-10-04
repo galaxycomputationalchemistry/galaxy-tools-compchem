@@ -1,5 +1,5 @@
-<tool id="gmx_solvate" name="Add solvent (water) and ions" version="@VERSION@">
-    <description></description>
+<tool id="gmx_solvate" name="GROMACS solvation and adding ions" version="@VERSION@">
+    <description>to structure and topology files</description>
     <macros>
         <import>macros.xml</import>
     </macros>
