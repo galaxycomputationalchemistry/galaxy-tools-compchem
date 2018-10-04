@@ -1,14 +1,12 @@
-<tool id="galaxy_packmol" name="Galaxy Packmol" version="0.1">
+<tool id="packmol" name="Packmol" version="1.18.013">
     <description>Initial configurations for Molecular Dynamics Simulations by packing optimization</description>
     <macros>
-        <import>macros.xml</import>
         <import>macros_packmol.xml</import>
     </macros>
     <requirements>
       <requirement type="package" version="1!18.013">packmol</requirement>
     </requirements>
-    <expand macro="stdio" />
-    <command>
+    <command detect_errors="exit_code">
         <![CDATA[
         python "$packmol_script" '$inputs' 
         ]]>
@@ -27,19 +25,19 @@ params = json.load(open(input_json_path, "r"))
 # get the inputs
 input_iter = []
 #for $i, $s in enumerate( $packmol_format.packmol_inputs )
-pmfile_index=$i 
-pmfile_path="${s.input.file_name}"
+pmfile_index = $i 
+pmfile_path = "${s.input.file_name}"
 input_iter.append(pmfile_path)
-params["packmol_format"]["packmol_inputs"][pmfile_index]["file"]=pmfile_path
-params["packmol_format"]["packmol_inputs"][pmfile_index]["datasetname"]="${s.input.name}"
+params["packmol_format"]["packmol_inputs"][pmfile_index]["file"] = pmfile_path
+params["packmol_format"]["packmol_inputs"][pmfile_index]["datasetname"] = "${s.input.name}"
 #end for        
 
-params["outfile"]="$outfile" 
+params["outfile"] = "$outfile" 
 
 import os
 from jinja2 import Environment, FileSystemLoader
 
-currentpath="/scratch/cbarnett/planemo/docker-version/packmol"
+currentpath = "$__tool_directory__"  # should work generally
 template_environment = Environment(loader=FileSystemLoader(currentpath),lstrip_blocks=True, trim_blocks=True)
 template = template_environment.get_template('template.j2')
 print(params)
@@ -111,8 +109,14 @@ os.system("packmol < "+"$parameteroutfile")
             <param name="packmol_inputs_1|input" value="urea.pdb" ftype="pdb"/>
             <param name="packmol_inputs_0|structureparams|number" value="1000"/>
             <param name="packmol_inputs_1|structureparams|number" value="400"/>
-            <param name="packmol_inputs_0|structureparams|constraints_repeat0|constraints0|constraint" value="box"/>
-            <param name="packmol_inputs_1|structureparams|constraints_repeat0|constraint" value="box"/>
+            <param name="packmol_inputs_0|structureparams|constraints_repeat_0|constraints|constraint" value="box"/>
+            <param name="packmol_inputs_0|structureparams|constraints_repeat_0|constraints|xmax" value="40.0"/>
+            <param name="packmol_inputs_0|structureparams|constraints_repeat_0|constraints|ymax" value="40.0"/>
+            <param name="packmol_inputs_0|structureparams|constraints_repeat_0|constraints|zmax" value="40.0"/>
+            <param name="packmol_inputs_1|structureparams|constraints_repeat_0|constraints|constraint" value="box"/>
+            <param name="packmol_inputs_1|structureparams|constraints_repeat_0|constraints|xmax" value="40.0"/>
+            <param name="packmol_inputs_1|structureparams|constraints_repeat_0|constraints|ymax" value="40.0"/>
+            <param name="packmol_inputs_1|structureparams|constraints_repeat_0|constraints|zmax" value="40.0"/>
             <param name="allparams.seed" value="-1"/>
             <output name="outfile" file="packmol_outfile2.pdb" compare="sim_size" delta="100000">
              <assert_contents>
@@ -125,16 +129,20 @@ os.system("packmol < "+"$parameteroutfile")
     </tests>
     <help>
         <![CDATA[
+.. class:: infomark
+
 **What it does**
 
-Packmol creates initial MD configurations from input molecules.
+Packmol creates initial MD configurations from input molecules. For example, create a water and urea mixture.
+
+.. class:: infomark
 
 **How it works**
 
 - Select a molecule file type e.g. pdb,xyz
 - Select single molecule from your history (can select multiple)
 - For each molecule:
-   - choose how many to create (number variable)
+   - choose how many molecules to create (number variable)
    - optionally choose:
        - molecular radius
        - how to number the molecules (resnumber variable)
@@ -142,14 +150,25 @@ Packmol creates initial MD configurations from input molecules.
        - for example, specify placement inside a cube of size 40 Angstroms placed at the origin
        - all units are in Angstroms for distances and degrees for angles
 
+.. class:: infomark
+
+**Outputs created**
+
+- A pdb file, view this in Galaxy by clicking on visualise and choosing a viewer. The NGLViewer works well for small molecules.
+- A packmol input script (for debugging and repeatability)
+
+.. class:: infomark
+
 **User guide and documentation**
 
 - Packmol `userguide`_
 - Calculating the number of molecules using the `volume guesser`_
 
+.. class:: infomark
+
 **Features not included**
 
-- xyz,tinker,moldy datatypes
+- xyz,tinker,moldy datatypes are not installed by default.
 - more than 3 multiple constraints per structure
 - atom constraints per structure
 - constrain rotations
@@ -160,6 +179,8 @@ Packmol creates initial MD configurations from input molecules.
 - additional input options and keywords e.g. add_amber_ter, seed
 - nloop,maxit is general, not included per structure
 
+.. class:: infomark
+
 **Known issues**
 
 - fixed constraint only allows 1 atom but this is not set for the user. user has to set this. Job may fail.
@@ -169,4 +190,7 @@ Packmol creates initial MD configurations from input molecules.
 
         ]]>
     </help>
+     <citations>
+       <citation type="doi">10.1002/jcc.21224</citation>
+     </citations> 
 </tool>
