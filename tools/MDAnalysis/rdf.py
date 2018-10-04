@@ -41,16 +41,16 @@ atom2 = "(segid %s and resid %s and name %s)" % \
     (args.isegid2, args.iresid2, args.iname2)
 bins = int(args.inbins)
 start = float(args.istart)
-end   = float(args.iend)
+end = float(args.iend)
 
 u = mda.Universe(args.ipdb, args.idcd, topology_format="PDB", format="DCD")
 x = u.select_atoms(atom1)
 y = u.select_atoms(atom2)
 
-rdf = InterRDF(x, y, nbins = bins, range = (start, end))
+rdf = InterRDF(x, y, nbins=bins, range=(start, end))
 rdf.run()
 bins = rdf.bins
-bins = np.around(bins , decimals = 3)
+bins = np.around(bins, decimals=3)
 RDF = rdf.rdf
 zip(bins, RDF)
 
@@ -62,7 +62,7 @@ with open(args.output) as f:
     g = [xtmp.strip() for xtmp in f]
     data = [tuple(map(float, xtmp.split())) for xtmp in g[0:]]
     time = [xtmp[0] for xtmp in data]
-    rdf=[x[1] for xtmp in data]
+    rdf = [x[1] for xtmp in data]
     plt.plot(time, rdf)
     plt.xlabel('r ($\AA$)')
     plt.ylabel('g(r)')
