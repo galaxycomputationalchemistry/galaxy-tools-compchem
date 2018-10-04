@@ -52,26 +52,22 @@ def theta(u):
     return np.rad2deg(theta)
 
 
-if __name__ == "__main__":
+u = mda.Universe(args.ipdb, args.idcd, topology_format="PDB", format="DCD")
+data = np.array([(u.trajectory.frame, theta(u)) for ts in u.trajectory])
+frame, theta = data.T
 
+zip(frame, theta)
 
-    u = mda.Universe(args.ipdb, args.idcd, \
-        topology_format="PDB", format="DCD")
-    data = np.array([(u.trajectory.frame, theta(u)) for ts in u.trajectory])
-    frame, theta = data.T
+with open(args.output, 'w') as f:
+    writer = csv.writer(f, delimiter = '\t')
+    writer.writerows(zip(frame, theta))
 
-    zip(frame, theta)
-
-    with open(args.output, 'w') as f:
-        writer = csv.writer(f, delimiter = '\t')
-        writer.writerows(zip(frame, theta))
-
-    with open(args.output) as f:
-        g = [xtmp.strip() for xtmp in f]
-        data = [tuple(map(float,xtmp.split())) for xtmp in g[0:]]
-        time = [xtmp[0] for xtmp in data]
-        angle = [xtmp[1] for xtmp in data]
-        plt.plot(time, angle)
-        plt.xlabel('Frame No.')
-        plt.ylabel('Angle (degrees)')
-        plt.savefig(args.oangle_plot, format='png')   
+with open(args.output) as f:
+    g = [xtmp.strip() for xtmp in f]
+    data = [tuple(map(float,xtmp.split())) for xtmp in g[0:]]
+    time = [xtmp[0] for xtmp in data]
+    angle = [xtmp[1] for xtmp in data]
+    plt.plot(time, angle)
+    plt.xlabel('Frame No.')
+    plt.ylabel('Angle (degrees)')
+    plt.savefig(args.oangle_plot, format='png')   
