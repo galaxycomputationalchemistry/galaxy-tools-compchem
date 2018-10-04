@@ -1,4 +1,5 @@
 <macros>
+    <token name="@VERSION@">0.18</token>
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="0.18.0">mdanalysis</requirement>

@@ -1,22 +1,25 @@
-<tool id="mda_distance_analysis" name="Distance Analysis" version="0.1.2">
-    <description>Time series using MDAnalysis</description>
+<tool id="mda_angle_analysis" name="Angle Analysis" version="0.1.2">
+    <description>Time series of Angles</description>
     <macros>
         <import>macros.xml</import>
     </macros>   
     <expand macro="requirements" />
     <command detect_errors="exit_code">
 <![CDATA[
-     python '$__tool_directory__/distance.py' 
+    python '$__tool_directory__md_analysis_angle.py' 
         --idcd '$dcdin' 
-        --ipdb '$pdbin'
+        --ipdb '$pdbin' 
         --isegid1 '$segid1' 
         --iresid1 '$resid1' 
-        --iname1 '$name1'
-        --isegid2 '$segid2'
+        --iname1 '$name1' 
+        --isegid2 '$segid2' 
         --iresid2 '$resid2' 
-        --iname2 '$name2'
-        --output '$output'
-        --odistance_plot '$distance_plot'
+        --iname2 '$name2' 
+        --isegid3 '$segid3' 
+        --iresid3 '$resid3' 
+        --iname3 '$name3' 
+        --output '$output' 
+        --oangle_plot '$angle_plot'
     2>&1
 ]]></command>
     <inputs>
@@ -28,10 +31,13 @@
         <param name="segid2"  type="text" value="HET" label="Segid of atom 2"/>
         <param name="resid2"  type="text" value="3" label="Resid of atom 2"/>
         <param name="name2"  type="text" value="C1" label="Atom name of atom 2"/>
+        <param name="segid3"  type="text" value="HET" label="Segid of atom 3"/>
+        <param name="resid3"  type="text" value="3" label="Resid of atom 3"/>
+        <param name="name3"  type="text" value="C2" label="Atom name of atom 3"/>
     </inputs>
     <outputs>
-        <data format="csv" name="output" label="Distance Analysis raw data"/>  
-        <data format="png" name="distance_plot" label="Distance Analysis Plot"/>
+        <data format="csv" name="output" label="Angle Analysis raw data"/>
+        <data format="png" name="angle_plot" label="Angle Analysis Plot"/>
     </outputs>
     <tests>
         <test>
@@ -43,7 +49,10 @@
             <param name="segid2" value="HET"/>
             <param name="resid2" value="3"/>
             <param name="name2" value="C1"/>
-            <output name="output" file='Distance_Analysis_raw_data.csv' ftype="csv" />
+            <param name="segid3" value="HET"/>
+            <param name="resid3" value="3"/>
+            <param name="name3" value="C2"/>
+            <output name="angle_plot" file='Angle_Analysis_Plot.png' ftype="png" />
         </test>
     </tests>
     <help><![CDATA[
@@ -51,7 +60,7 @@
 
 **What it does**
         
-This tool calculates and plot distance between the two atoms.
+This tool calculates and plot angle between three atoms.
 
 _____
 
@@ -62,7 +71,7 @@ _____
 
        - Trajectory file  (DCD).
        - PDB file.
-       - Segids, resids and names of two atoms to calculate distances.
+       - Segids, resids and names of the three atoms to calculate angles.
      
 _____
 
@@ -71,11 +80,13 @@ _____
 
 **Output**
 
-       - .csv file of raw data of distance between two atoms calculated for each frame.
+       - .csv file of raw data of angle between three atoms calculated for each frame.
        - .png of the time series graph.
 
 
     ]]></help>
-    <expand macro="citations" />
+    <citations>
+      <citation type="doi">10.1002/jcc.21787</citation>
+    </citations>
 </tool>
 
