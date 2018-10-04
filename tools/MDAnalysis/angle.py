@@ -42,6 +42,7 @@ atom2 = "(segid %s and resid %s and name %s)" % \
 atom3 = "(segid %s and resid %s and name %s)" % \
     (args.isegid3, args.iresid3, args.iname3)
 
+
 def theta(u):
     A = u.select_atoms(atom1).center_of_geometry()
     B = u.select_atoms(atom2).center_of_geometry()
@@ -59,15 +60,15 @@ frame, theta = data.T
 zip(frame, theta)
 
 with open(args.output, 'w') as f:
-    writer = csv.writer(f, delimiter = '\t')
+    writer = csv.writer(f, delimiter='\t')
     writer.writerows(zip(frame, theta))
 
 with open(args.output) as f:
     g = [xtmp.strip() for xtmp in f]
-    data = [tuple(map(float,xtmp.split())) for xtmp in g[0:]]
+    data = [tuple(map(float, xtmp.split())) for xtmp in g[0:]]
     time = [xtmp[0] for xtmp in data]
     angle = [xtmp[1] for xtmp in data]
     plt.plot(time, angle)
     plt.xlabel('Frame No.')
     plt.ylabel('Angle (degrees)')
-    plt.savefig(args.oangle_plot, format='png')   
+    plt.savefig(args.oangle_plot, format='png')
