@@ -8,7 +8,7 @@
     </requirements>
     <command detect_errors="exit_code">
         <![CDATA[
-        python "$packmol_script" '$inputs' 
+        python '$packmol_script' '$inputs' 
         ]]>
     </command>
     <configfiles>
@@ -45,7 +45,7 @@ print(params)
 with open("$parameteroutfile",'w+') as f:
     f.write(template.render(params))
 
-os.system("packmol < "+"$parameteroutfile")
+packmol < '$parameteroutfile'
 
             ]]>
         </configfile>
@@ -71,12 +71,12 @@ os.system("packmol < "+"$parameteroutfile")
                 <expand macro="multiple_input" name="packmol_inputs" format="moldy" label="moldy input with molecule type" help_text="Select a moldy file in .moldy format"/>
             </when>
         </conditional>
-    <section name="allparams" title="General Parameters" expanded="false">
-        <param name="tolerance" type="float" value="2.0" label="distance tolerance" />
-        <param name="nloop" type="integer" value="20" label="maximum number of optimisation loops" />
-        <param name="maxit" type="integer" value="20" label="maximum number of gencan iterations per loop" />
-        <param name="seed" type="integer" value="-1" label="random number generator seed, default of -1 used the computer time to set the seed" />
-    </section>
+        <section name="allparams" title="General Parameters" expanded="false">
+            <param name="tolerance" type="float" value="2.0" label="distance tolerance" min="0.0" max="100.0"/>
+            <param name="nloop" type="integer" value="20" label="maximum number of optimisation loops" min="1" max="10000"/>
+            <param name="maxit" type="integer" value="20" label="maximum number of gencan iterations per loop" min="1" max="10000"/>
+            <param name="seed" type="integer" value="-1" label="random number generator seed, default of -1 used the computer time to set the seed" />
+        </section>
 
 
     </inputs>
@@ -97,9 +97,9 @@ os.system("packmol < "+"$parameteroutfile")
             <param name="packmol_inputs_0|input" value="water.pdb" ftype="pdb"/>
             <param name="allparams.seed" value="101"/>
             <output name="outfile" file="packmol_outfile1.pdb" compare="sim_size" delta="100000">
-             <assert_contents>
-              <has_text text="HETATM  300  O   HOH"/>
-             </assert_contents>
+                <assert_contents>
+                    <has_text text="HETATM  300  O   HOH"/>
+                </assert_contents>
             </output>
             <output name="parameteroutfile" file="packmol_parameteroutfile_1.txt" compare="diff" lines_diff="6"/>
         </test>
@@ -119,10 +119,10 @@ os.system("packmol < "+"$parameteroutfile")
             <param name="packmol_inputs_1|structureparams|constraints_repeat_0|constraints|zmax" value="40.0"/>
             <param name="allparams.seed" value="-1"/>
             <output name="outfile" file="packmol_outfile2.pdb" compare="sim_size" delta="100000">
-             <assert_contents>
-              <has_text text="HETATM 3000  O   HOH"/>
-              <has_text text="HETATM 6200  H     2 B"/>
-             </assert_contents>
+                <assert_contents>
+                    <has_text text="HETATM 3000  O   HOH"/>
+                    <has_text text="HETATM 6200  H     2 B"/>
+                </assert_contents>
             </output>
             <output name="parameteroutfile" file="packmol_parameteroutfile_2.txt" compare="diff" lines_diff="6"/>
         </test>
