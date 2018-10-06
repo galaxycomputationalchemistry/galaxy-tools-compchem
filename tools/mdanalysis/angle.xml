@@ -6,7 +6,7 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code">
 <![CDATA[
-    python '$__tool_directory__/md_analysis_angle.py' 
+    python '$__tool_directory__/angle.py' 
         --idcd '$dcdin'
         --ipdb '$pdbin'
         --isegid1 '$segid1'
