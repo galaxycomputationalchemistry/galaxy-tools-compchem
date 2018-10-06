@@ -1,10 +1,10 @@
-<tool id="packmol" name="PACKMOL" version="1.18.013">
+<tool id="packmol" name="PACKMOL" version="18.169">
     <description>Initial configurations for Molecular Dynamics Simulations by packing optimization</description>
     <macros>
         <import>macros_packmol.xml</import>
     </macros>
     <requirements>
-      <requirement type="package" version="1!18.013">packmol</requirement>
+      <requirement type="package" version="18.169">packmol</requirement>
     </requirements>
     <command detect_errors="exit_code">
         <![CDATA[
