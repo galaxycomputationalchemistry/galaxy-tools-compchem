@@ -14,10 +14,13 @@
     </command>
     <configfiles>
         <inputs name="inputs" />
-        <configfile name="packmol_script">
-            <![CDATA[
+        <configfile name="packmol_script"><![CDATA[
+
+import os
 import sys
 import json
+
+from jinja2 import Environment, FileSystemLoader
 
 input_json_path = sys.argv[1]
 params = json.load(open(input_json_path, "r"))
@@ -34,9 +37,6 @@ params["packmol_format"]["packmol_inputs"][pmfile_index]["datasetname"] = "${s.i
 
 params["outfile"] = "$outfile" 
 
-import os
-from jinja2 import Environment, FileSystemLoader
-
 currentpath = "$__tool_directory__"  # should work generally
 template_environment = Environment(loader=FileSystemLoader(currentpath),lstrip_blocks=True, trim_blocks=True)
 template = template_environment.get_template('template.j2')
@@ -52,14 +52,14 @@ with open("$parameteroutfile",'w+') as f:
         <conditional name="packmol_format">
             <param name="selected_format" type="select" label="Select a file format:">
                 <option value="pdb" selected="true">pdb</option>
-                <option value="xyz">xyz</option>
+                <!--option value="xyz">xyz</option>
                 <option value="tinker">tinker</option>
-                <option value="moldy">moldy</option>
+                <option value="moldy">moldy</option-->
             </param>
             <when value="pdb">
                 <expand macro="multiple_input" name="packmol_inputs" format="pdb" label="pdb input with molecule type" help_text="Select a pdb file in .pdb format"/>
             </when>
-            <when value="xyz">
+            <!--when value="xyz">
                 <expand macro="multiple_input" name="packmol_inputs" format="xyz" label="xyz input with molecule type" help_text="Select a xyz file in .xyz format"/>
             </when>
             <when value="tinker">
@@ -67,7 +67,7 @@ with open("$parameteroutfile",'w+') as f:
             </when>
             <when value="moldy">
                 <expand macro="multiple_input" name="packmol_inputs" format="moldy" label="moldy input with molecule type" help_text="Select a moldy file in .moldy format"/>
-            </when>
+            </when-->
         </conditional>
         <section name="allparams" title="General Parameters" expanded="false">
             <param name="tolerance" type="float" value="2.0" label="distance tolerance" min="0.0" max="100.0"/>
@@ -75,8 +75,6 @@ with open("$parameteroutfile",'w+') as f:
             <param name="maxit" type="integer" value="20" label="maximum number of gencan iterations per loop" min="1" max="10000"/>
             <param name="seed" type="integer" value="-1" label="random number generator seed, default of -1 used the computer time to set the seed" />
         </section>
-
-
     </inputs>
     <outputs>
         <data format="pdb" name="outfile" label="${tool.name}: structure output">
@@ -125,8 +123,7 @@ with open("$parameteroutfile",'w+') as f:
             <output name="parameteroutfile" file="packmol_parameteroutfile_2.txt" compare="diff" lines_diff="6"/>
         </test>
     </tests>
-    <help>
-        <![CDATA[
+    <help><![CDATA[
 .. class:: infomark
 
 **What it does**
@@ -186,9 +183,9 @@ Packmol creates initial MD configurations from input molecules. For example, cre
 .. _`userguide`: http://m3g.iqm.unicamp.br/packmol/userguide.shtml#more
 .. _`volume guesser`: http://m3g.iqm.unicamp.br/packmol/utilities.shtml
 
-        ]]>
+]]>
     </help>
-     <citations>
-       <citation type="doi">10.1002/jcc.21224</citation>
-     </citations> 
+    <citations>
+        <citation type="doi">10.1002/jcc.21224</citation>
+    </citations> 
 </tool>
