@@ -1,0 +1,26 @@
+# Template for packmol in Galaxy
+#  
+
+tolerance 2.0
+nloop  20 
+maxit  20 
+seed  -1 
+filetype pdb 
+output /tmp/tmpgg9o1466/files/000/dataset_5.dat
+
+structure /tmp/tmpgg9o1466/files/000/dataset_1.dat
+# Galaxy datasetname - water.pdb
+  number 1000
+  radius 1.0
+  resnumbers 0 
+  inside box 0.0 0.0 0.0 40.0 40.0 40.0 
+end structure
+
+structure /tmp/tmpgg9o1466/files/000/dataset_4.dat
+# Galaxy datasetname - urea.pdb
+  number 400
+  radius 1.0
+  resnumbers 0 
+  inside box 0.0 0.0 0.0 40.0 40.0 40.0 
+end structure
+

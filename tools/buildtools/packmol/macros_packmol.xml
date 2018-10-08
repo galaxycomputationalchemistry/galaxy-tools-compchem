@@ -1,0 +1,106 @@
+<macros>
+  <xml name="multiple_input" token_name="input_files" token_max_num="10" token_format="txt" token_label="Sparse matrix file (.mtx, .txt)" token_help_text="Specify a sparse matrix file in .txt format.">
+    <repeat name="@NAME@" min="1" max="@MAX_NUM@" title="Select input file(s):">
+        <param name="input" type="data" format="@FORMAT@" label="@LABEL@" help="@HELP_TEXT@"/>
+        <section name="structureparams" title="Structure Parameters (Make Changes!)" expanded="false">
+        <param name="number" type="integer"  multiple="True" value="100" />
+        <param name="radius" type="float"  multiple="True" value="1.0" />
+        <param name="resnumbers" type="integer"  multiple="True" value="0" help="Default is to number 1 to n for type 1 and 1 to n for type 2"/>
+        <repeat name="constraints_repeat" min="1" max="3" title="Select constraint(s) to apply:">
+        <conditional name="constraints">
+        <param name="constraint" type="select" label="Shape Constraint selection" help="Choose the constraint for the molecules">
+         <option value="fixed">fixed - hold 1 molecule in fixed position (hardcoded number=1) Exclusive other constraints not possible</option>
+         <option selected="True" value="cube">cube</option>
+         <option value="box">box</option>
+         <option value="sphere">sphere</option>
+         <option value="ellipsoid">ellipsoid </option>
+         <option value="plane">plane</option>
+         <option value="cylinder">cylinder</option>
+        </param>
+        <when value="fixed">
+        <param name="center" type="select" label="Center" help="center">
+         <option value="Yes">yes</option>
+         <option value="No">no</option>
+        </param>
+        <param name="x" type="float" value="0.0" label="x" />
+        <param name="y" type="float" value="0.0" label="y" />
+        <param name="z" type="float" value="0.0" label="z" />
+        <param name="a" type="float" value="0.0" label="a" />
+        <param name="b" type="float" value="0.0" label="b" />
+        <param name="g" type="float" value="0.0" label="g" />
+        </when>
+        <when value="cube">
+        <param name="placement" type="select" label="Choose placement of molecules" help="Choose the placement of the molecules">
+         <option value="inside">inside</option>
+         <option value="outside">outside</option>
+        </param>
+        <param name="xmin" type="float" value="0.0" label="xmin" />
+        <param name="ymin" type="float" value="0.0" label="ymin" />
+        <param name="zmin" type="float" value="0.0" label="zmin" />
+        <param name="d" type="float" value="40.0" label="d" />
+        </when>
+        <when value="box">
+        <param name="placement" type="select" label="Choose placement of molecules" help="Choose the placement of the molecules">
+         <option value="inside">inside</option>
+         <option value="outside">outside</option>
+        </param>
+        <param name="xmin" type="float" value="0.0" label="xmin" />
+        <param name="ymin" type="float" value="0.0" label="ymin" />
+        <param name="zmin" type="float" value="0.0" label="zmin" />
+        <param name="xmax" type="float" value="40.0" label="xmax" />
+        <param name="ymax" type="float" value="40.0" label="ymax" />
+        <param name="zmax" type="float" value="40.0" label="zmax" />
+        </when>
+        <when value="sphere">
+        <param name="placement" type="select" label="Choose placement of molecules" help="Choose the placement of the molecules">
+         <option value="inside">inside</option>
+         <option value="outside">outside</option>
+        </param>
+        <param name="a" type="float" value="0.0" label="a" />
+        <param name="b" type="float" value="0.0" label="b" />
+        <param name="c" type="float" value="0.0" label="c" />
+        <param name="d" type="float" value="40.0" label="d" />
+        </when>
+        <when value="ellipsoid">
+        <param name="placement" type="select" label="Choose placement of molecules" help="Choose the placement of the molecules">
+         <option value="inside">inside</option>
+         <option value="outside">outside</option>
+        </param>
+        <param name="a1" type="float" value="0.0" label="a1" />
+        <param name="b1" type="float" value="0.0" label="b1" />
+        <param name="c1" type="float" value="0.0" label="c1" />
+        <param name="a2" type="float" value="20.0" label="a2" />
+        <param name="b2" type="float" value="20.0" label="b2" />
+        <param name="c2" type="float" value="20.0" label="c2" />
+        <param name="d" type="float" value="40.0" label="d" />
+        </when>
+        <when value="plane">
+        <param name="placement" type="select" label="Choose placement of molecules" help="Choose the placement of the molecules">
+         <option value="over">over</option>
+         <option value="below">below</option>
+        </param>
+        <param name="a" type="float" value="0.0" label="a" />
+        <param name="b" type="float" value="0.0" label="b" />
+        <param name="c" type="float" value="0.0" label="c" />
+        <param name="d" type="float" value="10.0" label="d" />
+        </when>
+        <when value="cylinder">
+        <param name="placement" type="select" label="Choose placement of molecules" help="Choose the placement of the molecules">
+         <option value="inside">inside</option>
+         <option value="outside">outside</option>
+        </param>
+        <param name="a1" type="float" value="0.0" label="a1" />
+        <param name="b1" type="float" value="0.0" label="b1" />
+        <param name="c1" type="float" value="0.0" label="c1" />
+        <param name="a2" type="float" value="40.0" label="a2" />
+        <param name="b2" type="float" value="40.0" label="b2" />
+        <param name="c2" type="float" value="40.0" label="c2" />
+        <param name="d" type="float" value="10.0" label="d" />
+        <param name="l" type="float" value="10.0" label="l" />
+        </when>
+        </conditional>
+        </repeat>
+        </section>
+    </repeat>
+  </xml>
+</macros>
