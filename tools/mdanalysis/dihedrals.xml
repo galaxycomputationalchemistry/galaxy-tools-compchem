@@ -1,0 +1,99 @@
+<tool id="mdanalysis_dihedral" name="Dihedral Analysis" version="@VERSION@">
+    <description>Time series of dihedrals</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>   
+    <expand macro="requirements" />
+    <command detect_errors="exit_code">
+<![CDATA[
+    python '$__tool_directory__/dihedrals.py'
+        --idcd '$dcdin' 
+        --ipdb '$pdbin' 
+        --isegid1 '$segid1' 
+        --iresid1 '$resid1' 
+        --iname1 '$name1' 
+        --isegid2 '$segid2' 
+        --iresid2 '$resid2'
+        --iname2 '$name2' 
+        --isegid3 '$segid3' 
+        --iresid3 '$resid3'
+        --iname3 '$name3' 
+        --isegid4 '$segid4' 
+        --iresid4 '$resid4' 
+        --iname4 '$name4'
+        --output '$output'  
+        --odihedral_plot '$dihedral_plot'
+    2>&1
+]]></command>
+    <inputs>
+        <expand macro="analysis_inputs"/>
+        <param name="segid1"  type="text" value="PRO" label="Segid of atom 1"/>
+        <param name="resid1"  type="text" value="212" label="Resid of atom 1"/>
+        <param name="name1"  type="text" value="OE2" label="Atom name of atom 1"/>
+        <param name="segid2"  type="text" value="HET" label="Segid of atom 2"/>
+        <param name="resid2"  type="text" value="3" label="Resid of atom 2"/>
+        <param name="name2"  type="text" value="C1" label="Atom name of atom 2"/>
+        <param name="segid3"  type="text" value="HET" label="Segid of atom 3"/>
+        <param name="resid3"  type="text" value="3" label="Resid of atom 3"/>
+        <param name="name3"  type="text" value="C2" label="Atom name of atom 3"/>
+        <param name="segid4"  type="text" value="HET" label="Segid of atom 4"/>
+        <param name="resid4"  type="text" value="3" label="Resid of atom 4"/>
+        <param name="name4"  type="text" value="C3" label="Atom name of atom 4"/>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="output" label="Dihedral analysis raw data"/>
+        <data format="png" name="dihedral_plot" label="Dihedral Analysis Plot"/>
+    </outputs>
+    <tests>
+        <test>
+            <expand macro="tests_inputs"/>
+            <param name="segid1" value="PRO"/>
+            <param name="resid1" value="212"/>
+            <param name="name1" value="OE2"/>
+            <param name="segid2" value="HET"/>
+            <param name="resid2" value="3"/>
+            <param name="name2" value="C1"/>
+            <param name="segid3" value="HET"/>
+            <param name="resid3" value="3"/>
+            <param name="name3" value="C2"/>
+            <param name="segid3" value="HET"/>
+            <param name="resid3" value="3"/>
+            <param name="name3" value="C3"/>
+            <output name="output">
+              <assert_contents>
+                <has_n_columns n="2" />
+              </assert_contents>
+             </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+        
+This tool calculates and plots dihedral angles (angle between two intersecting planes) between four atoms.
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Trajectory file  (DCD).
+       - PDB file.
+       - Segids, resids and names of the four atoms to calculate dihedral angle.
+     
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - Tab-separated file of raw data of the dihedral angle between two intersecting planes calculated for each frame.
+       - Image (as png) of the time series graph.
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>

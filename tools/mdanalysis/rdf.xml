@@ -1,0 +1,90 @@
+<tool id="mdanalysis_rdf" name="RDF Analysis" version="@VERSION@">
+    <description>Radial Distribution Function between two atoms</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>   
+    <expand macro="requirements" />
+    <command detect_errors="exit_code">
+<![CDATA[
+    python '$__tool_directory__/rdf.py' 
+        --idcd '$dcdin' 
+        --ipdb '$pdbin' 
+        --isegid1 '$segid1'
+        --iresid1 '$resid1'
+        --iname1 '$name1' 
+        --isegid2 '$segid2'
+        --iresid2 '$resid2'
+        --iname2 '$name2'
+        --inbins '$nbins'
+        --istart '$start' 
+        --iend '$end' 
+        --output '$output' 
+        --ordf_plot '$rdf_plot'
+    2>&1
+]]></command>
+    <inputs>
+        <expand macro="analysis_inputs"/>
+        <param name="segid1"  type="text" value="PRO" label="Segid of atom 1"/>
+        <param name="resid1"  type="text" value="212" label="Resid of atom 1"/>
+        <param name="name1"  type="text" value="OE2" label="Atom name of atom 1"/>
+        <param name="segid2"  type="text" value="HET" label="Segid of atom 2"/>
+        <param name="resid2"  type="text" value="3" label="Resid of atom 2"/>
+        <param name="name2"  type="text" value="C1" label="Atom name of atom 2"/>
+        <param name="nbins"  type="text" value="100" label="Number of bins in the histogram"/>
+        <param name="start"  type="text" value="0.0" label="Starting Point"/>
+        <param name="end"  type="text" value="5.0" label="End Point"/>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="output" label="RDF raw data"/>
+        <data format="png" name="rdf_plot" label="RDF Analysis Plot"/>
+    </outputs>
+    <tests>
+        <test>
+            <expand macro="tests_inputs"/>
+            <param name="segid1" value="PRO"/>
+            <param name="resid1" value="212"/>
+            <param name="name1" value="OE2"/>
+            <param name="segid2" value="HET"/>
+            <param name="resid2" value="3"/>
+            <param name="name1" value="C1"/>
+            <param name="nbins" value="100"/>
+            <param name="start" value="0.0"/>
+            <param name="end" value="5.0"/>
+            <output name="output">
+              <assert_contents>
+                <has_n_columns n="2" />
+              </assert_contents>
+             </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+        
+The Radial Distribution Function (RDF) , g(r), also called pair distribution function or pair correlation function function can be used to find how density varies as a function of distance from a reference atom. 
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Trajectory file  (DCD).
+       - PDB file.
+       - Segids, resids and names of two atoms to calculate distances.
+     
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - Tab-separated file of raw data of the RDF.
+       - Image (as png) of the RDF plot.
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>

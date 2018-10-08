@@ -1,0 +1,23 @@
+<macros>
+    <token name="@VERSION@">0.18</token>
+    <xml name="requirements">
+        <requirements>
+	  <requirement type="package" version="0.18.0">mdanalysis</requirement>
+        </requirements>
+    </xml>
+    <xml name="analysis_inputs">
+        <param format="dcd" name="dcdin" type="data" label="dcd trajectory input"/>
+        <param format="pdb" name="pdbin" type="data" label="pdb input"/>
+        <yield/>
+    </xml>
+    <xml name="tests_inputs">
+        <param name="dcdin" value="test.dcd" />
+        <param name="pdbin" value="test.pdb" />
+        <yield/>
+    </xml>
+    <xml name="citations">
+        <citations>
+            <citation type="doi">10.1002/jcc.21787</citation>
+        </citations>
+    </xml>
+</macros>
