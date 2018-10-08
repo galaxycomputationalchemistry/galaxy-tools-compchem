@@ -2,18 +2,33 @@
     <token name="@VERSION@">0.18</token>
     <xml name="requirements">
         <requirements>
+<<<<<<< HEAD
             <requirement type="package" version="0.18.0">mdanalysis</requirement>
             <yield/>
+=======
+	  <requirement type="package" version="0.18.0">mdanalysis</requirement>
+	  <yield/> 
+>>>>>>> 09fe66d4de4c2863ff1247297cdde84828b71692
         </requirements>
     </xml>
     <xml name="analysis_inputs">
         <param format="dcd" name="dcdin" type="data" label="dcd trajectory input"/>
+<<<<<<< HEAD
         <param format="pdb" name="pdbin" type="data" label="pdb input"/>
         <yield/>
     <xml name="tests_inputs">
         <param name="dcdin" value="test.dcd"/>
         <param name="pdbin" value="test.pdb"/>
         <yield/>
+=======
+	<param format="pdb" name="pdbin" type="data" label="pdb input"/>
+	<yield/> 
+    </xml>
+    <xml name="tests_inputs">
+        <param name="dcdin" value="test.dcd"/>
+	<param name="pdbin" value="test.pdb"/>
+	<yield/> 
+>>>>>>> 09fe66d4de4c2863ff1247297cdde84828b71692
     </xml>
     <xml name="citations">
         <citations>
