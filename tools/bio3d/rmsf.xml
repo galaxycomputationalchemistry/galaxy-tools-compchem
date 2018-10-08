@@ -1,0 +1,172 @@
+<tool id="bio3d_rmsf" name="RMSF Analysis" version="@VERSION@">
+    <description>rmsf using Bio3D</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code">
+<![CDATA[ 
+    Rscript '$__tool_directory__/rmsf.R' 
+        '$dcdin'  
+        '$pdbin'
+        #if $rmsf.sele == 'calpha':
+          "string"
+          "calpha"
+        #end if
+        #if $rmsf.sele == 'cbeta':
+          "string"
+          '$rmsf.cbeta'
+        #end if
+        #if $rmsf.sele == 'backbone':
+          "string"
+          "backbone"
+        #end if
+        #if $rmsf.sele == 'sidechain':
+          "string"
+          '$rmsf.sidechain'
+        #end if
+        #if $rmsf.sele == 'protein':
+          "string"
+          "protein"
+        #end if
+        #if $rmsf.sele == 'ligand':
+          "string"
+          "ligand"
+        #end if
+        #if $rmsf.sele == 'nucleic':
+          "string"
+          "nucleic"
+        #end if
+        #if $rmsf.sele == 'water':
+          "string"
+          "water"
+        #end if
+        #if $rmsf.sele == 'hyd':
+          "string"
+          "hyd"
+        #end if
+        #if $rmsf.sele == 'noh':
+          "string"
+          "noh"
+        #end if
+        #if $rmsf.sele == 'loop':
+          "resno"
+          '$rmsf.res1'
+          '$rmsf.res2'
+        #end if
+        #if $rmsf.sele == "elety":
+          "elety"
+          '$rmsf.elety'
+        #end if
+        #if $rmsf.sele == "resid":
+          "resid"
+          '$rmsf.resid'
+        #end if
+        #if $rmsf.sele == "segid":
+          "segid"
+          '$rmsf.segid'
+        #end if
+        '$output'
+        '$rmsf_plot' 
+    2>&1
+]]></command>
+    <inputs>
+       <expand macro="analysis_inputs"/>
+        <conditional name="rmsf">
+           <param name="sele" type="select" label="Select domains">
+             <option value="calpha">Calpha</option>
+             <option value="cbeta">Cbeta</option>
+             <option value="backbone">Backbone</option>
+             <option value="sidechain">Sidechain</option>
+             <option value="protein">Protein</option>
+             <option value="ligand">Ligand</option>
+             <option value="nucleic">Nucleic Acids</option>
+             <option value="loop">Loop</option>
+             <option value="water">Water</option>
+             <option value="hyd">Hydrogens</option>
+             <option value="noh">Non Hydrogens</option>
+             <option value="elety">Atom Names</option>
+             <option value="resid">Resid</option>
+             <option value="segid">Segid</option>
+           </param>
+           <when value="calpha">
+           </when>
+           <when value="cbeta">
+           </when>
+           <when value="backbone">
+           </when> 
+           <when value="sidechain">
+           </when>
+           <when value="protein">
+           </when>
+           <when value="ligand">
+           </when>
+           <when value="nucleic">
+           </when>
+           <when value="loop">
+             <param name="res1" type="text" label="Resid of the loop starting residue"/>
+             <param name="res2" type="text" label="Resid of the loop ending residue"/>
+           </when>
+           <when value="water">
+           </when>
+           <when value="hyd">
+          </when>
+          <when value="noh">
+          </when> 
+          <when value="elety">
+            <param name="elety"  type="text" value="CA" label="Atom Name"/>
+          </when>
+          <when value="resid">
+            <param name="resid"  type="text" value="BGLC" label="Resid"/>
+          </when>
+          <when value="segid">
+            <param name="segid"  type="text" value="SUBS" label="Segid"/>
+          </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="output" label="rmsf raw data"/>
+        <data format="png" name="rmsf_plot" label="rmsf plot"/>
+    </outputs>
+    <tests>
+        <test>
+            <expand macro="tests_inputs"/>
+            <param name="sele" value="calpha"/>
+            <output name="output">
+              <assert_contents>
+                <has_n_columns n="2" />
+              </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+The Root Mean Square Fluctuation (RMSF) conformational variance that analysis can analyze the
+portions of structure that are fluctuating from their mean structure the most (or least). This tool can calculate and plot the RMSF of the selected section.
+
+_____
+
+.. class:: infomark
+
+**Input**
+
+       - Input file in PDB format
+       - Input file in DCD format
+
+_____
+
+.. class:: infomark
+
+**Output**
+
+       - Image (as PNG) of the rmsf plot
+       - Tab-separated file of raw data
+
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>
