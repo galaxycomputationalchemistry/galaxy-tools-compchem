@@ -121,7 +121,8 @@
 
 **What it does**
 
-PCA can be used to determine the relationship between statistically meaningful conformations (major global motions) sampled during the trajectory. 
+PCA can be used to determine the relationship between statistically meaningful conformations (major global motions)
+sampled during the trajectory. 
 
 _____
 
@@ -130,8 +131,8 @@ _____
 
 **Input**
 
-       - .pdb input file 
-       - .dcd input file
+       - Input file in PDB format
+       - Input file in dcd format
 
 _____
 
@@ -140,12 +141,11 @@ _____
 
 **Output**
 
-       - .png of the pca plot.
-       - .png of the pca clusterd plot.
-       - .png of the PC1 plotted on RMSF.
-       - .csv of raw data.
+       - Image (as PNG) of the pca plot
+       - Image (as PNG) of the pca clusterd plot
+       - Image (as PNG) of the PC1 plotted on RMSF
+       - Tab-separated file of raw data
 
     ]]></help>
     <expand macro="citations" />
 </tool>
-
