@@ -43,7 +43,11 @@
             <param name="segid2" value="HET"/>
             <param name="resid2" value="3"/>
             <param name="name2" value="C1"/>
-            <output name="output" file='Distance_Analysis_raw_data.csv' ftype="csv" />
+            <output name="output">
+              <assert_contents>
+                <has_n_columns n="2" />
+              </assert_contents>
+             </output>
         </test>
     </tests>
     <help><![CDATA[
