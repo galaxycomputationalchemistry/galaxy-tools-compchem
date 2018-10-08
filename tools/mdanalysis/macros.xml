@@ -11,8 +11,8 @@
         <yield/>
     </xml>
     <xml name="tests_inputs">
-        <param name="dcdin" value="test.dcd" ftype="dcd"/>
-        <param name="pdbin" value="test.pdb" ftype="pdb"/>
+        <param name="dcdin" value="test.dcd" />
+        <param name="pdbin" value="test.pdb" />
         <yield/>
     </xml>
     <xml name="citations">
