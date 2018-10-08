@@ -82,8 +82,8 @@ _____
 
 **Output**
 
-       - .csv file of the raw data of the RDF.
-       - .png of the RDF plot.
+       - Tab-separated file of raw data of the RDF.
+       - Image (as png) of the RDF plot.
 
     ]]></help>
     <expand macro="citations" />
