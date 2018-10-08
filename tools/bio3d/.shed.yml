@@ -1,15 +1,14 @@
 name: bio3d
 owner: chemteam
-description: Bio3d is a program that can be used to analyse molecular dynamics trajectories.
+description: "Bio3d is a program that can be used to analyse molecular dynamics trajectories."
 homepage_url: ttp://thegrantlab.org/bio3d/index.php
 long_description: |
-  Bio3D is an R package containing utilities for the analysis of protein structure, sequence and trajectory data.
+    Bio3D is an R package containing utilities for the analysis of protein structure, sequence and trajectory data.
 remote_repository_url: https://github.com/Grantlab/bio3d.git
 type: unrestricted
 categories:
-- Trajectory analysis
+- Molecular Dynamics
 - Computational chemistry
- auto_tool_repositories:
+auto_tool_repositories:
    name_template: "{{ tool_id }}"
    description_template: "Wrapper for the Bio3D package: {{ tool_name }}"
-
