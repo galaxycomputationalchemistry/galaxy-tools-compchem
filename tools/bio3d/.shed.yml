@@ -7,4 +7,9 @@ long_description: |
 remote_repository_url: https://github.com/Grantlab/bio3d.git
 type: unrestricted
 categories:
-- Trajectory analysis 
+- Trajectory analysis
+- Computational chemistry
+ auto_tool_repositories:
+   name_template: "{{ tool_id }}"
+   description_template: "Wrapper for the Bio3D package: {{ tool_name }}"
+
