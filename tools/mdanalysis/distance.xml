@@ -73,11 +73,10 @@ _____
 
 **Output**
 
-       - .csv file of raw data of distance between two atoms calculated for each frame.
-       - .png of the time series graph.
+       - Tab-separated file of raw data of distance between two atoms calculated for each frame.
+       - Image (as png) of the time series graph.
 
 
     ]]></help>
     <expand macro="citations" />
 </tool>
-
