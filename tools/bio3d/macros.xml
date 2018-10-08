@@ -3,6 +3,8 @@
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="2.3_3">r-bio3d</requirement>
+            <requirement type="package" version="1.16">r-ncdf4</requirement>
+            <requirement type="package" version="0.20_35">r-lattice</requirement>
             <yield/>
         </requirements>
     </xml>
