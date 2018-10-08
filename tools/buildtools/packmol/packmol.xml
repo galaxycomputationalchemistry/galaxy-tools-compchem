@@ -28,14 +28,14 @@ params = json.load(open(input_json_path, "r"))
 # get the inputs
 input_iter = []
 #for $i, $s in enumerate( $packmol_format.packmol_inputs )
-pmfile_index = $i 
+pmfile_index = $i
 pmfile_path = "${s.input.file_name}"
 input_iter.append(pmfile_path)
 params["packmol_format"]["packmol_inputs"][pmfile_index]["file"] = pmfile_path
 params["packmol_format"]["packmol_inputs"][pmfile_index]["datasetname"] = "${s.input.name}"
-#end for        
+#end for
 
-params["outfile"] = "$outfile" 
+params["outfile"] = "$outfile"
 
 currentpath = "$__tool_directory__"  # should work generally
 template_environment = Environment(loader=FileSystemLoader(currentpath),lstrip_blocks=True, trim_blocks=True)
@@ -80,9 +80,9 @@ with open("$parameteroutfile",'w+') as f:
         <data format="pdb" name="outfile" label="${tool.name}: structure output">
         <change_format>
             <when input="selected_format" value="pdb" format="pdb"/>
-            <when input="selected_format" value="xyz" format="xyz"/>
+            <!-- <when input="selected_format" value="xyz" format="xyz"/>
             <when input="selected_format" value="tinker" format="tinker"/>
-            <when input="selected_format" value="moldy" format="moldy"/>
+            <when input="selected_format" value="moldy" format="moldy"/> -->
         </change_format>
         </data>
         <data format="txt" name="parameteroutfile" label="${tool.name}: parameter output"/>
@@ -161,21 +161,6 @@ Packmol creates initial MD configurations from input molecules. For example, cre
 
 .. class:: infomark
 
-**Features not included**
-
-- xyz,tinker,moldy datatypes are not installed by default.
-- more than 3 multiple constraints per structure
-- atom constraints per structure
-- constrain rotations
-- solvate large molecules with solvate.tcl script
-- change chains
-- restart files
-- convergence problem options to try
-- additional input options and keywords e.g. add_amber_ter, seed
-- nloop,maxit is general, not included per structure
-
-.. class:: infomark
-
 **Known issues**
 
 - fixed constraint only allows 1 atom but this is not set for the user. user has to set this. Job may fail.
@@ -187,5 +172,5 @@ Packmol creates initial MD configurations from input molecules. For example, cre
     </help>
     <citations>
         <citation type="doi">10.1002/jcc.21224</citation>
-    </citations> 
+    </citations>
 </tool>
