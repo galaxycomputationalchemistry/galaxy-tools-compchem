@@ -62,7 +62,7 @@ with open(args.output) as f:
     g = [xtmp.strip() for xtmp in f]
     data = [tuple(map(float, xtmp.split())) for xtmp in g[0:]]
     time = [xtmp[0] for xtmp in data]
-    rdf = [x[1] for xtmp in data]
+    rdf = [xtmp[1] for xtmp in data]
     plt.plot(time, rdf)
     plt.xlabel('r ($\AA$)')
     plt.ylabel('g(r)')
