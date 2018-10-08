@@ -71,8 +71,7 @@
     2>&1
 ]]></command>
     <inputs>
-        <param format="dcd" name="dcdin" type="data" label="dcd trajectory input"/>
-        <param format="pdb" name="pdbin" type="data" label="pdb input"/>
+       <expand macro="analysis_inputs"/>
         <conditional name="rmsf">
            <param name="sele" type="select" label="Select domains">
              <option value="calpha">Calpha</option>
@@ -131,8 +130,7 @@
     </outputs>
     <tests>
         <test>
-            <param name="dcdin" value="test.dcd" ftype="dcd"/>
-            <param name="pdbin" value="test.pdb" ftype="pdb"/>
+            <expand macro="tests_inputs"/>
             <param name="sele" value="calpha"/>
             <output name="output">
               <assert_contents>
