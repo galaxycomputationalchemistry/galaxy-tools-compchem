@@ -157,8 +157,8 @@ _____
 
 **Input**
 
-       - .pdb input file 
-       - .dcd input file
+       - Input file in PDB format
+       - Input file in DCD format
 
 _____
 
@@ -167,9 +167,9 @@ _____
 
 **Output**
 
-       - .png of the rmsd plot.
-       - .png of the rmsd histogram plot.
-       - .csv of raw data.
+       - Image (as PNG) of the rmsd plot.
+       - Image (as PNG) of the rmsd histogram plot.
+       - Tab-separated file of raw data.
 
     ]]></help>
     <expand macro="citations" />
