@@ -154,8 +154,8 @@ _____
 
 **Input**
 
-       - .pdb input file 
-       - .dcd input file
+       - Input file in PDB format
+       - Input file in DCD format
 
 _____
 
@@ -163,11 +163,10 @@ _____
 
 **Output**
 
-       - .png of the rmsf plot.
-       - .csv of raw data.
+       - Image (as PNG) of the rmsf plot
+       - Tab-separated file of raw data
 
 
     ]]></help>
     <expand macro="citations" />
 </tool>
-
