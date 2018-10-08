@@ -100,7 +100,7 @@
         </conditional>
     </inputs>
     <outputs>
-        <data format="csv" name="output" label="PCA raw data"/>
+        <data format="tabular" name="output" label="PCA raw data"/>
         <data format="png" name="pca_plot" label="PCA plot"/>
         <data format="png" name="pca_cluster" label="PCA Cluster Plot"/>
         <data format="png" name="pc1_rmsf" label="PC1 on RMSF"/>

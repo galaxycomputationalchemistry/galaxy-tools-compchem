@@ -127,7 +127,7 @@
         </conditional>
     </inputs>
     <outputs>
-        <data format="csv" name="output" label="RMSD raw data"/>
+        <data format="tabular" name="output" label="RMSD raw data"/>
         <data format="png" name="rmsd_plot" label="RMSD plot"/>
         <data format="png" name="rmsd_hist_plot" label="RMSD Histogram Plot"/>
     </outputs>

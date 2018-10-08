@@ -126,7 +126,7 @@
         </conditional>
     </inputs>
     <outputs>
-        <data format="csv" name="output" label="rmsf raw data"/>
+        <data format="tabular" name="output" label="rmsf raw data"/>
         <data format="png" name="rmsf_plot" label="rmsf plot"/>
     </outputs>
     <tests>
