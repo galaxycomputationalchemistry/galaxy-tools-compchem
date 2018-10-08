@@ -36,7 +36,7 @@
         <param name="name3"  type="text" value="C2" label="Atom name of atom 3"/>
     </inputs>
     <outputs>
-        <data format="csv" name="output" label="Angle Analysis raw data"/>
+        <data format="tabular" name="output" label="Angle Analysis raw data"/>
         <data format="png" name="angle_plot" label="Angle Analysis Plot"/>
     </outputs>
     <tests>

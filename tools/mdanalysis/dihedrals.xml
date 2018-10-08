@@ -42,7 +42,7 @@
         <param name="name4"  type="text" value="C3" label="Atom name of atom 4"/>
     </inputs>
     <outputs>
-        <data format="csv" name="output" label="Dihedral analysis raw data"/>
+        <data format="tabular" name="output" label="Dihedral analysis raw data"/>
         <data format="png" name="dihedral_plot" label="Dihedral Analysis Plot"/>
     </outputs>
     <tests>

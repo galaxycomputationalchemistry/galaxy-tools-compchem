@@ -30,7 +30,7 @@
         <param name="name2"  type="text" value="C1" label="Atom name of atom 2"/>
     </inputs>
     <outputs>
-        <data format="csv" name="output" label="Distance Analysis raw data"/>  
+        <data format="tabular" name="output" label="Distance Analysis raw data"/>  
         <data format="png" name="distance_plot" label="Distance Analysis Plot"/>
     </outputs>
     <tests>

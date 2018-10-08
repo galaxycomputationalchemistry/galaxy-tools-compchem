@@ -36,7 +36,7 @@
         <param name="end"  type="text" value="5.0" label="End Point"/>
     </inputs>
     <outputs>
-        <data format="csv" name="output" label="RDF raw data"/>
+        <data format="tabular" name="output" label="RDF raw data"/>
         <data format="png" name="rdf_plot" label="RDF Analysis Plot"/>
     </outputs>
     <tests>
