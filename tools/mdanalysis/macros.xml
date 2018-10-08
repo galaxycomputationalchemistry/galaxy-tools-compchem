@@ -10,7 +10,6 @@
         <param format="dcd" name="dcdin" type="data" label="dcd trajectory input"/>
         <param format="pdb" name="pdbin" type="data" label="pdb input"/>
         <yield/>
-    </xml>
     <xml name="tests_inputs">
         <param name="dcdin" value="test.dcd"/>
         <param name="pdbin" value="test.pdb"/>
