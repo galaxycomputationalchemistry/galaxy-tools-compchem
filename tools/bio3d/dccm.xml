@@ -25,7 +25,11 @@
         <test>
             <param name="dcdin" value="test.dcd" ftype="dcd"/>
             <param name="pdbin" value="test.pdb" ftype="pdb"/>
-            <output name="dccm_plot" file='DCCM_plot.png' ftype="png"/>
+            <output name="output">
+              <assert_contents>
+                <has_line line="1	1	0.691065292348727	0.589348686585723	0.236045354930272	0.508465893991714" />
+              </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
