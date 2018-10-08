@@ -20,7 +20,8 @@
     2>&1
 ]]></command>
     <inputs>
-        <expand macro="analysis_inputs"/>
+        <param format="dcd" name="dcdin" type="data" label="dcd trajectory input"/>
+        <param format="pdb" name="pdbin" type="data" label="pdb input"/>
         <param name="segid1"  type="text" value="PRO" label="Segid of atom 1"/>
         <param name="resid1"  type="text" value="212" label="Resid of atom 1"/>
         <param name="name1"  type="text" value="OE2" label="Atom name of atom 1"/>
@@ -34,7 +35,8 @@
     </outputs>
     <tests>
         <test>
-            <expand macro="tests_inputs"/>
+            <param name="dcdin" value="test.dcd"/>
+            <param name="pdbin" value="test.pdb"/>
             <param name="segid1" value="PRO"/>
             <param name="resid1" value="212"/>
             <param name="name1" value="OE2"/>
