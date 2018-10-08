@@ -1,4 +1,4 @@
-<tool id="bio3d_PCA_visualize" name="PCA visualization" version="0.1.2">
+<tool id="bio3d_PCA_visualize" name="PCA visualization"  version="@VERSION@">
     <description>Visualize principle components of motions</description>
     <macros>
         <import>macros.xml</import>
@@ -6,7 +6,7 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code">
 <![CDATA[ 
-     Rscript '$__tool_directory__/bio3d_visualize_pc.R' 
+     Rscript '$__tool_directory__/visualize_pc.R' 
         '$dcdin' 
         '$pdbin'
         '$method'
@@ -114,7 +114,11 @@
             <param name="pdbin" value="test.pdb"/>
             <param name="method" value="FALSE"/>
             <param name="sele" value="calpha"/>
-            <output name="pdb1" file='PC1_PDB.pdb' ftype="pdb" />
+            <output name="pdb1">
+              <assert_contents>
+                <has_line line="MODEL        1" />
+              </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[

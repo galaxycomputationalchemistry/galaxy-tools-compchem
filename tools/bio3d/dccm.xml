@@ -25,7 +25,7 @@
         <test>
             <param name="dcdin" value="test.dcd" ftype="dcd"/>
             <param name="pdbin" value="test.pdb" ftype="pdb"/>
-            <output name="output" file='DCCM_raw_data.csv' ftype="csv"/>
+            <output name="dccm_plot" file='DCCM_plot.png' ftype="png"/>
         </test>
     </tests>
     <help><![CDATA[
