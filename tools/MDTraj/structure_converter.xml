@@ -1,0 +1,60 @@
+<tool id="mdtraj_str_converter" name="Structure converter" version="1.9.1">
+    <description>convert gromacs trr and gro formats to dcd and pdb formats</description>
+    <requirements>
+        <requirement type="package" version="2018.2">gromacs</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+      ln -s '$gro_input' ./groinp.gro &&
+      ln -s '$trr_input' ./trrinp.trr &&
+      mdconvert -o ./dcdout.dcd ./trrinp.trr &&
+      cp ./dcdout.dcd '$dcdout' &&
+      gmx editconf  -f ./groinp.gro -o ./pdbout.pdb &&
+      cp ./pdbout.pdb '$pdbout'
+    ]]></command>
+    <inputs>
+        <param argument="gro_input" type="data" format='gro' label="GRO structure file."/>
+	<param argument="trr_input" type="data" format='trr' label="TRR trajectory file."/>
+    </inputs>
+    <outputs>
+        <data format="dcd" name="dcdout" label="dcd output"/>
+        <data format="pdb" name="pdbout" label="pdb output"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="gro_input" value="npt.gro" />
+            <param name="trr_input" value="npt.trr" />
+            <output name="pdbout">
+                <assert_contents>
+                    <has_line line="TITLE     LYSOZYME in water" />
+                </assert_contents>
+        </test>
+    </tests>
+    <help><![CDATA[
+**What it does**
+        
+This tool converts GROMACS trajectory (trr) and structure (gro) files to pdb and dcd file formats.
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Trajectory file from GROMACS (trr).
+       - Structure file from GROMACS (gro).
+     
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - Output files in PDB and DCD formats
+    ]]></help>
+    <citations>
+      <citation type="doi">10.1016/j.bpj.2015.08.015</citation>
+      <citation type="doi">10.1016/j.softx.2015.06.001</citation>
+    </citations>
+</tool>
