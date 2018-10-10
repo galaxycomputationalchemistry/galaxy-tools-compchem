@@ -1,0 +1,78 @@
+<tool id="str_converter" name="Structure converter (GROMACS editconf)" version="2018.2">
+    <description>- interconvert between structure file formats: pdb, gro</description>
+    <requirements>
+        <requirement type="package" version="2018.2">gromacs</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+
+        ln -s '$input_file' ./input.$input.input_format &&
+        gmx editconf -f ./input.$input.input_format -o ./output.${output_format} &&
+        cp ./output.${output_format} $output
+
+    ]]></command>
+    <inputs>
+        <conditional name="input">
+            <param name="input_format" type="select" label="File format of input">
+                <option value="gro">GRO file</option>
+                <option value="pdb">PDB file</option>
+            </param>
+            <when value="gro">
+                <param argument="input_file" type="data" format='gro' label="GRO input file for conversion"/>
+            </when>
+            <when value="pdb">
+                <param argument="input_file" type="data" format='pdb' label="PDB input file for conversion"/>
+            </when>
+        </conditional>
+        <param argument="output_format" type="select" label="Output">
+            <option value="gro">GRO file</option>
+            <option value="pdb">PDB file</option>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="output" auto_format="true" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input_format" value="pdb" />
+            <param name="output_format" value="gro" />
+            <param name="input_file" value="str.pdb" />
+            <output name="output" file="str.gro" compare="sim_size"/>
+        </test>
+        <test>
+            <param name="input_format" value="gro" />
+            <param name="output_format" value="pdb" />
+            <param name="input_file" value="str.gro" />
+            <output name="output" file="str2.pdb">
+                <assert_contents>
+                    <has_line line="TITLE     LYSOZYME in water" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+**What it does**
+        
+This tool interconverts between structure file formats: pdb and gro
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Structure file from GROMACS (pdb, gro).
+     
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - Structure file from GROMACS (pdb, gro).
+    ]]></help>
+    <citations>
+      <citation type="doi">10.1016/j.softx.2015.06.001</citation>
+    </citations>
+
+</tool>
