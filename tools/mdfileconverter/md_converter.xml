@@ -1,0 +1,124 @@
+<tool id="md_converter" name="MDTraj file converter" version="1.9.1">
+    <macros>
+        <xml name='traj' token_format='format'>
+            <when value="@FORMAT@">
+                <param argument="input_file" type="data" format='@FORMAT@' label="@FORMAT@ input file for conversion"/>
+                <param argument="output_format" type="select" label="Output">
+                    <option value="trr">TRR file</option>
+                    <option value="xtc">XTC file</option>
+                    <option value="dcd">DCD file</option>
+                </param>
+            </when>
+        </xml>
+        <xml name='str' token_format='format'>
+            <when value="@FORMAT@">
+                <param argument="input_file" type="data" format='@FORMAT@' label="@FORMAT@ input file for conversion"/>
+                <param argument="output_format" type="select" label="Output">
+                    <option value="gro">GRO file</option>
+                    <option value="pdb">PDB file</option>
+                </param>
+            </when>
+        </xml>
+    </macros>
+
+    <description>- interconvert between MD trajectory or structure file formats.</description>
+
+    <requirements>
+        <requirement type="package" version="1.9.1">mdtraj</requirement>
+        <requirement type="package" version="2018.2">gromacs</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+
+        #if $input.input_format == 'gro' or $input.input_format == 'pdb':
+            ln -s '$input_file' ./input.$input.input_format &&
+            gmx editconf -f ./input.$input.input_format -o ./output.${input.output_format} &&
+            cp ./output.${input.output_format} $output
+
+        #else
+            ln -s '$input_file' ./input.$input.input_format &&
+            mdconvert ./input.$input.input_format -o ./output.${input.output_format} &&
+            cp ./output.${input.output_format} $output
+        
+        #end if
+
+
+    ]]></command>
+    <inputs>
+        <conditional name="input">
+            <param name="input_format" type="select" label="File format of input">
+                <option value="trr">TRR file</option>
+                <option value="xtc">XTC file</option>
+                <option value="dcd">DCD file</option>
+                <option value="pdb">PDB file</option>
+                <option value="gro">GRO file</option>
+            </param>
+            
+            <expand macro="traj" format="trr" />
+            <expand macro="traj" format="xtc" />
+            <expand macro="traj" format="dcd" />
+            <expand macro="str" format="pdb" />
+            <expand macro="str" format="gro" />
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="output" auto_format="true" />
+    </outputs> 
+    <tests>
+        <test>
+            <param name="input_format" value="xtc" />
+            <param name="output_format" value="dcd" />
+            <param name="input_file" value="traj.xtc" />
+            <output name="output" file="traj.dcd" compare="sim_size"/>
+        </test>
+        <test>
+            <param name="input_format" value="dcd" />
+            <param name="output_format" value="trr" />
+            <param name="input_file" value="traj.dcd" />
+            <output name="output" file="traj.trr"/>
+        </test>
+        <test>
+            <param name="input_format" value="pdb" />
+            <param name="output_format" value="gro" />
+            <param name="input_file" value="str.pdb" />
+            <output name="output" file="str.gro" compare="sim_size"/>
+        </test>
+        <test>
+            <param name="input_format" value="gro" />
+            <param name="output_format" value="pdb" />
+            <param name="input_file" value="str.gro" />
+            <output name="output" file="str2.pdb">
+                <assert_contents>
+                    <has_line line="TITLE     LYSOZYME in water" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+**What it does**
+        
+This tool interconverts between MD file formats: xtc, trr and dcd (trajectory formats) and pdb and gro (structure formats).
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Trajectory file (trr, xtc, dcd) or structure file (pdb, gro)
+     
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - Trajectory file (trr, xtc, dcd) or structure file (pdb, gro)
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1016/j.bpj.2015.08.015</citation>
+        <citation type="doi">10.1016/j.softx.2015.06.001</citation>
+    </citations>
+</tool>
