@@ -1,0 +1,10 @@
+name: MD file converter
+owner: chemteam
+description: "A tool for interconverting between different MD structure and trajectory file formats."
+long_description: |
+    A tool for interconverting between different MD structure and trajectory file formats, from GROMACS, CHARMM and NAMD. PDB, DCD, GRO, TRR and XTC formats are currently supported. 
+remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/tools/mdfileconverter
+type: unrestricted
+categories:
+- Molecular Dynamics
+- Computational chemistry
