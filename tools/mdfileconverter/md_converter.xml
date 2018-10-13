@@ -61,9 +61,19 @@
             <expand macro="str" format="gro" />
         </conditional>
     </inputs>
+
     <outputs>
-        <data name="output" auto_format="true" />
+        <data name="output" format="text">
+            <change_format>
+                <when input="output_format" value="gro" format="gro"/>
+                <when input="output_format" value="pdb" format="pdb"/>
+                <when input="output_format" value="trr" format="trr"/>
+                <when input="output_format" value="xtc" format="xtc"/>
+                <when input="output_format" value="dcd" format="dcd"/>
+            </change_format>
+        </data>
     </outputs> 
+
     <tests>
         <test>
             <param name="input_format" value="xtc" />
