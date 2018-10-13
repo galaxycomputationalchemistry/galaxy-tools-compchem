@@ -1,25 +1,4 @@
 <tool id="md_converter" name="MDTraj file converter" version="1.9.1">
-    <macros>
-        <xml name='traj' token_format='format'>
-            <when value="@FORMAT@">
-                <param argument="input_file" type="data" format='@FORMAT@' label="@FORMAT@ input file for conversion"/>
-                <param argument="output_format" type="select" label="Output">
-                    <option value="trr">TRR file</option>
-                    <option value="xtc">XTC file</option>
-                    <option value="dcd">DCD file</option>
-                </param>
-            </when>
-        </xml>
-        <xml name='str' token_format='format'>
-            <when value="@FORMAT@">
-                <param argument="input_file" type="data" format='@FORMAT@' label="@FORMAT@ input file for conversion"/>
-                <param argument="output_format" type="select" label="Output">
-                    <option value="gro">GRO file</option>
-                    <option value="pdb">PDB file</option>
-                </param>
-            </when>
-        </xml>
-    </macros>
 
     <description>- interconvert between MD trajectory or structure file formats.</description>
 
@@ -30,35 +9,41 @@
 
     <command detect_errors="exit_code"><![CDATA[
 
-        #if $input.input_format == 'gro' or $input.input_format == 'pdb':
-            ln -s '$input_file' ./input.$input.input_format &&
-            gmx editconf -f ./input.$input.input_format -o ./output.${input.output_format} &&
+        #if $input.conversion == 'str':
+            ln -s '$input_file' ./input.$input_file.ext &&
+            gmx editconf -f ./input.$input_file.ext -o ./output.${input.output_format} &&
             cp ./output.${input.output_format} $output
-
-        #else
-            ln -s '$input_file' ./input.$input.input_format &&
-            mdconvert ./input.$input.input_format -o ./output.${input.output_format} &&
-            cp ./output.${input.output_format} $output
-        
         #end if
 
+        #if $input.conversion == 'traj':
+            ln -s '$input_file' ./input.$input_file.ext &&
+            mdconvert ./input.$input_file.ext -o ./output.${input.output_format} &&
+            cp ./output.${input.output_format} $output
+    
+        #end if
 
     ]]></command>
     <inputs>
         <conditional name="input">
-            <param name="input_format" type="select" label="File format of input">
-                <option value="trr">TRR file</option>
-                <option value="xtc">XTC file</option>
-                <option value="dcd">DCD file</option>
-                <option value="pdb">PDB file</option>
-                <option value="gro">GRO file</option>
+            <param argument="conversion" type="select" label="Type of conversion">
+                <option value="traj">Trajectory file</option>
+                <option value="str">Structure file</option>
             </param>
-            
-            <expand macro="traj" format="trr" />
-            <expand macro="traj" format="xtc" />
-            <expand macro="traj" format="dcd" />
-            <expand macro="str" format="pdb" />
-            <expand macro="str" format="gro" />
+            <when value="traj">
+                <param argument="input_file" type="data" format='xtc, trr, dcd' label="Input file for conversion"/>
+                <param argument="output_format" type="select" label="Output format">
+                    <option value="trr">TRR file</option>
+                    <option value="xtc">XTC file</option>
+                    <option value="dcd">DCD file</option>
+                </param>
+            </when>
+            <when value="str">
+                <param argument="input_file" type="data" format='gro, pdb' label="Input file for conversion"/>
+                <param argument="output_format" type="select" label="Output format">
+                    <option value="gro">GRO file</option>
+                    <option value="pdb">PDB file</option>
+                </param>
+            </when>
         </conditional>
     </inputs>
 
@@ -76,27 +61,27 @@
 
     <tests>
         <test>
-            <param name="input_format" value="xtc" />
+            <param name="conversion" value="traj" />
             <param name="output_format" value="dcd" />
             <param name="input_file" value="traj.xtc" />
             <output name="output" file="traj.dcd" compare="sim_size"/>
         </test>
         <test>
-            <param name="input_format" value="dcd" />
+            <param name="conversion" value="traj" />
             <param name="output_format" value="trr" />
             <param name="input_file" value="traj.dcd" />
             <output name="output" file="traj.trr"/>
         </test>
         <test>
-            <param name="input_format" value="pdb" />
+            <param name="conversion" value="str" />
             <param name="output_format" value="gro" />
-            <param name="input_file" value="str.pdb" />
+            <param name="input_file" value="str.pdb" ftype="pdb"/>
             <output name="output" file="str.gro" compare="sim_size"/>
         </test>
         <test>
-            <param name="input_format" value="gro" />
+            <param name="conversion" value="str" />
             <param name="output_format" value="pdb" />
-            <param name="input_file" value="str.gro" />
+            <param name="input_file" value="str.gro" ftype="gro"/>
             <output name="output" file="str2.pdb">
                 <assert_contents>
                     <has_line line="TITLE     LYSOZYME in water" />
