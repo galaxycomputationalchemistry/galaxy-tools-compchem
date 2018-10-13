@@ -82,11 +82,7 @@
             <param name="conversion" value="str" />
             <param name="output_format" value="pdb" />
             <param name="input_file" value="str.gro" ftype="gro"/>
-            <output name="output" file="str2.pdb">
-                <assert_contents>
-                    <has_line line="TITLE     LYSOZYME in water" />
-                </assert_contents>
-            </output>
+            <output name="output" file="str2.pdb" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[
