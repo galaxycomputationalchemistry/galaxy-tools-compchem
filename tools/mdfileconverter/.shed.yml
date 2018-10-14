@@ -1,4 +1,4 @@
-name: MD file converter
+name: md_converter
 owner: chemteam
 description: "A tool for interconverting between different MD structure and trajectory file formats."
 long_description: |
@@ -6,5 +6,5 @@ long_description: |
 remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/tools/mdfileconverter
 type: unrestricted
 categories:
-- Molecular Dynamics
-- Computational chemistry
+  - Molecular Dynamics
+  - Computational chemistry
