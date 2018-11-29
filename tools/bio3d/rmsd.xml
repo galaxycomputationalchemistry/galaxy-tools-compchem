@@ -1,0 +1,176 @@
+<tool id="bio3d_rmsd" name="RMSD Analysis" version="@VERSION@">
+    <description>RMSD using Bio3D</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code">
+<![CDATA[ 
+     Rscript '$__tool_directory__/rmsd.R'
+        '$dcdin'  
+        '$pdbin'
+        #if $rmsd.sele == 'calpha':
+          "string"
+          "calpha"
+        #end if
+        #if $rmsd.sele == 'cbeta':
+          "string"
+          "cbeta"
+        #end if
+        #if $rmsd.sele == 'backbone':
+          "string"
+          "backbone"
+        #end if
+        #if $rmsd.sele == 'sidechain':
+          "string"
+          "sidechain"
+        #end if
+        #if $rmsd.sele == 'protein':
+          "string"
+          "protein"
+        #end if
+        #if $rmsd.sele == 'ligand':
+          "string"
+          "ligand"
+        #end if
+        #if $rmsd.sele == 'nucleic':
+          "string"
+          "nucleic"
+        #end if
+        #if $rmsd.sele == 'water':
+          "string"
+          "water"
+        #end if
+        #if $rmsd.sele == 'hyd':
+          "string"
+          "hyd"
+        #end if
+        #if $rmsd.sele == 'noh':
+          "string"
+          "noh"
+        #end if
+        #if $rmsd.sele == "loop":
+          "resno"
+          '$rmsd.res1'
+          '$rmsd.res2'
+        #end if
+        #if $rmsd.sele == "elety":
+          "elety"
+          '$rmsd.elety'
+        #end if
+        #if $rmsd.sele == "resid":
+          "resid"
+          '$rmsd.resid'
+        #end if
+        #if $rmsd.sele == "segid":
+          "segid"
+          '$rmsd.segid'
+        #end if
+        '$output'
+        '$rmsd_plot' 
+        '$rmsd_hist_plot'
+    2>&1
+]]></command>
+    <inputs>
+        <expand macro="analysis_inputs"/>
+        <conditional name="rmsd">
+           <param name="sele" type="select" label="Select domains">
+             <option value="calpha">Calpha</option>
+             <option value="cbeta">Cbeta</option>
+             <option value="backbone">Backbone</option>
+             <option value="sidechain">Sidechain</option>
+             <option value="protein">Protein</option>
+             <option value="ligand">Ligand</option>
+             <option value="nucleic">Nucleic Acids</option>
+             <option value="loop">Loop</option>
+             <option value="water">Water</option>
+             <option value="hyd">Hydrogens</option>
+             <option value="noh">Non Hydrogens</option>
+             <option value="elety">Atom Names</option>
+             <option value="resid">Resid</option>
+             <option value="segid">Segid</option>
+           </param>
+           <when value="calpha">
+           </when>
+           <when value="cbeta">
+           </when>
+           <when value="backbone">
+           </when> 
+           <when value="sidechain">
+           </when>
+           <when value="protein">
+           </when>
+           <when value="ligand">
+           </when>
+           <when value="nucleic">
+           </when>
+           <when value="loop">
+             <param name="res1"  type="text" label="Resid of the loop starting residue"/>
+             <param name="res2"  type="text" label="Resid of the loop ending residue"/>
+           </when>
+           <when value="water">
+           </when>
+           <when value="hyd">
+          </when>
+          <when value="noh">
+          </when> 
+          <when value="elety">
+            <param name="elety"  type="text" value="CA" label="Atom Name"/>
+          </when>
+          <when value="resid">
+            <param name="resid"  type="text" value="BGLC" label="Resid"/>
+          </when>
+          <when value="segid">
+            <param name="segid"  type="text" value="SUBS" label="Segid"/>
+          </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="output" label="RMSD raw data"/>
+        <data format="png" name="rmsd_plot" label="RMSD plot"/>
+        <data format="png" name="rmsd_hist_plot" label="RMSD Histogram Plot"/>
+    </outputs>
+    <tests>
+        <test>
+            <expand macro="tests_inputs"/>
+            <param name="sele" value="calpha"/>
+            <output name="output">
+              <assert_contents>
+                <has_n_columns n="2" />
+              </assert_contents>
+             </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+The Root Mean Square Deviation (RMSD) is a standard measure of structural distance between coordinates.
+This tool can calculate and plot the RMSD of the selected section.
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Input file in PDB format
+       - Input file in DCD format
+
+_____
+
+
+.. class:: infomark
+
+**Output**
+
+       - Image (as PNG) of the rmsd plot.
+       - Image (as PNG) of the rmsd histogram plot.
+       - Tab-separated file of raw data.
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>

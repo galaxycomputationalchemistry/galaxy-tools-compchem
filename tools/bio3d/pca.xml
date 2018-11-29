@@ -1,0 +1,151 @@
+<tool id="bio3d_pca" name="PCA" version="@VERSION@">
+    <description>Principle component analysis using Bio3D</description>    
+    <macros>
+        <import>macros.xml</import>
+    </macros>   
+    <expand macro="requirements" />
+    <command detect_errors="exit_code">
+<![CDATA[ 
+   Rscript '$__tool_directory__/pca.R'
+        '$dcdin' 
+        '$pdbin'
+        '$method'
+        #if $pca.sele == 'calpha':
+          "string"
+           "calpha"
+        #end if
+        #if $pca.sele == 'cbeta':
+          "string"
+          '$pca.cbeta'
+        #end if
+        #if $pca.sele == 'backbone':
+          "string"
+          "backbone"
+        #end if
+        #if $pca.sele == 'sidechain':
+          "string"
+          "sidechain"
+        #end if
+        #if $pca.sele == 'protein':
+          "string"
+          "protein"
+        #end if
+        #if $pca.sele == 'ligand':
+          "string"
+          "ligand"
+        #end if
+        #if $pca.sele == 'nucleic':
+          "string"
+          "nucleic"
+        #end if
+        #if $pca.sele == 'elety':
+          "elety"
+          '$pca.elety'
+        #end if
+        #if $pca.sele == 'resid':
+          "resid"
+          '$pca.resid'
+        #end if
+        #if $pca.sele == 'segid':
+          "segid"
+          '$pca.segid'
+        #end if
+        '$output' 
+        '$pca_plot' 
+        '$pca_cluster' 
+        '$pc1_rmsf'
+    2>&1
+]]></command>
+    <inputs>
+        <expand macro="analysis_inputs"/>
+        <param name="method" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="false"
+            label="Use singular value decomposition (SVD) instead of default eigenvalue decomposition ?" help="Default: No" />
+        <conditional name="pca">
+           <param name="sele" type="select" label="Select domains">
+             <option value="calpha">Calpha</option>
+             <option value="cbeta">Cbeta</option>
+             <option value="backbone">Backbone</option>
+             <option value="sidechain">Sidechain</option>
+             <option value="protein">Protein</option>
+             <option value="ligand">Ligand</option>
+             <option value="nucleic">Nucleic Acids</option>
+             <option value="elety">Atom Names</option>
+             <option value="resid">Resid</option>
+             <option value="segid">Segid</option>
+           </param>
+           <when value="calpha">
+           </when>
+           <when value="cbeta">
+           </when>
+           <when value="backbone">
+           </when> 
+           <when value="sidechain">
+           </when>
+           <when value="protein">
+           </when>
+           <when value="ligand">
+           </when>
+           <when value="nucleic">
+           </when>
+          <when value="elety">
+            <param name="elety"  type="text" value="CA" label="Atom Name"/>
+          </when>
+          <when value="resid">
+            <param name="resid"  type="text" value="BGLC" label="Resid"/>
+          </when>
+          <when value="segid">
+            <param name="segid"  type="text" value="SUBS" label="Segid"/>
+          </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="output" label="PCA raw data"/>
+        <data format="png" name="pca_plot" label="PCA plot"/>
+        <data format="png" name="pca_cluster" label="PCA Cluster Plot"/>
+        <data format="png" name="pc1_rmsf" label="PC1 on RMSF"/>
+    </outputs>
+    <tests>
+        <test>
+            <expand macro="tests_inputs"/>
+            <param name="method" value="false"/>
+            <param name="sele" value="calpha"/> 
+            <output name="output">
+              <assert_contents>
+                <has_n_columns n="4" />
+              </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+PCA can be used to determine the relationship between statistically meaningful conformations (major global motions)
+sampled during the trajectory. 
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Input file in PDB format
+       - Input file in dcd format
+
+_____
+
+
+.. class:: infomark
+
+**Output**
+
+       - Image (as PNG) of the pca plot
+       - Image (as PNG) of the pca clusterd plot
+       - Image (as PNG) of the PC1 plotted on RMSF
+       - Tab-separated file of raw data
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>
