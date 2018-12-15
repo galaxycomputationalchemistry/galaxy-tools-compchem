@@ -8,7 +8,7 @@ import MDAnalysis as mda
 from MDAnalysis.lib.distances import calc_dihedrals
 
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use('Agg')  # noqa
 import matplotlib.pyplot as plt
 
 import numpy as np
