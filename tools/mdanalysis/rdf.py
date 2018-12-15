@@ -8,7 +8,7 @@ import MDAnalysis as mda
 from MDAnalysis.analysis.rdf import InterRDF
 
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use('Agg')  # noqa
 import matplotlib.pyplot as plt
 
 import numpy as np
