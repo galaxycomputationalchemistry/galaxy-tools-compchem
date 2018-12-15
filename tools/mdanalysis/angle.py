@@ -7,12 +7,11 @@ import sys
 import MDAnalysis as mda
 
 import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 import numpy as np
 from numpy.linalg import norm
-
-matplotlib.use('Agg')
 
 
 def parse_command_line(argv):
