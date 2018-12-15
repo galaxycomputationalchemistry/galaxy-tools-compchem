@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 
 import numpy as np
 
+
 def parse_command_line(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('--idcd', help='input dcd')
