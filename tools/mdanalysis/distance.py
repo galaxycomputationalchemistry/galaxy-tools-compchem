@@ -6,11 +6,10 @@ import sys
 import MDAnalysis as mda
 
 import matplotlib
+matplotlib.use('Agg')  # noqa
 import matplotlib.pyplot as plt
 
 import numpy as np
-
-matplotlib.use('Agg')
 
 
 def parse_command_line(argv):
@@ -53,5 +52,5 @@ with open(args.output) as f:
     distance = [xtmp[1] for xtmp in data]
     plt.plot(time, distance)
     plt.xlabel('Frame No.')
-    plt.ylabel('Distance ($\AA$)')
+    plt.ylabel(r'Distance ($\AA$)')
     plt.savefig(args.odistance_plot, format='png')

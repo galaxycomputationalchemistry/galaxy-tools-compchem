@@ -8,11 +8,10 @@ import MDAnalysis as mda
 from MDAnalysis.analysis.rdf import InterRDF
 
 import matplotlib
+matplotlib.use('Agg')  # noqa
 import matplotlib.pyplot as plt
 
 import numpy as np
-
-matplotlib.use('Agg')
 
 
 def parse_command_line(argv):
@@ -64,6 +63,6 @@ with open(args.output) as f:
     time = [xtmp[0] for xtmp in data]
     rdf = [xtmp[1] for xtmp in data]
     plt.plot(time, rdf)
-    plt.xlabel('r ($\AA$)')
+    plt.xlabel(r'r ($\AA$)')
     plt.ylabel('g(r)')
     plt.savefig(args.ordf_plot, format='png')

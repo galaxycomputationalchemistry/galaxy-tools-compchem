@@ -8,11 +8,10 @@ import MDAnalysis as mda
 from MDAnalysis.lib.distances import calc_dihedrals
 
 import matplotlib
+matplotlib.use('Agg')  # noqa
 import matplotlib.pyplot as plt
 
 import numpy as np
-
-matplotlib.use('Agg')
 
 
 def parse_command_line(argv):
