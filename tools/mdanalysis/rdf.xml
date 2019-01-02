@@ -53,6 +53,7 @@
             <output name="output">
              <assert_contents>
                <has_n_columns n="2" />
+               <has_line line="0.025	0.0" />
              </assert_contents>
             </output>
         </test>
