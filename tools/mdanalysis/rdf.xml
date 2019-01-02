@@ -51,7 +51,6 @@
             <param name="start" value="0.0"/>
             <param name="end" value="5.0"/>
             <output name="output" file="RDF_raw_data.tabular" ftype="tabular"/>
-            </output>
         </test>
     </tests>
     <help><![CDATA[
