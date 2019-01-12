@@ -54,7 +54,6 @@
               <assert_contents>
                 <has_n_columns n="2" />
                 <not_has_text text="nan" />
-                <has_line_matching expression="0.025	0.0" />
               </assert_contents>
              </output>
         </test>
