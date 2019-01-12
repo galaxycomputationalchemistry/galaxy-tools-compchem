@@ -59,7 +59,7 @@
             <param name="segid4" value="HET"/>
             <param name="resid4" value="3"/>
             <param name="name4" value="C3"/>
-            <output name="output" file="Dihedral_analysis_raw_data.csv" />
+            <output name="output" file="Dihedral_analysis_raw_data.tabular" />
         </test>
     </tests>
     <help><![CDATA[

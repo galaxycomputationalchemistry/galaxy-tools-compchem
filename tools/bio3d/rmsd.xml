@@ -134,7 +134,7 @@
         <test>
             <expand macro="tests_inputs"/>
             <param name="sele" value="calpha"/>
-            <output name="output" file="RMSD_raw_data.csv" />
+            <output name="output" file="RMSD_raw_data.tabular" />
         </test>
     </tests>
     <help><![CDATA[

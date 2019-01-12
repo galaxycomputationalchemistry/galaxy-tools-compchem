@@ -50,7 +50,7 @@
             <param name="segid3" value="HET"/>
             <param name="resid3" value="3"/>
             <param name="name3" value="C2"/>
-            <output name="output" file="Angle_Analysis_raw_data.csv" />
+            <output name="output" file="Angle_Analysis_raw_data.tabular" />
         </test>
     </tests>
     <help><![CDATA[
