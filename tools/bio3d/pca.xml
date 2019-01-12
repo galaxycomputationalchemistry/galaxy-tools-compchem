@@ -112,6 +112,7 @@
             <output name="output">
               <assert_contents>
                 <has_n_columns n="4" />
+                <has_line_matching expression="1\s+0.047.*\s+0.0374.*\s+0.0436.*" />
               </assert_contents>
             </output>
         </test>
