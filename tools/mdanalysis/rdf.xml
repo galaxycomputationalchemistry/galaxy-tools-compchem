@@ -46,7 +46,7 @@
             <param name="name1" value="OE2"/>
             <param name="segid2" value="HET"/>
             <param name="resid2" value="3"/>
-            <param name="name1" value="C1"/>
+            <param name="name2" value="C1"/>
             <param name="nbins" value="100"/>
             <param name="start" value="0.0"/>
             <param name="end" value="5.0"/>
