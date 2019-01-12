@@ -54,8 +54,9 @@
               <assert_contents>
                 <has_n_columns n="2" />
                 <not_has_text text="nan" />
+                <has_line_matching expression="3.625\s+5171.93.*" />
               </assert_contents>
-             </output>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
