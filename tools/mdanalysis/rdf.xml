@@ -46,15 +46,17 @@
             <param name="name1" value="OE2"/>
             <param name="segid2" value="HET"/>
             <param name="resid2" value="3"/>
-            <param name="name1" value="C1"/>
+            <param name="name2" value="C1"/>
             <param name="nbins" value="100"/>
             <param name="start" value="0.0"/>
             <param name="end" value="5.0"/>
             <output name="output">
               <assert_contents>
                 <has_n_columns n="2" />
+                <not_has_text text="nan" />
+                <has_line_matching expression="3.625\s+5171.93.*" />
               </assert_contents>
-             </output>
+            </output>
         </test>
     </tests>
     <help><![CDATA[

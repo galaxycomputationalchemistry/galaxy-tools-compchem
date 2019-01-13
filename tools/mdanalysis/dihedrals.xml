@@ -56,14 +56,10 @@
             <param name="segid3" value="HET"/>
             <param name="resid3" value="3"/>
             <param name="name3" value="C2"/>
-            <param name="segid3" value="HET"/>
-            <param name="resid3" value="3"/>
-            <param name="name3" value="C3"/>
-            <output name="output">
-              <assert_contents>
-                <has_n_columns n="2" />
-              </assert_contents>
-             </output>
+            <param name="segid4" value="HET"/>
+            <param name="resid4" value="3"/>
+            <param name="name4" value="C3"/>
+            <output name="output" file="Dihedral_analysis_raw_data.tabular" />
         </test>
     </tests>
     <help><![CDATA[

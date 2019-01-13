@@ -132,11 +132,7 @@
         <test>
             <expand macro="tests_inputs"/>
             <param name="sele" value="calpha"/>
-            <output name="output">
-              <assert_contents>
-                <has_n_columns n="2" />
-              </assert_contents>
-            </output>
+            <output name="output" file="rmsf_raw_data.tabular" /> 
         </test>
     </tests>
     <help><![CDATA[
