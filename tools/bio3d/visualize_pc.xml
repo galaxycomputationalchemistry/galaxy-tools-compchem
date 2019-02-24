@@ -1,0 +1,141 @@
+<tool id="PCA_visualize" name="PCA visualization" version="@VERSION@">
+    <description>Visualize principle components of motions</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>   
+    <expand macro="requirements" />
+    <command detect_errors="exit_code">
+<![CDATA[ 
+   Rscript '$__tool_directory__/visualize_pc.R'
+        '$dcdin' 
+        '$pdbin'
+        '$method'
+        #if $pca.sele == 'calpha':
+          "string"
+           "calpha"
+        #end if
+        #if $pca.sele == 'cbeta':
+          "string"
+          '$pca.cbeta'
+        #end if
+        #if $pca.sele == 'backbone':
+          "string"
+          "backbone"
+        #end if
+        #if $pca.sele == 'sidechain':
+          "string"
+          "sidechain"
+        #end if
+        #if $pca.sele == 'protein':
+          "string"
+          "protein"
+        #end if
+        #if $pca.sele == 'ligand':
+          "string"
+          "ligand"
+        #end if
+        #if $pca.sele == 'nucleic':
+          "string"
+          "nucleic"
+        #end if
+        #if $pca.sele == 'elety':
+          "elety"
+          '$pca.elety'
+        #end if
+        #if $pca.sele == 'resid':
+          "resid"
+          '$pca.resid'
+        #end if
+        #if $pca.sele == 'segid':
+          "segid"
+          '$pca.segid'
+        #end if
+        '$PC_id' 
+        '$pdbout' 
+    2>&1
+]]></command>
+    <inputs>
+        <expand macro="analysis_inputs"/>
+        <param name="method" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="false"
+            label="Use singular value decomposition (SVD) instead of default eigenvalue decomposition ?" help="Default: No" />
+        <conditional name="pca">
+           <param name="sele" type="select" label="Select domains">
+             <option value="calpha">Calpha</option>
+             <option value="cbeta">Cbeta</option>
+             <option value="backbone">Backbone</option>
+             <option value="sidechain">Sidechain</option>
+             <option value="protein">Protein</option>
+             <option value="ligand">Ligand</option>
+             <option value="nucleic">Nucleic Acids</option>
+             <option value="elety">Atom Names</option>
+             <option value="resid">Resid</option>
+             <option value="segid">Segid</option>
+           </param>
+           <when value="calpha">
+           </when>
+           <when value="cbeta">
+           </when>
+           <when value="backbone">
+           </when> 
+           <when value="sidechain">
+           </when>
+           <when value="protein">
+           </when>
+           <when value="ligand">
+           </when>
+           <when value="nucleic">
+           </when>
+          <when value="elety">
+            <param name="elety"  type="text" value="CA" label="Atom Name"/>
+          </when>
+          <when value="resid">
+            <param name="resid"  type="text" value="BGLC" label="Resid"/>
+          </when>
+          <when value="segid">
+            <param name="segid"  type="text" value="SUBS" label="Segid"/>
+          </when>
+        </conditional>
+        <param name="PC_id" type="integer" value="1" label="Principle component id"/>
+    </inputs>
+    <outputs>
+        <data format="pdb" name="pdbout" label="PCA_${PC_id}.pdb"/>
+    </outputs>
+    <tests>
+         <test>
+            <expand macro="tests_inputs"/>
+            <param name="method" value="false"/>
+            <param name="sele" value="calpha"/> 
+            <param name="PC_id" value="1"/>
+            <output name="output" file="PCA_1.pdb" />
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+        
+This tool can generate small trajectories of a given principle component.
+      
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Input file in PDB format
+       - Input file in dcd format
+
+_____
+
+
+.. class:: infomark
+
+**Output**
+
+       - A short trajectory (as PDB) of the given priciple component id.
+
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>
