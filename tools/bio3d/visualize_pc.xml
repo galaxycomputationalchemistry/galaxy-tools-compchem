@@ -1,5 +1,5 @@
 <tool id="bio3d_pca_visualize" name="PCA visualization" version="@VERSION@">
-    <description>of principle components of motions</description>
+    <description>Generate trajectories of principle components of motions</description>
     <macros>
         <import>macros.xml</import>
     </macros>   
@@ -106,7 +106,7 @@
             <param name="method" value="false"/>
             <param name="sele" value="calpha"/> 
             <param name="PC_id" value="1"/>
-            <output name="output" file="PCA_1.pdb" />
+            <output name="pdbout" file="PCA_1.pdb" />
         </test>
     </tests>
     <help><![CDATA[
