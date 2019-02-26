@@ -50,7 +50,7 @@
           "segid"
           '$pca.segid'
         #end if
-        '$PC_id' 
+        '$pc_id' 
         '$pdbout' 
     2>&1
 ]]></command>
@@ -71,41 +71,34 @@
              <option value="resid">Resid</option>
              <option value="segid">Segid</option>
            </param>
-           <when value="calpha">
-           </when>
-           <when value="cbeta">
-           </when>
-           <when value="backbone">
-           </when> 
-           <when value="sidechain">
-           </when>
-           <when value="protein">
-           </when>
-           <when value="ligand">
-           </when>
-           <when value="nucleic">
-           </when>
-          <when value="elety">
-            <param name="elety"  type="text" value="CA" label="Atom Name"/>
-          </when>
-          <when value="resid">
-            <param name="resid"  type="text" value="BGLC" label="Resid"/>
-          </when>
-          <when value="segid">
-            <param name="segid"  type="text" value="SUBS" label="Segid"/>
-          </when>
+           <when value="calpha"/>
+           <when value="cbeta"/>
+           <when value="backbone"/>
+           <when value="sidechain"/>
+           <when value="protein"/>
+           <when value="ligand"/>
+           <when value="nucleic"/>
+           <when value="elety">
+                <param name="elety"  type="text" value="CA" label="Atom Name"/>
+            </when>
+            <when value="resid">
+                <param name="resid"  type="text" value="BGLC" label="Resid"/>
+            </when>
+            <when value="segid">
+                <param name="segid"  type="text" value="SUBS" label="Segid"/>
+            </when>
         </conditional>
-        <param name="PC_id" type="integer" value="1" label="Principle component id"/>
+        <param name="pc_id" type="integer" value="1" label="Principle component id"/>
     </inputs>
     <outputs>
-        <data format="pdb" name="pdbout" label="PCA_${PC_id}.pdb"/>
+        <data format="pdb" name="pdbout" label="PCA_${pc_id}.pdb"/>
     </outputs>
     <tests>
          <test>
             <expand macro="tests_inputs"/>
             <param name="method" value="false"/>
             <param name="sele" value="calpha"/> 
-            <param name="PC_id" value="1"/>
+            <param name="pc_id" value="1"/>
             <output name="pdbout" file="PCA_1.pdb" />
         </test>
     </tests>
