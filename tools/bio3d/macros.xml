@@ -2,8 +2,8 @@
     <token name="@VERSION@">2.3</token>
     <xml name="requirements">
         <requirements>
+            <requirement type="package" version="3.5.1">r-essentials</requirement>
             <requirement type="package" version="2.3_3">r-bio3d</requirement>
-            <requirement type="package" version="0.20_35">r-lattice</requirement>
             <yield/>
         </requirements>
     </xml>
