@@ -1,4 +1,4 @@
-<tool id="gromacs_merge_topology_files" name="Merge GROMACS topologies" version="0.1.0">
+<tool id="gmx_merge_topology_files" name="Merge GROMACS topologies" version="0.1.0">
     <description>for example, for protein and ligand files</description>
     <macros>
         <import>macros.xml</import>
