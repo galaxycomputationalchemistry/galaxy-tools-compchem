@@ -94,11 +94,7 @@
         <test>
             <expand macro="tests_inputs"/>
             <param name="sele" value="calpha"/>
-             <output name="output">
-              <assert_contents>
-                <has_line_matching expression="1\s+1*" />
-              </assert_contents>
-            </output>
+            <output name="dccm_plot" file="dccm_plot.png" compare="sim_size" delta="20000" />
         </test>
     </tests>
     <help><![CDATA[
