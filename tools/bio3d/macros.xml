@@ -3,8 +3,7 @@
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="2.3_3">r-bio3d</requirement>
-            <requirement type="package" version="1.16">r-ncdf4</requirement>
-            <requirement type="package" version="0.20_35">r-lattice</requirement>
+            <requirement type="package" version="0.20_35">r-lattice </requirement>
             <yield/>
         </requirements>
     </xml>
@@ -20,6 +19,7 @@
     </xml>
     <xml name="citations">
         <citations>
+            <citation type="doi">10.1093/bioinformatics/btz107</citation>
             <citation type="doi">10.1093/bioinformatics/btl461</citation>
         </citations>
     </xml>
