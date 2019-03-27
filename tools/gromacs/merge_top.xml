@@ -1,0 +1,33 @@
+<tool id="merge_top" name="Merge GROMACS topologies" version="0.1.0">
+    <description>for example, for protein and ligand files</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <command detect_errors="exit_code"><![CDATA[
+        ln -s '$top_input' ./top_input.top &&
+        #for $itp_input in $itp_inputs
+            ln -s '$itp_input' ./$itp_input.element_identifier &&
+            echo '$itp_input.element_identifier' >> ./itps.txt &&
+        #end for
+
+        python $__tool_directory__/merge_top.py top_input.top itps.txt
+    ]]></command>
+    <inputs>
+        <param argument="top_input" type="data" format='top' label="Topology (TOP) file."/>
+        <param argument="itp_inputs" type="data" format='itp' multiple="true" label="Position restraint file."/>
+    </inputs>
+    <outputs>
+        <data name="output" format="top" from_work_dir="top_output.top"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="top_input" value="topol.top" />
+            <param name="itp_inputs" value="posres.itp" />
+            <output name="output" file="top_output.top" ftype="top" />
+        </test>
+    </tests>
+    <help><![CDATA[
+        Use this tool to combine GROMACS topologies - for example, the topology files for a ligand and protein.
+    ]]></help>
+    <expand macro="citations" />
+</tool>
