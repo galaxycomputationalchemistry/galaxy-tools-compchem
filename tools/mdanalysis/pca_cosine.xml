@@ -31,7 +31,7 @@
             <param name="index" value="0"/>
             <output name="cosout">
               <assert_contents>
-                <has_text text="0.5832533023151153" />
+                <has_text text="0.5832533" />
               </assert_contents>
             </output>
         </test>
