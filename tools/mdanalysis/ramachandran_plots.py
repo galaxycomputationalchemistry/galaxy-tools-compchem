@@ -10,10 +10,11 @@ from MDAnalysis.lib.distances import calc_dihedrals
 import matplotlib
 matplotlib.use('Agg')  # noqa
 import matplotlib.pyplot as plt
-
-import numpy as np
+import pylab
 
 from collections import namedtuple
+
+import numpy as np
 
 import seaborn as sns
 
