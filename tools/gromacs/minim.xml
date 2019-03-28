@@ -115,7 +115,7 @@
     </tests>
     <help><![CDATA[
 
-Upload GRO and TOP files for energy minimisation. To take advantage of all GROMACS features, upload an MDP file with simulation parameters. Otherwise, choose parameters through the Galaxy interface. See http://manual.gromacs.org/online/mdp_opt.html for more information on the options.
+Upload GRO and TOP files for energy minimisation. To take advantage of all GROMACS features, upload an MDP file with simulation parameters. Otherwise, choose parameters through the Galaxy interface. See http://manual.gromacs.org/documentation/2018/user-guide/mdp-options.html for more information on the options.
 
     ]]></help>
 
