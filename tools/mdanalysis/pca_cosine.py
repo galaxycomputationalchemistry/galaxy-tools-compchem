@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
 import argparse
+import csv
 import sys
 
 import MDAnalysis as mda
 import MDAnalysis.analysis.pca as pca
 
 import numpy as np
-import csv
 
 
 def parse_command_line(argv):
