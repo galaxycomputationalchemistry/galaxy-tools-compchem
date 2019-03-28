@@ -1,0 +1,70 @@
+<tool id="mdanalysis_cosine_analysis" name="Cosine Content" version="@VERSION@">
+    <description>Measure the cosine content of the PCA projection</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code">
+<![CDATA[
+     python '$__tool_directory__/pca_cosine.py' 
+        --idcd '$dcdin' 
+        --ipdb '$pdbin'
+        --icomponents '$components'
+        --iindex '$index' 
+        --output '$output' 
+        --cosout '$cosout'
+    2>&1
+]]></command>
+    <inputs>
+        <expand macro="analysis_inputs"/>
+        <param name="components"  type="text" value="3" label="Number of components"/>
+        <param name="index"  type="text" value="0" label="The index of the PCA component projection to be analyzed"/>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="output" label="PCA Analysis raw data"/>
+        <data format="txt" name="cosout" label="Cosine content of the PCA projection"/>
+    </outputs>
+    <tests>
+        <test>
+            <expand macro="tests_inputs"/>
+            <param name="components" value="3"/>
+            <param name="index" value="0"/>
+            <output name="cosout">
+              <assert_contents>
+                <has_text text="0.5832533023151153" />
+              </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+        
+The cosine content of the principal components is a good indicator for determine good or bad sampling and can be use to determine the convergence of the MD simulation.
+This tool can calculate the cosine content of a user define PCA projection.
+This tool use zero based indexes (0 is PC1).  
+    
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Trajectory file  (DCD).
+       - PDB file.
+
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - The cosine content value.
+       - Tab-separated file of raw data of first three principle component.
+
+    ]]></help>
+      <expand macro="citations" />
+</tool>
