@@ -1,0 +1,78 @@
+<tool id="mdanalysis_hbonds" name="Hydrogen Bond Analysis" version="@VERSION@">
+    <description>Analyze hbonds between two segments</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>   
+    <expand macro="requirements" />
+    <command detect_errors="exit_code">
+<![CDATA[
+     python '$__tool_directory__/hbonds.py' 
+        --idcd '$dcdin' 
+        --ipdb '$pdbin'
+        --isegid1 '$segid1'  
+        --isegid2 '$segid2'
+        --idistance '$distance'
+        --iangle '$angle'
+        --output '$output'
+        --ofreq_output '$freq_output' 
+        --onumber_output '$number_output' 
+        --otime_output '$time_output'
+    2>&1
+]]></command>
+    <inputs>
+        <expand macro="analysis_inputs"/>
+        <param name="segid1"  type="text" value="PRO" label="Segid of selection 1"/>
+        <param name="segid2"  type="text" value="HET" label="Segid of selection 2"/>
+        <param name="distance" type="float" value="3.0" label="Cutoff distance"/>
+        <param name="angle"  type="float" value="120.0" label="Cutoff angle"/>
+    </inputs>
+    <outputs> 
+        <data format="tabular" name="output" label="Hbond Analysis raw data"/>
+        <data format="tabular" name="freq_output" label="Hbond Frequency"/>
+        <data format="tabular" name="number_output" label="Number of Hbonds Per Time Step"/>
+        <data format="tabular" name="time_output" label="Time Steps for Each Observed Hbond"/>
+    </outputs>
+    <tests>
+        <test>
+            <expand macro="tests_inputs"/>
+            <param name="distance" value="3.0"/>
+            <param name="angle" value="120.0"/>
+            <output name="number_output">
+              <assert_contents>
+                <has_text text="1.000" />
+              </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+        
+This tool calculates hydrogen bonds between two segments of the system.
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Trajectory file  (DCD).
+       - PDB file.
+       - Segids of the two segments.
+       - cutoff distance and angle.
+     
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - .csv files of the Hbond frequency, number of Hbonds Per time step, and time steps for each observed Hbond
+
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>
