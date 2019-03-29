@@ -3,7 +3,9 @@
     <macros>
         <import>macros.xml</import>
     </macros>   
-    <expand macro="requirements" />
+    <expand macro="requirements">
+        <requirement type="package" version="0.24.2">pandas</requirement>
+    </expand>
     <command detect_errors="exit_code">
 <![CDATA[
      python '$__tool_directory__/hbonds.py' 

@@ -3,10 +3,7 @@
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="0.19.2">mdanalysis</requirement>
-            <requirement type="package" version="1.2.1">scipy</requirement>
-            <requirement type="package" version="0.9.0">seaborn</requirement>
-            <requirement type="package" version="1.0.5">nbdime</requirement>
-            <requirement type="package" version="0.24.2">pandas</requirement>
+            <yield/>
         </requirements>
     </xml>
     <xml name="analysis_inputs">
@@ -23,6 +20,7 @@
         <citations>
             <citation type="doi">10.1093/bioinformatics/btz107</citation>
             <citation type="doi">10.1002/jcc.21787</citation>
+            <yield/>
         </citations>
     </xml>
 </macros>

@@ -66,5 +66,7 @@ _____
        - Tab-separated file of raw data of first three principle component.
 
     ]]></help>
-      <expand macro="citations" />
+      <expand macro="citations">
+          <citation type="doi">10.1103/PhysRevE.65.031910</citation>
+      </expand>
 </tool>
