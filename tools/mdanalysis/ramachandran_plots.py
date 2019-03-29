@@ -3,6 +3,7 @@
 import argparse
 import csv
 import sys
+from collections import namedtuple
 
 import MDAnalysis as mda
 from MDAnalysis.lib.distances import calc_dihedrals
@@ -10,9 +11,6 @@ from MDAnalysis.lib.distances import calc_dihedrals
 import matplotlib
 matplotlib.use('Agg')  # noqa
 import matplotlib.pyplot as plt
-import pylab
-
-from collections import namedtuple
 
 import numpy as np
 
@@ -116,7 +114,6 @@ with open(args.output, 'w') as f:
     writer.writerows(zip(phi_frame, phi_series, psi_series))
 
 with sns.axes_style("white"):
-    figure()
     h = sns.jointplot(x=phi_series, y=psi_series, kind="kde", legend=True)
     h.set_axis_labels(r'$\Phi$ (degrees)', r'$\Psi$ (degrees)')
     h.ax_joint.set_xlim(-180, 180)

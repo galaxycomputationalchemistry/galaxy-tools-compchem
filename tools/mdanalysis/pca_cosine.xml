@@ -17,8 +17,8 @@
 ]]></command>
     <inputs>
         <expand macro="analysis_inputs"/>
-        <param name="components"  type="text" value="3" label="Number of components"/>
-        <param name="index"  type="text" value="0" label="The index of the PCA component projection to be analyzed"/>
+        <param name="components"  type="integer" value="3" label="Number of components"/>
+        <param name="index"  type="integer" value="0" label="The index of the PCA component projection to be analyzed"/>
     </inputs>
     <outputs>
         <data format="tabular" name="output" label="PCA Analysis raw data"/>
