@@ -48,7 +48,7 @@
             <expand macro="sanitizer"/>
           </param>
           <param name="resid1"  type="text" value="3" label="Resid of atom 1">
-            <expand macro="sanitizer"/>
+            <expand macro="sanitizer_resids"/>
           </param>
           <param name="name1"  type="text" value="O5" label="Atom name of atom 1">
             <expand macro="sanitizer"/>
@@ -57,7 +57,7 @@
             <expand macro="sanitizer"/>
           </param>
           <param name="resid2"  type="text" value="3" label="Resid of atom 2">
-            <expand macro="sanitizer"/>
+            <expand macro="sanitizer_resids"/>
           </param>
           <param name="name2"  type="text" value="C1" label="Atom name of atom 2">
             <expand macro="sanitizer"/>
@@ -66,7 +66,7 @@
             <expand macro="sanitizer"/>
           </param>
           <param name="resid3"  type="text" value="2" label="Resid of atom 3">
-            <expand macro="sanitizer"/>
+            <expand macro="sanitizer_resids"/>
           </param>
           <param name="name3"  type="text" value="O4" label="Atom name of atom 3">
             <expand macro="sanitizer"/>
@@ -75,7 +75,7 @@
             <expand macro="sanitizer"/>
           </param>
           <param name="resid4"  type="text" value="2" label="Resid of atom 4">
-            <expand macro="sanitizer"/>
+            <expand macro="sanitizer_resids"/>
           </param>
           <param name="name4"  type="text" value="C4" label="Atom name of atom 4">
             <expand macro="sanitizer"/>
@@ -86,7 +86,7 @@
             <expand macro="sanitizer"/>
           </param>
           <param name="resid1"  type="text" value="3" label="Resid of atom 1">
-            <expand macro="sanitizer"/>
+            <expand macro="sanitizer_resids"/>
           </param>
           <param name="name1"  type="text" value="C1" label="Atom name of atom 1">
             <expand macro="sanitizer"/>
@@ -95,7 +95,7 @@
             <expand macro="sanitizer"/>
           </param>
           <param name="resid2"  type="text" value="2" label="Resid of atom 2">
-            <expand macro="sanitizer"/>
+            <expand macro="sanitizer_resids"/>
           </param>
           <param name="name2"  type="text" value="O4" label="Atom name of atom 2">
             <expand macro="sanitizer"/>
@@ -104,7 +104,7 @@
             <expand macro="sanitizer"/>
           </param>
           <param name="resid3"  type="text" value="2" label="Resid of atom 3">
-            <expand macro="sanitizer"/>
+            <expand macro="sanitizer_resids"/>
           </param>
           <param name="name3"  type="text" value="C4" label="Atom name of atom 3">
             <expand macro="sanitizer"/>
@@ -113,7 +113,7 @@
             <expand macro="sanitizer"/>
           </param>
           <param name="resid4"  type="text" value="2" label="Resid of atom 4">
-            <expand macro="sanitizer"/>
+            <expand macro="sanitizer_resids"/>
           </param>
           <param name="name4"  type="text" value="C3" label="Atom name of atom 4">
             <expand macro="sanitizer"/>
