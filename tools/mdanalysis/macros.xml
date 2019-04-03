@@ -13,17 +13,15 @@
     </xml>
     <xml name="sanitizer">
         <sanitizer invalid_char="">
-           <valid initial="string.ascii_letters,string.digits">
-           </valid>
+            <valid initial="string.ascii_letters,string.digits"/>
          </sanitizer>
          <yield/>
     </xml>
     <xml name="sanitizer_resids">
         <sanitizer invalid_char="">
-           <valid initial="string.digits">
-           </valid>
-         </sanitizer>
-         <yield/>
+            <valid initial="string.digits"/>
+        </sanitizer>
+        <yield/>
     </xml>
     <xml name="tests_inputs">
         <param name="dcdin" value="test.dcd" />
