@@ -44,32 +44,152 @@
     <inputs>
         <expand macro="analysis_inputs"/>
         <section name="phi" title="Phi" expanded="False">
-          <param name="segid1"  type="text" value="HET" label="Segid of atom 1"/>
-          <param name="resid1"  type="text" value="3" label="Resid of atom 1"/>
-          <param name="name1"  type="text" value="O5" label="Atom name of atom 1"/>
-          <param name="segid2"  type="text" value="HET" label="Segid of atom 2"/>
-          <param name="resid2"  type="text" value="3" label="Resid of atom 2"/>
-          <param name="name2"  type="text" value="C1" label="Atom name of atom 2"/>
-          <param name="segid3"  type="text" value="HET" label="Segid of atom 3"/>
-          <param name="resid3"  type="text" value="2" label="Resid of atom 3"/>
-          <param name="name3"  type="text" value="O4" label="Atom name of atom 3"/>
-          <param name="segid4"  type="text" value="HET" label="Segid of atom 4"/>
-          <param name="resid4"  type="text" value="2" label="Resid of atom 4"/>
-          <param name="name4"  type="text" value="C4" label="Atom name of atom 4"/>
+          <param name="segid1"  type="text" value="HET" label="Segid of atom 1">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="resid1"  type="text" value="3" label="Resid of atom 1">
+            <sanitizer invalid_char="">
+              <valid initial="string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="name1"  type="text" value="O5" label="Atom name of atom 1">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="segid2"  type="text" value="HET" label="Segid of atom 2">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="resid2"  type="text" value="3" label="Resid of atom 2">
+            <sanitizer invalid_char="">
+              <valid initial="string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="name2"  type="text" value="C1" label="Atom name of atom 2">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="segid3"  type="text" value="HET" label="Segid of atom 3">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="resid3"  type="text" value="2" label="Resid of atom 3">
+            <sanitizer invalid_char="">
+              <valid initial="string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="name3"  type="text" value="O4" label="Atom name of atom 3">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="segid4"  type="text" value="HET" label="Segid of atom 4">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="resid4"  type="text" value="2" label="Resid of atom 4">
+            <sanitizer invalid_char="">
+              <valid initial="string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="name4"  type="text" value="C4" label="Atom name of atom 4">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
         </section>
         <section name="psi" title="Psi" expanded="False">
-          <param name="segid1"  type="text" value="HET" label="Segid of atom 1"/>
-          <param name="resid1"  type="text" value="3" label="Resid of atom 1"/>
-          <param name="name1"  type="text" value="C1" label="Atom name of atom 1"/>
-          <param name="segid2"  type="text" value="HET" label="Segid of atom 2"/>
-          <param name="resid2"  type="text" value="2" label="Resid of atom 2"/>
-          <param name="name2"  type="text" value="O4" label="Atom name of atom 2"/>
-          <param name="segid3"  type="text" value="HET" label="Segid of atom 3"/>
-          <param name="resid3"  type="text" value="2" label="Resid of atom 3"/>
-          <param name="name3"  type="text" value="C4" label="Atom name of atom 3"/>
-          <param name="segid4"  type="text" value="HET" label="Segid of atom 4"/>
-          <param name="resid4"  type="text" value="2" label="Resid of atom 4"/>
-          <param name="name4"  type="text" value="C3" label="Atom name of atom 4"/>
+          <param name="segid1"  type="text" value="HET" label="Segid of atom 1">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="resid1"  type="text" value="3" label="Resid of atom 1">
+            <sanitizer invalid_char="">
+              <valid initial="string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="name1"  type="text" value="C1" label="Atom name of atom 1">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="segid2"  type="text" value="HET" label="Segid of atom 2">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="resid2"  type="text" value="2" label="Resid of atom 2">
+            <sanitizer invalid_char="">
+              <valid initial="string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="name2"  type="text" value="O4" label="Atom name of atom 2">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="segid3"  type="text" value="HET" label="Segid of atom 3">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="resid3"  type="text" value="2" label="Resid of atom 3">
+            <sanitizer invalid_char="">
+              <valid initial="string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="name3"  type="text" value="C4" label="Atom name of atom 3">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="segid4"  type="text" value="HET" label="Segid of atom 4">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="resid4"  type="text" value="2" label="Resid of atom 4">
+            <sanitizer invalid_char="">
+              <valid initial="string.digits">
+              </valid>
+            </sanitizer>
+          </param>
+          <param name="name4"  type="text" value="C3" label="Atom name of atom 4">
+            <sanitizer invalid_char="">
+              <valid initial="string.ascii_letters,string.digits">
+              </valid>
+            </sanitizer>
+          </param>
         </section>
     </inputs>
     <outputs>
