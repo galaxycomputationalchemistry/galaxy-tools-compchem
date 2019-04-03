@@ -3,7 +3,9 @@
     <macros>
         <import>macros.xml</import>
     </macros>
-    <expand macro="requirements" />
+    <expand macro="requirements">
+        <requirement type="package" version="0.20_35">r-lattice</requirement>
+    </expand>
     <command detect_errors="exit_code">
 <![CDATA[ 
    Rscript '$__tool_directory__/dccm.R'
