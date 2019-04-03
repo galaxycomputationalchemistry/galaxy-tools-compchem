@@ -11,6 +11,13 @@
         <param format="pdb" name="pdbin" type="data" label="pdb input"/>
         <yield/>
     </xml>
+    <xml name="sanitizer">
+        <sanitizer invalid_char="">
+           <valid initial="string.ascii_letters,string.digits">
+           </valid>
+         </sanitizer>
+         <yield/>
+    </xml>
     <xml name="tests_inputs">
         <param name="dcdin" value="test.dcd" />
         <param name="pdbin" value="test.pdb" />
