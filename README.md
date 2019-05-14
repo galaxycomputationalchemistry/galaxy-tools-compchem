@@ -2,13 +2,14 @@
 
 # Galaxy tools for Computational Chemistry
 
-The start of something exciting (!) computational chemistry tools in Galaxy. 
+The start of something exciting!! Computational chemistry tools in Galaxy. 
 
-Where are the tools? Not yet on the master branch. 
-At present please see the development branches or a forked development repository e.g. 
- *  [Chris MD tools](https://github.com/chrisbarnettster/galaxy-tools-compchem)
+- **[Source code](https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem)** :books: :wrench:
+  - If you'd like to contribute tools please do!
+-  **[Tools live on Galaxy](https://cheminformatics.usegalaxy.eu/)** :rocket::star:
+   - In collaboration with [Björn Grüning](https://github.com/bgruening) and the [Galaxy computational chemistry team](https://github.com/galaxycomputationalchemistry), these tools are available on [Galaxy Europe](https://cheminformatics.usegalaxy.eu/) under the Chemical Toolbox section.
 
-If you'd like to contribute tools please do!
+
 
 # Contributing 
 See [Contributing Guidelines](./CONTRIBUTING.md), these are the same guidelines as found at the [IUC repo](https://github.com/galaxyproject/tools-iuc).
