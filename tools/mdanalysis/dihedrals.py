@@ -59,12 +59,13 @@ def psi(u):
 u = mda.Universe(args.ipdb, args.idcd, topology_format="PDB", format="DCD")
 data = np.array([(u.trajectory.frame, psi(u)) for ts in u.trajectory])
 frame, psi = data.T
+PSI = np.concatenate(psi, axis=0)
 
-zip(frame, psi)
+zip(frame, PSI)
 
 with open(args.output, 'w') as f:
     writer = csv.writer(f, delimiter='\t')
-    writer.writerows(zip(frame, psi))
+    writer.writerows(zip(frame, PSI))
 
 with open(args.output) as f:
     g = [xtmp.strip() for xtmp in f]

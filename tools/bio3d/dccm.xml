@@ -1,0 +1,133 @@
+<tool id="bio3d_dccm" name="DCCM analysis" version="@VERSION@">
+    <description>Dynamical Cross-Correlation Maps using Bio3D (DCCM)</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements">
+        <requirement type="package" version="0.20_35">r-lattice</requirement>
+    </expand>
+    <command detect_errors="exit_code">
+<![CDATA[ 
+   Rscript '$__tool_directory__/dccm.R'
+        '$dcdin' 
+        '$pdbin'
+        #if $dccm.sele == 'calpha':
+          "string"
+           "calpha"
+        #end if
+        #if $dccm.sele == 'cbeta':
+          "string"
+          '$dccm.cbeta'
+        #end if
+        #if $dccm.sele == 'backbone':
+          "string"
+          "backbone"
+        #end if
+        #if $dccm.sele == 'sidechain':
+          "string"
+          "sidechain"
+        #end if
+        #if $dccm.sele == 'protein':
+          "string"
+          "protein"
+        #end if
+        #if $dccm.sele == 'ligand':
+          "string"
+          "ligand"
+        #end if
+        #if $dccm.sele == 'nucleic':
+          "string"
+          "nucleic"
+        #end if
+        #if $dccm.sele == 'elety':
+          "elety"
+          '$dccm.elety'
+        #end if
+        #if $dccm.sele == 'resid':
+          "resid"
+          '$dccm.resid'
+        #end if
+        #if $dccm.sele == 'segid':
+          "segid"
+          '$dccm.segid'
+        #end if
+        '$output'
+        '$dccm_plot'
+    2>&1
+]]></command>
+    <inputs>
+        <expand macro="analysis_inputs"/>
+        <conditional name="dccm">
+           <param name="sele" type="select" label="Select domains">
+             <option value="calpha">Calpha</option>
+             <option value="cbeta">Cbeta</option>
+             <option value="backbone">Backbone</option>
+             <option value="sidechain">Sidechain</option>
+             <option value="protein">Protein</option>
+             <option value="ligand">Ligand</option>
+             <option value="nucleic">Nucleic Acids</option>
+             <option value="elety">Atom Names</option>
+             <option value="resid">Resid</option>
+             <option value="segid">Segid</option>
+           </param>
+           <when value="calpha"/>
+           <when value="cbeta"/>
+           <when value="backbone"/>
+           <when value="sidechain"/>
+           <when value="protein"/>
+           <when value="ligand"/>
+           <when value="nucleic"/>
+           <when value="elety">
+                <param name="elety"  type="text" value="CA" label="Atom Name"/>
+            </when>
+            <when value="resid">
+                <param name="resid"  type="text" value="BGLC" label="Resid"/>
+            </when>
+            <when value="segid">
+                <param name="segid"  type="text" value="SUBS" label="Segid"/>
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="output" label="DCCM raw data"/>
+        <data format="png" name="dccm_plot" label="DCCM plot"/>
+    </outputs>
+    <tests>
+        <test>
+            <expand macro="tests_inputs"/>
+            <param name="sele" value="calpha"/>
+            <output name="dccm_plot" file="dccm_plot.png" compare="sim_size" delta="20000" />
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+        
+The extent to which the atomic fluctuations/displacements of a system are correlated with one another can be assessed by examining the magnitude of all pairwise cross-correlation coefficients.
+The DCCM Analysis tool can plot the atom-wise cross-correlations using the Bio3D package. The negative values (negative correlation) indicate the atoms moves in opposite directions and the positive values (positive correlation) indicate the atoms moves in same directions.
+      
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Input file in PDB format
+       - Input file in dcd format
+
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - Image (as PNG) of the dccm plot
+       - Tab-separated file of raw data
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>
+
