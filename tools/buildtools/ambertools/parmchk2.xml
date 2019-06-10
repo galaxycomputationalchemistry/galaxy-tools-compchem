@@ -1,12 +1,12 @@
-<tool id="parmchk2" name="ParmChk2" version="1.0">
-    <description>Amber Parameter Checker</description>
+<tool id="parmchk2" name="ParmChk2" version="19.0">
+    <description>Amber's parameter checker</description>
     <requirements>
         <requirement type="package" version="19.0">ambertools</requirement>
         <requirement type="package" version="3.0.0">libgfortran</requirement>
     </requirements>
     <command detect_errors="exit_code">
         <![CDATA[
-        parmchk2 -i $input1 -f $input_format.selected_format  -o $output1 -s $allparams.s -a $allparams.a
+        parmchk2 -i $input1 -f $input_format.selected_format -s $allparams.s -a $allparams.a -o $output1
         ]]>
     </command>
     <inputs>
@@ -18,15 +18,15 @@
               <param type="data" name="input1" format="mol2" />
             </when>
       </conditional>
-        <param name="selected_output_format" type="select" label="Select an output file format (txt recommended!):">
+        <param name="selected_output_format" type="select" label="Select an output file format:" help="text recommended for now and it will contain frcmod data (-o)">
             <option value="txt" selected="true">txt</option>
         </param>
         <section name="allparams" title="General Parameters" expanded="true">
-            <param name="s" type="integer" value="2" label="ffparm set parameter (suppressed by -p option), 1: gaff 2: gaff2" min="1" max="2"/>
-            <param name="a" type="select" label="print out all force field parameters including those in the parm file default is no">
-             <option value="y">Yes</option>
-             <option selected="True" value="n">No</option>
+            <param name="s" type="select" value="2" label="FFparm set parameter" help="(-s)">
+             <option value="1">1: gaff</option>
+             <option selected="True" value="2">2: gaff2</option>
         </param>
+           <param name="a" type="boolean" checked="false" truevalue="Y" falsevalue="N" label="Print all force field parameters" help="(-a)"/>
         </section>
     </inputs>
     <outputs>
@@ -39,14 +39,22 @@
         </change_format>
         </data>
     </outputs>
+    <tests>
+        <test>
+            <param name="input_format|selected_format" value="mol2"/>
+            <param name="selected_output_format" value="txt"/>
+            <param name="input1" value="LigA_prmchk.mol2"/>
+            <param name="allparams|s" value="2"/>
+            <output name="output1" file="LigA_output.txt" compare="diff" lines_diff="0">
+            </output>
+        </test>
+    </tests>
     <help><![CDATA[
 .. class:: infomark
 
 **What it does**
 
-Antechamber parameter check
-parmchk2 reads in an mol2 file (along with default atomtype similarity index file iand forcefield files (the default is $AMBERHOME/dat/antechamber/PARMCHK.DAT & $AMBERHOME/dat/leap/parm/gaff.dat). 
-It writes out a force field modification (frcmod) file containing any force field parameters that are needed for the molecule but not supplied by the force field file. 
+Antechamber parameter check reads in a mol2 file and writes out a force field modification (frcmod) file containing any force field parameters that are needed for the molecule but not supplied by the force field file.  
 Problematic parameters, if any, are indicated in the frcmod file with the note, “ATTN, need revision”, and are typically given values of zero.
 
 
@@ -55,7 +63,7 @@ Problematic parameters, if any, are indicated in the frcmod file with the note, 
 **How it works**
 
 - Select a mol input file (mol2)
-- Specify the correct unknown parameter
+- Choose GAFF or GAFF2 parameter set
 
 .. class:: infomark
 
