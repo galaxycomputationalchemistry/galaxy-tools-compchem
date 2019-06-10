@@ -1,111 +1,110 @@
 <tool id="antechamber" name="AnteChamber" version="19.0">
-    <description>Amber's molecular input file processor</description>
-    <requirements>
-        <requirement type="package" version="19.0">ambertools</requirement>
-        <requirement type="package" version="3.0.0">libgfortran</requirement>
-    </requirements>
-    <command detect_errors="exit_code">
-        <![CDATA[
-        antechamber -i $input1 -o $output1 -fi $input_format.selected_format -fo $selected_output_format -c $allparams.c -pf $extraparams.pf 
+  <description>Amber's molecular input file processor</description>
+  <requirements>
+    <requirement type="package" version="19.0">ambertools</requirement>
+    <requirement type="package" version="3.0.0">libgfortran</requirement>
+  </requirements>
+  <command detect_errors="exit_code">
+    <![CDATA[
+        antechamber -i $input1 -o $output1 -fi $input_format.selected_format -fo $selected_output_format -c $allparams.c -pf $extraparams.pf
         #if $extraparams.usenc
         -nc $allparams.nc
         #end if
         -at $allparams.at -j $allparams.j -rn '$allparams.resname' -m $allparams.m
         ]]>
-    </command>
-    <inputs>
-      <conditional name="input_format">
-            <param name="selected_format" type="select" label="Select a file format:" help="In PDB or mol2 format">
-                <option value="pdb" selected="true">pdb</option>
-                <option value="mol2">mol2</option>
-            </param>
-	    <when value="pdb">
-             <param type="data" name="input1" format="pdb" />
-            </when>
-            <when value="mol2">
-              <param type="data" name="input1" format="mol2" />
-            </when>
-      </conditional>
-        <param name="selected_output_format" type="select" label="Select an output file format (mol2 recommended!):">
-            <option value="pdb">pdb</option>
-            <option value="mol2" selected="true">mol2</option>
-        </param>
-        <section name="allparams" title="General Parameters" expanded="true">
-            <param name="nc" type="integer" value="0" label="Net charge. Default is 0" min="-50" max="50" help="Specify the net charge for the molecule. (-nc)"/>
-            <param name="m" type="integer" value="1" label="Multiplicity. Default is 1" min="1" max="10" help="Multiplicity, 2S+1. (-m)"/>
-            <param name="resname" type="text" value="MOL" label="Residue name. Default is MOL" help="From 1-3 characters allowed. (-rn)"/>
-            <param name="c" type="select" label="Charge method" help="Charge method to use for the calculations. AM1-BCC or RESP recommended (-c)">
-             <option value="resp">RESP</option>
-             <option selected="True" value="bcc">AM1-BCC</option>
-             <option value="cm1">CM1</option>
-             <option value="cm2">CM2</option>
-             <option value="esp">ESP (Kollman)</option>
-             <option value="mul">Mulliken</option>
-             <option value="gas">Gasteiger</option>
-           </param>
-            <param name="at" type="select" label="Atom type" help="Create atom type for the specified forcefield (-at)">
-             <option selected="True" value="gaff">gaff</option>
-             <option value="gaff2">gaff2</option>
-	     <option value="amber">amber for PARM94/99/99SB</option>
-             <option value="bcc">bcc</option>
-             <option value="sybyl">sybyl</option>
-           </param>
-            <param name="j" type="select" label="Atom type and bond type prediction index" help="Specify how to run predictions (-j)">
-             <option value="0">0 - No assignment</option>
-	     <option value="1">1 - atom type</option>
-             <option value="2">2 - full bond types</option>
-             <option value="3">3 - part bond types</option>
-             <option selected="True" value="4">4 - atom and full bond type (default)</option>
-             <option value="5">5 - atom and part bond type</option>
-           </param>
-        </section>
-        <section name="extraparams" title="Additional Parameters" expanded="false">
-           <param name="pf" type="boolean" checked="true" truevalue="yes" falsevalue="no" label="remove intermediate files (recommended)" help="(-pf)"/>
-           <param name="usenc" type="boolean" checked="true" truevalue="True" falsevalue="False" label="use netcharge (recommended)" help="Can choose to let the charge be inferred by setting this to False."/>
-        </section>
-    </inputs>
-    <outputs>
-        <data format="mol2" name="output1" label="${tool.name}: structure output">
-        <change_format>
-            <when input="selected_output_format" value="pdb" format="pdb"/>
-            <when input="selected_output_format" value="mol2" format="mol2"/>
-            <!-- <when input="selected_format" value="xyz" format="xyz"/>
-            <when input="selected_format" value="tinker" format="tinker"/>
-            <when input="selected_format" value="moldy" format="moldy"/> -->
-        </change_format>
-        </data>
-    </outputs>
-    <tests>
-        <test>
-            <param name="input_format|selected_format" value="mol2"/>
-            <param name="selected_output_format" value="mol2"/>
-            <param name="input1" value="LigA.mol2"/>
-            <param name="allparams|nc" value="-2"/>
-            <param name="allparams|c" value="AM1-BCC"/>
-            <param name="allparams|at" value="gaff2"/>
-            <param name="allparams|j" value="5 - atom and part bond type"/>
-            <output name="output1" file="LigA_output.mol2" compare="diff" lines_diff="0">
-                <assert_contents>
-                    <has_text text=" 1 C           49.2110    26.9920    85.5530 c2         1 MOL"/>
-                </assert_contents>
-            </output>
-        </test>
-        <test>
-            <param name="input_format|selected_format" value="pdb"/>
-            <param name="selected_output_format" value="pdb"/>
-            <param name="input1" value="LigA.pdb"/>
-            <param name="allparams|nc" value="-2"/>
-            <param name="allparams|c" value="AM1-BCC"/>
-            <param name="allparams|at" value="gaff2"/>
-            <param name="allparams|j" value="5 - atom and part bond type"/>
-            <output name="output1" file="LigA_output.pdb" compare="diff" lines_diff="0">
-                <assert_contents>
-                    <has_text text="ATOM      1  C   MOL     1      49.211  26.992  85.553  1.00  0.00           C"/>
-                </assert_contents>
-            </output>
-        </test>
-    </tests>
-    <help><![CDATA[
+  </command>
+  <inputs>
+    <conditional name="input_format">
+      <param name="selected_format" type="select" label="Select a file format:" help="In PDB or mol2 format">
+        <option value="pdb" selected="true">pdb</option>
+        <option value="mol2">mol2</option>
+      </param>
+      <when value="pdb">
+        <param type="data" name="input1" format="pdb"/>
+      </when>
+      <when value="mol2">
+        <param type="data" name="input1" format="mol2"/>
+      </when>
+    </conditional>
+    <param name="selected_output_format" type="select" label="Select an output file format (mol2 recommended!):">
+      <option value="pdb">pdb</option>
+      <option value="mol2" selected="true">mol2</option>
+    </param>
+    <section name="allparams" title="General Parameters" expanded="true">
+      <param name="nc" type="integer" value="0" label="Net charge. Default is 0" min="-50" max="50" help="Specify the net charge for the molecule. (-nc)"/>
+      <param name="m" type="integer" value="1" label="Multiplicity. Default is 1" min="1" max="10" help="Multiplicity, 2S+1. (-m)"/>
+      <param name="resname" type="text" value="MOL" label="Residue name. Default is MOL" help="From 1-3 characters allowed. (-rn)"/>
+      <param name="c" type="select" label="Charge method" help="Charge method to use for the calculations. AM1-BCC or RESP recommended (-c)">
+        <option value="resp">RESP</option>
+        <option selected="True" value="bcc">AM1-BCC</option>
+        <option value="cm1">CM1</option>
+        <option value="cm2">CM2</option>
+        <option value="esp">ESP (Kollman)</option>
+        <option value="mul">Mulliken</option>
+        <option value="gas">Gasteiger</option>
+      </param>
+      <param name="at" type="select" label="Atom type" help="Create atom type for the specified forcefield (-at)">
+        <option selected="True" value="gaff">gaff</option>
+        <option value="gaff2">gaff2</option>
+        <option value="amber">amber for PARM94/99/99SB</option>
+        <option value="bcc">bcc</option>
+        <option value="sybyl">sybyl</option>
+      </param>
+      <param name="j" type="select" label="Atom type and bond type prediction index" help="Specify how to run predictions (-j)">
+        <option value="0">0 - No assignment</option>
+        <option value="1">1 - atom type</option>
+        <option value="2">2 - full bond types</option>
+        <option value="3">3 - part bond types</option>
+        <option selected="True" value="4">4 - atom and full bond type (default)</option>
+        <option value="5">5 - atom and part bond type</option>
+      </param>
+    </section>
+    <section name="extraparams" title="Additional Parameters" expanded="false">
+      <param name="pf" type="boolean" checked="true" truevalue="yes" falsevalue="no" label="remove intermediate files (recommended)" help="(-pf)"/>
+      <param name="usenc" type="boolean" checked="true" truevalue="True" falsevalue="False" label="use netcharge (recommended)" help="Can choose to let the charge be inferred by setting this to False."/>
+    </section>
+  </inputs>
+  <outputs>
+    <data format="mol2" name="output1" label="${tool.name}: structure output">
+      <change_format>
+        <when input="selected_output_format" value="pdb" format="pdb"/>
+        <when input="selected_output_format" value="mol2" format="mol2"/>
+        <!-- <when input="selected_format" value="xyz" format="xyz"/> <when input="selected_format" value="tinker" format="tinker"/> <when input="selected_format" value="moldy" format="moldy"/> -->
+      </change_format>
+    </data>
+  </outputs>
+  <tests>
+    <test>
+      <param name="input_format|selected_format" value="mol2"/>
+      <param name="selected_output_format" value="mol2"/>
+      <param name="input1" value="LigA.mol2"/>
+      <param name="allparams|nc" value="-2"/>
+      <param name="allparams|c" value="AM1-BCC"/>
+      <param name="allparams|at" value="gaff2"/>
+      <param name="allparams|j" value="5 - atom and part bond type"/>
+      <output name="output1" file="LigA_output.mol2" compare="diff" lines_diff="0">
+        <assert_contents>
+          <has_text text=" 1 C           49.2110    26.9920    85.5530 c2         1 MOL"/>
+        </assert_contents>
+      </output>
+    </test>
+    <test>
+      <param name="input_format|selected_format" value="pdb"/>
+      <param name="selected_output_format" value="pdb"/>
+      <param name="input1" value="LigA.pdb"/>
+      <param name="allparams|nc" value="-2"/>
+      <param name="allparams|c" value="AM1-BCC"/>
+      <param name="allparams|at" value="gaff2"/>
+      <param name="allparams|j" value="5 - atom and part bond type"/>
+      <output name="output1" file="LigA_output.pdb" compare="diff" lines_diff="0">
+        <assert_contents>
+          <has_text text="ATOM      1  C   MOL     1      49.211  26.992  85.553  1.00  0.00           C"/>
+        </assert_contents>
+      </output>
+    </test>
+  </tests>
+  <help>
+    <![CDATA[
 .. class:: infomark
 
 **What it does**
@@ -146,16 +145,13 @@ Go to Galaxy Computational Chemistry and make a `feature request`_
 
 
 ]]>
-    </help>
-    <citations>
-	    <citation type="doi">10.1002/jcc.20290</citation>
-	            <citation type="bibtex">
-@misc{ambertools,
-  author = {D.A. Case, I.Y. Ben-Shalom, S.R. Brozell, D.S. Cerutti, T.E. Cheatham, III, V.W.D. Cruzeiro, T.A. Darden, R.E. Duke, D. Ghoreishi, M.K. Gilson, H. Gohlke, A.W. Goetz, D. Greene, R Harris, N. Homeyer, S. Izadi, A. Kovalenko, T. Kurtzman, T.S. Lee, S. LeGrand, P. Li, C. Lin, J. Liu, T. Luchko, R. Luo, D.J. Mermelstein, K.M. Merz, Y. Miao, G. Monard, C. Nguyen, H. Nguyen, I. Omelyan, A. Onufriev, F. Pan, R. Qi, D.R. Roe, A. Roitberg, C. Sagui, S. Schott-Verdugo, J. Shen, C.L. Simmerling, J. Smith, R. Salomon-Ferrer, J. Swails, R.C. Walker, J. Wang, H. Wei, R.M. Wolf, X. Wu, L. Xiao, D.M. York and P.A. Kollman },
-  year = {2018},
-  title = {AMBER 2018},
-  publisher = {University of California, San Francisco},
-  url = {http://ambermd.org/CiteAmber.php},
-}</citation>
-    </citations>
+  </help>
+  <citations>
+    <citation type="doi">10.1002/jcc.20290</citation>
+    <citation type="bibtex">
+      @misc{ambertools, author = {D.A. Case, I.Y. Ben-Shalom, S.R. Brozell, D.S. Cerutti, T.E. Cheatham, III, V.W.D. Cruzeiro, T.A. Darden, R.E. Duke, D. Ghoreishi, M.K. Gilson, H. Gohlke, A.W. Goetz, D. Greene, R Harris, N. Homeyer, S. Izadi, A.
+      Kovalenko, T. Kurtzman, T.S. Lee, S. LeGrand, P. Li, C. Lin, J. Liu, T. Luchko, R. Luo, D.J. Mermelstein, K.M. Merz, Y. Miao, G. Monard, C. Nguyen, H. Nguyen, I. Omelyan, A. Onufriev, F. Pan, R. Qi, D.R. Roe, A. Roitberg, C. Sagui, S. Schott-Verdugo,
+      J. Shen, C.L. Simmerling, J. Smith, R. Salomon-Ferrer, J. Swails, R.C. Walker, J. Wang, H. Wei, R.M. Wolf, X. Wu, L. Xiao, D.M. York and P.A. Kollman }, year = {2018}, title = {AMBER 2018}, publisher = {University of California, San Francisco}, url =
+      {http://ambermd.org/CiteAmber.php}, }</citation>
+  </citations>
 </tool>

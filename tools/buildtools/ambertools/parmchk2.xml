@@ -1,60 +1,58 @@
 <tool id="parmchk2" name="ParmChk2" version="19.0">
-    <description>Amber's parameter checker</description>
-    <requirements>
-        <requirement type="package" version="19.0">ambertools</requirement>
-        <requirement type="package" version="3.0.0">libgfortran</requirement>
-    </requirements>
-    <command detect_errors="exit_code">
-        <![CDATA[
+  <description>Amber's parameter checker</description>
+  <requirements>
+    <requirement type="package" version="19.0">ambertools</requirement>
+    <requirement type="package" version="3.0.0">libgfortran</requirement>
+  </requirements>
+  <command detect_errors="exit_code">
+    <![CDATA[
         parmchk2 -i $input1 -f $input_format.selected_format -s $allparams.s -a $allparams.a -o $output1
         ]]>
-    </command>
-    <inputs>
-      <conditional name="input_format">
-            <param name="selected_format" type="select" label="Select a file format:">
-                <option value="mol2">mol2</option>
-            </param>
-            <when value="mol2">
-              <param type="data" name="input1" format="mol2" />
-            </when>
-      </conditional>
-        <param name="selected_output_format" type="select" label="Select an output file format:" help="text recommended for now and it will contain frcmod data (-o)">
-            <option value="txt" selected="true">txt</option>
-        </param>
-        <section name="allparams" title="General Parameters" expanded="true">
-            <param name="s" type="select" value="2" label="FFparm set parameter" help="(-s)">
-             <option value="1">1: gaff</option>
-             <option selected="True" value="2">2: gaff2</option>
-        </param>
-           <param name="a" type="boolean" checked="false" truevalue="Y" falsevalue="N" label="Print all force field parameters" help="(-a)"/>
-        </section>
-    </inputs>
-    <outputs>
-        <data format="txt" name="output1" label="${tool.name}: structure output">
-        <change_format>
-            <when input="selected_output_format" value="txt" format="txt"/>
-            <!-- <when input="selected_format" value="xyz" format="xyz"/>
-            <when input="selected_format" value="tinker" format="tinker"/>
-            <when input="selected_format" value="moldy" format="moldy"/> -->
-        </change_format>
-        </data>
-    </outputs>
-    <tests>
-        <test>
-            <param name="input_format|selected_format" value="mol2"/>
-            <param name="selected_output_format" value="txt"/>
-            <param name="input1" value="LigA_prmchk.mol2"/>
-            <param name="allparams|s" value="2"/>
-            <output name="output1" file="LigA_output.txt" compare="diff" lines_diff="0">
-            </output>
-        </test>
-    </tests>
-    <help><![CDATA[
+  </command>
+  <inputs>
+    <conditional name="input_format">
+      <param name="selected_format" type="select" label="Select a file format:">
+        <option value="mol2">mol2</option>
+      </param>
+      <when value="mol2">
+        <param type="data" name="input1" format="mol2"/>
+      </when>
+    </conditional>
+    <param name="selected_output_format" type="select" label="Select an output file format:" help="text recommended for now and it will contain frcmod data (-o)">
+      <option value="txt" selected="true">txt</option>
+    </param>
+    <section name="allparams" title="General Parameters" expanded="true">
+      <param name="s" type="select" value="2" label="FFparm set parameter" help="(-s)">
+        <option value="1">1: gaff</option>
+        <option selected="True" value="2">2: gaff2</option>
+      </param>
+      <param name="a" type="boolean" checked="false" truevalue="Y" falsevalue="N" label="Print all force field parameters" help="(-a)"/>
+    </section>
+  </inputs>
+  <outputs>
+    <data format="txt" name="output1" label="${tool.name}: structure output">
+      <change_format>
+        <when input="selected_output_format" value="txt" format="txt"/>
+        <!-- <when input="selected_format" value="xyz" format="xyz"/> <when input="selected_format" value="tinker" format="tinker"/> <when input="selected_format" value="moldy" format="moldy"/> -->
+      </change_format>
+    </data>
+  </outputs>
+  <tests>
+    <test>
+      <param name="input_format|selected_format" value="mol2"/>
+      <param name="selected_output_format" value="txt"/>
+      <param name="input1" value="LigA_prmchk.mol2"/>
+      <param name="allparams|s" value="2"/>
+      <output name="output1" file="LigA_output.txt" compare="diff" lines_diff="0"></output>
+    </test>
+  </tests>
+  <help>
+    <![CDATA[
 .. class:: infomark
 
 **What it does**
 
-Antechamber parameter check reads in a mol2 file and writes out a force field modification (frcmod) file containing any force field parameters that are needed for the molecule but not supplied by the force field file.  
+Antechamber parameter check reads in a mol2 file and writes out a force field modification (frcmod) file containing any force field parameters that are needed for the molecule but not supplied by the force field file.
 Problematic parameters, if any, are indicated in the frcmod file with the note, “ATTN, need revision”, and are typically given values of zero.
 
 
@@ -89,16 +87,13 @@ Go to Galaxy Computational Chemistry and make a `feature request`_
 .. _`feature request`: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/issues/new
 
 ]]>
-    </help>
-    <citations>
-	    <citation type="doi">10.1002/jcc.20290</citation>
-	            <citation type="bibtex">
-@misc{ambertools,
-  author = {D.A. Case, I.Y. Ben-Shalom, S.R. Brozell, D.S. Cerutti, T.E. Cheatham, III, V.W.D. Cruzeiro, T.A. Darden, R.E. Duke, D. Ghoreishi, M.K. Gilson, H. Gohlke, A.W. Goetz, D. Greene, R Harris, N. Homeyer, S. Izadi, A. Kovalenko, T. Kurtzman, T.S. Lee, S. LeGrand, P. Li, C. Lin, J. Liu, T. Luchko, R. Luo, D.J. Mermelstein, K.M. Merz, Y. Miao, G. Monard, C. Nguyen, H. Nguyen, I. Omelyan, A. Onufriev, F. Pan, R. Qi, D.R. Roe, A. Roitberg, C. Sagui, S. Schott-Verdugo, J. Shen, C.L. Simmerling, J. Smith, R. Salomon-Ferrer, J. Swails, R.C. Walker, J. Wang, H. Wei, R.M. Wolf, X. Wu, L. Xiao, D.M. York and P.A. Kollman },
-  year = {2018},
-  title = {AMBER 2018},
-  publisher = {University of California, San Francisco},
-  url = {http://ambermd.org/CiteAmber.php},
-}</citation>
-    </citations>
+  </help>
+  <citations>
+    <citation type="doi">10.1002/jcc.20290</citation>
+    <citation type="bibtex">
+      @misc{ambertools, author = {D.A. Case, I.Y. Ben-Shalom, S.R. Brozell, D.S. Cerutti, T.E. Cheatham, III, V.W.D. Cruzeiro, T.A. Darden, R.E. Duke, D. Ghoreishi, M.K. Gilson, H. Gohlke, A.W. Goetz, D. Greene, R Harris, N. Homeyer, S. Izadi, A.
+      Kovalenko, T. Kurtzman, T.S. Lee, S. LeGrand, P. Li, C. Lin, J. Liu, T. Luchko, R. Luo, D.J. Mermelstein, K.M. Merz, Y. Miao, G. Monard, C. Nguyen, H. Nguyen, I. Omelyan, A. Onufriev, F. Pan, R. Qi, D.R. Roe, A. Roitberg, C. Sagui, S. Schott-Verdugo,
+      J. Shen, C.L. Simmerling, J. Smith, R. Salomon-Ferrer, J. Swails, R.C. Walker, J. Wang, H. Wei, R.M. Wolf, X. Wu, L. Xiao, D.M. York and P.A. Kollman }, year = {2018}, title = {AMBER 2018}, publisher = {University of California, San Francisco}, url =
+      {http://ambermd.org/CiteAmber.php}, }</citation>
+  </citations>
 </tool>
