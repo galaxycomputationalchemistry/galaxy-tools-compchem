@@ -1,17 +1,21 @@
-<tool id="antechamber" name="AnteChamber" version="1.0">
-    <description>Molecular input file processor</description>
+<tool id="antechamber" name="AnteChamber" version="19.0">
+    <description>Amber's molecular input file processor</description>
     <requirements>
         <requirement type="package" version="19.0">ambertools</requirement>
         <requirement type="package" version="3.0.0">libgfortran</requirement>
     </requirements>
     <command detect_errors="exit_code">
         <![CDATA[
-	antechamber -i $input1 -o $output1 -fi $input_format.selected_format -fo $selected_output_format -c $allparams.c -pf $allparams.pf -nc $allparams.nc -at $allparams.at -j $allparams.j -rn $allparams.resname -m $allparams.m
+        antechamber -i $input1 -o $output1 -fi $input_format.selected_format -fo $selected_output_format -c $allparams.c -pf $extraparams.pf 
+        #if $extraparams.usenc
+        -nc $allparams.nc
+        #end if
+        -at $allparams.at -j $allparams.j -rn '$allparams.resname' -m $allparams.m
         ]]>
     </command>
     <inputs>
       <conditional name="input_format">
-            <param name="selected_format" type="select" label="Select a file format:">
+            <param name="selected_format" type="select" label="Select a file format:" help="In PDB or mol2 format">
                 <option value="pdb" selected="true">pdb</option>
                 <option value="mol2">mol2</option>
             </param>
@@ -27,9 +31,10 @@
             <option value="mol2" selected="true">mol2</option>
         </param>
         <section name="allparams" title="General Parameters" expanded="true">
-            <param name="nc" type="integer" value="0" label="net charge, default is 0" min="-50" max="50"/>
-            <param name="resname" type="text" value="MOL" label="residue name, from 1-3 characters allowed, default is MOL" />
-            <param name="c" type="select" label="charge method">
+            <param name="nc" type="integer" value="0" label="Net charge. Default is 0" min="-50" max="50" help="Specify the net charge for the molecule. (-nc)"/>
+            <param name="m" type="integer" value="1" label="Multiplicity. Default is 1" min="1" max="10" help="Multiplicity, 2S+1. (-m)"/>
+            <param name="resname" type="text" value="MOL" label="Residue name. Default is MOL" help="From 1-3 characters allowed. (-rn)"/>
+            <param name="c" type="select" label="Charge method" help="Charge method to use for the calculations. AM1-BCC or RESP recommended (-c)">
              <option value="resp">RESP</option>
              <option selected="True" value="bcc">AM1-BCC</option>
              <option value="cm1">CM1</option>
@@ -38,14 +43,14 @@
              <option value="mul">Mulliken</option>
              <option value="gas">Gasteiger</option>
            </param>
-            <param name="at" type="select" label="atom type">
+            <param name="at" type="select" label="Atom type" help="Create atom type for the specified forcefield (-at)">
              <option selected="True" value="gaff">gaff</option>
              <option value="gaff2">gaff2</option>
 	     <option value="amber">amber for PARM94/99/99SB</option>
              <option value="bcc">bcc</option>
              <option value="sybyl">sybyl</option>
            </param>
-            <param name="j" type="select" label="atom type and bond type prediction index">
+            <param name="j" type="select" label="Atom type and bond type prediction index" help="Specify how to run predictions (-j)">
              <option value="0">0 - No assignment</option>
 	     <option value="1">1 - atom type</option>
              <option value="2">2 - full bond types</option>
@@ -53,12 +58,10 @@
              <option selected="True" value="4">4 - atom and full bond type (default)</option>
              <option value="5">5 - atom and part bond type</option>
            </param>
-	   <param name="pf" type="select" label="Remove intermediate files">
-             <option selected="True" value="yes">yes</option>
-             <option value="no">no</option>
-           </param>
-            <param name="m" type="integer" value="1" label="multiplicity, default is 1" min="1" max="10"/>
-
+        </section>
+        <section name="extraparams" title="Additional Parameters" expanded="false">
+           <param name="pf" type="boolean" checked="true" truevalue="yes" falsevalue="no" label="remove intermediate files (recommended)" help="(-pf)"/>
+           <param name="usenc" type="boolean" checked="true" truevalue="True" falsevalue="False" label="use netcharge (recommended)" help="Can choose to let the charge be inferred by setting this to False."/>
         </section>
     </inputs>
     <outputs>
@@ -107,20 +110,22 @@
 
 **What it does**
 
-Antechamber sets up parameters for the input molecules
+Antechamber sets up parameters for the input molecules provided.
 
 .. class:: infomark
 
 **How it works**
 
-- Select a mol input file (mol2)
+- Select an input file (PDB, mol2)
 - Specify the correct charge, or keep the default charge of 0
+- Adjust other parameters as needed.
+- Click on Execute
 
 .. class:: infomark
 
 **Outputs created**
 
-- Press run and wait for the mol2 output
+- A mol2 output is created with the forcefield compatible atom names.
 
 .. class:: infomark
 
