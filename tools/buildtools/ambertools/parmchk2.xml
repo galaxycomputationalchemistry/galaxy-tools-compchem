@@ -6,7 +6,7 @@
     </requirements>
     <command detect_errors="exit_code">
         <![CDATA[
-        parmchk2 -i $input1 -f $input_format.selected_format  -o $output1 -s $allparams.s
+        parmchk2 -i $input1 -f $input_format.selected_format  -o $output1 -s $allparams.s -a $allparams.a
         ]]>
     </command>
     <inputs>
@@ -23,6 +23,10 @@
         </param>
         <section name="allparams" title="General Parameters" expanded="true">
             <param name="s" type="integer" value="2" label="ffparm set parameter (suppressed by -p option), 1: gaff 2: gaff2" min="1" max="2"/>
+            <param name="a" type="select" label="print out all force field parameters including those in the parm file default is no">
+             <option value="y">Yes</option>
+             <option selected="True" value="n">No</option>
+        </param>
         </section>
     </inputs>
     <outputs>
@@ -41,28 +45,10 @@
 **What it does**
 
 Antechamber parameter check
-parmchk2 reads in an ac/mol2/prepi/prepc file, an atomtype similarity index file (the default is $AMBERHOME-
-/dat/antechamber/PARMCHK.DAT) as well as a force field file (the default is $AMBERHOME/dat/leap/parm/-
-gaff.dat). It writes out a force field modification (frcmod) file containing any force field parameters that are needed
-for the molecule but not supplied by the force field (*.dat) file. Problematic parameters, if any, are indicated in
-the frcmod file with the note, “ATTN, need revision”, and are typically given values of zero.
+parmchk2 reads in an mol2 file (along with default atomtype similarity index file iand forcefield files (the default is $AMBERHOME/dat/antechamber/PARMCHK.DAT & $AMBERHOME/dat/leap/parm/gaff.dat). 
+It writes out a force field modification (frcmod) file containing any force field parameters that are needed for the molecule but not supplied by the force field file. 
+Problematic parameters, if any, are indicated in the frcmod file with the note, “ATTN, need revision”, and are typically given values of zero.
 
-parmchk2 -i input file name
--o frcmod file name
--f input file format (prepi, prepc, ac, mol2)
--s  ff parm set, it is suppressed by "-p" option
- 1: gaff (the default)
- 2: gaff2 
--p ff parmfile
--pf parmfile format,
-1: for amber FF data file (the default)
-2: for additional force field parameter file
--c atom type corresponding score file, default is PARMCHK.DAT
--a print out all force field parameters including those in the parmfile
-can be ’Y’ (yes) or ’N’ (no) default is ’N’
--w print out parameters that matching improper dihedral parameters
-that contain ’X’ in the force field parameter file, can be ’Y’ (yes)
-or ’N’ (no), default is ’Y
 
 .. class:: infomark
 
@@ -85,6 +71,14 @@ or ’N’ (no), default is ’Y
 
 
 .. _`userguide`: http://ambermd.org/doc12/Amber19.pdf
+
+.. class:: infomark
+
+**Feature requests**
+
+Go to Galaxy Computational Chemistry and make a `feature request`_
+
+.. _`feature request`: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/issues/new
 
 ]]>
     </help>

@@ -28,7 +28,7 @@
         </param>
         <section name="allparams" title="General Parameters" expanded="true">
             <param name="nc" type="integer" value="0" label="net charge, default is 0" min="-50" max="50"/>
-            <param name="resname" type="text" value="MOL" label="residue name, default is MOL" />
+            <param name="resname" type="text" value="MOL" label="residue name, from 1-3 characters allowed, default is MOL" />
             <param name="c" type="select" label="charge method">
              <option value="resp">RESP</option>
              <option selected="True" value="bcc">AM1-BCC</option>
@@ -37,9 +37,6 @@
              <option value="esp">ESP (Kollman)</option>
              <option value="mul">Mulliken</option>
              <option value="gas">Gasteiger</option>
-             <option value="rc">Read in charge</option>
-             <option value="wc">Write out charge</option>
-             <option value="dc">Delete Charge</option>
            </param>
             <param name="at" type="select" label="atom type">
              <option selected="True" value="gaff">gaff</option>
@@ -133,6 +130,15 @@ Antechamber sets up parameters for the input molecules
 
 
 .. _`userguide`: http://ambermd.org/doc12/Amber19.pdf
+
+.. class:: infomark
+
+**Feature requests**
+
+Go to Galaxy Computational Chemistry and make a `feature request`_
+
+.. _`feature request`: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/issues/new
+
 
 ]]>
     </help>
