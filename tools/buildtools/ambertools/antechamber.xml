@@ -7,9 +7,9 @@
   <command detect_errors="exit_code">
     <![CDATA[
     antechamber -i '$input1' -o '$output1'
-    #if $input1.is_of_type("pdb")
+    #if '$input1'.is_of_type("pdb")
     -fi pdb
-    #else if $input1.is_of_type("mol2")
+    #else if '$input1'.is_of_type("mol2")
     -fi mol2
     #end if
     -fo '$selected_output_format' -c '$allparams.c' -pf '$extraparams.pf'
