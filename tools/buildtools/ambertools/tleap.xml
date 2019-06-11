@@ -1,24 +1,25 @@
-<tool id="tleap" name="tleap" version="1.0">
-    <description>Amber Parameter Checker</description>
+<tool id="leap" name="Leap" version="@VERSION@">
+  <description> Link, edit and parm input preparation</description>
   <macros>
     <import>macros.xml</import>
   </macros>
   <expand macro="requirements"></expand>
-    <command detect_errors="exit_code">
-        <![CDATA[
+  <command detect_errors="exit_code">
+    <![CDATA[
         ln -s '$ligandinput1' input.mol2
         &&
         bash '$tleap_script' > tleap.in
-        && 
+        &&
         tleap -f tleap.in
 
         ]]>
-    </command>
-    <configfiles>
-        <inputs name="inputs" />
-        <configfile name="tleap_script"><![CDATA[
-            cat << EOF 
-            #for $i, $s  in enumerate( '$Forcefields' 
+  </command>
+  <configfiles>
+    <inputs name="inputs"/>
+    <configfile name="tleap_script">
+      <![CDATA[
+            cat << EOF
+            #for $i, $s  in enumerate( '$Forcefields'
 source $s
             #end for
 
@@ -33,9 +34,10 @@ saveamberparm ligA '$outputprmtop1' '$outputinpcrd2'
 quit
 EOF
 ]]>
-        </configfile>
-    </configfiles>
-    <inputs>
+    </configfile>
+  </configfiles>
+  <inputs>
+    <conditional name="input_format">
       <param name="template_style" type="select" label="Select a template style for tleap:">
         <option value="ligandinsolventbox">ligand in solvent box</option>
         <option value="proteinwithligands">protein with ligands</option>
@@ -53,36 +55,40 @@ EOF
       <when value="customscript">
         <param type="text" area="true" name="input1" format="mol2"/>
       </when>
-  <param name="Forcefields" type="select" multiple="true" label="Forcefield(s) to load" help="">
-    <option value="leaprc.protein.ff14SB" selected="true">ff14SB</option>
-    <option value="leaprc.gaff2" selected="true">gaff2</option>
-    <option value="leaprc.water.tip3p" selected="true">water tip3p</option>
-</param>
-<section name="solvions" title="Solvate and add ions" expanded="true">
+    </conditional>
+    <param name="Forcefields" type="select" multiple="true" label="Forcefield(s) to load" help="">
+      <option value="leaprc.protein.ff14SB" selected="true">ff14SB</option>
+      <option value="leaprc.gaff2" selected="true">gaff2</option>
+      <option value="leaprc.water.tip3p" selected="true">water tip3p</option>
+    </param>
+    <section name="solvions" title="Solvate and add ions" expanded="true">
       <param name="box" type="select" label="Select box type" help="box like or octahedral">
         <option value="solvateBox" selected="true">Box</option>
         <option value="solvateOct">Oct</option>
       </param>
-      <param name="dimension" type="select" display="radio" label="Uniform distance or differing x,y,z distance">
-        <option value="1">1 - uniform</option>
-        <option value="3">3 - multiple</option>
-      </param>
-      <when value="1">
-      <param name="distance" type="integer" value="20" label="Distance. minimum distance between solute and edge of a periodic box" min="1" max="100" help=""/>
-      </when>
-      <when value="3">
-      <param name="distancex" type="integer" value="20" label="Distance x. minimum distance between solute and edge of a periodic box" min="1" max="100" help=""/>
-      <param name="distancey" type="integer" value="20" label="Distance y. minimum distance between solute and edge of a periodic box" min="1" max="100" help=""/>
-      <param name="distancez" type="integer" value="20" label="Distance z. minimum distance between solute and edge of a periodic box" min="1" max="100" help=""/>
-  </when>
+      <conditional name="dimension_format">
+        <param name="dimension" type="select" display="radio" label="Uniform distance or differing x,y,z distance">
+          <option value="1">1 - uniform</option>
+          <option value="3">3 - multiple</option>
+        </param>
+        <when value="1">
+          <param name="distance" type="integer" value="20" label="Distance. minimum distance between solute and edge of a periodic box" min="1" max="100" help=""/>
+        </when>
+        <when value="3">
+          <param name="distancex" type="integer" value="20" label="Distance x. minimum distance between solute and edge of a periodic box" min="1" max="100" help=""/>
+          <param name="distancey" type="integer" value="20" label="Distance y. minimum distance between solute and edge of a periodic box" min="1" max="100" help=""/>
+          <param name="distancez" type="integer" value="20" label="Distance z. minimum distance between solute and edge of a periodic box" min="1" max="100" help=""/>
+        </when>
+      </conditional>
       <param name="iso" type="boolean" checked="false" truevalue="iso" falsevalue="" label="" help="rotate box to orient to principal axes."/>
-  </section>
-    </inputs>
-    <outputs>
-        <data format="txt" name="outputprmtop1" label="${tool.name}: prmtop output"/>
-        <data format="txt" name="outputinpcrd2" label="${tool.name}: inpcrd output"/>
-    </outputs>
-    <help><![CDATA[
+    </section>
+  </inputs>
+  <outputs>
+    <data format="txt" name="outputprmtop1" label="${tool.name}: prmtop output"/>
+    <data format="txt" name="outputinpcrd2" label="${tool.name}: inpcrd output"/>
+  </outputs>
+  <help>
+    <![CDATA[
 .. class:: infomark
 
 **What it does**
@@ -111,10 +117,13 @@ Leap -  link, edit and parm - prepare input for molecular mechanics.
 
 .. _`userguide`: http://ambermd.org/doc12/Amber19.pdf
 
+.. class:: infomark
+
 **Known issues**
-If datatype is mol not mol2, tleap decides to crash. Does not matter if a soft link is used. Fix - edit the datatype and set it to be mol2 (this is not available in the upload and must be done after).
+
+- If datatype is mol not mol2, tleap will crash. Does not matter if a soft link is used. Fix - edit the datatype and set it to be mol2 (this is not available in the upload and must be done after).
 
 ]]>
-    </help>
+  </help>
   <expand macro="citations"/>
 </tool>
