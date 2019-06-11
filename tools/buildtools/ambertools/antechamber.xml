@@ -6,26 +6,21 @@
   <expand macro="requirements"></expand>
   <command detect_errors="exit_code">
     <![CDATA[
-        antechamber -i '$input1' -o '$output1' -fi '$input_format.selected_format' -fo '$selected_output_format' -c '$allparams.c' -pf '$extraparams.pf'
-        #if '$extraparams.usenc'
-        -nc '$allparams.nc'
-        #end if
-        -at '$allparams.at' -j '$allparams.j' -rn '$allparams.resname' -m '$allparams.m'
+    antechamber -i '$input1' -o '$output1'
+    #if $input1.is_of_type("pdb")
+    -fi pdb
+    #else if $input1.is_of_type("mol2")
+    -fi mol2
+    #end if
+    -fo '$selected_output_format' -c '$allparams.c' -pf '$extraparams.pf'
+    #if '$extraparams.usenc'
+    -nc '$allparams.nc'
+    #end if
+    -at '$allparams.at' -j '$allparams.j' -rn '$allparams.resname' -m '$allparams.m'
         ]]>
   </command>
   <inputs>
-    <conditional name="input_format">
-      <param name="selected_format" type="select" label="Select a file format:" help="In PDB or mol2 format">
-        <option value="pdb" selected="true">pdb</option>
-        <option value="mol2">mol2</option>
-      </param>
-      <when value="pdb">
-        <param type="data" name="input1" format="pdb"/>
-      </when>
-      <when value="mol2">
-        <param type="data" name="input1" format="mol2"/>
-      </when>
-    </conditional>
+    <param type="data" name="input1" label="Molecular input (PDB or mol2)" format="pdb,mol2"/>
     <param name="selected_output_format" type="select" label="Select an output file format (mol2 recommended!):">
       <option value="pdb">pdb</option>
       <option value="mol2" selected="true">mol2</option>
@@ -75,8 +70,6 @@
   </outputs>
   <tests>
     <test>
-      <param name="input_format|selected_format" value="mol2"/>
-      <param name="selected_output_format" value="mol2"/>
       <param name="input1" value="LigA.mol2"/>
       <param name="allparams|nc" value="-2"/>
       <param name="allparams|c" value="AM1-BCC"/>
@@ -89,8 +82,6 @@
       </output>
     </test>
     <test>
-      <param name="input_format|selected_format" value="pdb"/>
-      <param name="selected_output_format" value="pdb"/>
       <param name="input1" value="LigA.pdb"/>
       <param name="allparams|nc" value="-2"/>
       <param name="allparams|c" value="AM1-BCC"/>
@@ -124,7 +115,7 @@ Antechamber sets up parameters for the input molecules provided.
 
 **Outputs created**
 
-- A mol2 output is created with the forcefield compatible atom names.
+- A mol2 or PDB output is created with the forcefield compatible atom names.
 
 .. class:: infomark
 
