@@ -3,7 +3,6 @@
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="19.0">ambertools</requirement>
-            <requirement type="package" version="3.0.0">libgfortran</requirement>
             <yield/>
         </requirements>
     </xml>
