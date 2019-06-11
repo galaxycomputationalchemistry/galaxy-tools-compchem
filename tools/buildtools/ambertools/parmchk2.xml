@@ -7,7 +7,7 @@
   <command detect_errors="exit_code">
     <![CDATA[
     parmchk2 -i '$input1'
-    #if '$input1'.is_of_type("mol2")
+    #if $input1.is_of_type("mol2")
     -f mol2
     #end if
     -s '$allparams.s' -a '$allparams.a' -o '$output1'
@@ -15,9 +15,6 @@
   </command>
   <inputs>
     <param type="data" name="input1" label="Molecular input (mol2)" format="mol2"/>
-    <param name="selected_output_format" type="select" label="Select an output file format:" help="text recommended for now and it will contain frcmod data (-o)">
-      <option value="txt" selected="true">txt</option>
-    </param>
     <section name="allparams" title="General Parameters" expanded="true">
       <param name="s" type="select" value="2" label="FFparm set parameter" help="(-s)">
         <option value="1">1: gaff</option>
@@ -27,7 +24,7 @@
     </section>
   </inputs>
   <outputs>
-    <data format="txt" name="output1" label="${tool.name}: structure output">
+    <data format="txt" name="output1" label="${tool.name}: frcmod output">
     </data>
   </outputs>
   <tests>
