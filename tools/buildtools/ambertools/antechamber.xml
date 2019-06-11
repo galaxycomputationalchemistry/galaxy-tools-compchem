@@ -6,13 +6,7 @@
   <expand macro="requirements"></expand>
   <command detect_errors="exit_code">
     <![CDATA[
-    antechamber -i '$input1' -o '$output1'
-    #if $input1.is_of_type("mol2")
-    -fi mol2
-    #else
-    -fi pdb
-    #end if
-    -fo '$selected_output_format' -c '$allparams.c' -pf '$extraparams.pf'
+    antechamber -i '$input1' -o '$output1' -fi '$input1.ext' -fo '$selected_output_format' -c '$allparams.c' -pf '$extraparams.pf'
     #if '$extraparams.usenc'
     -nc '$allparams.nc'
     #end if
@@ -82,7 +76,7 @@
       </output>
     </test>
     <test>
-      <param name="input1" value="LigA.pdb"/>
+      <param name="input1" value="LigA.pdb" ftype="pdb"/>
       <param name="selected_output_format" value="pdb"/>
       <param name="allparams|nc" value="-2"/>
       <param name="allparams|c" value="AM1-BCC"/>
