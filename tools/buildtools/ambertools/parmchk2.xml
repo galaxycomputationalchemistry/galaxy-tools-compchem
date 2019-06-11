@@ -6,18 +6,15 @@
   <expand macro="requirements"></expand>
   <command detect_errors="exit_code">
     <![CDATA[
-        parmchk2 -i '$input1' -f '$input_format.selected_format' -s '$allparams.s' -a '$allparams.a' -o '$output1'
+    parmchk2 -i '$input1'
+    #if '$input1'.is_of_type("mol2")
+    -f mol2
+    #end if
+    -s '$allparams.s' -a '$allparams.a' -o '$output1'
         ]]>
   </command>
   <inputs>
-    <conditional name="input_format">
-      <param name="selected_format" type="select" label="Select a file format:">
-        <option value="mol2">mol2</option>
-      </param>
-      <when value="mol2">
-        <param type="data" name="input1" format="mol2"/>
-      </when>
-    </conditional>
+    <param type="data" name="input1" label="Molecular input (mol2)" format="mol2"/>
     <param name="selected_output_format" type="select" label="Select an output file format:" help="text recommended for now and it will contain frcmod data (-o)">
       <option value="txt" selected="true">txt</option>
     </param>
@@ -31,16 +28,10 @@
   </inputs>
   <outputs>
     <data format="txt" name="output1" label="${tool.name}: structure output">
-      <change_format>
-        <when input="selected_output_format" value="txt" format="txt"/>
-        <!-- <when input="selected_format" value="xyz" format="xyz"/> <when input="selected_format" value="tinker" format="tinker"/> <when input="selected_format" value="moldy" format="moldy"/> -->
-      </change_format>
     </data>
   </outputs>
   <tests>
     <test>
-      <param name="input_format|selected_format" value="mol2"/>
-      <param name="selected_output_format" value="txt"/>
       <param name="input1" value="LigA_prmchk.mol2"/>
       <param name="allparams|s" value="2"/>
       <output name="output1" file="LigA_output.txt" compare="diff" lines_diff="0"></output>
