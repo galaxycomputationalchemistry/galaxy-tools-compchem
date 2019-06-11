@@ -16,9 +16,9 @@
   <inputs>
     <param type="data" name="input1" label="Molecular input (mol2)" format="mol2"/>
     <section name="allparams" title="General Parameters" expanded="true">
-      <param name="s" type="select" value="2" label="FFparm set parameter" help="(-s)">
-        <option value="1">1: gaff</option>
-        <option selected="True" value="2">2: gaff2</option>
+      <param name="s" type="select" display="radio" label="FFparm set parameter" help="(-s)">
+        <option selected="True" value="1">1: gaff</option>
+        <option value="2">2: gaff2</option>
       </param>
       <param name="a" type="boolean" checked="false" truevalue="Y" falsevalue="N" label="Print all force field parameters" help="(-a)"/>
     </section>
