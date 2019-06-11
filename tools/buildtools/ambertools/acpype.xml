@@ -1,12 +1,16 @@
 <tool id="acpype" name="Generate MD topologies for small molecules" version="0.1.0">
     <description>using acpype</description>
     <requirements>
-        <!-- <requirement type="package" version="18.0">ambertools</requirement> -->
         <requirement type="package" version="2019.03.22.14.36">acpype</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
         ln -s '$input1' ./input1.${input1.ext} &&
-        acpype -i './input1.${input1.ext}' -n $charge -b base -m $multiplicity -a $atomtype -o gmx
+        acpype -i './input1.${input1.ext}'
+            -n $charge
+            -b base
+            -m $multiplicity
+            -a $atomtype
+            -o gmx
     ]]></command>
     <inputs>
         <param name="input1" type="data" format="pdb,mol2" label="Input file"
@@ -20,22 +24,18 @@
             <option value="gaff2">gaff2</option>
             <option value="amber2">AMBER14SB + gaff2</option>
         </param>
-        <!-- <param name="tops" type="select" value="gmx" label="Topology output">
-            <option value="gmx">GROMACS</option>
-            <option value="charmm">CHARMM</option>
-        </param> -->
+        <param name="save_gro" type="boolean" value="false" label="Save GRO file?" help="Save atomic coordinates of ligand in GRO format."/>
     </inputs>
     <outputs>
         <data format="itp" name="output" label="Topology" from_work_dir='base.acpype/base_GMX.itp'/>
-            <!-- <filter>tops == 'gmx'</filter>
+        <data name="gro_output" format="gro" from_work_dir="base.acpype/base_GMX.gro">
+            <filter>save_gro</filter>
         </data>
-        <data format="itp" name="output" label="Topology" from_work_dir='base.acpype/base_GMX.itp'>
-            <filter>tops == 'charmm'</filter>
-        </data> -->
     </outputs>
     <tests>
         <test>
             <param name="input1" value="JZ4.mol2"/>
+            <param name="save_gro" value="True"/>
             <output name="output">
                 <assert_contents>
                     <has_line line="[ atoms ]"/>
@@ -43,6 +43,7 @@
                     <has_text text="    18   hc     1   JZ4    H7   18     0.05"/>
                 </assert_contents>
             </output>
+            <output name="gro_output" file="base_GMX.gro" lines_diff="2"/>
         </test>
     </tests>
     <help><![CDATA[
