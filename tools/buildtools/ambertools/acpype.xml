@@ -6,10 +6,10 @@
     <command detect_errors="exit_code"><![CDATA[
         ln -s '$input1' ./input1.${input1.ext} &&
         acpype -i './input1.${input1.ext}'
-            -n $charge
+            -n '$charge'
             -b base
-            -m $multiplicity
-            -a $atomtype
+            -m '$multiplicity'
+            -a '$atomtype'
             -o gmx
     ]]></command>
     <inputs>
