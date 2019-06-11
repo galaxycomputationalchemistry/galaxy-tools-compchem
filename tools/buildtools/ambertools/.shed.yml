@@ -1,0 +1,20 @@
+name: ambertools
+owner: chemteam
+description: "Ambertools is a set of packages for preparing systems for molecular dynamics (MD) simulations and analyzing trajectories."
+homepage_url: http://ambermd.org/AmberTools.php
+long_description: |
+    AmberTools (http://ambermd.org/AmberTools.php) is a set of packages than can be to create forcefields (antechamber), prepare molecules(tleap) and much more.
+remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/
+type: unrestricted
+categories:
+- Molecular Dynamics
+  - Computational chemistry
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the AmberTools package: {{ tool_name }}"
+suite:
+  name: "suite_ambertools"
+  description: "Ambertools is a suite of tools for preparation and analysis of molecular dynamics."
+  long_description: |
+    AmberTools (http://ambermd.org/AmberTools.php) is a set of packages than can be to create forcefields (antechamber), prepare molecules(tleap) and much more.
+
