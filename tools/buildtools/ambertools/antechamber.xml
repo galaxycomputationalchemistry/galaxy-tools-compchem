@@ -6,11 +6,19 @@
   <expand macro="requirements"></expand>
   <command detect_errors="exit_code">
     <![CDATA[
-    antechamber -i '$input1' -o '$output1' -fi '$input1.ext' -fo '$selected_output_format' -c '$allparams.c' -pf '$extraparams.pf'
-    #if '$extraparams.usenc'
-    -nc '$allparams.nc'
-    #end if
-    -at '$allparams.at' -j '$allparams.j' -rn '$allparams.resname' -m '$allparams.m'
+    antechamber -i '$input1'
+        -o '$output1'
+        -fi '$input1.ext'
+        -fo '$selected_output_format'
+        -c '$allparams.c'
+        -pf '$extraparams.pf'
+        #if '$extraparams.usenc'
+        -nc '$allparams.nc'
+        #end if
+        -at '$allparams.at'
+        -j '$allparams.j'
+        -rn '$allparams.resname'
+        -m '$allparams.m'
         ]]>
   </command>
   <inputs>

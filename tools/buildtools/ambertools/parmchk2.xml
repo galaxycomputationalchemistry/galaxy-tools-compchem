@@ -6,8 +6,11 @@
   <expand macro="requirements"></expand>
   <command detect_errors="exit_code">
     <![CDATA[
-    parmchk2 -i '$input1' -f '$input1.ext'
-    -s '$allparams.s' -a '$allparams.a' -o '$output1'
+    parmchk2 -i '$input1'
+        -f '$input1.ext'
+        -s '$allparams.s'
+        -a '$allparams.a'
+        -o '$output1'
         ]]>
   </command>
   <inputs>
