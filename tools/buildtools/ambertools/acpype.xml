@@ -1,4 +1,4 @@
-<tool id="acpype" name="Generate MD topologies for small molecules" version="0.1.0">
+<tool id="acpype" name="Generate MD topologies for small molecules" version="2019.03.22.14.36">
     <description>using acpype</description>
     <requirements>
         <requirement type="package" version="2019.03.22.14.36">acpype</requirement>
@@ -28,7 +28,7 @@
     </inputs>
     <outputs>
         <data format="itp" name="output" label="Topology" from_work_dir='base.acpype/base_GMX.itp'/>
-        <data name="gro_output" format="gro" from_work_dir="base.acpype/base_GMX.gro">
+        <data format="gro" name="gro_output" label="Structure file (GRO format, optional)" from_work_dir="base.acpype/base_GMX.gro">
             <filter>save_gro</filter>
         </data>
     </outputs>
@@ -47,7 +47,7 @@
         </test>
     </tests>
     <help><![CDATA[
-Tool to produce GROMACS topologies for small molecules using AmberTools.
+Tool to produce GROMACS topologies for small molecules using the acpype interface to AmberTools.
 
 .. class:: infomark
 
@@ -62,7 +62,7 @@ consider using a tool such as 'GROMACS initial setup' instead.
 
 **Outputs**
 
-GROMACS topology for the ligand, in itp format. 
+GROMACS topology for the ligand, in itp format. Optional: structure file, in gro format.
 
 
     ]]></help>
