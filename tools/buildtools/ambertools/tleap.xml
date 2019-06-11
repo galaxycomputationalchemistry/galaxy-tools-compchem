@@ -1,37 +1,82 @@
 <tool id="tleap" name="tleap" version="1.0">
     <description>Amber Parameter Checker</description>
-    <requirements>
-        <requirement type="package" version="19.0">ambertools</requirement>
-        <requirement type="package" version="3.0.0">libgfortran</requirement>
-    </requirements>
+  <macros>
+    <import>macros.xml</import>
+  </macros>
+  <expand macro="requirements"></expand>
     <command detect_errors="exit_code">
         <![CDATA[
-        bash '$tleap_script' && tleap -f tleap.in
+        ln -s '$ligandinput1' input.mol2
+        &&
+        bash '$tleap_script' > tleap.in
+        && 
+        tleap -f tleap.in
 
         ]]>
     </command>
     <configfiles>
         <inputs name="inputs" />
         <configfile name="tleap_script"><![CDATA[
-            cat << EOF > tleap.in
-source leaprc.protein.ff14SB
-source leaprc.gaff2
-source leaprc.water.tip3p
+            cat << EOF 
+            #for $i, $s  in enumerate( '$Forcefields' 
+source $s
+            #end for
 
-ligA = loadmol2 $inputmol1
+ligA = loadmol2 input.mol2
 
-loadamberparams $inputfrcmod1
+#if '$ligandinputfrcmod1'
+loadamberparams '$ligandinputfrcmod1'
+#end if
 solvateBox ligA TIP3PBOX 14.0 iso
 addIonsRand ligA  Na+ 0
-saveamberparm ligA $outputprmtop1 $outputinpcrd2
+saveamberparm ligA '$outputprmtop1' '$outputinpcrd2'
 quit
 EOF
 ]]>
         </configfile>
     </configfiles>
     <inputs>
-        <param type="data" name="inputmol1" format="mol2" />
-        <param type="data" name="inputfrcmod1" format="txt" />
+      <param name="template_style" type="select" label="Select a template style for tleap:">
+        <option value="ligandinsolventbox">ligand in solvent box</option>
+        <option value="proteinwithligands">protein with ligands</option>
+        <option value="customscript">custom script</option>
+      </param>
+      <when value="proteinwithligands">
+        <param type="data" name="proteininput1" format="mol2"/>
+        <param type="data" name="ligandinput1" format="mol2" label="Ligand input coordinates"/>
+        <param type="data" name="ligandinputfrcmod1" optional="true" label="Ligand frcmod param (Optional)" format="txt" help="frcmod is optional"/>
+      </when>
+      <when value="ligandinsolventbox">
+        <param type="data" name="ligandinput1" format="mol2" label="Ligand input coordinates"/>
+        <param type="data" name="ligandinputfrcmod1" optional="true" label="Ligand frcmod param (Optional)" format="txt" help="frcmod is optional"/>
+      </when>
+      <when value="customscript">
+        <param type="text" area="true" name="input1" format="mol2"/>
+      </when>
+  <param name="Forcefields" type="select" multiple="true" label="Forcefield(s) to load" help="">
+    <option value="leaprc.protein.ff14SB" selected="true">ff14SB</option>
+    <option value="leaprc.gaff2" selected="true">gaff2</option>
+    <option value="leaprc.water.tip3p" selected="true">water tip3p</option>
+</param>
+<section name="solvions" title="Solvate and add ions" expanded="true">
+      <param name="box" type="select" label="Select box type" help="box like or octahedral">
+        <option value="solvateBox" selected="true">Box</option>
+        <option value="solvateOct">Oct</option>
+      </param>
+      <param name="dimension" type="select" display="radio" label="Uniform distance or differing x,y,z distance">
+        <option value="1">1 - uniform</option>
+        <option value="3">3 - multiple</option>
+      </param>
+      <when value="1">
+      <param name="distance" type="integer" value="20" label="Distance. minimum distance between solute and edge of a periodic box" min="1" max="100" help=""/>
+      </when>
+      <when value="3">
+      <param name="distancex" type="integer" value="20" label="Distance x. minimum distance between solute and edge of a periodic box" min="1" max="100" help=""/>
+      <param name="distancey" type="integer" value="20" label="Distance y. minimum distance between solute and edge of a periodic box" min="1" max="100" help=""/>
+      <param name="distancez" type="integer" value="20" label="Distance z. minimum distance between solute and edge of a periodic box" min="1" max="100" help=""/>
+  </when>
+      <param name="iso" type="boolean" checked="false" truevalue="iso" falsevalue="" label="" help="rotate box to orient to principal axes."/>
+  </section>
     </inputs>
     <outputs>
         <data format="txt" name="outputprmtop1" label="${tool.name}: prmtop output"/>
@@ -42,26 +87,7 @@ EOF
 
 **What it does**
 
-Antechamber parameter check
-parmchk2 reads in an ac/mol2/prepi/prepc file, an atomtype similarity index file (the default is $AMBERHOME-
-/dat/antechamber/PARMCHK.DAT) as well as a force field file (the default is $AMBERHOME/dat/leap/parm/-
-gaff.dat). It writes out a force field modification (frcmod) file containing any force field parameters that are needed
-for the molecule but not supplied by the force field (*.dat) file. Problematic parameters, if any, are indicated in
-the frcmod file with the note, “ATTN, need revision”, and are typically given values of zero.
-
-parmchk2 -i input file name
--o frcmod file name
--f input file format (prepi, prepc, ac, mol2)
--p ff parmfile
--pf parmfile format,
-1: for amber FF data file (the default)
-2: for additional force field parameter file
--c atom type corresponding score file, default is PARMCHK.DAT
--a print out all force field parameters including those in the parmfile
-can be ’Y’ (yes) or ’N’ (no) default is ’N’
--w print out parameters that matching improper dihedral parameters
-that contain ’X’ in the force field parameter file, can be ’Y’ (yes)
-or ’N’ (no), default is ’Y
+Leap -  link, edit and parm - prepare input for molecular mechanics.
 
 .. class:: infomark
 
@@ -85,17 +111,10 @@ or ’N’ (no), default is ’Y
 
 .. _`userguide`: http://ambermd.org/doc12/Amber19.pdf
 
+**Known issues**
+If datatype is mol not mol2, tleap decides to crash. Does not matter if a soft link is used. Fix - edit the datatype and set it to be mol2 (this is not available in the upload and must be done after).
+
 ]]>
     </help>
-    <citations>
-	    <citation type="doi">10.1002/jcc.20290</citation>
-	            <citation type="bibtex">
-@misc{ambertools,
-  author = {D.A. Case, I.Y. Ben-Shalom, S.R. Brozell, D.S. Cerutti, T.E. Cheatham, III, V.W.D. Cruzeiro, T.A. Darden, R.E. Duke, D. Ghoreishi, M.K. Gilson, H. Gohlke, A.W. Goetz, D. Greene, R Harris, N. Homeyer, S. Izadi, A. Kovalenko, T. Kurtzman, T.S. Lee, S. LeGrand, P. Li, C. Lin, J. Liu, T. Luchko, R. Luo, D.J. Mermelstein, K.M. Merz, Y. Miao, G. Monard, C. Nguyen, H. Nguyen, I. Omelyan, A. Onufriev, F. Pan, R. Qi, D.R. Roe, A. Roitberg, C. Sagui, S. Schott-Verdugo, J. Shen, C.L. Simmerling, J. Smith, R. Salomon-Ferrer, J. Swails, R.C. Walker, J. Wang, H. Wei, R.M. Wolf, X. Wu, L. Xiao, D.M. York and P.A. Kollman },
-  year = {2018},
-  title = {AMBER 2018},
-  publisher = {University of California, San Francisco},
-  url = {http://ambermd.org/CiteAmber.php},
-}</citation>
-    </citations>
+  <expand macro="citations"/>
 </tool>
