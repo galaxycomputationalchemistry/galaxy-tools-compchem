@@ -1,0 +1,72 @@
+<tool id="acpype" name="Generate MD topologies for small molecules" version="0.1.0">
+    <description>using acpype</description>
+    <requirements>
+        <!-- <requirement type="package" version="18.0">ambertools</requirement> -->
+        <requirement type="package" version="2019.03.22.14.36">acpype</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        ln -s '$input1' ./input1.${input1.ext} &&
+        acpype -i './input1.${input1.ext}' -n $charge -b base -m $multiplicity -a $atomtype -o gmx
+    ]]></command>
+    <inputs>
+        <param name="input1" type="data" format="pdb,mol2" label="Input file"
+                        help="Structure of the compound in pdb or mol2 format"/>
+        <param name="charge" type="integer" value="0" label="Charge of the molecule"/>
+        <param name="multiplicity" type="integer" value="1" label="Multiplicity" 
+                        help="Default value is 1, which is correct for almost all organic molecules."/>
+        <param name="atomtype" type="select" value="gaff" label="Force field to use for parameterization">
+            <option value="gaff">gaff</option>
+            <option value="amber">AMBER14SB</option>
+            <option value="gaff2">gaff2</option>
+            <option value="amber2">AMBER14SB + gaff2</option>
+        </param>
+        <!-- <param name="tops" type="select" value="gmx" label="Topology output">
+            <option value="gmx">GROMACS</option>
+            <option value="charmm">CHARMM</option>
+        </param> -->
+    </inputs>
+    <outputs>
+        <data format="itp" name="output" label="Topology" from_work_dir='base.acpype/base_GMX.itp'/>
+            <!-- <filter>tops == 'gmx'</filter>
+        </data>
+        <data format="itp" name="output" label="Topology" from_work_dir='base.acpype/base_GMX.itp'>
+            <filter>tops == 'charmm'</filter>
+        </data> -->
+    </outputs>
+    <tests>
+        <test>
+            <param name="input1" value="JZ4.mol2"/>
+            <output name="output">
+                <assert_contents>
+                    <has_line line="[ atoms ]"/>
+                    <has_text text="    15   ha     1   JZ4    H4   15     0.13"/>
+                    <has_text text="    18   hc     1   JZ4    H7   18     0.05"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+Tool to produce GROMACS topologies for small molecules using AmberTools.
+
+.. class:: infomark
+
+**Input**
+
+Either a mol2 file (more appropriate for small structures) or a 
+pdb file. If you want to parameterize a large macromolecule 
+(which is more likely to be stored in PDB format, e.g. a protein) 
+consider using a tool such as 'GROMACS initial setup' instead.
+
+.. class:: infomark
+
+**Outputs**
+
+GROMACS topology for the ligand, in itp format. 
+
+
+    ]]></help>
+    <citations>
+	    <citation type="doi">10.1002/jcc.20290</citation>
+	    <citation type="doi">doi:10.1186/1756-0500-5-367</citation>
+    </citations>
+</tool>
