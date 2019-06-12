@@ -1,24 +1,20 @@
 <macros>
-    <token name="@VERSION@">0.19</token>
-    <xml name="requirements">
-        <requirements>
-            <requirement type="package" version="19.0">ambertools</requirement>
-            <yield/>
-        </requirements>
-    </xml>
-    <xml name="citations">
+  <token name="@VERSION@">19.0</token>
+  <xml name="requirements">
+    <requirements>
+      <requirement type="package" version="19.0">ambertools</requirement>
+      <yield/>
+    </requirements>
+  </xml>
+  <xml name="citations">
     <citations>
-	    <citation type="doi">10.1002/jcc.20290</citation>
-	            <citation type="bibtex">
-@misc{ambertools,
-  author = {D.A. Case, I.Y. Ben-Shalom, S.R. Brozell, D.S. Cerutti, T.E. Cheatham, III, V.W.D. Cruzeiro, T.A. Darden, R.E. Duke, D. Ghoreishi, M.K. Gilson, H. Gohlke, A.W. Goetz, D. Greene, R Harris, N. Homeyer, S. Izadi, A. Kovalenko, T. Kurtzman, T.S. Lee, S. LeGrand, P. Li, C. Lin, J. Liu, T. Luchko, R. Luo, D.J. Mermelstein, K.M. Merz, Y. Miao, G. Monard, C. Nguyen, H. Nguyen, I. Omelyan, A. Onufriev, F. Pan, R. Qi, D.R. Roe, A. Roitberg, C. Sagui, S. Schott-Verdugo, J. Shen, C.L. Simmerling, J. Smith, R. Salomon-Ferrer, J. Swails, R.C. Walker, J. Wang, H. Wei, R.M. Wolf, X. Wu, L. Xiao, D.M. York and P.A. Kollman },
-  year = {2018},
-  title = {AMBER 2018},
-  publisher = {University of California, San Francisco},
-  url = {http://ambermd.org/CiteAmber.php},
-}</citation>
-            <yield/>
+      <citation type="doi">10.1002/jcc.20290</citation>
+      <citation type="bibtex">
+        @misc{ambertools, author = {D.A. Case, I.Y. Ben-Shalom, S.R. Brozell, D.S. Cerutti, T.E. Cheatham, III, V.W.D. Cruzeiro, T.A. Darden, R.E. Duke, D. Ghoreishi, M.K. Gilson, H. Gohlke, A.W. Goetz, D. Greene, R Harris, N. Homeyer, S. Izadi, A.
+        Kovalenko, T. Kurtzman, T.S. Lee, S. LeGrand, P. Li, C. Lin, J. Liu, T. Luchko, R. Luo, D.J. Mermelstein, K.M. Merz, Y. Miao, G. Monard, C. Nguyen, H. Nguyen, I. Omelyan, A. Onufriev, F. Pan, R. Qi, D.R. Roe, A. Roitberg, C. Sagui, S. Schott-Verdugo,
+        J. Shen, C.L. Simmerling, J. Smith, R. Salomon-Ferrer, J. Swails, R.C. Walker, J. Wang, H. Wei, R.M. Wolf, X. Wu, L. Xiao, D.M. York and P.A. Kollman }, year = {2018}, title = {AMBER 2018}, publisher = {University of California, San Francisco}, url =
+        {http://ambermd.org/CiteAmber.php}, }</citation>
+      <yield/>
     </citations>
-    </xml>
+  </xml>
 </macros>
-
