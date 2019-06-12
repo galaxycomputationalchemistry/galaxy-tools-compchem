@@ -24,13 +24,14 @@
     </section>
   </inputs>
   <outputs>
-    <data format="txt" name="output1" label="${tool.name}: frcmod output">
-    </data>
+    <data format="txt" name="output1" label="${tool.name}: frcmod output"></data>
   </outputs>
   <tests>
     <test>
       <param name="input1" value="LigA_prmchk.mol2"/>
-      <param name="allparams|s" value="2"/>
+      <section name="allparams">
+        <param name="s" value="2"/>
+      </section>
       <output name="output1" file="LigA_output.txt" compare="diff" lines_diff="0"></output>
     </test>
   </tests>

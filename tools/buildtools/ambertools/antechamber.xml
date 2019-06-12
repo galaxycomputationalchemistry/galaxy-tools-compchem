@@ -73,10 +73,12 @@
   <tests>
     <test>
       <param name="input1" value="LigA.mol2"/>
-      <param name="allparams|nc" value="-2"/>
-      <param name="allparams|c" value="AM1-BCC"/>
-      <param name="allparams|at" value="gaff2"/>
-      <param name="allparams|j" value="5 - atom and part bond type"/>
+      <section name="allparams">
+        <param name="nc" value="-2"/>
+        <param name="c" value="AM1-BCC"/>
+        <param name="at" value="gaff2"/>
+        <param name="j" value="5 - atom and part bond type"/>
+      </section>
       <output name="output1" file="LigA_output.mol2" compare="diff" lines_diff="0">
         <assert_contents>
           <has_text text=" 1 C           49.2110    26.9920    85.5530 c2         1 MOL"/>
@@ -86,10 +88,12 @@
     <test>
       <param name="input1" value="LigA.pdb" ftype="pdb"/>
       <param name="selected_output_format" value="pdb"/>
-      <param name="allparams|nc" value="-2"/>
-      <param name="allparams|c" value="AM1-BCC"/>
-      <param name="allparams|at" value="gaff2"/>
-      <param name="allparams|j" value="5 - atom and part bond type"/>
+      <section name="allparams">
+        <param name="nc" value="-2"/>
+        <param name="c" value="AM1-BCC"/>
+        <param name="at" value="gaff2"/>
+        <param name="j" value="5 - atom and part bond type"/>
+      </section>
       <output name="output1" file="LigA_output.pdb" compare="diff" lines_diff="0">
         <assert_contents>
           <has_text text="ATOM      1  C   MOL     1      49.211  26.992  85.553  1.00  0.00           C"/>
