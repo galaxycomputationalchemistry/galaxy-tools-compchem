@@ -1,4 +1,4 @@
-<tool id="antechamber" name="AnteChamber" version="@VERSION@">
+<tool id="ambertools_antechamber" name="AnteChamber" version="@VERSION@">
   <description>Amber's molecular input file processor</description>
   <macros>
     <import>macros.xml</import>
