@@ -1,0 +1,81 @@
+<tool id="ambertools_parmchk2" name="ParmChk2" version="@VERSION@">
+  <description>Amber's parameter checker</description>
+  <macros>
+    <import>macros.xml</import>
+  </macros>
+  <expand macro="requirements"></expand>
+  <command detect_errors="exit_code">
+    <![CDATA[
+    parmchk2 -i '$input1'
+        -f '$input1.ext'
+        -s '$allparams.s'
+        -a '$allparams.a'
+        -o '$output1'
+        ]]>
+  </command>
+  <inputs>
+    <param type="data" name="input1" label="Molecular input (mol2)" format="mol2"/>
+    <section name="allparams" title="General Parameters" expanded="true">
+      <param name="s" type="select" display="radio" label="FFparm set parameter" help="(-s)">
+        <option selected="True" value="1">1: gaff</option>
+        <option value="2">2: gaff2</option>
+      </param>
+      <param name="a" type="boolean" checked="false" truevalue="Y" falsevalue="N" label="Print all force field parameters" help="(-a)"/>
+    </section>
+  </inputs>
+  <outputs>
+    <data format="txt" name="output1" label="${tool.name}: frcmod output"></data>
+  </outputs>
+  <tests>
+    <test>
+      <param name="input1" value="LigA_prmchk.mol2"/>
+      <section name="allparams">
+        <param name="s" value="2"/>
+      </section>
+      <output name="output1" file="LigA_output.txt" compare="diff" lines_diff="0"></output>
+    </test>
+  </tests>
+  <help>
+    <![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Antechamber parameter check reads in a mol2 file and writes out a force field modification (frcmod) file containing any force field parameters that are needed for the molecule but not supplied by the force field file.
+Problematic parameters, if any, are indicated in the frcmod file with the note, “ATTN, need revision”, and are typically given values of zero.
+
+
+.. class:: infomark
+
+**How it works**
+
+- Select a mol input file (mol2)
+- Choose GAFF or GAFF2 parameter set
+
+.. class:: infomark
+
+**Outputs created**
+
+- Outputs a frcmod file as text
+
+.. class:: infomark
+
+**User guide and documentation**
+
+- AmberTools `userguide`_
+
+
+.. _`userguide`: http://ambermd.org/doc12/Amber19.pdf
+
+.. class:: infomark
+
+**Feature requests**
+
+Go to Galaxy Computational Chemistry and make a `feature request`_
+
+.. _`feature request`: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/issues/new
+
+]]>
+  </help>
+  <expand macro="citations"/>
+</tool>
