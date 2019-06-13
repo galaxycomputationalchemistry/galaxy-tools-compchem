@@ -1,8 +1,11 @@
-<tool id="acpype" name="Generate MD topologies for small molecules" version="2019.03.22.14.36">
+<tool id="ambertools_acpype" name="Generate MD topologies for small molecules" version="@VERSION@">
     <description>using acpype</description>
-    <requirements>
-        <requirement type="package" version="2019.03.22.14.36">acpype</requirement>
-    </requirements>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements">
+        <requirement type="package" version="0.1.0">acpype</requirement>
+    </expand>
     <command detect_errors="exit_code"><![CDATA[
         ln -s '$input1' ./input1.${input1.ext} &&
         acpype -i './input1.${input1.ext}'
@@ -13,11 +16,9 @@
             -o gmx
     ]]></command>
     <inputs>
-        <param name="input1" type="data" format="pdb,mol2" label="Input file"
-                        help="Structure of the compound in pdb or mol2 format"/>
+        <param name="input1" type="data" format="pdb,mol2" label="Input file" help="Structure of the compound in pdb or mol2 format"/>
         <param name="charge" type="integer" value="0" label="Charge of the molecule"/>
-        <param name="multiplicity" type="integer" value="1" label="Multiplicity" 
-                        help="Default value is 1, which is correct for almost all organic molecules."/>
+        <param name="multiplicity" type="integer" value="1" label="Multiplicity" help="Default value is 1, which is correct for almost all organic molecules."/>
         <param name="atomtype" type="select" value="gaff" label="Force field to use for parameterization">
             <option value="gaff">gaff</option>
             <option value="amber">AMBER14SB</option>
@@ -66,8 +67,7 @@ GROMACS topology for the ligand, in itp format. Optional: structure file, in gro
 
 
     ]]></help>
-    <citations>
-	    <citation type="doi">10.1002/jcc.20290</citation>
-	    <citation type="doi">doi:10.1186/1756-0500-5-367</citation>
-    </citations>
+    <expand macro="citations">
+        <citation type="doi">doi:10.1186/1756-0500-5-367</citation>
+    </expand>
 </tool>
