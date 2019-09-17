@@ -1,5 +1,5 @@
 <tool id="packmol" name="PACKMOL" version="18.169">
-    <description>Initial configurations for Molecular Dynamics Simulations by packing optimization</description>
+    <description>Initial configurations for Molecular Dynamics simulations by packing optimization</description>
     <macros>
         <import>macros_packmol.xml</import>
     </macros>
