@@ -7,8 +7,8 @@
         </requirements>
     </xml>
     <xml name="analysis_inputs">
-        <param format="dcd" name="dcdin" type="data" label="dcd trajectory input"/>
-        <param format="pdb" name="pdbin" type="data" label="pdb input"/>
+        <param format="dcd" name="dcdin" type="data" label="DCD trajectory input"/>
+        <param format="pdb" name="pdbin" type="data" label="PDB input"/>
         <yield/>
     </xml>
     <xml name="tests_inputs">

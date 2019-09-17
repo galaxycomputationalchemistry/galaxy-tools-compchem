@@ -1,5 +1,5 @@
 <tool id="mdanalysis_cosine_analysis" name="Cosine Content" version="@VERSION@">
-    <description>Measure the cosine content of the PCA projection</description>
+    <description>- measure the cosine content of the PCA projection</description>
     <macros>
         <import>macros.xml</import>
     </macros>
@@ -41,10 +41,9 @@
 
 **What it does**
         
-The cosine content of the principal components is a good indicator for determine good or bad sampling and can be use to determine the convergence of the MD simulation.
-This tool can calculate the cosine content of a user define PCA projection.
-This tool use zero based indexes (0 is PC1).  
-    
+The cosine content of the principal components is a good indicator for determining the quality of the sampling and can be used to determine the convergence of the MD simulation.
+This tool can calculate the cosine content of a user-defined PCA projection. Note: it uses zero-based indexes (i.e. 0 is the first principal component).  
+
 _____
 
 
@@ -63,7 +62,7 @@ _____
 **Output**
 
        - The cosine content value.
-       - Tab-separated file of raw data of first three principle component.
+       - Tab-separated file of raw data of the first three principal components.
 
     ]]></help>
       <expand macro="citations">

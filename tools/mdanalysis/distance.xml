@@ -1,5 +1,5 @@
 <tool id="mdanalysis_distance" name="Distance Analysis" version="@VERSION@">
-    <description>Time series using MDAnalysis</description>
+    <description>- time series using MDAnalysis</description>
     <macros>
         <import>macros.xml</import>
     </macros>   
@@ -10,7 +10,7 @@
         --idcd '$dcdin' 
         --ipdb '$pdbin'
         --isegid1 '$segid1' 
-        --iresid1 '$resid1' 
+        --iResidue ID 1 '$resid1' 
         --iname1 '$name1'
         --isegid2 '$segid2'
         --iresid2 '$resid2' 
@@ -21,11 +21,11 @@
 ]]></command>
     <inputs>
         <expand macro="analysis_inputs"/>
-        <param name="segid1"  type="text" value="PRO" label="Segid of atom 1"/>
-        <param name="resid1"  type="text" value="212" label="Resid of atom 1"/>
+        <param name="segid1"  type="text" value="PRO" label="Segment ID of atom 1"/>
+        <param name="resid1"  type="text" value="212" label="Residue ID of atom 1"/>
         <param name="name1"  type="text" value="OE2" label="Atom name of atom 1"/>
-        <param name="segid2"  type="text" value="HET" label="Segid of atom 2"/>
-        <param name="resid2"  type="text" value="3" label="Resid of atom 2"/>
+        <param name="segid2"  type="text" value="HET" label="Segment ID of atom 2"/>
+        <param name="resid2"  type="text" value="3" label="Residue ID of atom 2"/>
         <param name="name2"  type="text" value="C1" label="Atom name of atom 2"/>
     </inputs>
     <outputs>
@@ -35,11 +35,11 @@
     <tests>
         <test>
             <expand macro="tests_inputs"/>
-            <param name="segid1" value="PRO"/>
-            <param name="resid1" value="212"/>
+            <param name="Segment ID 1" value="PRO"/>
+            <param name="Residue ID 1" value="212"/>
             <param name="name1" value="OE2"/>
-            <param name="segid2" value="HET"/>
-            <param name="resid2" value="3"/>
+            <param name="Segment ID 2" value="HET"/>
+            <param name="Residue ID 2" value="3"/>
             <param name="name2" value="C1"/>
             <output name="output" file="Distance_Analysis_raw_data.tabular" />
         </test>
@@ -49,7 +49,7 @@
 
 **What it does**
         
-This tool calculates and plot distance between the two atoms.
+This tool calculates and plots the distance between the two atoms.
 
 _____
 
@@ -60,8 +60,10 @@ _____
 
        - Trajectory file  (DCD).
        - PDB file.
-       - Segids, resids and names of two atoms to calculate distances.
-     
+       - Segment IDs, Residue IDs and names of two atoms to calculate distances.
+
+Note that a MDAnalysis 'segment' is a larger organizational unit,  for example one protein or all the solvent molecules or simply the whole system.
+
 _____
 
         

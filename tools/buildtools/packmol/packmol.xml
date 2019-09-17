@@ -1,5 +1,5 @@
 <tool id="packmol" name="PACKMOL" version="18.169">
-    <description>Initial configurations for Molecular Dynamics simulations by packing optimization</description>
+    <description>- initial configurations for molecular dynamics simulations by packing optimization</description>
     <macros>
         <import>macros_packmol.xml</import>
     </macros>
@@ -69,11 +69,11 @@ with open("$parameteroutfile",'w+') as f:
                 <expand macro="multiple_input" name="packmol_inputs" format="moldy" label="moldy input with molecule type" help_text="Select a moldy file in .moldy format"/>
             </when-->
         </conditional>
-        <section name="allparams" title="General Parameters" expanded="false">
-            <param name="tolerance" type="float" value="2.0" label="distance tolerance" min="0.0" max="100.0"/>
-            <param name="nloop" type="integer" value="20" label="maximum number of optimisation loops" min="1" max="10000"/>
-            <param name="maxit" type="integer" value="20" label="maximum number of gencan iterations per loop" min="1" max="10000"/>
-            <param name="seed" type="integer" value="-1" label="random number generator seed, default of -1 used the computer time to set the seed" />
+        <section name="allparams" title="General parameters" expanded="false">
+            <param name="tolerance" type="float" value="2.0" label="Distance tolerance" min="0.0" max="100.0"/>
+            <param name="nloop" type="integer" value="20" label="Maximum number of optimisation loops" min="1" max="10000"/>
+            <param name="maxit" type="integer" value="20" label="Maximum number of gencan iterations per loop" min="1" max="10000"/>
+            <param name="seed" type="integer" value="-1" label="Random number generator seed, default of -1 uses the computer time to set the seed" />
         </section>
     </inputs>
     <outputs>
@@ -128,14 +128,14 @@ with open("$parameteroutfile",'w+') as f:
 
 **What it does**
 
-Packmol creates initial MD configurations from input molecules. For example, create a water and urea mixture.
+Packmol creates initial MD configurations from input molecules - for example, creating a water and urea mixture.
 
 .. class:: infomark
 
 **How it works**
 
-- Select a molecule file type e.g. pdb,xyz
-- Select single molecule from your history (can select multiple)
+- Select a molecule file type e.g. pdb, xyz
+- Select a single molecule from your history (can select multiple)
 - For each molecule:
    - choose how many molecules to create (number variable)
    - optionally choose:
@@ -149,7 +149,7 @@ Packmol creates initial MD configurations from input molecules. For example, cre
 
 **Outputs created**
 
-- A pdb file, view this in Galaxy by clicking on visualise and choosing a viewer. The NGLViewer works well for small molecules.
+- A pdb file; view this in Galaxy by clicking on the 'visualize' icon and choosing a viewer. The NGLViewer works well for small molecules.
 - A packmol input script (for debugging and repeatability)
 
 .. class:: infomark
@@ -163,7 +163,7 @@ Packmol creates initial MD configurations from input molecules. For example, cre
 
 **Known issues**
 
-- fixed constraint only allows 1 atom but this is not set for the user. user has to set this. Job may fail.
+- fixed constraint only allows 1 atom but this is not set for the user. The user has to set this parameter. The job may fail.
 
 .. _`userguide`: http://m3g.iqm.unicamp.br/packmol/userguide.shtml#more
 .. _`volume guesser`: http://m3g.iqm.unicamp.br/packmol/utilities.shtml

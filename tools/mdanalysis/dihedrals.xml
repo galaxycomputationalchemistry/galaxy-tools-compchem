@@ -27,22 +27,22 @@
 ]]></command>
     <inputs>
         <expand macro="analysis_inputs"/>
-        <param name="segid1"  type="text" value="PRO" label="Segid of atom 1"/>
-        <param name="resid1"  type="text" value="212" label="Resid of atom 1"/>
+        <param name="segid1"  type="text" value="PRO" label="Segment ID of atom 1"/>
+        <param name="resid1"  type="text" value="212" label="Residue ID of atom 1"/>
         <param name="name1"  type="text" value="OE2" label="Atom name of atom 1"/>
-        <param name="segid2"  type="text" value="HET" label="Segid of atom 2"/>
-        <param name="resid2"  type="text" value="3" label="Resid of atom 2"/>
+        <param name="segid2"  type="text" value="HET" label="Segment ID of atom 2"/>
+        <param name="resid2"  type="text" value="3" label="Residue ID of atom 2"/>
         <param name="name2"  type="text" value="C1" label="Atom name of atom 2"/>
-        <param name="segid3"  type="text" value="HET" label="Segid of atom 3"/>
-        <param name="resid3"  type="text" value="3" label="Resid of atom 3"/>
+        <param name="segid3"  type="text" value="HET" label="Segment ID of atom 3"/>
+        <param name="resid3"  type="text" value="3" label="Residue ID of atom 3"/>
         <param name="name3"  type="text" value="C2" label="Atom name of atom 3"/>
-        <param name="segid4"  type="text" value="HET" label="Segid of atom 4"/>
-        <param name="resid4"  type="text" value="3" label="Resid of atom 4"/>
+        <param name="segid4"  type="text" value="HET" label="Segment ID of atom 4"/>
+        <param name="resid4"  type="text" value="3" label="Residue ID of atom 4"/>
         <param name="name4"  type="text" value="C3" label="Atom name of atom 4"/>
     </inputs>
     <outputs>
         <data format="tabular" name="output" label="Dihedral analysis raw data"/>
-        <data format="png" name="dihedral_plot" label="Dihedral Analysis Plot"/>
+        <data format="png" name="dihedral_plot" label="Dihedral analysis plot"/>
     </outputs>
     <tests>
         <test>
@@ -78,8 +78,10 @@ _____
 
        - Trajectory file  (DCD).
        - PDB file.
-       - Segids, resids and names of the four atoms to calculate dihedral angle.
-     
+       - Segment IDs, residue IDs and names of the four atoms to calculate the dihedral angle.
+
+Note that a MDAnalysis 'segment' is a larger organizational unit, for example one protein or all the solvent molecules or simply the whole system.
+
 _____
 
         
@@ -87,7 +89,7 @@ _____
 
 **Output**
 
-       - Tab-separated file of raw data of the dihedral angle between two intersecting planes calculated for each frame.
+       - Tab-separated file of raw data of the dihedral angle calculated for each frame.
        - Image (as png) of the time series graph.
 
     ]]></help>

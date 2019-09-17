@@ -1,5 +1,5 @@
 <tool id="mdanalysis_hbonds" name="Hydrogen Bond Analysis" version="@VERSION@">
-    <description>Analyze hbonds between two segments</description>
+    <description>- analyze H-bonds between two segments</description>
     <macros>
         <import>macros.xml</import>
     </macros>   
@@ -23,16 +23,16 @@
 ]]></command>
     <inputs>
         <expand macro="analysis_inputs"/>
-        <param name="segid1"  type="text" value="PRO" label="Segid of selection 1"/>
-        <param name="segid2"  type="text" value="HET" label="Segid of selection 2"/>
+        <param name="segid1"  type="text" value="PRO" label="Segment ID of selection 1"/>
+        <param name="segid2"  type="text" value="HET" label="Segment ID of selection 2"/>
         <param name="distance" type="float" value="3.0" label="Cutoff distance"/>
         <param name="angle"  type="float" value="120.0" label="Cutoff angle"/>
     </inputs>
     <outputs> 
-        <data format="tabular" name="output" label="Hbond Analysis raw data"/>
-        <data format="tabular" name="freq_output" label="Hbond Frequency"/>
-        <data format="tabular" name="number_output" label="Number of Hbonds Per Time Step"/>
-        <data format="tabular" name="time_output" label="Time Steps for Each Observed Hbond"/>
+        <data format="tabular" name="output" label="H-bond analysis raw data"/>
+        <data format="tabular" name="freq_output" label="H-bond frequency"/>
+        <data format="tabular" name="number_output" label="Number of H-bonds per time step"/>
+        <data format="tabular" name="time_output" label="Time steps for each observed H-bond"/>
     </outputs>
     <tests>
         <test>
@@ -51,7 +51,7 @@
 
 **What it does**
         
-This tool calculates hydrogen bonds between two segments of the system.
+This tool calculates hydrogen bonds between two segments of the system. Note that a MDAnalysis 'segment' is a larger organizational unit,  for example one protein or all the solvent molecules or simply the whole system.
 
 _____
 
@@ -62,8 +62,8 @@ _____
 
        - Trajectory file  (DCD).
        - PDB file.
-       - Segids of the two segments.
-       - cutoff distance and angle.
+       - Segment IDs of the two segments.
+       - Cutoff distance and angle.
      
 _____
 
@@ -72,7 +72,7 @@ _____
 
 **Output**
 
-       - .csv files of the Hbond frequency, number of Hbonds Per time step, and time steps for each observed Hbond
+       - Tabular files containing H-bond frequency, number of H-bonds Per time step, and time steps for each observed H-bond.
 
 
     ]]></help>

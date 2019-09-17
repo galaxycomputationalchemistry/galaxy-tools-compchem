@@ -68,7 +68,7 @@
             <option value='both'>Return both .gro and .pdb files</option>
         </param>
 
-        <param name="capture_log" type="boolean" value="false" label="Generate Detailed Log" help="Generate detailed log information that can be summarized with ParseLog."/>
+        <param name="capture_log" type="boolean" value="false" label="Generate detailed log" help="Generate detailed log information that can be summarized with ParseLog."/>
 
 
     </xml>
