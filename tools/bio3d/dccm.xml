@@ -4,7 +4,7 @@
         <import>macros.xml</import>
     </macros>
     <expand macro="requirements">
-        <requirement type="package" version="0.20_35">r-lattice</requirement>
+        <requirement type="package" version="0.20_38">r-lattice</requirement>
     </expand>
     <command detect_errors="exit_code">
 <![CDATA[ 

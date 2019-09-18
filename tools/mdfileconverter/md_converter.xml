@@ -1,4 +1,4 @@
-<tool id="md_converter" name="MDTraj file converter" version="1.9.1">
+<tool id="md_converter" name="MDTraj file converter" version="1.9.3">
 
     <description>- interconvert between MD trajectory or structure file formats.</description>
 

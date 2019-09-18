@@ -16,7 +16,7 @@
 
     <inputs>
         <!-- PDB2GMX VARS -->
-        <param argument="pdb_input" type="data" format='pdb' label="PDB input file."/>
+        <param argument="pdb_input" type="data" format='pdb' label="PDB input file"/>
         <param argument="water" type="select" label="Water model" help="">
             <option value="tip3p" selected="true">TIP3P</option>
             <option value="tip4p">TIP4P</option>
@@ -48,7 +48,7 @@
         <param argument="ignore_h" type="boolean" label="Ignore hydrogens" truevalue="" falsevalue="no" help="Ignore hydrogen atoms that are in the coordinate file." />
         
         <!-- EDITCONF VARS -->
-        <param argument="box_d" type="float" label="Box dimensions in nanometers." value="0.0" min="0.0" max="10.0" help="Box dimensions" />
+        <param argument="box_d" type="float" label="Box dimensions in nanometers" value="0.0" min="0.0" max="10.0" help="Box dimensions" />
         <param argument="box_type" type="select" label="Box type"
             help="triclinic is a triclinic box, cubic is a rectangular box with all sides equal dodecahedron represents a rhombic dodecahedron and octahedron is a truncated octahedron. The last two are special cases of a triclinic box. The length of the three box vectors of the truncated octahedron is the shortest distance between two opposite hexagons. Relative to a cubic box with some periodic image distance, the volume of a dodecahedron with this same periodic distance is 0.71 times that of the cube, and that of a truncated octahedron is 0.77 times.">
             <option value="cubic">Rectangular box with all sides equal</option>
@@ -57,7 +57,7 @@
             <option value="octahedron">truncated octahedron</option>
         </param>
 
-        <param name="capture_log" type="boolean" value="false" label="Generate Detailed Log" help="Generate detailed log information that can be summarized with ParseLog."/>
+        <param name="capture_log" type="boolean" value="false" label="Generate detailed log" help="Generate detailed log information that can be summarized with ParseLog."/>
 
     </inputs>
     <outputs>

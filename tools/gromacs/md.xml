@@ -82,9 +82,9 @@
 
         </configfiles>
     <inputs>
-        <param argument="gro_input" type="data" format='gro' label="GRO structure file."/>
-        <param argument="top_input" type="data" format='top' label="Topology (TOP) file."/>
-        <param argument="cpt_input" type="data" format='cpt' label="Checkpoint (CPT) file from NVT run."/>
+        <param argument="gro_input" type="data" format='gro' label="GRO structure file"/>
+        <param argument="top_input" type="data" format='top' label="Topology (TOP) file"/>
+        <param argument="cpt_input" type="data" format='cpt' label="Checkpoint (CPT) file from NVT run"/>
         
         <expand macro="md_inputs"/>
     </inputs>

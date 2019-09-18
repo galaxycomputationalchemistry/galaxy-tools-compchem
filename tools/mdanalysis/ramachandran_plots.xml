@@ -1,4 +1,4 @@
-<tool id="mdanalysis_ramachandran_plot" name="Ramachandran Plots" version="0.1.3">
+<tool id="mdanalysis_ramachandran_plot" name="Ramachandran Plots" version="@VERSION@">
     <description>- calculate and plot the distribution of two dihedrals in a trajectory</description>
     <macros>
         <import>macros.xml</import>
