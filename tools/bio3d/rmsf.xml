@@ -132,7 +132,13 @@
         <test>
             <expand macro="tests_inputs"/>
             <param name="sele" value="calpha"/>
-            <output name="output" file="rmsf_raw_data.tabular" /> 
+            <output name="output" >
+              <assert_contents>
+                <has_line_matching expression="1\t0.297.*" />
+                <has_line_matching expression="418\t0.410.*" />
+                <has_line_matching expression="433\t0.300.*" />
+              </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[

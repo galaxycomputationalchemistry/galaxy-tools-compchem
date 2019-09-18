@@ -10,7 +10,7 @@
         --idcd '$dcdin' 
         --ipdb '$pdbin'
         --isegid1 '$segid1' 
-        --iResidue ID 1 '$resid1' 
+        --iresid1 '$resid1' 
         --iname1 '$name1'
         --isegid2 '$segid2'
         --iresid2 '$resid2' 

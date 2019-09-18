@@ -4,7 +4,7 @@
         <import>macros.xml</import>
     </macros>
     <expand macro="requirements">
-        <requirement type="package" version="0.1.0">acpype</requirement>
+        <requirement type="package" version="2019.07.02.16.09">acpype</requirement>
     </expand>
     <command detect_errors="exit_code"><![CDATA[
         ln -s '$input1' ./input1.${input1.ext} &&

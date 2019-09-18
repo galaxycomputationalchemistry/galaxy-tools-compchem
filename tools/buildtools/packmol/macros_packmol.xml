@@ -3,9 +3,9 @@
     <repeat name="@NAME@" min="1" max="@MAX_NUM@" title="Select input file(s):">
         <param name="input" type="data" format="@FORMAT@" label="@LABEL@" help="@HELP_TEXT@"/>
         <section name="structureparams" title="Structure Parameters (Make Changes!)" expanded="false">
-        <param name="Number" type="integer"  multiple="True" value="100" help="How many molecules to create"/>
-        <param name="Radius" type="float"  multiple="True" value="1.0" help="Molecular radius (angstroms)"/>
-        <param name="Resnumbers" type="integer"  multiple="True" value="0" help="Default is to number 1 to n for type 1 and 1 to n for type 2"/>
+        <param name="number" label="Number" type="integer"  multiple="True" value="100" help="How many molecules to create"/>
+        <param name="radius" label="Radius" type="float"  multiple="True" value="1.0" help="Molecular radius (angstroms)"/>
+        <param name="resnumbers" label="Resnumbers" type="integer"  multiple="True" value="0" help="Default is to number 1 to n for type 1 and 1 to n for type 2"/>
         <repeat name="constraints_repeat" min="1" max="3" title="Select constraint(s) to apply:">
         <conditional name="constraints">
         <param name="constraint" type="select" label="Shape constraint selection" help="Choose the constraint for the molecules">

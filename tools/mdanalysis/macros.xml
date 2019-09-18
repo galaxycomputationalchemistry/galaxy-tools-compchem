@@ -2,7 +2,7 @@
     <token name="@VERSION@">0.19</token>
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="0.19.2">mdanalysis</requirement>
+            <requirement type="package" version="0.20.1">mdanalysis</requirement>
             <yield/>
         </requirements>
     </xml>

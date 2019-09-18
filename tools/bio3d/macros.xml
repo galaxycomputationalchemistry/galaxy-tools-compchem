@@ -2,7 +2,7 @@
     <token name="@VERSION@">2.3</token>
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="2.3_3">r-bio3d</requirement>
+            <requirement type="package" version="2.3_4">r-bio3d</requirement>
             <yield/>
         </requirements>
     </xml>
