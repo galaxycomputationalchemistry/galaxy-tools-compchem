@@ -78,9 +78,9 @@
 
         </configfiles>
     <inputs>
-        <param argument="gro_input" type="data" format='gro' label="GRO structure file."/>
-        <param argument="top_input" type="data" format='top' label="Topology (TOP) file."/>
-        <param argument="itp_input" type="data" format='itp' label="Position restraint file."/>
+        <param argument="gro_input" type="data" format='gro' label="GRO structure file"/>
+        <param argument="top_input" type="data" format='top' label="Topology (TOP) file"/>
+        <param argument="itp_input" type="data" format='itp' label="Position restraint file"/>
 
         <expand macro="md_inputs"/>
     </inputs>

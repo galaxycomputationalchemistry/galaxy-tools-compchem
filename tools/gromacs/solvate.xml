@@ -37,14 +37,14 @@ pbc            = xyz
             </configfile>
         </configfiles>
     <inputs>
-        <param argument="gro_input" type="data" format='gro' label="GRO structure file."/>
-        <param argument="top_input" type="data" format='top' label="Topology (TOP) file."/>
-        <param name="water_model" type="select"  label="Water model for solvation.">
+        <param argument="gro_input" type="data" format='gro' label="GRO structure file"/>
+        <param argument="top_input" type="data" format='top' label="Topology (TOP) file"/>
+        <param name="water_model" type="select"  label="Water model for solvation">
             <option value="tip3p">TIP3P</option>
             <option value="tip4p">TIP4P</option>
             <option value="spc216">SPC</option>
         </param>
-        <param name="capture_log" type="boolean" value="false" label="Generate Detailed Log" help="Generate detailed log information that can be summarized with ParseLog."/>
+        <param name="capture_log" type="boolean" value="false" label="Generate detailed log" help="Generate detailed log information that can be summarized with ParseLog."/>
 
     </inputs>
     <outputs>
@@ -65,7 +65,7 @@ pbc            = xyz
     </tests>
     <help><![CDATA[
 
-Select a water model - consistent with the one selected in system set-up and provide GRO and TOP files to be updated with the added water molecules. In addition, sodium or chloride ions are added if necessary to ensure the system is charge-neutral.
+Select a water model (consistent with the one selected in system set-up) and provide GRO and TOP files to be updated with the added water molecules. In addition, sodium or chloride ions will be added if necessary to ensure the system is charge-neutral.
 
     ]]></help>
 
