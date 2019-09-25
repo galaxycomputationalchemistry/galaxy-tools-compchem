@@ -7,8 +7,10 @@
     <command detect_errors="exit_code">
 <![CDATA[
     python '$__tool_directory__/dihedrals.py'
-        --idcd '$dcdin' 
-        --ipdb '$pdbin' 
+        --itraj '$trajin' 
+        --istr '$strin' 
+        --itrajext '$trajin.ext'
+        --istrext '$strin.ext'
         --isegid1 '$segid1' 
         --iresid1 '$resid1' 
         --iname1 '$name1' 
@@ -60,6 +62,29 @@
             <param name="resid4" value="3"/>
             <param name="name4" value="C3"/>
             <output name="output" file="Dihedral_analysis_raw_data.tabular" />
+        </test>
+        <test>
+            <expand macro="tests_inputs_gmx"/>
+            <param name="segid1" value="SYSTEM"/>
+            <param name="resid1" value="212"/>
+            <param name="name1" value="OE2"/>
+            <param name="segid2" value="SYSTEM"/>
+            <param name="resid2" value="3"/>
+            <param name="name2" value="C1"/>
+            <param name="segid3" value="SYSTEM"/>
+            <param name="resid3" value="3"/>
+            <param name="name3" value="C2"/>
+            <param name="segid4" value="SYSTEM"/>
+            <param name="resid4" value="3"/>
+            <param name="name4" value="C3"/>
+            <output name="output">
+                <assert_contents>
+                    <has_n_columns n="2" />
+                    <has_line_matching expression="0\t-61.*" />
+                    <has_line_matching expression="12\t-76.*" />
+                    <has_line_matching expression="4\t-66.*" />
+                </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[

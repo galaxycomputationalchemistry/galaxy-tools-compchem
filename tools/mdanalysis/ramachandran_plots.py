@@ -19,8 +19,10 @@ import seaborn as sns
 
 def parse_command_line(argv):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--idcd', help='input dcd')
-    parser.add_argument('--ipdb', help='input pdb')
+    parser.add_argument('--itraj', help='input traj')
+    parser.add_argument('--istr', help='input str')
+    parser.add_argument('--itrajext', help='input traj ext')
+    parser.add_argument('--istrext', help='input str ext')
     parser.add_argument('--isegid1', help='segid 1')
     parser.add_argument('--iresid1', help='resid 1')
     parser.add_argument('--iname1', help='name 1')
@@ -94,12 +96,14 @@ def calc_torsion(dihedral):
     return np.rad2deg(dihe)
 
 
-u = mda.Universe(args.ipdb, args.idcd, topology_format="PDB", format="DCD")
+u = mda.Universe(args.istr, args.itraj, topology_format=args.istrext, format=args.itrajext)
 
 phi_trajdata = np.array(
     [(u.trajectory.frame, calc_torsion(dihe_phi)) for ts in u.trajectory])
 psi_trajdata = np.array(
     [(u.trajectory.frame, calc_torsion(dihe_psi)) for ts in u.trajectory])
+
+print(phi_trajdata, psi_trajdata)
 
 phi_frame, phi_series = phi_trajdata.T
 psi_frame, psi_series = psi_trajdata.T

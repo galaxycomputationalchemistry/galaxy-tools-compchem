@@ -9,8 +9,10 @@
     <command detect_errors="exit_code">
 <![CDATA[
      python '$__tool_directory__/hbonds.py' 
-        --idcd '$dcdin' 
-        --ipdb '$pdbin'
+        --itraj '$trajin' 
+        --istr '$strin'
+        --itrajext '$trajin.ext'
+        --istrext '$strin.ext'
         --isegid1 '$segid1'  
         --isegid2 '$segid2'
         --idistance '$distance'

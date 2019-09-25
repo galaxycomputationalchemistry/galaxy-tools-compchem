@@ -12,8 +12,10 @@ import numpy as np
 
 def parse_command_line(argv):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--idcd', help='input dcd')
-    parser.add_argument('--ipdb', help='input pdb')
+    parser.add_argument('--itraj', help='input traj')
+    parser.add_argument('--istr', help='input str')
+    parser.add_argument('--itrajext', help='input traj ext')
+    parser.add_argument('--istrext', help='input str ext')
     parser.add_argument('--icomponents', help='number of principle components')
     parser.add_argument('--iindex', help='index of the PC')
     parser.add_argument('--output', help='output')
@@ -23,7 +25,7 @@ def parse_command_line(argv):
 
 args = parse_command_line(sys.argv)
 
-u = mda.Universe(args.ipdb, args.idcd, topology_format="PDB", format="DCD")
+u = mda.Universe(args.istr, args.itraj, topology_format=args.istrext, format=args.itrajext)
 
 components = int(args.icomponents)
 pca_index = int(args.iindex)

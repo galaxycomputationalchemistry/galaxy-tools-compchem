@@ -7,8 +7,10 @@
     <command detect_errors="exit_code">
 <![CDATA[
      python '$__tool_directory__/pca_cosine.py' 
-        --idcd '$dcdin' 
-        --ipdb '$pdbin'
+        --itraj '$trajin' 
+        --istr '$strin'
+        --itrajext '$trajin.ext'
+        --istrext '$strin.ext'
         --icomponents '$components'
         --iindex '$index' 
         --output '$output' 
@@ -32,6 +34,16 @@
             <output name="cosout">
               <assert_contents>
                 <has_text text="0.5832533" />
+              </assert_contents>
+            </output>
+        </test>
+        <test>
+            <expand macro="tests_inputs_gmx"/>
+            <param name="components" value="3"/>
+            <param name="index" value="0"/>
+            <output name="cosout">
+              <assert_contents>
+                <has_text text="0.583" />
               </assert_contents>
             </output>
         </test>

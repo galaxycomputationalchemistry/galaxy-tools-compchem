@@ -11,32 +11,34 @@
     <command detect_errors="exit_code">
 <![CDATA[
     python '$__tool_directory__/ramachandran_plots.py'
-        --idcd '$dcdin' 
-        --ipdb '$pdbin'
-        --isegid1  '$phi.segid1'
-        --iresid1  '$phi.resid1' 
-        --iname1   '$phi.name1'
-        --isegid2  '$phi.segid2'
-        --iresid2  '$phi.resid2' 
-        --iname2   '$phi.name2'
-        --isegid3  '$phi.segid3'
-        --iresid3  '$phi.resid3' 
-        --iname3   '$phi.name3'
-        --isegid4  '$phi.segid4'
-        --iresid4  '$phi.resid4' 
-        --iname4   '$phi.name4'
-        --isegid5  '$psi.segid1'
-        --iresid5  '$psi.resid1' 
-        --iname5   '$psi.name1'
-        --isegid6  '$psi.segid2'
-        --iresid6  '$psi.resid2' 
-        --iname6   '$psi.name2' 
-        --isegid7  '$psi.segid3' 
-        --iresid7  '$psi.resid3' 
-        --iname7   '$psi.name3' 
-        --isegid8  '$psi.segid4' 
-        --iresid8  '$psi.resid4' 
-        --iname8   '$psi.name4' 
+        --itraj '$trajin' 
+        --istr '$strin'
+        --itrajext '$trajin.ext'
+        --istrext '$strin.ext'
+        --isegid1  '$phi.phi_segid1'
+        --iresid1  '$phi.phi_resid1' 
+        --iname1   '$phi.phi_name1'
+        --isegid2  '$phi.phi_segid2'
+        --iresid2  '$phi.phi_resid2' 
+        --iname2   '$phi.phi_name2'
+        --isegid3  '$phi.phi_segid3'
+        --iresid3  '$phi.phi_resid3' 
+        --iname3   '$phi.phi_name3'
+        --isegid4  '$phi.phi_segid4'
+        --iresid4  '$phi.phi_resid4' 
+        --iname4   '$phi.phi_name4'
+        --isegid5  '$psi.psi_segid1'
+        --iresid5  '$psi.psi_resid1' 
+        --iname5   '$psi.psi_name1'
+        --isegid6  '$psi.psi_segid2'
+        --iresid6  '$psi.psi_resid2' 
+        --iname6   '$psi.psi_name2' 
+        --isegid7  '$psi.psi_segid3' 
+        --iresid7  '$psi.psi_resid3' 
+        --iname7   '$psi.psi_name3' 
+        --isegid8  '$psi.psi_segid4' 
+        --iresid8  '$psi.psi_resid4' 
+        --iname8   '$psi.psi_name4' 
         --output   '$output'  
         --oramachandran_plot '$ramachandran_plot'
     2>&1
@@ -44,78 +46,78 @@
     <inputs>
         <expand macro="analysis_inputs"/>
         <section name="phi" title="Phi" expanded="False">
-          <param name="segid1"  type="text" value="HET" label="Segment ID of atom 1">
+          <param name="phi_segid1"  type="text" value="HET" label="Segment ID of atom 1">
             <expand macro="sanitizer"/>
           </param>
-          <param name="resid1"  type="text" value="3" label="Residue ID of atom 1">
+          <param name="phi_resid1"  type="text" value="3" label="Residue ID of atom 1">
             <expand macro="sanitizer_resids"/>
           </param>
-          <param name="name1"  type="text" value="O5" label="Atom name of atom 1">
+          <param name="phi_name1"  type="text" value="O5" label="Atom name of atom 1">
             <expand macro="sanitizer"/>
           </param>
-          <param name="segid2"  type="text" value="HET" label="Segment ID of atom 2">
+          <param name="phi_segid2"  type="text" value="HET" label="Segment ID of atom 2">
             <expand macro="sanitizer"/>
           </param>
-          <param name="resid2"  type="text" value="3" label="Residue ID of atom 2">
+          <param name="phi_resid2"  type="text" value="3" label="Residue ID of atom 2">
             <expand macro="sanitizer_resids"/>
           </param>
-          <param name="name2"  type="text" value="C1" label="Atom name of atom 2">
+          <param name="phi_name2"  type="text" value="C1" label="Atom name of atom 2">
             <expand macro="sanitizer"/>
           </param>
-          <param name="segid3"  type="text" value="HET" label="Segment ID of atom 3">
+          <param name="phi_segid3"  type="text" value="HET" label="Segment ID of atom 3">
             <expand macro="sanitizer"/>
           </param>
-          <param name="resid3"  type="text" value="2" label="Residue ID of atom 3">
+          <param name="phi_resid3"  type="text" value="2" label="Residue ID of atom 3">
             <expand macro="sanitizer_resids"/>
           </param>
-          <param name="name3"  type="text" value="O4" label="Atom name of atom 3">
+          <param name="phi_name3"  type="text" value="O4" label="Atom name of atom 3">
             <expand macro="sanitizer"/>
           </param>
-          <param name="segid4"  type="text" value="HET" label="Segment ID of atom 4">
+          <param name="phi_segid4"  type="text" value="HET" label="Segment ID of atom 4">
             <expand macro="sanitizer"/>
           </param>
-          <param name="resid4"  type="text" value="2" label="Residue ID of atom 4">
+          <param name="phi_resid4"  type="text" value="2" label="Residue ID of atom 4">
             <expand macro="sanitizer_resids"/>
           </param>
-          <param name="name4"  type="text" value="C4" label="Atom name of atom 4">
+          <param name="phi_name4"  type="text" value="C4" label="Atom name of atom 4">
             <expand macro="sanitizer"/>
           </param>
         </section>
         <section name="psi" title="Psi" expanded="False">
-          <param name="segid1"  type="text" value="HET" label="Segment ID of atom 1">
+          <param name="psi_segid1"  type="text" value="HET" label="Segment ID of atom 1">
             <expand macro="sanitizer"/>
           </param>
-          <param name="resid1"  type="text" value="3" label="Residue ID of atom 1">
+          <param name="psi_resid1"  type="text" value="3" label="Residue ID of atom 1">
             <expand macro="sanitizer_resids"/>
           </param>
-          <param name="name1"  type="text" value="C1" label="Atom name of atom 1">
+          <param name="psi_name1"  type="text" value="C1" label="Atom name of atom 1">
             <expand macro="sanitizer"/>
           </param>
-          <param name="segid2"  type="text" value="HET" label="Segment ID of atom 2">
+          <param name="psi_segid2"  type="text" value="HET" label="Segment ID of atom 2">
             <expand macro="sanitizer"/>
           </param>
-          <param name="resid2"  type="text" value="2" label="Residue ID of atom 2">
+          <param name="psi_resid2"  type="text" value="2" label="Residue ID of atom 2">
             <expand macro="sanitizer_resids"/>
           </param>
-          <param name="name2"  type="text" value="O4" label="Atom name of atom 2">
+          <param name="psi_name2"  type="text" value="O4" label="Atom name of atom 2">
             <expand macro="sanitizer"/>
           </param>
-          <param name="segid3"  type="text" value="HET" label="Segment ID of atom 3">
+          <param name="psi_segid3"  type="text" value="HET" label="Segment ID of atom 3">
             <expand macro="sanitizer"/>
           </param>
-          <param name="resid3"  type="text" value="2" label="Residue ID of atom 3">
+          <param name="psi_resid3"  type="text" value="2" label="Residue ID of atom 3">
             <expand macro="sanitizer_resids"/>
           </param>
-          <param name="name3"  type="text" value="C4" label="Atom name of atom 3">
+          <param name="psi_name3"  type="text" value="C4" label="Atom name of atom 3">
             <expand macro="sanitizer"/>
           </param>
-          <param name="segid4"  type="text" value="HET" label="Segment ID of atom 4">
+          <param name="psi_segid4"  type="text" value="HET" label="Segment ID of atom 4">
             <expand macro="sanitizer"/>
           </param>
-          <param name="resid4"  type="text" value="2" label="Residue ID of atom 4">
+          <param name="psi_resid4"  type="text" value="2" label="Residue ID of atom 4">
             <expand macro="sanitizer_resids"/>
           </param>
-          <param name="name4"  type="text" value="C3" label="Atom name of atom 4">
+          <param name="psi_name4"  type="text" value="C3" label="Atom name of atom 4">
             <expand macro="sanitizer"/>
           </param>
         </section>
@@ -127,31 +129,59 @@
     <tests>
         <test>
             <expand macro="tests_inputs"/>
-            <param name="phi.segid1" value="HET"/>
-            <param name="phi.resid1" value="3"/>
-            <param name="phi.name1" value="O5"/>
-            <param name="phi.segid2" value="HET"/>
-            <param name="phi.resid2" value="3"/>
-            <param name="phi.name2" value="C1"/>
-            <param name="phi.segid3" value="HET"/>
-            <param name="phi.resid3" value="2"/>
-            <param name="phi.name3" value="O4"/>
-            <param name="phi.segid4" value="HET"/>
-            <param name="phi.resid4" value="2"/>
-            <param name="phi.name4" value="C4"/>
-            <param name="psi.segid1" value="HET"/>
-            <param name="psi.resid1" value="3"/>
-            <param name="psi.name1" value="C1"/>
-            <param name="psi.segid2" value="HET"/>
-            <param name="psi.resid2" value="2"/>
-            <param name="psi.name2" value="O4"/>
-            <param name="psi.segid3" value="HET"/>
-            <param name="psi.resid3" value="2"/>
-            <param name="psi.name3" value="C4"/>
-            <param name="psi.segid4" value="HET"/>
-            <param name="psi.resid4" value="2"/>
-            <param name="psi.name4" value="C3"/>
+            <param name="phi_segid1" value="HET"/>
+            <param name="phi_resid1" value="3"/>
+            <param name="phi_name1" value="O5"/>
+            <param name="phi_segid2" value="HET"/>
+            <param name="phi_resid2" value="3"/>
+            <param name="phi_name2" value="C1"/>
+            <param name="phi_segid3" value="HET"/>
+            <param name="phi_resid3" value="2"/>
+            <param name="phi_name3" value="O4"/>
+            <param name="phi_segid4" value="HET"/>
+            <param name="phi_resid4" value="2"/>
+            <param name="phi_name4" value="C4"/>
+            <param name="psi_segid1" value="HET"/>
+            <param name="psi_resid1" value="3"/>
+            <param name="psi_name1" value="C1"/>
+            <param name="psi_segid2" value="HET"/>
+            <param name="psi_resid2" value="2"/>
+            <param name="psi_name2" value="O4"/>
+            <param name="psi_segid3" value="HET"/>
+            <param name="psi_resid3" value="2"/>
+            <param name="psi_name3" value="C4"/>
+            <param name="psi_segid4" value="HET"/>
+            <param name="psi_resid4" value="2"/>
+            <param name="psi_name4" value="C3"/>
             <output name="output" file="Ramachandran_Plot_raw_data.tabular" />
+        </test>
+        <test>
+            <expand macro="tests_inputs_gmx"/>
+            <param name="phi_segid1" value="SYSTEM"/>
+            <param name="phi_resid1" value="3"/>
+            <param name="phi_name1" value="O5"/>
+            <param name="phi_segid2" value="SYSTEM"/>
+            <param name="phi_resid2" value="3"/>
+            <param name="phi_name2" value="C1"/>
+            <param name="phi_segid3" value="SYSTEM"/>
+            <param name="phi_resid3" value="2"/>
+            <param name="phi_name3" value="O4"/>
+            <param name="phi_segid4" value="SYSTEM"/>
+            <param name="phi_resid4" value="2"/>
+            <param name="phi_name4" value="C4"/>
+            <param name="psi_segid1" value="SYSTEM"/>
+            <param name="psi_resid1" value="3"/>
+            <param name="psi_name1" value="C1"/>
+            <param name="psi_segid2" value="SYSTEM"/>
+            <param name="psi_resid2" value="2"/>
+            <param name="psi_name2" value="O4"/>
+            <param name="psi_segid3" value="SYSTEM"/>
+            <param name="psi_resid3" value="2"/>
+            <param name="psi_name3" value="C4"/>
+            <param name="psi_segid4" value="SYSTEM"/>
+            <param name="psi_resid4" value="2"/>
+            <param name="psi_name4" value="C3"/>
+            <output name="output" file="Ramachandran_Plot_raw_data_gmx.tabular" />
         </test>
     </tests>
     <help><![CDATA[
