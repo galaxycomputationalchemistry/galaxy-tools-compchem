@@ -59,7 +59,7 @@ def psi(u):
 
 
 u = mda.Universe(args.istr, args.itraj,
-                    topology_format=args.istrext, format=args.itrajext)
+                 topology_format=args.istrext, format=args.itrajext)
 data = np.array([(u.trajectory.frame, psi(u)) for ts in u.trajectory])
 frame, psi = data.T
 PSI = np.concatenate(psi, axis=0)

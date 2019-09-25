@@ -35,7 +35,7 @@ distance = float(args.idistance)
 angle = float(args.iangle)
 
 u = mda.Universe(args.istr, args.itraj,
-                    topology_format=args.istrext, format=args.itrajext)
+                 topology_format=args.istrext, format=args.itrajext)
 
 h = MDAnalysis.analysis.hbonds.HydrogenBondAnalysis(
     u, selection1, selection2, distance=distance, angle=angle)

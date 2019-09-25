@@ -26,7 +26,7 @@ def parse_command_line(argv):
 args = parse_command_line(sys.argv)
 
 u = mda.Universe(args.istr, args.itraj,
-                    topology_format=args.istrext, format=args.itrajext)
+                 topology_format=args.istrext, format=args.itrajext)
 
 components = int(args.icomponents)
 pca_index = int(args.iindex)
