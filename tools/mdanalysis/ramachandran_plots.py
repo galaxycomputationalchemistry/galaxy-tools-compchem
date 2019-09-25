@@ -96,8 +96,8 @@ def calc_torsion(dihedral):
     return np.rad2deg(dihe)
 
 
-u = mda.Universe(args.istr, args.itraj, 
-        topology_format=args.istrext, format=args.itrajext)
+u = mda.Universe(args.istr, args.itraj,
+                    topology_format=args.istrext, format=args.itrajext)
 
 phi_trajdata = np.array(
     [(u.trajectory.frame, calc_torsion(dihe_phi)) for ts in u.trajectory])

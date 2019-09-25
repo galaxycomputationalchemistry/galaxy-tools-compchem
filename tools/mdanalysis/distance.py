@@ -36,8 +36,8 @@ atom1 = "(segid %s and resid %s and name %s)" % \
 atom2 = "(segid %s and resid %s and name %s)" % \
     (args.isegid2, args.iresid2, args.iname2)
 
-u = mda.Universe(args.istr, args.itraj, 
-        topology_format=args.istrext, format=args.itrajext)
+u = mda.Universe(args.istr, args.itraj,
+                    topology_format=args.istrext, format=args.itrajext)
 x = u.select_atoms(atom1)
 y = u.select_atoms(atom2)
 
