@@ -44,7 +44,8 @@ bins = int(args.inbins)
 start = float(args.istart)
 end = float(args.iend)
 
-u = mda.Universe(args.istr, args.itraj, topology_format=args.istrext, format=args.itrajext)
+u = mda.Universe(args.istr, args.itraj, 
+        topology_format=args.istrext, format=args.itrajext)
 x = u.select_atoms(atom1)
 y = u.select_atoms(atom2)
 

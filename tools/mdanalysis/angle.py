@@ -54,7 +54,8 @@ def theta(u):
     return np.rad2deg(theta)
 
 
-u = mda.Universe(args.istr, args.itraj, topology_format=args.istrext, format=args.itrajext)
+u = mda.Universe(args.istr, args.itraj, 
+        topology_format=args.istrext, format=args.itrajext)
 data = np.array([(u.trajectory.frame, theta(u)) for ts in u.trajectory])
 frame, theta = data.T
 
