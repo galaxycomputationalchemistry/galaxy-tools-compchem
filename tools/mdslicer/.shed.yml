@@ -1,0 +1,10 @@
+name: md_converter
+owner: chemteam
+description: "A tool for slicing trajectory files using MDTraj."
+long_description: |
+    A tool for slicing trajectory files using MDTraj, from GROMACS, CHARMM and NAMD. PDB and DCD formats are currently supported. 
+remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/tools/mdslicer
+type: unrestricted
+categories:
+  - Molecular Dynamics
+  - Computational chemistry
