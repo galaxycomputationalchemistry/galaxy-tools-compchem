@@ -1,14 +1,15 @@
-<tool id="md_slicer" name="Slice MD trajectories" version="1.9.3">
+<tool id="md_slicer" name="Slice MD trajectories" version="@VERSION@">
+    <macros>
+        <token name="@VERSION@">1.9.3</token>
+    </macros>
     <description>using the MDTraj package</description>
-
     <requirements>
-        <requirement type="package" version="1.9.3">mdtraj</requirement>
+        <requirement type="package" version="@VERSION@">mdtraj</requirement>
     </requirements>
-
     <command detect_errors="exit_code"><![CDATA[
-        ln -s $traj traj.$traj.ext && 
-        mdconvert traj.$traj.ext -o output.$traj.ext -i $start:$end:$stride && 
-        mv output.$traj.ext '$output'
+        ln -s '$traj' traj.${traj.ext} && 
+        mdconvert traj.${traj.ext} -o output.${traj.ext} -i $start:$end:$stride && 
+        mv output.${traj.ext} '$output'
     ]]></command>
     <inputs>
         <param argument="traj" type="data" format='xtc,dcd' label="Input trajectory file for slicing"/>
@@ -16,11 +17,9 @@
         <param argument="end" type="integer" value="10000" label="End frame for slicing"/>
         <param argument="stride" type="integer" value="1" label="Stride" help="i.e. load every nth frame from the input file"/>
     </inputs>
-
     <outputs>
         <data name="output" format_source="traj"/>
-    </outputs> 
-
+    </outputs>
     <tests>
         <test>
             <param name="traj" value="traj.xtc" />
