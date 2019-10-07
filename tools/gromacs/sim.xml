@@ -113,20 +113,29 @@
         <param argument="gro_input" type="data" format='gro' label="GRO structure file"/>
         <param argument="top_input" type="data" format='top' label="Topology (TOP) file"/>
         <conditional name="cpt_inp">
-            <param name="cpt_bool" type="boolean" label="Use a checkpoint (CPT) file" help="CPT file from a previous MD run" truevalue="yes" falsevalue="no"/>
+            <param name="cpt_bool" type="select" label="Use a checkpoint (CPT) file" help="CPT file from a previous MD run">
+                <option value="yes">Continue simulation from a CPT file</option>
+                <option value="no" selected="true">No CPT input</option>
+            </param>
             <when value="yes">
                 <param argument="cpt_in" type="data" format='cpt' label="Checkpoint file"/>
             </when>
             <when value="no"/>
         </conditional>
-        <param name="cpt_out" type="boolean" label="Produce a checkpoint (CPT) file" help = "Produce CPT file for a subsequent MD run" value="false"/>
+        <param name="cpt_out" type="select" label="Produce a checkpoint (CPT) file" help="Produce CPT file for a subsequent MD run">
+            <option value="true">Produce CPT output</option>
+            <option value="false" selected="true">No CPT output</option>
+        </param>
 
         <conditional name="posres">
-            <param name="posres_bool" type="boolean" label="Apply position restraints" help="Used e.g. for equilibrationof solvent around a protein" value="false"/>
+            <param name="posres_bool" type="select" label="Apply position restraints" help="Used e.g. for equilibration of solvent around a protein" value="false">
+                <option value="true">Apply position restraints</option>
+                <option value="false" selected="true">No position restraints</option>
+            </param>
             <when value="true">
                 <param argument="itp_inp" type="data" format='itp' label="Position restraint (ITP) file"/>
             </when>
-            <when value ="false"/>
+            <when value="false"/>
         </conditional>
 
         <param name="ensemble" label="Ensemble" type="select" help="NVT ensemble (constant number of particles, volume and temperature) or NPT ensemble (constant number of particles, pressure and temperature)">
