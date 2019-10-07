@@ -65,7 +65,31 @@ pbc            = xyz
     </tests>
     <help><![CDATA[
 
-Select a water model (consistent with the one selected in system set-up) and provide GRO and TOP files to be updated with the added water molecules. In addition, sodium or chloride ions will be added if necessary to ensure the system is charge-neutral.
+.. class:: infomark
+
+**What it does**
+
+This tool solvates a system prior to a GROMACS simulation. In addition, sodium or chloride ions will be added if necessary to ensure the system is charge-neutral.
+
+_____
+
+.. class:: infomark
+
+**Input**
+
+       - GRO structure file.
+       - Topology (TOP) file.
+
+In addition, a water model must be selected - this should be consistent with the one selected previously in the system setup.
+
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - GRO structure file.
 
     ]]></help>
 

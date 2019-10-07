@@ -11,6 +11,20 @@
         </citations>
     </xml>
     <xml name="md_inputs">
+        <param argument="traj" type="select" label="Trajectory output">
+            <option value='none'>Return no trajectory output</option>
+            <option value='xtc'>Return .xtc file (reduced precision)</option>
+            <option value='trr'>Return .trr file (full precision)</option>
+            <option value='both'>Return both .xtc and .trr files</option>
+        </param>
+
+        <param argument="str" type="select" label="Structure output">
+            <option value='none'>Return no structure output</option>
+            <option value='gro'>Return .gro file</option>
+            <option value='pdb'>Return .pdb file</option>
+            <option value='both'>Return both .gro and .pdb files</option>
+        </param>
+
         <conditional name="mdp">
             <param name="mdpfile" type="select" label="Parameter input">
                 <option value="custom">Upload own MDP file</option>
@@ -48,25 +62,11 @@
                 <param argument="rcoulomb" value="1.0" type="float" label="Distance for the Coulomb cut-off."/>
                 <param argument="rlist" value="1.0" type="float" label="Cut-off distance for the short-range neighbor list. Ignored if the Verlet cutoff scheme is set."/>
                 <param argument="rvdw" value="1.0" type="float" label="Short range van der Waals cutoff."/>
-                <param argument="md_steps" type="integer" label="Number of steps for the NPT equilibration" value="0" min="0" max="1000000" help="NPT steps" />
+                <param argument="md_steps" type="integer" label="Number of steps for the simulation" value="0" min="0" max="1000000" help="NPT steps" />
                 
             </when>
 
         </conditional>
-        
-        <param argument="traj" type="select" label="Trajectory output">
-            <option value='none'>Return no trajectory output</option>
-            <option value='xtc'>Return .xtc file (reduced precision)</option>
-            <option value='trr'>Return .trr file (full precision)</option>
-            <option value='both'>Return both .xtc and .trr files</option>
-        </param>
-
-        <param argument="str" type="select" label="Structure output">
-            <option value='none'>Return no trajectory output</option>
-            <option value='gro'>Return .gro file</option>
-            <option value='pdb'>Return .pdb file</option>
-            <option value='both'>Return both .gro and .pdb files</option>
-        </param>
 
         <param name="capture_log" type="boolean" value="false" label="Generate detailed log" help="Generate detailed log information that can be summarized with ParseLog."/>
 
