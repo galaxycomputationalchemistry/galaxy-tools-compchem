@@ -4,6 +4,7 @@ import argparse
 import csv
 import sys
 
+import MDAnalysis as mda
 import MDAnalysis.analysis.hbonds
 
 import pandas as pd
@@ -11,8 +12,10 @@ import pandas as pd
 
 def parse_command_line(argv):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--idcd', help='input dcd')
-    parser.add_argument('--ipdb', help='input pdb')
+    parser.add_argument('--itraj', help='input traj')
+    parser.add_argument('--istr', help='input str')
+    parser.add_argument('--itrajext', help='input traj ext')
+    parser.add_argument('--istrext', help='input str ext')
     parser.add_argument('--isegid1', help='segid 1')
     parser.add_argument('--isegid2', help='segid 2')
     parser.add_argument('--idistance', help='cutoff distance')
@@ -31,8 +34,8 @@ selection2 = "segid %s" % args.isegid2
 distance = float(args.idistance)
 angle = float(args.iangle)
 
-u = MDAnalysis.Universe(
-    args.ipdb, args.idcd, topology_format="PDB", format="DCD")
+u = mda.Universe(args.istr, args.itraj,
+                 topology_format=args.istrext, format=args.itrajext)
 
 h = MDAnalysis.analysis.hbonds.HydrogenBondAnalysis(
     u, selection1, selection2, distance=distance, angle=angle)

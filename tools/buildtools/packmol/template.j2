@@ -5,10 +5,10 @@ tolerance {{ allparams.tolerance }}
 nloop  {{ allparams.nloop }} 
 maxit  {{ allparams.maxit }} 
 seed  {{ allparams.seed }} 
-filetype {{packmol_format.selected_format}} 
+filetype pdb 
 output {{outfile}}
 
-{% for struct in packmol_format.packmol_inputs %}
+{% for struct in packmol_inputs %}
 structure {{struct.file}}
 # Galaxy datasetname - {{struct.datasetname}}
   number {{struct.structureparams.number}}

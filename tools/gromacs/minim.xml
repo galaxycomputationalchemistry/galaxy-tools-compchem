@@ -47,8 +47,6 @@
     <inputs>
         <param argument="gro_input" type="data" format='gro' label="GRO structure file."/>
         <param argument="top_input" type="data" format='top' label="Topology (TOP) file."/>
-        <param name="capture_log" type="boolean" value="false" label="Generate Detailed Log" help="Generate detailed log information that can be summarized with ParseLog."/>
-
         <conditional name="mdp">
             <param name="mdpfile" type="select" label="Parameter input">
                 <option value="custom">Upload own MDP file</option>
@@ -81,6 +79,7 @@
                 <param argument="emstep" type="float" label="Maximum step size /nm" value="0.01" min="0.0001" max="1.0" help="Initial step size in nm." />
             </when>
         </conditional>
+        <param name="capture_log" type="boolean" value="false" label="Generate detailed log" help="Generate detailed log information that can be summarized with ParseLog."/>
     </inputs>
     <outputs>
         <data name="output1" format="gro" from_work_dir="em.gro"/>
@@ -115,7 +114,34 @@
     </tests>
     <help><![CDATA[
 
-Upload GRO and TOP files for energy minimisation. To take advantage of all GROMACS features, upload an MDP file with simulation parameters. Otherwise, choose parameters through the Galaxy interface. See http://manual.gromacs.org/documentation/2018/user-guide/mdp-options.html for more information on the options.
+.. class:: infomark
+
+**What it does**
+
+This tool performs energy minimization of a system prior to a GROMACS simulation.
+
+_____
+
+.. class:: infomark
+
+**Input**
+
+       - GRO structure file.
+       - Topology (TOP) file.
+       - MDP parameter file (optional)
+
+To take advantage of all GROMACS features, upload an MDP file with simulation parameters. Otherwise, choose parameters through the Galaxy interface. See the `manual`_ for more information on the options.
+
+.. _`manual`: http://manual.gromacs.org/documentation/2018/user-guide/mdp-options.html
+
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - GRO structure file.
 
     ]]></help>
 

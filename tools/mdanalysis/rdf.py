@@ -16,8 +16,10 @@ import numpy as np
 
 def parse_command_line(argv):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--idcd', help='input dcd')
-    parser.add_argument('--ipdb', help='input pdb')
+    parser.add_argument('--itraj', help='input traj')
+    parser.add_argument('--istr', help='input str')
+    parser.add_argument('--itrajext', help='input traj ext')
+    parser.add_argument('--istrext', help='input str ext')
     parser.add_argument('--isegid1', help='segid 1')
     parser.add_argument('--iresid1', help='resid 1')
     parser.add_argument('--iname1', help='name 1')
@@ -42,7 +44,8 @@ bins = int(args.inbins)
 start = float(args.istart)
 end = float(args.iend)
 
-u = mda.Universe(args.ipdb, args.idcd, topology_format="PDB", format="DCD")
+u = mda.Universe(args.istr, args.itraj,
+                 topology_format=args.istrext, format=args.itrajext)
 x = u.select_atoms(atom1)
 y = u.select_atoms(atom2)
 

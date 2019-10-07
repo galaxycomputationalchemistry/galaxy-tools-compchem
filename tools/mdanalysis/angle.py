@@ -16,8 +16,10 @@ from numpy.linalg import norm
 
 def parse_command_line(argv):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--idcd', help='input dcd')
-    parser.add_argument('--ipdb', help='input pdb')
+    parser.add_argument('--itraj', help='input traj')
+    parser.add_argument('--istr', help='input str')
+    parser.add_argument('--itrajext', help='input traj ext')
+    parser.add_argument('--istrext', help='input str ext')
     parser.add_argument('--isegid1', help='segid 1')
     parser.add_argument('--iresid1', help='resid 1')
     parser.add_argument('--iname1', help='name 1')
@@ -52,7 +54,8 @@ def theta(u):
     return np.rad2deg(theta)
 
 
-u = mda.Universe(args.ipdb, args.idcd, topology_format="PDB", format="DCD")
+u = mda.Universe(args.istr, args.itraj,
+                 topology_format=args.istrext, format=args.itrajext)
 data = np.array([(u.trajectory.frame, theta(u)) for ts in u.trajectory])
 frame, theta = data.T
 
