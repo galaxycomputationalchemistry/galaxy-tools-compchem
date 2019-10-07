@@ -16,13 +16,8 @@
 
     <inputs>
         <!-- PDB2GMX VARS -->
-<<<<<<< HEAD
-        <param argument="pdb_input" type="data" format='pdb' label="PDB input file"/>
-        <param argument="water" type="select" label="Water model" help="">
-=======
         <param argument="pdb_input" type="data" format='pdb' label="PDB input file" help="Input structure"/>
         <param argument="water" type="select" label="Water model" help="Model for simulating water molecules in the solvent">
->>>>>>> tool-review3
             <option value="tip3p" selected="true">TIP3P</option>
             <option value="tip4p">TIP4P</option>
             <option value="tips3p">TIPS3P</option>
