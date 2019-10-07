@@ -33,7 +33,7 @@
             <param name="start" value="1" />
             <param name="end" value="6" />
             <param name="stride" value="1" />
-            <output name="output" file="traj_slice.dcd" compare="sim_size"/> 
+            <output name="output" file="traj_slice.dcd" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -48,10 +48,10 @@ _____
 
 **Input**
  
-       - Trajectory file (trr, xtc, dcd)
+       - Trajectory file (xtc, dcd)
      
 In addition, a start frame and end frame have to be specified for the output trajectory, 
-in addition to a value 'stride' (to save only every nth frame in the output file).
+as well as a value for the 'stride' (to save only every nth frame in the output file).
 _____
 
         
@@ -59,7 +59,7 @@ _____
 
 **Output**
 
-       - Trajectory file (trr, xtc, dcd) extracted from the input file.
+       - Trajectory file (xtc, dcd) extracted from the input file.
     ]]></help>
     <citations>
         <citation type="doi">10.1016/j.bpj.2015.08.015</citation>

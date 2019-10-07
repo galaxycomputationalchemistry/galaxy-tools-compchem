@@ -33,8 +33,10 @@
         <param name="resid2"  type="text" value="3" label="Residue ID of atom 2"/>
         <param name="name2"  type="text" value="C1" label="Atom name of atom 2"/>
         <param name="nbins"  type="text" value="100" label="Number of bins in the histogram"/>
-        <param name="start"  type="text" value="0.0" label="Starting point"/>
-        <param name="end"  type="text" value="5.0" label="End point"/>
+        <param name="start"  type="text" min="0.0" value="0.0" label="Starting point (angstroms)"
+            help="Minimum value of r to calculate RDF for"/>
+        <param name="end"  type="text" value="15.0" label="End point (angstroms)"
+            help="Maximum value of r to calculate RDF for"/>
     </inputs>
     <outputs>
         <data format="tabular" name="output" label="RDF raw data"/>
@@ -100,6 +102,7 @@ _____
 
 Note that a MDAnalysis 'segment' is a larger organizational unit, for example one protein or all the solvent molecules or simply the whole system.
 
+Other parameters can also be specified: the number of bins in the RDF histogram, and the start and end points for the calculation (i.e. the values of r between which RDF will be calculated).
 _____
 
         
