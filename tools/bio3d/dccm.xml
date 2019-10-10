@@ -1,10 +1,10 @@
 <tool id="bio3d_dccm" name="DCCM analysis" version="@VERSION@">
-    <description>Dynamical Cross-Correlation Maps using Bio3D (DCCM)</description>
+    <description>- Dynamical Cross-Correlation Maps using Bio3D (DCCM)</description>
     <macros>
         <import>macros.xml</import>
     </macros>
     <expand macro="requirements">
-        <requirement type="package" version="0.20_35">r-lattice</requirement>
+        <requirement type="package" version="0.20_38">r-lattice</requirement>
     </expand>
     <command detect_errors="exit_code">
 <![CDATA[ 
@@ -59,16 +59,16 @@
         <expand macro="analysis_inputs"/>
         <conditional name="dccm">
            <param name="sele" type="select" label="Select domains">
-             <option value="calpha">Calpha</option>
-             <option value="cbeta">Cbeta</option>
+             <option value="calpha">C-alpha</option>
+             <option value="cbeta">C-beta</option>
              <option value="backbone">Backbone</option>
              <option value="sidechain">Sidechain</option>
              <option value="protein">Protein</option>
              <option value="ligand">Ligand</option>
-             <option value="nucleic">Nucleic Acids</option>
-             <option value="elety">Atom Names</option>
-             <option value="resid">Resid</option>
-             <option value="segid">Segid</option>
+             <option value="nucleic">Nucleic acids</option>
+             <option value="elety">Atom names</option>
+             <option value="resid">Residue ID</option>
+             <option value="segid">Segment ID</option>
            </param>
            <when value="calpha"/>
            <when value="cbeta"/>
@@ -78,13 +78,13 @@
            <when value="ligand"/>
            <when value="nucleic"/>
            <when value="elety">
-                <param name="elety"  type="text" value="CA" label="Atom Name"/>
+                <param name="elety"  type="text" value="CA" label="Atom name"/>
             </when>
             <when value="resid">
-                <param name="resid"  type="text" value="BGLC" label="Resid"/>
+                <param name="resid"  type="text" value="BGLC" label="Residue ID"/>
             </when>
             <when value="segid">
-                <param name="segid"  type="text" value="SUBS" label="Segid"/>
+                <param name="segid"  type="text" value="SUBS" label="Segment ID"/>
             </when>
         </conditional>
     </inputs>
@@ -105,7 +105,7 @@
 **What it does**
         
 The extent to which the atomic fluctuations/displacements of a system are correlated with one another can be assessed by examining the magnitude of all pairwise cross-correlation coefficients.
-The DCCM Analysis tool can plot the atom-wise cross-correlations using the Bio3D package. The negative values (negative correlation) indicate the atoms moves in opposite directions and the positive values (positive correlation) indicate the atoms moves in same directions.
+The DCCM Analysis tool can plot the atom-wise cross-correlations using the Bio3D package. Negative values (negative correlation) indicate the atoms move in opposite directions, while positive values (positive correlation) indicate the atoms move in the same direction.
       
 _____
 
@@ -115,7 +115,7 @@ _____
 **Input**
 
        - Input file in PDB format
-       - Input file in dcd format
+       - Input file in DCD format
 
 _____
 
@@ -124,7 +124,7 @@ _____
 
 **Output**
 
-       - Image (as PNG) of the dccm plot
+       - Image (as PNG) of the DCCM plot
        - Tab-separated file of raw data
 
     ]]></help>

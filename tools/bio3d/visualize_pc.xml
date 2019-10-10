@@ -1,5 +1,5 @@
 <tool id="bio3d_pca_visualize" name="PCA visualization" version="@VERSION@">
-    <description>Generate trajectories of principle components of motions</description>
+    <description>- generate trajectories of principal components of atomic motion</description>
     <macros>
         <import>macros.xml</import>
     </macros>   
@@ -60,36 +60,44 @@
             label="Use singular value decomposition (SVD) instead of default eigenvalue decomposition ?" help="Default: No" />
         <conditional name="pca">
            <param name="sele" type="select" label="Select domains">
-             <option value="calpha">Calpha</option>
-             <option value="cbeta">Cbeta</option>
+             <option value="calpha">C-alpha</option>
+             <option value="cbeta">C-beta</option>
              <option value="backbone">Backbone</option>
              <option value="sidechain">Sidechain</option>
              <option value="protein">Protein</option>
              <option value="ligand">Ligand</option>
-             <option value="nucleic">Nucleic Acids</option>
-             <option value="elety">Atom Names</option>
-             <option value="resid">Resid</option>
-             <option value="segid">Segid</option>
+             <option value="nucleic">Nucleic acids</option>
+             <option value="elety">Atom names</option>
+             <option value="resid">Residue ID</option>
+             <option value="segid">Segment ID</option>
            </param>
-           <when value="calpha"/>
-           <when value="cbeta"/>
-           <when value="backbone"/>
-           <when value="sidechain"/>
-           <when value="protein"/>
-           <when value="ligand"/>
-           <when value="nucleic"/>
-           <when value="elety">
-                <param name="elety"  type="text" value="CA" label="Atom Name"/>
-            </when>
-            <when value="resid">
-                <param name="resid"  type="text" value="BGLC" label="Resid"/>
-            </when>
-            <when value="segid">
-                <param name="segid"  type="text" value="SUBS" label="Segid"/>
-            </when>
+           <when value="calpha">
+           </when>
+           <when value="cbeta">
+           </when>
+           <when value="backbone">
+           </when> 
+           <when value="sidechain">
+           </when>
+           <when value="protein">
+           </when>
+           <when value="ligand">
+           </when>
+           <when value="nucleic">
+           </when>
+          <when value="elety">
+            <param name="elety"  type="text" value="CA" label="Atom name"/>
+          </when>
+          <when value="resid">
+            <param name="resid"  type="text" value="BGLC" label="Residue ID"/>
+          </when>
+          <when value="segid">
+            <param name="segid"  type="text" value="SUBS" label="Segment ID"/>
+          </when>
         </conditional>
-        <param name="pc_id" type="integer" value="1" label="Principle component id"/>
+        <param name="pc_id" type="integer" value="1" label="Principal component ID"/>
     </inputs>
+
     <outputs>
         <data format="pdb" name="pdbout" label="PCA_${pc_id}.pdb"/>
     </outputs>
@@ -107,7 +115,7 @@
 
 **What it does**
         
-This tool can generate small trajectories of a given principle component.
+This tool can generate small trajectories of a given principal component.
       
 _____
 
@@ -117,7 +125,7 @@ _____
 **Input**
 
        - Input file in PDB format
-       - Input file in dcd format
+       - Input file in DCD format
 
 _____
 
@@ -126,7 +134,7 @@ _____
 
 **Output**
 
-       - A short trajectory (as PDB) of the given priciple component id.
+       - A short trajectory (as PDB) of the given principal component ID.
 
 
     ]]></help>

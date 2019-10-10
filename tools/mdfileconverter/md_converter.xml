@@ -1,10 +1,10 @@
-<tool id="md_converter" name="MDTraj file converter" version="1.9.1">
+<tool id="md_converter" name="MDTraj file converter" version="1.9.3">
 
     <description>- interconvert between MD trajectory or structure file formats.</description>
 
     <requirements>
-        <requirement type="package" version="1.9.1">mdtraj</requirement>
-        <requirement type="package" version="2018.2">gromacs</requirement>
+        <requirement type="package" version="1.9.3">mdtraj</requirement>
+        <requirement type="package" version="2019.1">gromacs</requirement>
     </requirements>
 
     <command detect_errors="exit_code"><![CDATA[
@@ -48,7 +48,7 @@
     </inputs>
 
     <outputs>
-        <data name="output" format="text">
+        <data name="output">
             <change_format>
                 <when input="output_format" value="gro" format="gro"/>
                 <when input="output_format" value="pdb" format="pdb"/>
@@ -63,13 +63,13 @@
         <test>
             <param name="conversion" value="traj" />
             <param name="output_format" value="dcd" />
-            <param name="input_file" value="traj.xtc" />
+            <param name="input_file" value="traj.xtc" ftype="xtc"/>
             <output name="output" file="traj.dcd" compare="sim_size"/>
         </test>
         <test>
             <param name="conversion" value="traj" />
             <param name="output_format" value="trr" />
-            <param name="input_file" value="traj.dcd" />
+            <param name="input_file" value="traj.dcd" ftype="dcd"/>
             <output name="output" file="traj.trr"/>
         </test>
         <test>

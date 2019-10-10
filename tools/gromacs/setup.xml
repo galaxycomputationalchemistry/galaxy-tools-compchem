@@ -16,8 +16,8 @@
 
     <inputs>
         <!-- PDB2GMX VARS -->
-        <param argument="pdb_input" type="data" format='pdb' label="PDB input file."/>
-        <param argument="water" type="select" label="Water model" help="">
+        <param argument="pdb_input" type="data" format='pdb' label="PDB input file" help="Input structure"/>
+        <param argument="water" type="select" label="Water model" help="Model for simulating water molecules in the solvent">
             <option value="tip3p" selected="true">TIP3P</option>
             <option value="tip4p">TIP4P</option>
             <option value="tips3p">TIPS3P</option>
@@ -27,7 +27,7 @@
             <option value="none">None</option>
         </param>
 
-        <param argument="ff" type="select" label="Force field">
+        <param argument="ff" type="select" label="Force field" help="Specify a molecular force field">
             <option value="oplsaa" selected="true">OPLS/AA</option>
             <option value="gromos43a1">GROMOS43A1</option>
             <option value="amber96">AMBER96</option>
@@ -48,7 +48,7 @@
         <param argument="ignore_h" type="boolean" label="Ignore hydrogens" truevalue="" falsevalue="no" help="Ignore hydrogen atoms that are in the coordinate file." />
         
         <!-- EDITCONF VARS -->
-        <param argument="box_d" type="float" label="Box dimensions in nanometers." value="0.0" min="0.0" max="10.0" help="Box dimensions" />
+        <param argument="box_d" type="float" label="Box dimensions in nanometers" value="0.0" min="0.0" max="10.0" help="Dimensions of the box in which simulation will take place" />
         <param argument="box_type" type="select" label="Box type"
             help="triclinic is a triclinic box, cubic is a rectangular box with all sides equal dodecahedron represents a rhombic dodecahedron and octahedron is a truncated octahedron. The last two are special cases of a triclinic box. The length of the three box vectors of the truncated octahedron is the shortest distance between two opposite hexagons. Relative to a cubic box with some periodic image distance, the volume of a dodecahedron with this same periodic distance is 0.71 times that of the cube, and that of a truncated octahedron is 0.77 times.">
             <option value="cubic">Rectangular box with all sides equal</option>
@@ -57,7 +57,7 @@
             <option value="octahedron">truncated octahedron</option>
         </param>
 
-        <param name="capture_log" type="boolean" value="false" label="Generate Detailed Log" help="Generate detailed log information that can be summarized with ParseLog."/>
+        <param name="capture_log" type="boolean" value="false" label="Generate detailed log" help="Generate detailed log information that can be summarized with ParseLog."/>
 
     </inputs>
     <outputs>
@@ -83,7 +83,34 @@
     </tests>
     <help><![CDATA[
 
-Initial GROMACS setup. Upload a structure in PDB format and produce a topology and a structure in GRO format contained in a box of defined shape and dimensions.
+.. class:: infomark
+
+**What it does**
+
+This tool performs the initial setup prior to a GROMACS simulation. This entails producing a topology from an input structure using the pdb2gmx command and also defining a simulation box with editconf.
+
+Please note that the tool will only successfully generate a topology for residues it recognizes (i.e. standard amino acids). If the structure contains other components such as ligands, these should be separately parameterized with the AmberTools or ACPYPE tools. In this case, make sure to also use an AMBER forcefield for this tool to ensure compatability with the ligand topology. 
+
+_____
+
+.. class:: infomark
+
+**Input**
+
+       - PDB file.
+       - Water model and forcefield must be specified.
+       - Parameters for the simulation box (dimensions and shape).
+     
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - GROMACS topology (TOP) file.
+       - Position restraint (itp) file, which may be useful for system equilibration.
+       - GRO structure file.
 
     ]]></help>
 

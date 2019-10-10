@@ -1,14 +1,14 @@
 <macros>
-    <token name="@VERSION@">2.3</token>
+    <token name="@VERSION@">2.3.4</token>
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="2.3_3">r-bio3d</requirement>
+            <requirement type="package" version="2.3_4">r-bio3d</requirement>
             <yield/>
         </requirements>
     </xml>
     <xml name="analysis_inputs">
-        <param format="dcd" name="dcdin" type="data" label="dcd trajectory input"/>
-        <param format="pdb" name="pdbin" type="data" label="pdb input"/>
+        <param format="dcd" name="dcdin" type="data" label="DCD trajectory input"/>
+        <param format="pdb" name="pdbin" type="data" label="PDB input"/>
         <yield/>
     </xml>
     <xml name="tests_inputs">

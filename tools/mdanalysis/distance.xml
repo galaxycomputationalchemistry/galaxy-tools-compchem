@@ -1,5 +1,5 @@
 <tool id="mdanalysis_distance" name="Distance Analysis" version="@VERSION@">
-    <description>Time series using MDAnalysis</description>
+    <description>- time series using MDAnalysis</description>
     <macros>
         <import>macros.xml</import>
     </macros>   
@@ -7,8 +7,10 @@
     <command detect_errors="exit_code">
 <![CDATA[
      python '$__tool_directory__/distance.py' 
-        --idcd '$dcdin' 
-        --ipdb '$pdbin'
+        --itraj '$trajin' 
+        --istr '$strin'
+        --itrajext '$trajin.ext'
+        --istrext '$strin.ext'
         --isegid1 '$segid1' 
         --iresid1 '$resid1' 
         --iname1 '$name1'
@@ -21,11 +23,11 @@
 ]]></command>
     <inputs>
         <expand macro="analysis_inputs"/>
-        <param name="segid1"  type="text" value="PRO" label="Segid of atom 1"/>
-        <param name="resid1"  type="text" value="212" label="Resid of atom 1"/>
+        <param name="segid1"  type="text" value="PRO" label="Segment ID of atom 1"/>
+        <param name="resid1"  type="text" value="212" label="Residue ID of atom 1"/>
         <param name="name1"  type="text" value="OE2" label="Atom name of atom 1"/>
-        <param name="segid2"  type="text" value="HET" label="Segid of atom 2"/>
-        <param name="resid2"  type="text" value="3" label="Resid of atom 2"/>
+        <param name="segid2"  type="text" value="HET" label="Segment ID of atom 2"/>
+        <param name="resid2"  type="text" value="3" label="Residue ID of atom 2"/>
         <param name="name2"  type="text" value="C1" label="Atom name of atom 2"/>
     </inputs>
     <outputs>
@@ -43,13 +45,29 @@
             <param name="name2" value="C1"/>
             <output name="output" file="Distance_Analysis_raw_data.tabular" />
         </test>
+        <test>
+            <expand macro="tests_inputs_gmx"/>
+            <param name="segid1" value="SYSTEM"/>
+            <param name="resid1" value="212"/>
+            <param name="name1" value="OE2"/>
+            <param name="segid2" value="SYSTEM"/>
+            <param name="resid2" value="3"/>
+            <param name="name2" value="C1"/>
+            <output name="output">
+                <assert_contents>
+                    <has_n_columns n="2" />
+                    <has_line_matching expression="0\s+3.8.*" />
+                    <has_line_matching expression="14\s+3.2.*" />
+                </assert_contents>
+            </output>
+        </test>
     </tests>
     <help><![CDATA[
 .. class:: infomark
 
 **What it does**
         
-This tool calculates and plot distance between the two atoms.
+This tool calculates and plots the distance between the two atoms.
 
 _____
 
@@ -60,8 +78,10 @@ _____
 
        - Trajectory file  (DCD).
        - PDB file.
-       - Segids, resids and names of two atoms to calculate distances.
-     
+       - Segment IDs, Residue IDs and names of two atoms to calculate distances.
+
+Note that a MDAnalysis 'segment' is a larger organizational unit,  for example one protein or all the solvent molecules or simply the whole system.
+
 _____
 
         

@@ -1,5 +1,5 @@
 <tool id="bio3d_pca" name="PCA" version="@VERSION@">
-    <description>Principle component analysis using Bio3D</description>    
+    <description>- principal component analysis using Bio3D</description>    
     <macros>
         <import>macros.xml</import>
     </macros>   
@@ -62,16 +62,16 @@
             label="Use singular value decomposition (SVD) instead of default eigenvalue decomposition ?" help="Default: No" />
         <conditional name="pca">
            <param name="sele" type="select" label="Select domains">
-             <option value="calpha">Calpha</option>
-             <option value="cbeta">Cbeta</option>
+             <option value="calpha">C-alpha</option>
+             <option value="cbeta">C-beta</option>
              <option value="backbone">Backbone</option>
              <option value="sidechain">Sidechain</option>
              <option value="protein">Protein</option>
              <option value="ligand">Ligand</option>
-             <option value="nucleic">Nucleic Acids</option>
-             <option value="elety">Atom Names</option>
-             <option value="resid">Resid</option>
-             <option value="segid">Segid</option>
+             <option value="nucleic">Nucleic acids</option>
+             <option value="elety">Atom names</option>
+             <option value="resid">Residue ID</option>
+             <option value="segid">Segment ID</option>
            </param>
            <when value="calpha">
            </when>
@@ -88,13 +88,13 @@
            <when value="nucleic">
            </when>
           <when value="elety">
-            <param name="elety"  type="text" value="CA" label="Atom Name"/>
+            <param name="elety"  type="text" value="CA" label="Atom name"/>
           </when>
           <when value="resid">
-            <param name="resid"  type="text" value="BGLC" label="Resid"/>
+            <param name="resid"  type="text" value="BGLC" label="Residue ID"/>
           </when>
           <when value="segid">
-            <param name="segid"  type="text" value="SUBS" label="Segid"/>
+            <param name="segid"  type="text" value="SUBS" label="Segment ID"/>
           </when>
         </conditional>
     </inputs>
@@ -122,7 +122,7 @@
 
 **What it does**
 
-PCA can be used to determine the relationship between statistically meaningful conformations (major global motions)
+Principal component analysis (PCA) can be used to determine the relationship between statistically meaningful conformations (major global motions)
 sampled during the trajectory. 
 
 _____
@@ -133,7 +133,7 @@ _____
 **Input**
 
        - Input file in PDB format
-       - Input file in dcd format
+       - Input file in DCD format
 
 _____
 
@@ -142,9 +142,9 @@ _____
 
 **Output**
 
-       - Image (as PNG) of the pca plot
-       - Image (as PNG) of the pca clusterd plot
-       - Image (as PNG) of the PC1 plotted on RMSF
+       - Image (as PNG) of the PCA plot
+       - Image (as PNG) of the PCA clustered plot
+       - Image (as PNG) of the first principal component plotted on RMSF
        - Tab-separated file of raw data
 
     ]]></help>

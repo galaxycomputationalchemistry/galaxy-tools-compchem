@@ -1,5 +1,5 @@
 <tool id="ambertools_parmchk2" name="ParmChk2" version="@VERSION@">
-  <description>Amber's parameter checker</description>
+  <description>- Amber's parameter checker</description>
   <macros>
     <import>macros.xml</import>
   </macros>
@@ -15,7 +15,7 @@
   </command>
   <inputs>
     <param type="data" name="input1" label="Molecular input (mol2)" format="mol2"/>
-    <section name="allparams" title="General Parameters" expanded="true">
+    <section name="allparams" title="General parameters" expanded="true">
       <param name="s" type="select" display="radio" label="FFparm set parameter" help="(-s)">
         <option selected="True" value="1">1: gaff</option>
         <option value="2">2: gaff2</option>

@@ -1,0 +1,67 @@
+<tool id="md_slicer" name="Slice MD trajectories" version="@VERSION@">
+    <macros>
+        <token name="@VERSION@">1.9.3</token>
+    </macros>
+    <description>using the MDTraj package</description>
+    <requirements>
+        <requirement type="package" version="@VERSION@">mdtraj</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        ln -s '$traj' traj.${traj.ext} && 
+        mdconvert traj.${traj.ext} -o output.${traj.ext} -i $start:$end:$stride && 
+        mv output.${traj.ext} '$output'
+    ]]></command>
+    <inputs>
+        <param argument="traj" type="data" format='xtc,dcd' label="Input trajectory file for slicing"/>
+        <param argument="start" type="integer" value="0" label="Start frame for slicing"/>
+        <param argument="end" type="integer" value="10000" label="End frame for slicing"/>
+        <param argument="stride" type="integer" value="1" label="Stride" help="i.e. load every nth frame from the input file"/>
+    </inputs>
+    <outputs>
+        <data name="output" format_source="traj"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="traj" value="traj.xtc" />
+            <param name="start" value="0" />
+            <param name="end" value="8" />
+            <param name="stride" value="2" />
+            <output name="output" file="traj_slice.xtc" />
+        </test>
+        <test>
+            <param name="traj" value="traj.dcd" />
+            <param name="start" value="1" />
+            <param name="end" value="6" />
+            <param name="stride" value="1" />
+            <output name="output" file="traj_slice.dcd" compare="sim_size"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+**What it does**
+        
+This tool extracts a segment from a molecular dynamcics trajectory (i.e. performs a slice). 
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+ 
+       - Trajectory file (xtc, dcd)
+     
+In addition, a start frame and end frame have to be specified for the output trajectory, 
+as well as a value for the 'stride' (to save only every nth frame in the output file).
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - Trajectory file (xtc, dcd) extracted from the input file.
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1016/j.bpj.2015.08.015</citation>
+    </citations>
+</tool>
