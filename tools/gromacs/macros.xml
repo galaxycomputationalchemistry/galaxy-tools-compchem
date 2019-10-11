@@ -1,5 +1,5 @@
 <macros>
-    <token name="@VERSION@">2019.1.1</token>
+    <token name="@VERSION@">2019.1.2</token>
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="2019.1">gromacs</requirement>
