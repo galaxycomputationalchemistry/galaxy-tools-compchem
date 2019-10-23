@@ -6,14 +6,14 @@
     <command detect_errors="exit_code">
 <![CDATA[
      ln -s '$__tool_directory__/hbonds.tcl' ./hbonds.tcl &&
-     vmd '$strin' '$trajin' -dispdev text -e '$hbonds_inp' &>> verbose.txt 
+     vmd  -pdb '$strin' -dcd '$trajin' -dispdev text -e '$hbonds_inp' &>> verbose.txt 
 ]]></command>
     <configfiles>
          <configfile name="hbonds_inp">
 source hbonds.tcl
 
-set sele1 [atomselect top "$sele1"]
-set sele2 [atomselect top "$sele2"]
+set sele1 [atomselect $molid "$sele1"]
+set sele2 [atomselect $molid "$sele2"]
 
 hbonds -sel1 \$sele1 -sel2 \$sele2 -writefile yes -ang $angle -dist $distance -plot no -DA both -type all -outfile hbond.txt -detailout detail.txt
 quit
@@ -22,9 +22,10 @@ quit
     <inputs>
         <param format="dcd" name="trajin" type="data" label="DCD trajectory input"/>
         <param format="pdb" name="strin" type="data" label="PDB input"/>
+        <param name="molid"  type="integer" value="0" label="Molecule ID"/>
         <param name="sele1"  type="text" value="segid PRO" label="Selection 1"/>
         <param name="sele2"  type="text" value="segid HET" label="Selection 2"/>
-        <param name="angle"  type="float" value="20" label="Angle cutoff"/>
+        <param name="angle"  type="float" value="20.0" label="Angle cutoff"/>
         <param name="distance"  type="float" value="3.0" label="Distance cutoff"/>
     </inputs>
     <outputs> 
@@ -36,6 +37,7 @@ quit
         <test>
             <param name="trajin" value="test.dcd" ftype="dcd"/>
             <param name="strin" value="test.pdb" ftype="pdb"/>
+             <param name="molid" value="0"/>
             <param name="distance" value="3.0"/>
             <param name="angle" value="20.0"/>
             <param name="sele1" value="segid PRO"/>
