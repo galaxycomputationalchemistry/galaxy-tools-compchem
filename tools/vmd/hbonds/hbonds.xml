@@ -6,7 +6,7 @@
     <command detect_errors="exit_code">
 <![CDATA[
      ln -s '$__tool_directory__/hbonds.tcl' ./hbonds.tcl &&
-     vmd -pdb '$strin' -dcd '$trajin' -dispdev text -e '$hbonds_inp' &>> verbose.txt 
+     vmd '$strin' '$trajin' -dispdev text -e '$hbonds_inp' &>> verbose.txt 
 ]]></command>
     <configfiles>
          <configfile name="hbonds_inp">
@@ -20,8 +20,8 @@ quit
          </configfile>
     </configfiles> 
     <inputs>
-        <param format="dcd" name="trajin" type="data" label="DCD trajectory input"/>
-        <param format="pdb" name="strin" type="data" label="PDB input"/>
+        <param format="dcd,xtc" name="trajin" type="data" label="DCD/XTC trajectory input"/>
+        <param format="pdb,gro" name="strin" type="data" label="PDB/GRO input"/>
         <param name="sele1"  type="text" value="segid PRO" label="Selection 1"/>
         <param name="sele2"  type="text" value="segid HET" label="Selection 2"/>
         <param name="angle"  type="float" value="20" label="Angle cutoff"/>
