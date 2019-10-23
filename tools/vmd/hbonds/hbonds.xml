@@ -1,5 +1,5 @@
 <tool id="vmd_hbonds" name="Hydrogen Bond Analysis using VMD" version="1.9.3">
-    <description>Analyze H-bonds between two segments</description>
+    <description>between two segments of a trajectory</description>
     <requirements>
         <requirement type="package" version="1.9.3">vmd</requirement>
     </requirements>
@@ -17,7 +17,7 @@ set sele2 [atomselect top "$sele2"]
 
 hbonds -sel1 \$sele1 -sel2 \$sele2 -writefile yes -ang $angle -dist $distance -plot no -DA both -type all -outfile hbond.txt -detailout detail.txt
 quit
-                 </configfile>
+         </configfile>
     </configfiles> 
     <inputs>
         <param format="dcd" name="trajin" type="data" label="DCD trajectory input"/>
@@ -25,10 +25,10 @@ quit
         <param name="sele1"  type="text" value="segid PRO" label="Selection 1"/>
         <param name="sele2"  type="text" value="segid HET" label="Selection 2"/>
         <param name="angle"  type="float" value="20" label="Angle cutoff"/>
-        <param name="distance"  type="float" value="3.0" label="Distance Cutoff"/>
+        <param name="distance"  type="float" value="3.0" label="Distance cutoff"/>
     </inputs>
     <outputs> 
-        <data format="txt" name="detail" from_work_dir="detail.txt" label="Percentage occupancy of the H bond"/>
+        <data format="txt" name="detail" from_work_dir="detail.txt" label="Percentage occupancy of the H-bond"/>
         <data format="txt" name="hbond"  from_work_dir="hbond.txt" label="Number of H-bonds"/>
         <data name="report" format="txt" from_work_dir="verbose.txt"/>
     </outputs>
@@ -48,7 +48,7 @@ quit
 
 **What it does**
         
-This tool calculates hydrogen bonds between two segments of the .
+This tool calculates hydrogen bonds between two segments of a system in a trajectory.
 
 _____
 
@@ -68,7 +68,7 @@ _____
 
 **Output**
 
-       - Number of h bonds for each time stp and and their occupancy.
+       - Number of H-bonds for each time step and and their occupancy.
 
 
     ]]></help>
