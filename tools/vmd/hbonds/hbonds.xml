@@ -6,7 +6,12 @@
     <command detect_errors="exit_code">
 <![CDATA[
      ln -s '$__tool_directory__/hbonds.tcl' ./hbonds.tcl &&
-     vmd  -pdb '$strin' -dcd '$trajin' -dispdev text -e '$hbonds_inp' &>> verbose.txt 
+#if $trajin.is_of_type("dcd"):
+     vmd  -pdb '$strin' -dcd '$trajin' -dispdev text -e '$hbonds_inp' &>> verbose.txt
+#end if
+#if $trajin.is_of_type("xtc"):
+     vmd  -gro '$strin' -xtc '$trajin' -dispdev text -e '$hbonds_inp' &>> verbose.txt
+#end if 
 ]]></command>
     <configfiles>
          <configfile name="hbonds_inp">
@@ -20,8 +25,8 @@ quit
          </configfile>
     </configfiles> 
     <inputs>
-        <param format="dcd" name="trajin" type="data" label="DCD trajectory input"/>
-        <param format="pdb" name="strin" type="data" label="PDB input"/>
+        <param format="dcd,xtc" name="trajin" type="data" label="DCD/XTC trajectory input"/>
+        <param format="pdb,gro" name="strin" type="data" label="PDB/GRO input"/>
         <param name="molid"  type="integer" value="0" label="Molecule ID"/>
         <param name="sele1"  type="text" value="segid PRO" label="Selection 1"/>
         <param name="sele2"  type="text" value="segid HET" label="Selection 2"/>
@@ -43,6 +48,16 @@ quit
             <param name="sele1" value="segid PRO"/>
             <param name="sele2" value="segid HET"/>
 	    <output name="hbond" value="Number_of_H-bonds.txt"/>
+        </test>
+        <test>
+            <param name="trajin" value="test.xtc" ftype="xtc"/>
+            <param name="strin" value="test.gro" ftype="gro"/>
+             <param name="molid" value="0"/>
+            <param name="distance" value="3.0"/>
+            <param name="angle" value="20.0"/>
+            <param name="sele1" value="protein"/>
+            <param name="sele2" value="water"/>
+	    <output name="hbond" value="Number_of_H-bonds_gro.txt"/>
         </test>
     </tests>
     <help><![CDATA[
