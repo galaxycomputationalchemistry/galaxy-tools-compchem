@@ -27,8 +27,8 @@ quit
         <param format="dcd,xtc" name="trajin" type="data" label="DCD/XTC trajectory input"/>
         <param format="pdb,gro" name="strin" type="data" label="PDB/GRO input"/>
         <param name="molid"  type="integer" value="0" label="Molecule ID"/>
-        <param name="sele1"  type="text" value="segid PRO" label="Selection 1"/>
-        <param name="sele2"  type="text" value="segid HET" label="Selection 2"/>
+        <param name="sele1"  type="text" value="segid PRO" label="Selection 1" help="Definition of a segment with VMD atom selection language"/>
+        <param name="sele2"  type="text" value="segid HET" label="Selection 2" help="Definition of a segment with VMD atom selection language"/>
         <param name="angle"  type="float" value="20.0" label="Angle cutoff"/>
         <param name="distance"  type="float" value="3.0" label="Distance cutoff"/>
     </inputs>
