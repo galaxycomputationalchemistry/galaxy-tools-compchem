@@ -41,7 +41,7 @@ quit
         <test>
             <param name="trajin" value="test.dcd" ftype="dcd"/>
             <param name="strin" value="test.pdb" ftype="pdb"/>
-             <param name="molid" value="0"/>
+            <param name="molid" value="0"/>
             <param name="distance" value="3.0"/>
             <param name="angle" value="20.0"/>
             <param name="sele1" value="segid PRO"/>
