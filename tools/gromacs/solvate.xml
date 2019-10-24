@@ -14,7 +14,7 @@
 
         gmx solvate -cp ./gro_input.gro -cs ${water_model}.gro -o solv.gro -p ./top_input.top &>> verbose.txt &&
 
-        gmx grompp -f ./ions.mdp -c solv.gro -p ./top_input.top -o ions.tpr -maxwarn 1 &>> verbose.txt &&
+        gmx grompp -f ./ions.mdp -c solv.gro -p ./top_input.top -o ions.tpr &>> verbose.txt &&
 
         echo 'SOL' | gmx genion -s ions.tpr -o solv_ions.gro -p ./top_input.top -pname NA -nname CL -neutral &>> verbose.txt
     
@@ -30,7 +30,7 @@ nsteps    = 1
 nstlist        = 1
 cutoff-scheme   = Verlet
 ns_type        = grid
-coulombtype      = PME
+coulombtype      = cutoff
 rcoulomb      = 1.0
 rvdw        = 1.0
 pbc            = xyz
