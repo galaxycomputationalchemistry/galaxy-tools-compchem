@@ -44,8 +44,8 @@ quit
             <param name="molid" value="0"/>
             <param name="distance" value="3.0"/>
             <param name="angle" value="20.0"/>
-            <param name="sele1" value="segid PRO"/>
-            <param name="sele2" value="segid HET"/>
+            <param name="sele1" value="water"/>
+            <param name="sele2" value="not water"/>
 	    <output name="hbond" value="Number_of_H-bonds.txt"/>
         </test>
         <test>
@@ -54,9 +54,9 @@ quit
             <param name="molid" value="0"/>
             <param name="distance" value="3.0"/>
             <param name="angle" value="20.0"/>
-            <param name="sele1" value="protein"/>
-            <param name="sele2" value="water"/>
-	    <output name="hbond" value="Number_of_H-bonds_gro.txt"/>
+            <param name="sele1" value="water"/>
+            <param name="sele2" value="not water"/>
+	    <output name="hbond" value="Number_of_H-bonds.txt"/>
         </test>
     </tests>
     <help><![CDATA[
