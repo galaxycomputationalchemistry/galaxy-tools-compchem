@@ -8,8 +8,7 @@
      ln -s '$__tool_directory__/hbonds.tcl' ./hbonds.tcl &&
 #if $trajin.is_of_type("dcd"):
      vmd  -pdb '$strin' -dcd '$trajin' -dispdev text -e '$hbonds_inp' &>> verbose.txt
-#end if
-#if $trajin.is_of_type("xtc"):
+#elif $trajin.is_of_type("xtc"):
      vmd  -gro '$strin' -xtc '$trajin' -dispdev text -e '$hbonds_inp' &>> verbose.txt
 #end if 
 ]]></command>
@@ -52,7 +51,7 @@ quit
         <test>
             <param name="trajin" value="test.xtc" ftype="xtc"/>
             <param name="strin" value="test.gro" ftype="gro"/>
-             <param name="molid" value="0"/>
+            <param name="molid" value="0"/>
             <param name="distance" value="3.0"/>
             <param name="angle" value="20.0"/>
             <param name="sele1" value="protein"/>
@@ -65,7 +64,7 @@ quit
 
 **What it does**
         
-This tool calculates hydrogen bonds between two segments of a system in a trajectory.
+This tool calculates hydrogen bonds between two segments of a system in a molecular dynamics trajectory.
 
 _____
 
@@ -74,7 +73,7 @@ _____
 
 **Input**
 
-       - Trajectory file  (DCD).
+       - Trajectory file  (DCD/XTC).
        - PDB file.
        - Segment IDs of the two segments.     
 
