@@ -1,0 +1,7 @@
+name: kinamine7
+categories: [Computational chemistry]
+owner: jfb
+description: Kinamine 7_to_7 extract substrates
+long_description: This tool is intended for use with a mass spec file.name: kinamine
+homepage_url: https://pubs.acs.org/doi/abs/10.1021/ja507164a
+remote_repository_url: https://github.umn.edu/blank121/KinaMine/tree/Galaxy-7-7
