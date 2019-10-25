@@ -1,0 +1,10 @@
+categories: [Computational chemistry]
+description: Negative-Motif-Finder 7_to_7 discover unphosphorylated substrates
+homepage_url: https://pubs.acs.org/doi/abs/10.1021/ja507164a
+long_description: This tool is intended for use in conjunction with KinaMine 7-7 and
+  Kinatest 7-7.  This tool discovers all Y-centered motifs that could have been found
+  by the KinaMine following the KALIP process, but weren't.  This script then infers that those
+  motifs were NOT phosphorylated by the kinase, and outputs them.  That output is used in Kinatest 7-7
+name: NMF.R
+owner: blank121
+remote_repository_url: https://github.umn.edu/blank121/Negative-Motif-Finder-GalaxyP
