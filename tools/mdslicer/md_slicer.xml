@@ -21,23 +21,19 @@
         <data name="output" format_source="traj"/>
     </outputs>
     <tests>
-        <!-- <test>
+        <test>
             <param name="traj" value="traj.xtc" />
             <param name="start" value="0" />
             <param name="end" value="8" />
             <param name="stride" value="2" />
             <output name="output" file="traj_slice.xtc" />
-        </test> -->
+        </test>
         <test>
             <param name="traj" value="traj.dcd" />
             <param name="start" value="1" />
             <param name="end" value="6" />
             <param name="stride" value="1" />
-	        <output name="output">
-	        	<assert_contents>
-		    	    <has_size value="2000"/>
-		        </assert_contents>
-	        </output>
+            <output name="output" file="traj_slice.dcd" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[
