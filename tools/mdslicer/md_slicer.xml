@@ -1,8 +1,8 @@
 <tool id="md_slicer" name="Slice MD trajectories" version="@VERSION@">
+    <description>using the MDTraj package</description>
     <macros>
         <token name="@VERSION@">1.9.3</token>
     </macros>
-    <description>using the MDTraj package</description>
     <requirements>
         <requirement type="package" version="@VERSION@">mdtraj</requirement>
     </requirements>
