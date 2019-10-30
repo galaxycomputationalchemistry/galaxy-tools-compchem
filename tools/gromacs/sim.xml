@@ -23,6 +23,10 @@
             ln -s '$cpt_inp.cpt_in' ./inp.cpt &&
         #end if
 
+        #if $ndx_inp.ndx_bool == "yes":
+            ln -s '$ndx_inp.ndx_in' ./index.ndx &&
+        #end if
+
         gmx grompp 
             -f ./md.mdp 
             -c ./inp.gro 
@@ -31,6 +35,9 @@
             #end if
             #if $posres.posres_bool == "true":
                 -r ./inp.gro
+            #end if
+            #if $ndx_inp.ndx_bool == "true":
+                -n ./index.ndx
             #end if
             -p ./top_input.top 
             -o outp.tpr &>> verbose.txt &&
@@ -138,6 +145,18 @@
             <when value="false"/>
         </conditional>
 
+        <conditional name="ndx_inp">
+            <param name="ndx_bool" type="select" label="Use a custom index (ndx) file" help="Use an index file specifying custom atom groups.">
+                <option value="yes">Use custom index file</option>
+                <option value="no" selected="true">Use default generated group</option>
+            </param>
+            <when value="yes">
+                <param argument="ndx_in" type="data" format='txt' label="Index file"/>
+            </when>
+            <when value="no"/>
+        </conditional>
+
+
         <param name="ensemble" label="Ensemble" type="select" help="NVT ensemble (constant number of particles, volume and temperature) or NPT ensemble (constant number of particles, pressure and temperature)">
             <option value="nvt">Isothermal-isochoric ensemble (NVT)</option>
             <option value="npt">Isothermal-isobaric ensemble (NPT)</option>
@@ -175,6 +194,7 @@
             <param name="cpt_in" value="npt.cpt" />
             <param name="mdpfile" value="custom" />
             <param name="mdp_input" value="md.mdp" />
+            <param name="ndx_bool" value="no" />
             <param name="traj" value="trr"/>
             <param name="str" value="gro"/>
             <param name="ensemble" value="npt" />
@@ -188,6 +208,24 @@
             <param name="top_input" value="topol_solv.top" />
             <param name="cpt_bool" value="yes" />
             <param name="cpt_in" value="npt.cpt" />
+            <param name="ndx_bool" value="no" />
+            <param name="traj" value="trr"/>
+            <param name="str" value="both"/>
+            <expand macro="test_params"/>
+            <param name="ensemble" value="npt" />
+            <param name="posres_bool" value="false" />
+            <output name="output1" file="md_0_1.gro" ftype="gro" compare="sim_size"/>
+            <output name="output2" file="md_0_1.pdb" ftype="pdb" compare="sim_size"/>
+            <output name="output3" file="md_0_1.trr" ftype="trr" compare="sim_size"/>
+        </test>
+
+        <test>
+            <param name="gro_input" value="npt.gro" />
+            <param name="top_input" value="topol_solv.top" />
+            <param name="cpt_bool" value="yes" />
+            <param name="cpt_in" value="npt.cpt" />
+            <param name="ndx_bool" value="yes" />
+            <param name="ndx_in" value="index.ndx" />
             <param name="traj" value="trr"/>
             <param name="str" value="both"/>
             <expand macro="test_params"/>
@@ -205,6 +243,7 @@
             <param name="itp_inp" value="posres.itp" />
             <param name="cpt_bool" value="no" />
             <param name="cpt_out" value="true" />
+            <param name="ndx_bool" value="no" />
             <param name="traj" value="xtc"/>
             <param name="str" value="pdb"/>
             <param name="ensemble" value="nvt" />
