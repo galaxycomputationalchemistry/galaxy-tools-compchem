@@ -434,7 +434,7 @@ dh_hist_spacing          = 0.1
             <param name="fepop" value="default"/>
             <param name="input_fep" value="perform"/>
             <param name="pressure" value="1.0"/>
-            <output name="dataout" file="TI_FEP_data_output.tar"  ftype="tar" compare="sim_size"/>
+            <output name="dataout" file="TI_FEP_data_output.tar" compare="sim_size" delta="20000"/>
         </test>
         <test>
             <param name="groin" value="morph.gro" ftype="gro"/>
@@ -453,7 +453,7 @@ dh_hist_spacing          = 0.1
             <param name="fepop" value="default"/>
             <param name="input_fep" value="generate"/>
             <param name="pressure" value="1.0"/>
-            <output name="fepinpout" file="Input_files.tar"  ftype="tar" compare="sim_size"/>
+            <output name="fepinpout" file="Input_files.tar" compare="sim_size"/>
         </test>
     </tests>    
     <help><![CDATA[   
