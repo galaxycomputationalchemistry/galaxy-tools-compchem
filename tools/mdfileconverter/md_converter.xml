@@ -1,57 +1,30 @@
-<tool id="md_converter" name="MDTraj file converter" version="1.9.3">
+<tool id="md_converter" name="MDTraj file converter" version="1.9.3.1">
 
-    <description>- interconvert between MD trajectory or structure file formats.</description>
+    <description>- interconvert between MD trajectory file formats.</description>
 
     <requirements>
         <requirement type="package" version="1.9.3">mdtraj</requirement>
-        <requirement type="package" version="2019.1">gromacs</requirement>
     </requirements>
 
     <command detect_errors="exit_code"><![CDATA[
 
-        #if $input.conversion == 'str':
-            ln -s '$input_file' ./input.$input_file.ext &&
-            gmx editconf -f ./input.$input_file.ext -o ./output.${input.output_format} &&
-            cp ./output.${input.output_format} $output
-        #end if
-
-        #if $input.conversion == 'traj':
-            ln -s '$input_file' ./input.$input_file.ext &&
-            mdconvert ./input.$input_file.ext -o ./output.${input.output_format} &&
-            cp ./output.${input.output_format} $output
-    
-        #end if
+        ln -s '$input_file' ./input.$input_file.ext &&
+        mdconvert ./input.$input_file.ext -o ./output.${output_format} &&
+        cp ./output.${output_format} $output
 
     ]]></command>
     <inputs>
-        <conditional name="input">
-            <param argument="conversion" type="select" label="Type of conversion">
-                <option value="traj">Trajectory file</option>
-                <option value="str">Structure file</option>
-            </param>
-            <when value="traj">
-                <param argument="input_file" type="data" format='xtc, trr, dcd' label="Input file for conversion"/>
-                <param argument="output_format" type="select" label="Output format">
-                    <option value="trr">TRR file</option>
-                    <option value="xtc">XTC file</option>
-                    <option value="dcd">DCD file</option>
-                </param>
-            </when>
-            <when value="str">
-                <param argument="input_file" type="data" format='gro, pdb' label="Input file for conversion"/>
-                <param argument="output_format" type="select" label="Output format">
-                    <option value="gro">GRO file</option>
-                    <option value="pdb">PDB file</option>
-                </param>
-            </when>
-        </conditional>
+        <param argument="input_file" type="data" format='xtc, trr, dcd' label="Input file for conversion"/>
+        <param argument="output_format" type="select" label="Output format">
+            <option value="trr">TRR file</option>
+            <option value="xtc">XTC file</option>
+            <option value="dcd">DCD file</option>
+        </param>
     </inputs>
 
     <outputs>
         <data name="output">
             <change_format>
-                <when input="output_format" value="gro" format="gro"/>
-                <when input="output_format" value="pdb" format="pdb"/>
                 <when input="output_format" value="trr" format="trr"/>
                 <when input="output_format" value="xtc" format="xtc"/>
                 <when input="output_format" value="dcd" format="dcd"/>
@@ -72,23 +45,11 @@
             <param name="input_file" value="traj.dcd" ftype="dcd"/>
             <output name="output" file="traj.trr"/>
         </test>
-        <test>
-            <param name="conversion" value="str" />
-            <param name="output_format" value="gro" />
-            <param name="input_file" value="str.pdb" ftype="pdb"/>
-            <output name="output" file="str.gro" compare="sim_size"/>
-        </test>
-        <test>
-            <param name="conversion" value="str" />
-            <param name="output_format" value="pdb" />
-            <param name="input_file" value="str.gro" ftype="gro"/>
-            <output name="output" file="str2.pdb" compare="sim_size"/>
-        </test>
     </tests>
     <help><![CDATA[
 **What it does**
         
-This tool interconverts between MD file formats: xtc, trr and dcd (trajectory formats) and pdb and gro (structure formats).
+This tool interconverts between MD trajectory file formats: xtc, trr and dcd.
 
 _____
 
@@ -97,7 +58,7 @@ _____
 
 **Input**
 
-       - Trajectory file (trr, xtc, dcd) or structure file (pdb, gro)
+       - Trajectory file (trr, xtc, dcd)
      
 _____
 
@@ -106,10 +67,9 @@ _____
 
 **Output**
 
-       - Trajectory file (trr, xtc, dcd) or structure file (pdb, gro)
+       - Trajectory file (trr, xtc, dcd)
     ]]></help>
     <citations>
         <citation type="doi">10.1016/j.bpj.2015.08.015</citation>
-        <citation type="doi">10.1016/j.softx.2015.06.001</citation>
     </citations>
 </tool>

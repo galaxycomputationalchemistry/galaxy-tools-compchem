@@ -12,12 +12,15 @@
         ln -s '$gro_input' ./gro_input.gro &&
         ln -s '$top_input' ./top_input.top &&
 
-        gmx solvate -cp ./gro_input.gro -cs ${water_model}.gro -o solv.gro -p ./top_input.top &>> verbose.txt &&
+        gmx solvate -cp ./gro_input.gro -cs ${water_model}.gro -o solv.gro -p ./top_input.top &>> verbose.txt
 
-        gmx grompp -f ./ions.mdp -c solv.gro -p ./top_input.top -o ions.tpr &>> verbose.txt &&
+        #if $neutralise == "true":
+            &&
+            gmx grompp -f ./ions.mdp -c solv.gro -p ./top_input.top -o ions.tpr &>> verbose.txt &&
+            echo 'SOL' | gmx genion -s ions.tpr -o solv_ions.gro -p ./top_input.top -pname NA -nname CL -neutral &>> verbose.txt &&
+            mv solv_ions.gro solv.gro
+        #end if
 
-        echo 'SOL' | gmx genion -s ions.tpr -o solv_ions.gro -p ./top_input.top -pname NA -nname CL -neutral &>> verbose.txt
-    
     ]]></command>
         <configfiles>
             <!-- .mdp file for the gromacs simulation -->
@@ -44,11 +47,17 @@ pbc            = xyz
             <option value="tip4p">TIP4P (four-point model)</option>
             <option value="tip5p">TIP5P (five-point model)</option>
         </param>
+        <param name="neutralise" label="Add ions to neutralise system?" type="select" help="If system is charged, replace an appropriate number of randomly selected solvent molecules with sodium or chloride ions to neutralise it.">
+            <option value="true"/>
+            <option value="false"/>
+        </param>
+
+
         <param name="capture_log" type="boolean" value="false" label="Generate detailed log" help="Generate detailed log information that can be summarized with ParseLog."/>
 
     </inputs>
     <outputs>
-        <data name="output1" format="gro" from_work_dir="solv_ions.gro"/>
+        <data name="output1" format="gro" from_work_dir="solv.gro"/>
         <data name="output2" format="top" from_work_dir="./top_input.top"/>
         <data name="report" format="txt" from_work_dir="verbose.txt">
             <filter>capture_log</filter>
@@ -57,10 +66,25 @@ pbc            = xyz
     <tests>
         <test>
             <param name="gro_input" value="newbox.gro" />
+            <param name="neutralise" value="true" />
             <param name="top_input" value="topol.top" />
             <param name="water_model" value="spc216" />
-            <output name="output1" file="solv_ions.gro" ftype="gro" compare="sim_size"/>
+            <output name="output1" ftype="gro">
+                <!-- replacement of water with ions is random, thus we cannot compare the whole file -->
+                <assert_contents>
+                    <has_text text="1.014   5.822   2.833"/>
+                    <has_text text="6.831   5.961   6.119"/>
+                    <has_text text="3.592   6.520   5.241"/>
+                </assert_contents>
+            </output>
             <output name="output2" file="topol_solv.top" ftype="top"/>
+        </test>
+        <test>
+            <param name="gro_input" value="newbox.gro" />
+            <param name="neutralise" value="false" />
+            <param name="top_input" value="topol.top" />
+            <param name="water_model" value="spc216" />
+            <output name="output1" file="solv.gro" ftype="gro"/>
         </test>
     </tests>
     <help><![CDATA[

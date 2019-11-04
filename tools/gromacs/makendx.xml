@@ -1,0 +1,53 @@
+<tool id="gmx_makendx" name="Create GROMACS index files" version="@VERSION@">
+    <description>using make_ndx</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements" />
+
+    <command detect_errors="exit_code"><![CDATA[
+
+        ln -s '$input_file' ./input.$input_file.ext &&
+        (echo '$sel'; echo 'q') | gmx make_ndx -f ./input.$input_file.ext -o ./ndx.ndx &>> verbose.txt &&
+        cp ./ndx.ndx $ndx
+
+    ]]></command>
+
+    <inputs>
+        <param argument="input_file" type="data" format='gro,pdb' label="Input structure"/>
+        <param argument="sel" type="text" label="Selection command" help="Selection for the new index group, e.g. 'r34' to select residue 34"/>
+     
+        <param name="capture_log" type="boolean" value="false" label="Generate detailed log" help="Generate detailed log information that can be summarized with ParseLog."/>
+
+    </inputs>
+    <outputs>
+        <data name="ndx" format="txt"/>
+        <data name="report" format="txt" from_work_dir="verbose.txt">
+            <filter>capture_log</filter>
+        </data>
+    </outputs>
+    <tests>
+        <test>
+            <!-- <param name="input_file" value="md_0_1.gro" ftype="gro"/>
+            <param name="sel" value="! 1 \& 14" />
+            <output name="ndx" file="md_0_1.ndx">
+                <assert_contents>
+                    <has_line text="[ !Protein_\&_non-Water ]"/>
+                    <has_text text="38369 38370 38371 38372 38373 38374 38375 38376"/>
+                </assert_contents>
+            </output> -->
+        </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+Generates GROMACS custom index files.
+
+    ]]></help>
+
+    <expand macro="citations" />
+</tool>
