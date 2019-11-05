@@ -1,0 +1,97 @@
+<tool id="vmd_hbonds" name="Hydrogen Bond Analysis using VMD" version="1.9.3">
+    <description>between two segments of a trajectory</description>
+    <requirements>
+        <requirement type="package" version="1.9.3">vmd</requirement>
+    </requirements>
+    <command detect_errors="exit_code">
+<![CDATA[
+     ln -s '$__tool_directory__/hbonds.tcl' ./hbonds.tcl &&
+#if $trajin.is_of_type("dcd"):
+     vmd  -pdb '$strin' -dcd '$trajin' -dispdev text -e '$hbonds_inp' &>> verbose.txt
+#elif $trajin.is_of_type("xtc"):
+     vmd  -gro '$strin' -xtc '$trajin' -dispdev text -e '$hbonds_inp' &>> verbose.txt
+#end if 
+]]></command>
+    <configfiles>
+         <configfile name="hbonds_inp">
+source hbonds.tcl
+
+set sele1 [atomselect $molid "$sele1"]
+set sele2 [atomselect $molid "$sele2"]
+
+hbonds -sel1 \$sele1 -sel2 \$sele2 -writefile yes -ang $angle -dist $distance -plot no -DA both -type all -outfile hbond.txt -detailout detail.txt
+quit
+         </configfile>
+    </configfiles> 
+    <inputs>
+        <param format="dcd,xtc" name="trajin" type="data" label="DCD/XTC trajectory input"/>
+        <param format="pdb,gro" name="strin" type="data" label="PDB/GRO input"/>
+        <param name="molid"  type="integer" value="0" label="Molecule ID"/>
+        <param name="sele1"  type="text" value="segid PRO" label="Selection 1" help="Definition of a segment with VMD atom selection language"/>
+        <param name="sele2"  type="text" value="segid HET" label="Selection 2" help="Definition of a segment with VMD atom selection language"/>
+        <param name="angle"  type="float" value="20.0" label="Angle cutoff"/>
+        <param name="distance"  type="float" value="3.0" label="Distance cutoff"/>
+    </inputs>
+    <outputs> 
+        <data format="txt" name="detail" from_work_dir="detail.txt" label="Percentage occupancy of the H-bond"/>
+        <data format="txt" name="hbond"  from_work_dir="hbond.txt" label="Number of H-bonds"/>
+        <data name="report" format="txt" from_work_dir="verbose.txt"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="trajin" value="test.dcd" ftype="dcd"/>
+            <param name="strin" value="test.pdb" ftype="pdb"/>
+            <param name="molid" value="0"/>
+            <param name="distance" value="3.0"/>
+            <param name="angle" value="20.0"/>
+            <param name="sele1" value="water"/>
+            <param name="sele2" value="not water"/>
+	    <output name="hbond" value="Number_of_H-bonds.txt"/>
+        </test>
+        <test>
+            <param name="trajin" value="test.xtc" ftype="xtc"/>
+            <param name="strin" value="test.gro" ftype="gro"/>
+            <param name="molid" value="0"/>
+            <param name="distance" value="3.0"/>
+            <param name="angle" value="20.0"/>
+            <param name="sele1" value="water"/>
+            <param name="sele2" value="not water"/>
+	    <output name="hbond" value="Number_of_H-bonds_gro.txt"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+        
+This tool calculates hydrogen bonds between two segments of a system in a molecular dynamics trajectory.
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Trajectory file  (DCD/XTC).
+       - PDB or GRO file.
+       - Atom selection commands for two regions to be compared - e.g. 'not water' or 'segid PRO'. See here_ for more information on the VMD atom selection language.
+
+.. _here: https://www.ks.uiuc.edu/Research/vmd/vmd-1.3/ug/node132.html    
+
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - Number of H-bonds for each time step and and their occupancy.
+
+
+    ]]></help>
+    <citations>
+      <citation type="doi">10.1016/0263-7855(96)00018-5</citation>
+      <citation type="doi">10.1093/bioinformatics/btz107</citation>
+    </citations>
+</tool>

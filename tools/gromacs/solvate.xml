@@ -21,6 +21,7 @@
             mv solv_ions.gro solv.gro
         #end if
 
+
     ]]></command>
         <configfiles>
             <!-- .mdp file for the gromacs simulation -->
