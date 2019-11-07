@@ -48,8 +48,8 @@ pbc            = xyz
             <option value="tip5p">TIP5P (five-point model)</option>
         </param>
         <param name="neutralise" label="Add ions to neutralise system?" type="select" help="If system is charged, replace an appropriate number of randomly selected solvent molecules with sodium or chloride ions to neutralise it.">
-            <option value="true"/>
-            <option value="false"/>
+            <option value="true">Yes, add ions</option>
+            <option value="false">No</option>
         </param>
 
 

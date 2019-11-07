@@ -50,7 +50,7 @@
     </inputs>
     <outputs>
         <data name="output1" format="top" from_work_dir="topol.top"/>
-        <data name="output2" format="gro" from_work_dir="newbox.gro"/>
+        <data name="output2" format="gro" from_work_dir="processed.gro"/>
         <data name="output3" format="itp" from_work_dir="posres.itp"/>
         <data name="report" format="txt" from_work_dir="verbose.txt">
             <filter>capture_log</filter>

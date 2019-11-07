@@ -11,19 +11,6 @@
         </citations>
     </xml>
     <xml name="md_inputs">
-        <param argument="traj" type="select" label="Trajectory output">
-            <option value='none'>Return no trajectory output</option>
-            <option value='xtc'>Return .xtc file (reduced precision)</option>
-            <option value='trr'>Return .trr file (full precision)</option>
-            <option value='both'>Return both .xtc and .trr files</option>
-        </param>
-
-        <param argument="str" type="select" label="Structure output">
-            <option value='none'>Return no structure output</option>
-            <option value='gro'>Return .gro file</option>
-            <option value='pdb'>Return .pdb file</option>
-            <option value='both'>Return both .gro and .pdb files</option>
-        </param>
 
         <conditional name="mdp">
             <param name="mdpfile" type="select" label="Parameter input">
