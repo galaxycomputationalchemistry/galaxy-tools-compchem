@@ -411,10 +411,18 @@ dh_hist_spacing          = 0.1
         </param>
     </inputs>
     <outputs>
-        <data name="fepinpout" format="tar" from_work_dir="input_files.tar" label="Input files"/>
-        <data name="dataout" format="tar" from_work_dir="data.tar" label="TI/FEP data output"/>
-        <data name="trajout" format="tar" from_work_dir="traj.tar" label="Trajectories output"/>
-        <data name="report" format="txt" label="Report"/>
+        <data name="fepinpout" format="tar" from_work_dir="input_files.tar" label="Input files">
+             <filter>input_fep == 'generate'</filter>
+        </data>
+        <data name="dataout" format="tar" from_work_dir="data.tar" label="TI/FEP data output">
+             <filter>input_fep == 'perform'</filter>
+        </data>
+        <data name="trajout" format="tar" from_work_dir="traj.tar" label="Trajectories output">
+             <filter>input_fep == 'perform'</filter>
+        </data>
+        <data name="report" format="txt" label="Report">
+             <filter>input_fep == 'perform'</filter>
+        </data>
     </outputs>
     <tests>
          <test>
@@ -425,7 +433,7 @@ dh_hist_spacing          = 0.1
             <param name="nptstep" value="50"/>
             <param name="mdstep" value="2000"/>
             <param name="seed" value="19880924"/>
-            <param name="cons" value="No"/>
+            <param name="cons" value="no"/>
             <param name="dt" value="0.001"/>
             <param name="path" value="global"/> 
             <param name="lambda" value="2"/>
@@ -439,16 +447,22 @@ dh_hist_spacing          = 0.1
         <test>
             <param name="groin" value="morph.gro" ftype="gro"/>
             <param name="topin" value="morph.top" ftype="top"/>
-            <param name="minstep" value="10"/>
-            <param name="nvtstep" value="50"/>
-            <param name="nptstep" value="50"/>
-            <param name="mdstep" value="2000"/>
-            <param name="seed" value="19880924"/>
-            <param name="cons" value="No"/>
-            <param name="dt" value="0.001"/>
-            <param name="path" value="global"/> 
-            <param name="lambda" value="2"/>
-            <param name="fep" value="0.00 0.50 1.00"/>
+            <param name="minstep" value="10000"/>
+            <param name="nvtstep" value="500000"/>
+            <param name="nptstep" value="500000"/>
+            <param name="mdstep" value="1000000"/>
+            <param name="seed" value="123546"/>
+            <param name="cons" value="yes"/>
+            <param name="cons_type" value="h-bonds"/>
+            <param name="lincs_order" value="4"/>
+            <param name="lincs_iter" value="1"/>
+            <param name="incs_warnangle" value="30"/>
+            <param name="dt" value="0.002"/>
+            <param name="path" value="default2"/> 
+            <param name="lambda" value="40"/>
+            <param name="coul" value="0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.000 0.00 0.11 0.22 0.33 0.44 0.56 0.67 0.78 0.89 1.00"/>
+            <param name="vdw" value="0.00 0.04 0.08 0.11 0.15 0.19 0.23 0.27 0.30 0.34 0.38 0.42 0.46 0.49 0.53 0.57 0.61 0.65 0.68 0.72 0.76 0.80 0.84 0.87 0.91 0.95 0.97 0.98 0.99 0.999 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00"/>
+            <param name="bonded" value="0.00 0.04 0.08 0.11 0.15 0.19 0.23 0.27 0.30 0.34 0.38 0.42 0.46 0.49 0.53 0.57 0.61 0.65 0.68 0.72 0.76 0.80 0.84 0.87 0.91 0.95 0.97 0.98 0.99 0.999 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00"/>
             <param name="temperature" value="300.0"/>
             <param name="fepop" value="default"/>
             <param name="input_fep" value="generate"/>
@@ -531,6 +545,8 @@ _____
 
     ]]></help>
     <citations>
-      <citation type="doi">10.1016/j.softx.2015.06.001</citation>
+       <citation type="doi">10.1016/j.softx.2015.06.001</citation>
+      <citation type="bibtex">@misc{alchemistrywiki, title={Alchemistry.org}, url={http://www.alchemistry.org/wiki/Main_Page}, journal={AlchemistryWiki}}
+      </citation>
     </citations>
 </tool>
