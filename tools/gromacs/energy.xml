@@ -1,0 +1,116 @@
+<tool id="gmx_setup" name="Extract energy components with GROMACS" version="@VERSION@">
+    <description>from an energy (EDR) file</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements" />
+
+    <command detect_errors="exit_code"><![CDATA[
+
+        ln -s '$edr_input' ./edr_input.edr &&
+        echo $terms | tr , ' ' | gmx energy -f ./edr_input.edr -o ./energy.xvg
+
+    ]]></command>
+
+    <inputs>
+        <param argument="edr_input" type="data" format='binary' label="EDR file" help="GROMACS energy binary file"/>
+        <param argument="terms" type='select' label="Terms to calculate" multiple="true" help="Select terms for which values should be calculated">
+            <option value="0">Angle</option>
+            <option value="1">Proper dihedrals</option>
+            <option value="2">Ryckaert-Bellemans dihedrals</option>
+            <option value="3">Lennard-Jones (1-4 interactions)</option>
+            <option value="4">Coulomb (1-4 interactions)</option>
+            <option value="5">Lennard-Jones energies (short range)</option>
+            <option value="6">Dispersion correction</option>
+            <option value="7">Coulomb (short range)</option>
+            <option value="8">Reciprocal Coulomb energy</option>
+            <option value="9">Potential</option>
+            <option value="10">Kinetic energy</option>
+            <option value="11">Total energy</option>
+            <option value="12">Temperature</option>
+            <option value="13">Pressure DC</option>
+            <option value="14">Pressure</option>
+            <option value="15">Constr. RMSD</option>
+            <option value="16">Box-X</option>
+            <option value="17">Box-Y</option>
+            <option value="18">Box-Z</option>
+            <option value="19">Volume</option>
+            <option value="20">Density</option>
+            <option value="21">pV</option>
+            <option value="22">Enthalpy</option>
+            <option value="23">Virial(XX)</option>
+            <option value="24">Virial(XY)</option>
+            <option value="25">Virial(XZ)</option>
+            <option value="26">Virial(YX)</option>
+            <option value="27">Virial(YY)</option>
+            <option value="28">Virial(YZ)</option>
+            <option value="29">Virial(ZX)</option>
+            <option value="30">Virial(ZY)</option>
+            <option value="31">Virial(ZZ)</option>
+            <option value="32">Pressure(XX)</option>
+            <option value="33">Pressure(XY)</option>
+            <option value="34">Pressure(XZ)</option>
+            <option value="35">Pressure(YX)</option>
+            <option value="36">Pressure(YY)</option>
+            <option value="37">Pressure(YZ)</option>
+            <option value="38">Pressure(ZX)</option>
+            <option value="39">Pressure(ZY)</option>
+            <option value="40">Pressure(ZZ)</option>
+            <option value="41">Surface tension</option>
+            <option value="42">Box-Vel-XX</option>
+            <option value="43">Box-Vel-YY</option>
+            <option value="44">Box-Vel-ZZ</option>
+            <option value="45">Protein temperature</option>
+            <option value="46">Non-protein temperature</option>
+            <option value="47">Protein lambda values</option>
+            <option value="48">Non-protein lambda values</option>
+        </param>
+
+
+        <param name="capture_log" type="boolean" value="false" label="Generate detailed log" help="Generate detailed log information that can be summarized with ParseLog."/>
+
+    </inputs>
+    <outputs>
+        <data name="output1" format="itp" from_work_dir="energy.xvg"/>
+        <data name="report" format="txt" from_work_dir="verbose.txt">
+            <filter>capture_log</filter>
+        </data>
+    </outputs>
+    <tests>
+        <test>
+            <param name="edr_input" value="md_0_1.edr" />
+            <param name="terms" value="10,12,13" />
+            <output name="output1" file="md_0_1.xvg" ftype="txt" lines_diff="12"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+This tool extracts energy components from an energy (EDR) binary file. A list of terms to select is provided.
+
+_____
+
+.. class:: infomark
+
+**Input**
+
+       - EDR binary file.
+       - Selection of terms to extract.
+     
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - Tabular file containing selected terms and some header lines
+
+    ]]></help>
+
+    <expand macro="citations" />
+</tool>

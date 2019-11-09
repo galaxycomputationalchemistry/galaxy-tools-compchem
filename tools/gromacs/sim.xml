@@ -201,7 +201,10 @@
             </param>
 
             <!-- XVG out -->
-            <param name="xvg_out" type="text" optional="true" label="Produce XVG file" help="Produce tabular XVG file (e.g. forces from pulling simulations)" />
+            <param name="xvg_out" type="select" label="Produce XVG output" help="Produce tabular XVG file (e.g. forces from pulling simulations)" >
+                <option value="true">Produce XVG output</option>
+                <option value="false" selected="true">No XVG output</option>
+            </param>
         
         </section>
 
@@ -230,14 +233,15 @@
             <filter>outps.traj == 'xtc' or outps.traj == 'both'</filter>
         </data>
         <data name="output5" format="cpt" from_work_dir="outp.cpt">
-            <filter>cpt_out</filter>
+            <filter>outps.cpt_out == 'true'</filter>
         </data>
         <data name="output6" format="binary" from_work_dir="outp.edr">
-            <filter>edr_out</filter>
+            <filter>outps.edr_out == 'true'</filter>
         </data>
-        <data name="output7" format="txt" from_work_dir="xvg_out">
-            <filter>edr_out</filter>
-        </data>
+        <collection name="output7" type="list">
+            <discover_datasets pattern="(?P&lt;designation&gt;.*)\.xvg" visible="true" directory="." />
+            <filter>outps.xvg_out == 'true'</filter>
+        </collection>
 
         <data name="report" format="txt" from_work_dir="verbose.txt">
             <filter>capture_log</filter>

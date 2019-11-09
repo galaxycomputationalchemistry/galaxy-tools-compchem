@@ -1,0 +1,37 @@
+# This file was created Sat Nov  9 15:20:20 2019
+# Created by:
+#                      :-) GROMACS - gmx energy, 2019.1 (-:
+# 
+# Executable:   /home/simon/miniconda3/envs/gmx/bin/gmx
+# Data prefix:  /home/simon/miniconda3/envs/gmx
+# Working dir:  /home/simon/Repos/galaxy-tools-compchem/tools/gromacs
+# Command line:
+#   gmx energy -f test-data/md_0_1.edr -o xvg5.xvg
+# gmx energy is part of G R O M A C S:
+#
+# Gromacs Runs One Microsecond At Cannonball Speeds
+#
+@    title "GROMACS Energies"
+@    xaxis  label "Time (ps)"
+@    yaxis  label "(kJ/mol), (K)"
+@TYPE xy
+@ view 0.15, 0.15, 0.75, 0.85
+@ legend on
+@ legend box on
+@ legend loctype view
+@ legend 0.78, 0.8
+@ legend length 2
+@ s0 legend "Potential"
+@ s1 legend "Total Energy"
+@ s2 legend "Temperature"
+    0.000000  -593300.312500  -497358.281250  300.761719
+    0.100000  -592522.125000  -497450.843750  298.032074
+    0.200000  -593496.500000  -497942.718750  299.544647
+    0.300000  -593921.062500  -497878.187500  301.077850
+    0.400000  -593262.062500  -497926.406250  298.860870
+    0.500000  -593674.437500  -498809.312500  297.385773
+    0.600000  -594222.062500  -498825.562500  299.051605
+    0.700000  -593496.625000  -498020.125000  299.302399
+    0.800000  -593813.875000  -498131.031250  299.949219
+    0.900000  -594351.437500  -498515.812500  300.428131
+    1.000000  -595232.000000  -499672.000000  299.564087
