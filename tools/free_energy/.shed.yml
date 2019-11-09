@@ -4,7 +4,6 @@ description: "Free energy tools of BRIDGE."
 remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/tools/free_energy
 type: unrestricted
 categories:
-- Free Energy
 - Molecular Dynamics
 - Computational chemistry
 auto_tool_repositories:
