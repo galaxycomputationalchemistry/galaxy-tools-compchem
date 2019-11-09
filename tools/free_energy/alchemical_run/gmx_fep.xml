@@ -339,12 +339,12 @@ dh_hist_spacing          = 0.1
          </configfile>
     </configfiles>  
     <inputs>
-        <param format="gro" name="groin" type="data" label="Structure (GRO) file" help="GRO input file with the merged strucure."/>
-        <param format="top" name="topin" type="data" label="Topology (TOP) file" help="TOP input file with the merged strucure."/>
+        <param format="gro" name="groin" type="data" label="Structure (GRO) file" help="GRO input file with the merged structure."/>
+        <param format="top" name="topin" type="data" label="Topology (TOP) file" help="TOP input file with the merged structure."/>
         <param name="minstep"  type="integer" value="10000" label="Minimization steps" help="Number of steps for each free energy window."/>
-        <param name="nvtstep"  type="integer" value="500000" label="NVT equilibration steps" help="Number of MD steps for NVT equilibrations for each free energy window."/>
-        <param name="nptstep"  type="integer" value="500000" label="NPT equilibration steps" help="Number of MD steps for NPT equilibrations for each free energy window."/>
-        <param name="mdstep"   type="integer" value="1000000" label="MD (production) steps" help="Number of MD steps for production runs of echfree energy window."/>
+        <param name="nvtstep"  type="integer" value="500000" label="NVT equilibration steps" help="Number of MD steps for NVT equilibration for each free energy window."/>
+        <param name="nptstep"  type="integer" value="500000" label="NPT equilibration steps" help="Number of MD steps for NPT equilibration for each free energy window."/>
+        <param name="mdstep"   type="integer" value="1000000" label="MD (production) steps" help="Number of MD steps for production runs of each free energy window."/>
         <param name="seed"   type="integer" value="19880924" label="Seed" help="Seed to initialize random generator for random velocities."/>
         <param name="dt" type="float" value="0.001" label="Time step (ps)" help="Time step for integration."/>
         <conditional name="constraints">
