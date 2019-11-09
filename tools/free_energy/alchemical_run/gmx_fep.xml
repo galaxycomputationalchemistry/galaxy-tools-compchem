@@ -339,16 +339,16 @@ dh_hist_spacing          = 0.1
          </configfile>
     </configfiles>  
     <inputs>
-        <param format="gro" name="groin" type="data" label="Structure (GRO) file."/>
-        <param format="top" name="topin" type="data" label="Topology (TOP) file."/>
-        <param name="minstep"  type="integer" value="10000" label="Minimization steps"/>
-        <param name="nvtstep"  type="integer" value="500000" label="NVT equilibration steps"/>
-        <param name="nptstep"  type="integer" value="500000" label="NPT equilibration steps"/>
-        <param name="mdstep"   type="integer" value="1000000" label="MD (production) steps"/>
-        <param name="seed"   type="integer" value="19880924" label="Seed to initialize random generator for random velocities"/>
-        <param name="dt" type="float" value="0.001" label="Time step (ps)"/>
+        <param format="gro" name="groin" type="data" label="Structure (GRO) file" help="GRO input file with the merged strucure."/>
+        <param format="top" name="topin" type="data" label="Topology (TOP) file" help="TOP input file with the merged strucure."/>
+        <param name="minstep"  type="integer" value="10000" label="Minimization steps" help="Number of steps for each free energy window."/>
+        <param name="nvtstep"  type="integer" value="500000" label="NVT equilibration steps" help="Number of MD steps for NVT equilibrations for each free energy window."/>
+        <param name="nptstep"  type="integer" value="500000" label="NPT equilibration steps" help="Number of MD steps for NPT equilibrations for each free energy window."/>
+        <param name="mdstep"   type="integer" value="1000000" label="MD (production) steps" help="Number of MD steps for production runs of echfree energy window."/>
+        <param name="seed"   type="integer" value="19880924" label="Seed" help="Seed to initialize random generator for random velocities."/>
+        <param name="dt" type="float" value="0.001" label="Time step (ps)" help="Time step for integration."/>
         <conditional name="constraints">
-            <param name="cons" type="select" label="Apply constraints to the ligands?">
+            <param name="cons" type="select" label="Apply constraints to the ligands?" help="Constraints maybe required to keep the ligands with alchemical states in the active site.">
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
             </param>
@@ -371,19 +371,19 @@ dh_hist_spacing          = 0.1
             </param>
             <when value="global">
                <param name="lambda" type="text" value="2" label="Number of free energy windows"/>
-               <param name="fep"  type="text" value="0.00 0.50 1.00" label="FEP Lambdas"/>
+               <param name="fep"  type="text" value="0.00 0.50 1.00" label="FEP Lambdas" help="Globle scaling - Values must be between 0 and 1."/>
             </when>
             <when value="default1">
                <param name="lambda" type="text" value="40" label="Number of free energy windows"/>
-               <param name="coul"   type="text" value="0.00 0.11 0.22 0.33 0.44 0.56 0.67 0.78 0.89 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.000 1.00" label="Coulomb Lambdas (scaling electrostatics)"/>
-               <param name="vdw"    type="text" value="0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.04 0.08 0.11 0.15 0.19 0.23 0.27 0.30 0.34 0.38 0.42 0.46 0.49 0.53 0.57 0.61 0.65 0.68 0.72 0.76 0.80 0.84 0.87 0.91 0.95 0.97 0.98 0.99 0.999 1.00" label="Van der Waals Lambdas (scaling vdw interactions)"/>
-               <param name="bonded" type="text" value="0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.04 0.08 0.11 0.15 0.19 0.23 0.27 0.30 0.34 0.38 0.42 0.46 0.49 0.53 0.57 0.61 0.65 0.68 0.72 0.76 0.80 0.84 0.87 0.91 0.95 0.97 0.98 0.99 0.999 1.00" label="Bonded Lambdas (scaling torsion)"/> 
+               <param name="coul"   type="text" value="0.00 0.11 0.22 0.33 0.44 0.56 0.67 0.78 0.89 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.000 1.00" label="Coulomb Lambdas (scaling electrostatics)" help="Values must be between 0 and 1."/>
+               <param name="vdw"    type="text" value="0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.04 0.08 0.11 0.15 0.19 0.23 0.27 0.30 0.34 0.38 0.42 0.46 0.49 0.53 0.57 0.61 0.65 0.68 0.72 0.76 0.80 0.84 0.87 0.91 0.95 0.97 0.98 0.99 0.999 1.00" label="Van der Waals Lambdas (scaling vdw interactions)" help="Values must be between 0 and 1."/>
+               <param name="bonded" type="text" value="0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.04 0.08 0.11 0.15 0.19 0.23 0.27 0.30 0.34 0.38 0.42 0.46 0.49 0.53 0.57 0.61 0.65 0.68 0.72 0.76 0.80 0.84 0.87 0.91 0.95 0.97 0.98 0.99 0.999 1.00" label="Bonded Lambdas (scaling torsion)" help="Values must be between 0 and 1."/> 
             </when>
             <when value="default2">
                <param name="lambda" type="text" value="40" label="Number of free energy windows"/>
-               <param name="coul"   type="text" value="0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.000 0.00 0.11 0.22 0.33 0.44 0.56 0.67 0.78 0.89 1.00 " label="Coulomb Lambdas (scaling electrostatics)"/>
-               <param name="vdw"    type="text" value="0.00 0.04 0.08 0.11 0.15 0.19 0.23 0.27 0.30 0.34 0.38 0.42 0.46 0.49 0.53 0.57 0.61 0.65 0.68 0.72 0.76 0.80 0.84 0.87 0.91 0.95 0.97 0.98 0.99 0.999 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00" label="Van der Waals Lambdas (scaling vdw interactions)"/>
-               <param name="bonded" type="text" value="0.00 0.04 0.08 0.11 0.15 0.19 0.23 0.27 0.30 0.34 0.38 0.42 0.46 0.49 0.53 0.57 0.61 0.65 0.68 0.72 0.76 0.80 0.84 0.87 0.91 0.95 0.97 0.98 0.99 0.999 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00" label="Bonded Lambdas (scaling torsion)"/> 
+               <param name="coul"   type="text" value="0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.000 0.00 0.11 0.22 0.33 0.44 0.56 0.67 0.78 0.89 1.00 " label="Coulomb Lambdas (scaling electrostatics)" help="Values must be between 0 and 1."/>
+               <param name="vdw"    type="text" value="0.00 0.04 0.08 0.11 0.15 0.19 0.23 0.27 0.30 0.34 0.38 0.42 0.46 0.49 0.53 0.57 0.61 0.65 0.68 0.72 0.76 0.80 0.84 0.87 0.91 0.95 0.97 0.98 0.99 0.999 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00" label="Van der Waals Lambdas (scaling vdw interactions)" help="Values must be between 0 and 1."/>
+               <param name="bonded" type="text" value="0.00 0.04 0.08 0.11 0.15 0.19 0.23 0.27 0.30 0.34 0.38 0.42 0.46 0.49 0.53 0.57 0.61 0.65 0.68 0.72 0.76 0.80 0.84 0.87 0.91 0.95 0.97 0.98 0.99 0.999 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00" label="Bonded Lambdas (scaling torsion)" help="Values must be between 0 and 1."/> 
             </when>
         </conditional>
         <conditional name="feoptions">
