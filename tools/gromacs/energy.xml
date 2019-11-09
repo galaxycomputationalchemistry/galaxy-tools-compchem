@@ -1,4 +1,4 @@
-<tool id="gmx_setup" name="Extract energy components with GROMACS" version="@VERSION@">
+<tool id="gmx_energy" name="Extract energy components with GROMACS" version="@VERSION@">
     <description>from an energy (EDR) file</description>
     <macros>
         <import>macros.xml</import>

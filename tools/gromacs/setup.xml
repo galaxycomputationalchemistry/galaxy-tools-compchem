@@ -9,7 +9,7 @@
     <command detect_errors="exit_code"><![CDATA[
 
         ln -s '$pdb_input' ./pdb_input.pdb &&
-        gmx pdb2gmx -f ./pdb_input.pdb -o processed.gro -p topol.top -i posres.itp -water $water -ff $ff -${ignore_h}ignh &>> verbose.txt
+        gmx pdb2gmx -f ./pdb_input.pdb -o processed.gro -p topol.top -i posres.itp -water $water -ff $ff -${ignore_h}ignh -merge all &>> verbose.txt
 
     ]]></command>
 
