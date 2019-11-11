@@ -360,7 +360,7 @@ dh_hist_spacing          = 0.1
             </param>
             <param name="lincs_order" type="integer" value="4" label="lincs-order" help="Accuracy of LINCS algorithm. For normal MD simulations an order of 4 usually suffices, 6 is needed for large time-steps with virtual sites or BD."/>
             <param name="lincs_iter" type="integer" value="1" label="LINCS iterations" help="Number of iterations to correct for rotational lengthening in LINCS. For normal runs a single step is sufficient."/>
-            <param name="lincs_warnangle" type="integer" value="30" llabel="LINCS maximum angle" help="Maximum angle that a bond can rotate before LINCS will complain / [deg]"/>
+            <param name="lincs_warnangle" type="integer" value="30" label="LINCS maximum angle" help="Maximum angle that a bond can rotate before LINCS will complain / [deg]"/>
             </when>
         </conditional>
         <conditional name="path">
