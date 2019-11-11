@@ -495,7 +495,7 @@ _____
 
 .. class:: infomark 
 
-**Rules of Thumb for Intermediate States (taken from alchemistry.org**  
+**Rules of Thumb for Intermediate States (taken from alchemistry.org)**  
 
     - These rules are not the end-all set and you should be familiar with why each one is suggested before just accepting them.  
     - Bonded terms can be modified/turned off linearly. This includes angle or bond force constants as well as unconstrained bond distances. 
