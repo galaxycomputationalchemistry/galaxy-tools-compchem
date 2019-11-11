@@ -348,19 +348,19 @@ dh_hist_spacing          = 0.1
         <param name="seed"   type="integer" value="19880924" label="Seed" help="Seed to initialize random generator for random velocities."/>
         <param name="dt" type="float" value="0.001" label="Time step (ps)" help="Time step for integration."/>
         <conditional name="constraints">
-            <param name="cons" type="select" label="Apply constraints to the ligands?" help="Constraints maybe required to keep the ligands with alchemical states in the active site.">
+            <param name="cons" type="select" label="Apply constraints to the ligands?" help="Constraints may be required to keep the ligands with alchemical states in the active site.">
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
             </param>
             <when value="no"/>
             <when value="yes">
-            <param name="cons_type" type="select" label="Constraints type">
-                <option value="h-bonds" selected="true">h-bonds</option>
-                <option value="all-bonds">all-bonds</option>
+            <param name="cons_type" type="select" label="Constraints type" help="Convert all bonds to constraints, or only those containing hydrogen atoms">
+                <option value="h-bonds" selected="true">H-bonds</option>
+                <option value="all-bonds">All bonds</option>
             </param>
-            <param name="lincs_order" type="integer" value="4" label="lincs-order"/>
-            <param name="lincs_iter" type="integer" value="1" label="Number of iterations to correct for rotational lengthening in LINCS"/>
-            <param name="lincs_warnangle" type="integer" value="30" label="Maximum angle that a bond can rotate before LINCS will complain / [deg]"/>
+            <param name="lincs_order" type="integer" value="4" label="lincs-order" help="Accuracy of LINCS algorithm. For normal MD simulations an order of 4 usually suffices, 6 is needed for large time-steps with virtual sites or BD."/>
+            <param name="lincs_iter" type="integer" value="1" label="LINCS iterations" help="Number of iterations to correct for rotational lengthening in LINCS. For normal runs a single step is sufficient."/>
+            <param name="lincs_warnangle" type="integer" value="30" llabel="LINCS maximum angle" help="Maximum angle that a bond can rotate before LINCS will complain / [deg]"/>
             </when>
         </conditional>
         <conditional name="path">
@@ -371,7 +371,7 @@ dh_hist_spacing          = 0.1
             </param>
             <when value="global">
                <param name="lambda" type="text" value="2" label="Number of free energy windows"/>
-               <param name="fep"  type="text" value="0.00 0.50 1.00" label="FEP Lambdas" help="Globle scaling - Values must be between 0 and 1."/>
+               <param name="fep"  type="text" value="0.00 0.50 1.00" label="FEP Lambdas" help="Global scaling - values must be between 0 and 1."/>
             </when>
             <when value="default1">
                <param name="lambda" type="text" value="40" label="Number of free energy windows"/>
@@ -478,12 +478,12 @@ dh_hist_spacing          = 0.1
 
     - This tool can run the alchemical free energy calculations using GROMACS.
     - For more details about alchemical free energy calculations see http://www.alchemistry.org/wiki/Main_Page
-    - For details about Gromacs simulations see http://manual.gromacs.org/documentation/2019-rc1/user-guide/mdp-options.html
+    - For details about GROMACS simulations see http://manual.gromacs.org/documentation/2019-rc1/user-guide/mdp-options.html
 
-When you need to run the simulation out side Glalaxy, you can generate and down load all the input files from this tool.
+When you need to run the simulation outside Glalaxy, you can generate and down load all the input files from this tool.
 
 1. Simply download the output "Input files".
-2. untar it using tar -xvf  Galaxy3-\[Input_files\].tar
+2. Untar it using tar -xvf  Galaxy3-\[Input_files\].tar
 3. Run the bash script inside ./gmx_fep.sh {number of FEP windows}
    - Give the number of FEP windows as an argument.
 
@@ -495,7 +495,7 @@ _____
 
 .. class:: infomark 
 
-**Rules of Thumb for Intermediate States**  
+**Rules of Thumb for Intermediate States (taken from alchemistry.org**  
 
     - These rules are not the end-all set and you should be familiar with why each one is suggested before just accepting them.  
     - Bonded terms can be modified/turned off linearly. This includes angle or bond force constants as well as unconstrained bond distances. 
