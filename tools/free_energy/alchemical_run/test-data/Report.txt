@@ -1,0 +1,1636 @@
+Starting minimization for lambda = 0...
+                      :-) GROMACS - gmx grompp, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx grompp, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_0/EM
+Command line:
+  gmx grompp -f /tmp/tmphozbbmzv/job_working_directory/000/3/working/MDP/em_steep_0.mdp -c /tmp/tmphozbbmzv/job_working_directory/000/3/working/morph.gro -p /tmp/tmphozbbmzv/job_working_directory/000/3/working/morph.top -o min0.tpr
+
+Setting the LD random seed to -127141127
+Generated 45 of the 45 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+Generated 45 of the 45 1-4 parameter combinations
+Excluding 3 bonded neighbours molecule type 'Merged_Molecule'
+Excluding 3 bonded neighbours molecule type 'NA'
+Excluding 3 bonded neighbours molecule type 'CL'
+Excluding 3 bonded neighbours molecule type 'WAT'
+Removing all charge groups because cutoff-scheme=Verlet
+Number of degrees of freedom in T-Coupling group rest is 12987.00
+Estimate for the relative computational load of the PME mesh part: 0.21
+
+GROMACS reminds you: "Wedged as we are between two eternities of idleness, there is no excuse for being idle now" (Anthony Burgess)
+
+Analysing residue names:
+There are:     1      Other residues
+There are:    10        Ion residues
+There are:  2151      Water residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 36x36x36, spacing 0.111 0.111 0.111
+This run will generate roughly 1 Mb of data
+                      :-) GROMACS - gmx mdrun, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx mdrun, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_0/EM
+Command line:
+  gmx mdrun -deffnm min0
+
+Compiled SIMD: SSE2, but for this host/run AVX2_256 might be better (see log).
+The current CPU can measure timings more accurately than the code in
+gmx mdrun was configured to use. This might affect your simulation
+speed as accurate timings are needed for load-balancing.
+Please consider rebuilding gmx mdrun with the GMX_USE_RDTSCP=ON CMake option.
+Reading file min0.tpr, VERSION 2019.1 (single precision)
+
+Using 1 MPI thread
+Using 4 OpenMP threads 
+
+
+Steepest Descents:
+   Tolerance (Fmax)   =  1.00000e+02
+   Number of steps    =           10
+
+Energy minimization reached the maximum number of steps before the forces
+reached the requested precision Fmax < 100.
+
+writing lowest energy coordinates.
+
+Steepest Descents did not converge to Fmax < 100 in 11 steps.
+Potential Energy  = -8.3125391e+04
+Maximum force     =  2.1372287e+04 on atom 1
+Norm of force     =  5.1859150e+02
+
+GROMACS reminds you: "It has not escaped our notice that the specific pairing we have postulated immediately suggests a possible copying mechanism for the genetic material." (Watson & Crick)
+
+Starting constant volume equilibration...
+                      :-) GROMACS - gmx grompp, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx grompp, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_0/NVT
+Command line:
+  gmx grompp -f /tmp/tmphozbbmzv/job_working_directory/000/3/working/MDP/nvt_0.mdp -c ../EM/min0.gro -p /tmp/tmphozbbmzv/job_working_directory/000/3/working/morph.top -o nvt0.tpr
+
+Setting the LD random seed to -187712966
+Generated 45 of the 45 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+Generated 45 of the 45 1-4 parameter combinations
+Excluding 3 bonded neighbours molecule type 'Merged_Molecule'
+Excluding 3 bonded neighbours molecule type 'NA'
+Excluding 3 bonded neighbours molecule type 'CL'
+Excluding 3 bonded neighbours molecule type 'WAT'
+Velocities were taken from a Maxwell distribution at 300 K
+Removing all charge groups because cutoff-scheme=Verlet
+
+NOTE 1 [file morph.top, line 232]:
+  The bond in molecule-type Merged_Molecule between atoms 7 H and 13 H has
+  an estimated oscillational period of 8.0e-03 ps, which is less than 10
+  times the time step of 1.0e-03 ps.
+  Maybe you forgot to change the constraints mdp option.
+
+Number of degrees of freedom in T-Coupling group System is 12987.00
+Estimate for the relative computational load of the PME mesh part: 0.23
+
+There was 1 note
+
+GROMACS reminds you: "Nada e organico, e tudo programado" (Pitty)
+
+Analysing residue names:
+There are:     1      Other residues
+There are:    10        Ion residues
+There are:  2151      Water residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 300 K
+Calculated rlist for 1x1 atom pair-list as 1.205 nm, buffer size 0.005 nm
+Set rlist, assuming 4x4 atom pair-list, to 1.200 nm, buffer size 0.000 nm
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 36x36x36, spacing 0.111 0.111 0.111
+This run will generate roughly 1 Mb of data
+                      :-) GROMACS - gmx mdrun, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx mdrun, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_0/NVT
+Command line:
+  gmx mdrun -deffnm nvt0
+
+Compiled SIMD: SSE2, but for this host/run AVX2_256 might be better (see log).
+The current CPU can measure timings more accurately than the code in
+gmx mdrun was configured to use. This might affect your simulation
+speed as accurate timings are needed for load-balancing.
+Please consider rebuilding gmx mdrun with the GMX_USE_RDTSCP=ON CMake option.
+Reading file nvt0.tpr, VERSION 2019.1 (single precision)
+Changing nstlist from 20 to 100, rlist from 1.2 to 1.2
+
+
+Using 1 MPI thread
+Using 4 OpenMP threads 
+
+starting mdrun 'BioSimSpace System'
+50 steps,      0.1 ps.
+
+Writing final coordinates.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:        1.458        0.365      399.9
+                 (ns/day)    (hour/ns)
+Performance:       12.084        1.986
+
+GROMACS reminds you: "I Quit My Job Blowing Leaves" (Beck)
+
+Constant volume equilibration complete.
+Starting constant pressure equilibration...
+                      :-) GROMACS - gmx grompp, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx grompp, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_0/NPT
+Command line:
+  gmx grompp -f /tmp/tmphozbbmzv/job_working_directory/000/3/working/MDP/npt_0.mdp -c ../NVT/nvt0.gro -p /tmp/tmphozbbmzv/job_working_directory/000/3/working/morph.top -t ../NVT/nvt0.cpt -o npt0.tpr
+
+Setting the LD random seed to 2038796930
+Generated 45 of the 45 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+Generated 45 of the 45 1-4 parameter combinations
+Excluding 3 bonded neighbours molecule type 'Merged_Molecule'
+Excluding 3 bonded neighbours molecule type 'NA'
+Excluding 3 bonded neighbours molecule type 'CL'
+Excluding 3 bonded neighbours molecule type 'WAT'
+Removing all charge groups because cutoff-scheme=Verlet
+
+NOTE 1 [file morph.top, line 232]:
+  The bond in molecule-type Merged_Molecule between atoms 7 H and 13 H has
+  an estimated oscillational period of 8.0e-03 ps, which is less than 10
+  times the time step of 1.0e-03 ps.
+  Maybe you forgot to change the constraints mdp option.
+
+Number of degrees of freedom in T-Coupling group System is 12987.00
+Reading Coordinates, Velocities and Box size from old trajectory
+Will read whole trajectory
+Last frame         -1 time    0.050   
+Using frame at t = 0.05 ps
+Starting time for run is 0 ps
+Estimate for the relative computational load of the PME mesh part: 0.23
+
+There was 1 note
+
+GROMACS reminds you: "Act like Prometheus would" (Gogol Bordello)
+
+Analysing residue names:
+There are:     1      Other residues
+There are:    10        Ion residues
+There are:  2151      Water residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 300 K
+Calculated rlist for 1x1 atom pair-list as 1.205 nm, buffer size 0.005 nm
+Set rlist, assuming 4x4 atom pair-list, to 1.200 nm, buffer size 0.000 nm
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 36x36x36, spacing 0.111 0.111 0.111
+This run will generate roughly 1 Mb of data
+                      :-) GROMACS - gmx mdrun, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx mdrun, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_0/NPT
+Command line:
+  gmx mdrun -deffnm npt0
+
+Compiled SIMD: SSE2, but for this host/run AVX2_256 might be better (see log).
+The current CPU can measure timings more accurately than the code in
+gmx mdrun was configured to use. This might affect your simulation
+speed as accurate timings are needed for load-balancing.
+Please consider rebuilding gmx mdrun with the GMX_USE_RDTSCP=ON CMake option.
+Reading file npt0.tpr, VERSION 2019.1 (single precision)
+Changing nstlist from 20 to 100, rlist from 1.2 to 1.2
+
+
+Using 1 MPI thread
+Using 4 OpenMP threads 
+
+starting mdrun 'BioSimSpace System'
+50 steps,      0.1 ps.
+
+Writing final coordinates.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:        1.261        0.315      399.9
+                 (ns/day)    (hour/ns)
+Performance:       13.979        1.717
+
+GROMACS reminds you: "I Was Born to Have Adventure" (F. Zappa)
+
+Constant pressure equilibration complete.
+Starting production MD simulation...
+                      :-) GROMACS - gmx grompp, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx grompp, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_0/Production_MD
+Command line:
+  gmx grompp -f /tmp/tmphozbbmzv/job_working_directory/000/3/working/MDP/md_0.mdp -c ../NPT/npt0.gro -p /tmp/tmphozbbmzv/job_working_directory/000/3/working/morph.top -t ../NPT/npt0.cpt -o md0.tpr
+
+
+NOTE 1 [file /tmp/tmphozbbmzv/job_working_directory/000/3/working/MDP/md_0.mdp]:
+  With PME there is a minor soft core effect present at the cut-off,
+  proportional to (LJsigma/rcoulomb)^6. This could have a minor effect on
+  energy conservation, but usually other effects dominate. With a common
+  sigma value of 0.34 nm the fraction of the particle-particle potential at
+  the cut-off at lambda=0.5 is around 2.5e-04, while ewald-rtol is 1.0e-05.
+
+Setting the LD random seed to -1773803540
+Generated 45 of the 45 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+Generated 45 of the 45 1-4 parameter combinations
+Excluding 3 bonded neighbours molecule type 'Merged_Molecule'
+Excluding 3 bonded neighbours molecule type 'NA'
+Excluding 3 bonded neighbours molecule type 'CL'
+Excluding 3 bonded neighbours molecule type 'WAT'
+Removing all charge groups because cutoff-scheme=Verlet
+
+NOTE 2 [file morph.top, line 232]:
+  The bond in molecule-type Merged_Molecule between atoms 7 H and 13 H has
+  an estimated oscillational period of 8.0e-03 ps, which is less than 10
+  times the time step of 1.0e-03 ps.
+  Maybe you forgot to change the constraints mdp option.
+
+Number of degrees of freedom in T-Coupling group System is 12987.00
+Reading Coordinates, Velocities and Box size from old trajectory
+Will read whole trajectory
+Last frame         -1 time    0.050   
+Using frame at t = 0.05 ps
+Starting time for run is 0 ps
+Estimate for the relative computational load of the PME mesh part: 0.47
+
+There were 2 notes
+
+GROMACS reminds you: "God is a DJ" (Faithless)
+
+Analysing residue names:
+There are:     1      Other residues
+There are:    10        Ion residues
+There are:  2151      Water residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 300 K
+Calculated rlist for 1x1 atom pair-list as 0.812 nm, buffer size 0.012 nm
+Set rlist, assuming 4x4 atom pair-list, to 0.800 nm, buffer size 0.000 nm
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 42x42x42, spacing 0.096 0.096 0.096
+This run will generate roughly 1 Mb of data
+                      :-) GROMACS - gmx mdrun, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx mdrun, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_0/Production_MD
+Command line:
+  gmx mdrun -deffnm md0
+
+Compiled SIMD: SSE2, but for this host/run AVX2_256 might be better (see log).
+The current CPU can measure timings more accurately than the code in
+gmx mdrun was configured to use. This might affect your simulation
+speed as accurate timings are needed for load-balancing.
+Please consider rebuilding gmx mdrun with the GMX_USE_RDTSCP=ON CMake option.
+Reading file md0.tpr, VERSION 2019.1 (single precision)
+Changing nstlist from 10 to 50, rlist from 0.8 to 0.86
+
+
+Using 1 MPI thread
+Using 4 OpenMP threads 
+
+starting mdrun 'BioSimSpace System'
+2000 steps,      2.0 ps.
+
+Writing final coordinates.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:       27.033        6.758      400.0
+                 (ns/day)    (hour/ns)
+Performance:       25.581        0.938
+
+GROMACS reminds you: "Don't You Wish You Never Met Her, Dirty Blue Gene?" (Captain Beefheart)
+
+Production MD complete.
+Ending. Job completed for lambda = 0
+Starting minimization for lambda = 1...
+                      :-) GROMACS - gmx grompp, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx grompp, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_1/EM
+Command line:
+  gmx grompp -f /tmp/tmphozbbmzv/job_working_directory/000/3/working/MDP/em_steep_1.mdp -c /tmp/tmphozbbmzv/job_working_directory/000/3/working/morph.gro -p /tmp/tmphozbbmzv/job_working_directory/000/3/working/morph.top -o min1.tpr
+
+Setting the LD random seed to -1393309481
+Generated 45 of the 45 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+Generated 45 of the 45 1-4 parameter combinations
+Excluding 3 bonded neighbours molecule type 'Merged_Molecule'
+Excluding 3 bonded neighbours molecule type 'NA'
+Excluding 3 bonded neighbours molecule type 'CL'
+Excluding 3 bonded neighbours molecule type 'WAT'
+Removing all charge groups because cutoff-scheme=Verlet
+Number of degrees of freedom in T-Coupling group rest is 12987.00
+Estimate for the relative computational load of the PME mesh part: 0.21
+
+GROMACS reminds you: "Scientists think they are born with logic; God forbid they should study this discipline with a history of more than two and a half millennia." (Roald Hoffmann)
+
+Analysing residue names:
+There are:     1      Other residues
+There are:    10        Ion residues
+There are:  2151      Water residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 36x36x36, spacing 0.111 0.111 0.111
+This run will generate roughly 1 Mb of data
+                      :-) GROMACS - gmx mdrun, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx mdrun, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_1/EM
+Command line:
+  gmx mdrun -deffnm min1
+
+Compiled SIMD: SSE2, but for this host/run AVX2_256 might be better (see log).
+The current CPU can measure timings more accurately than the code in
+gmx mdrun was configured to use. This might affect your simulation
+speed as accurate timings are needed for load-balancing.
+Please consider rebuilding gmx mdrun with the GMX_USE_RDTSCP=ON CMake option.
+Reading file min1.tpr, VERSION 2019.1 (single precision)
+
+Using 1 MPI thread
+Using 4 OpenMP threads 
+
+
+Steepest Descents:
+   Tolerance (Fmax)   =  1.00000e+02
+   Number of steps    =           10
+
+Energy minimization reached the maximum number of steps before the forces
+reached the requested precision Fmax < 100.
+
+writing lowest energy coordinates.
+
+Steepest Descents did not converge to Fmax < 100 in 11 steps.
+Potential Energy  = -8.3125391e+04
+Maximum force     =  2.1372287e+04 on atom 1
+Norm of force     =  5.1859150e+02
+
+GROMACS reminds you: "Der Ball ist rund, das Spiel dauert 90 minuten, alles andere ist Theorie" (Lola rennt)
+
+Starting constant volume equilibration...
+                      :-) GROMACS - gmx grompp, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx grompp, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_1/NVT
+Command line:
+  gmx grompp -f /tmp/tmphozbbmzv/job_working_directory/000/3/working/MDP/nvt_1.mdp -c ../EM/min1.gro -p /tmp/tmphozbbmzv/job_working_directory/000/3/working/morph.top -o nvt1.tpr
+
+Setting the LD random seed to -1631510067
+Generated 45 of the 45 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+Generated 45 of the 45 1-4 parameter combinations
+Excluding 3 bonded neighbours molecule type 'Merged_Molecule'
+Excluding 3 bonded neighbours molecule type 'NA'
+Excluding 3 bonded neighbours molecule type 'CL'
+Excluding 3 bonded neighbours molecule type 'WAT'
+Velocities were taken from a Maxwell distribution at 300 K
+Removing all charge groups because cutoff-scheme=Verlet
+
+NOTE 1 [file morph.top, line 232]:
+  The bond in molecule-type Merged_Molecule between atoms 7 H and 13 H has
+  an estimated oscillational period of 8.0e-03 ps, which is less than 10
+  times the time step of 1.0e-03 ps.
+  Maybe you forgot to change the constraints mdp option.
+
+Number of degrees of freedom in T-Coupling group System is 12987.00
+Estimate for the relative computational load of the PME mesh part: 0.23
+
+There was 1 note
+
+GROMACS reminds you: "No great discovery was ever made without a bold guess." (Marie Curie)
+
+Analysing residue names:
+There are:     1      Other residues
+There are:    10        Ion residues
+There are:  2151      Water residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 300 K
+Calculated rlist for 1x1 atom pair-list as 1.205 nm, buffer size 0.005 nm
+Set rlist, assuming 4x4 atom pair-list, to 1.200 nm, buffer size 0.000 nm
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 36x36x36, spacing 0.111 0.111 0.111
+This run will generate roughly 1 Mb of data
+                      :-) GROMACS - gmx mdrun, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx mdrun, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_1/NVT
+Command line:
+  gmx mdrun -deffnm nvt1
+
+Compiled SIMD: SSE2, but for this host/run AVX2_256 might be better (see log).
+The current CPU can measure timings more accurately than the code in
+gmx mdrun was configured to use. This might affect your simulation
+speed as accurate timings are needed for load-balancing.
+Please consider rebuilding gmx mdrun with the GMX_USE_RDTSCP=ON CMake option.
+Reading file nvt1.tpr, VERSION 2019.1 (single precision)
+Changing nstlist from 20 to 100, rlist from 1.2 to 1.2
+
+
+Using 1 MPI thread
+Using 4 OpenMP threads 
+
+starting mdrun 'BioSimSpace System'
+50 steps,      0.1 ps.
+
+Writing final coordinates.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:        1.273        0.318      399.9
+                 (ns/day)    (hour/ns)
+Performance:       13.842        1.734
+
+GROMACS reminds you: "You're like them scientists on TV explaining black holes. More you talk, less I get" (Jess Walter)
+
+Constant volume equilibration complete.
+Starting constant pressure equilibration...
+                      :-) GROMACS - gmx grompp, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx grompp, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_1/NPT
+Command line:
+  gmx grompp -f /tmp/tmphozbbmzv/job_working_directory/000/3/working/MDP/npt_1.mdp -c ../NVT/nvt1.gro -p /tmp/tmphozbbmzv/job_working_directory/000/3/working/morph.top -t ../NVT/nvt1.cpt -o npt1.tpr
+
+Setting the LD random seed to -166230178
+Generated 45 of the 45 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+Generated 45 of the 45 1-4 parameter combinations
+Excluding 3 bonded neighbours molecule type 'Merged_Molecule'
+Excluding 3 bonded neighbours molecule type 'NA'
+Excluding 3 bonded neighbours molecule type 'CL'
+Excluding 3 bonded neighbours molecule type 'WAT'
+Removing all charge groups because cutoff-scheme=Verlet
+
+NOTE 1 [file morph.top, line 232]:
+  The bond in molecule-type Merged_Molecule between atoms 7 H and 13 H has
+  an estimated oscillational period of 8.0e-03 ps, which is less than 10
+  times the time step of 1.0e-03 ps.
+  Maybe you forgot to change the constraints mdp option.
+
+Number of degrees of freedom in T-Coupling group System is 12987.00
+Reading Coordinates, Velocities and Box size from old trajectory
+Will read whole trajectory
+Last frame         -1 time    0.050   
+Using frame at t = 0.05 ps
+Starting time for run is 0 ps
+Estimate for the relative computational load of the PME mesh part: 0.23
+
+There was 1 note
+
+GROMACS reminds you: "Keep Your Shoes and Socks On, People" (F. Zappa)
+
+Analysing residue names:
+There are:     1      Other residues
+There are:    10        Ion residues
+There are:  2151      Water residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 300 K
+Calculated rlist for 1x1 atom pair-list as 1.205 nm, buffer size 0.005 nm
+Set rlist, assuming 4x4 atom pair-list, to 1.200 nm, buffer size 0.000 nm
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 36x36x36, spacing 0.111 0.111 0.111
+This run will generate roughly 1 Mb of data
+                      :-) GROMACS - gmx mdrun, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx mdrun, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_1/NPT
+Command line:
+  gmx mdrun -deffnm npt1
+
+Compiled SIMD: SSE2, but for this host/run AVX2_256 might be better (see log).
+The current CPU can measure timings more accurately than the code in
+gmx mdrun was configured to use. This might affect your simulation
+speed as accurate timings are needed for load-balancing.
+Please consider rebuilding gmx mdrun with the GMX_USE_RDTSCP=ON CMake option.
+Reading file npt1.tpr, VERSION 2019.1 (single precision)
+Changing nstlist from 20 to 100, rlist from 1.2 to 1.2
+
+
+Using 1 MPI thread
+Using 4 OpenMP threads 
+
+starting mdrun 'BioSimSpace System'
+50 steps,      0.1 ps.
+
+Writing final coordinates.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:        1.310        0.328      399.9
+                 (ns/day)    (hour/ns)
+Performance:       13.448        1.785
+
+GROMACS reminds you: "Don't Follow Me Home" (Throwing Muses)
+
+Constant pressure equilibration complete.
+Starting production MD simulation...
+                      :-) GROMACS - gmx grompp, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx grompp, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_1/Production_MD
+Command line:
+  gmx grompp -f /tmp/tmphozbbmzv/job_working_directory/000/3/working/MDP/md_1.mdp -c ../NPT/npt1.gro -p /tmp/tmphozbbmzv/job_working_directory/000/3/working/morph.top -t ../NPT/npt1.cpt -o md1.tpr
+
+
+NOTE 1 [file /tmp/tmphozbbmzv/job_working_directory/000/3/working/MDP/md_1.mdp]:
+  With PME there is a minor soft core effect present at the cut-off,
+  proportional to (LJsigma/rcoulomb)^6. This could have a minor effect on
+  energy conservation, but usually other effects dominate. With a common
+  sigma value of 0.34 nm the fraction of the particle-particle potential at
+  the cut-off at lambda=0.5 is around 2.5e-04, while ewald-rtol is 1.0e-05.
+
+Setting the LD random seed to -651728442
+Generated 45 of the 45 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+Generated 45 of the 45 1-4 parameter combinations
+Excluding 3 bonded neighbours molecule type 'Merged_Molecule'
+Excluding 3 bonded neighbours molecule type 'NA'
+Excluding 3 bonded neighbours molecule type 'CL'
+Excluding 3 bonded neighbours molecule type 'WAT'
+Removing all charge groups because cutoff-scheme=Verlet
+
+NOTE 2 [file morph.top, line 232]:
+  The bond in molecule-type Merged_Molecule between atoms 7 H and 13 H has
+  an estimated oscillational period of 8.0e-03 ps, which is less than 10
+  times the time step of 1.0e-03 ps.
+  Maybe you forgot to change the constraints mdp option.
+
+Number of degrees of freedom in T-Coupling group System is 12987.00
+Reading Coordinates, Velocities and Box size from old trajectory
+Will read whole trajectory
+Last frame         -1 time    0.050   
+Using frame at t = 0.05 ps
+Starting time for run is 0 ps
+Estimate for the relative computational load of the PME mesh part: 0.47
+
+There were 2 notes
+
+GROMACS reminds you: "Beat On the Brat With a Baseball Bat" (The Ramones)
+
+Analysing residue names:
+There are:     1      Other residues
+There are:    10        Ion residues
+There are:  2151      Water residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 300 K
+Calculated rlist for 1x1 atom pair-list as 0.812 nm, buffer size 0.012 nm
+Set rlist, assuming 4x4 atom pair-list, to 0.800 nm, buffer size 0.000 nm
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 42x42x42, spacing 0.096 0.096 0.096
+This run will generate roughly 1 Mb of data
+                      :-) GROMACS - gmx mdrun, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx mdrun, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_1/Production_MD
+Command line:
+  gmx mdrun -deffnm md1
+
+Compiled SIMD: SSE2, but for this host/run AVX2_256 might be better (see log).
+The current CPU can measure timings more accurately than the code in
+gmx mdrun was configured to use. This might affect your simulation
+speed as accurate timings are needed for load-balancing.
+Please consider rebuilding gmx mdrun with the GMX_USE_RDTSCP=ON CMake option.
+Reading file md1.tpr, VERSION 2019.1 (single precision)
+Changing nstlist from 10 to 50, rlist from 0.8 to 0.86
+
+
+Using 1 MPI thread
+Using 4 OpenMP threads 
+
+starting mdrun 'BioSimSpace System'
+2000 steps,      2.0 ps.
+
+Writing final coordinates.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:       27.548        6.887      400.0
+                 (ns/day)    (hour/ns)
+Performance:       25.103        0.956
+
+GROMACS reminds you: "Nothing is more anarchic than power." (Pier Paolo Pasolini)
+
+Production MD complete.
+Ending. Job completed for lambda = 1
+Starting minimization for lambda = 2...
+                      :-) GROMACS - gmx grompp, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx grompp, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_2/EM
+Command line:
+  gmx grompp -f /tmp/tmphozbbmzv/job_working_directory/000/3/working/MDP/em_steep_2.mdp -c /tmp/tmphozbbmzv/job_working_directory/000/3/working/morph.gro -p /tmp/tmphozbbmzv/job_working_directory/000/3/working/morph.top -o min2.tpr
+
+Setting the LD random seed to 886887101
+Generated 45 of the 45 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+Generated 45 of the 45 1-4 parameter combinations
+Excluding 3 bonded neighbours molecule type 'Merged_Molecule'
+Excluding 3 bonded neighbours molecule type 'NA'
+Excluding 3 bonded neighbours molecule type 'CL'
+Excluding 3 bonded neighbours molecule type 'WAT'
+Removing all charge groups because cutoff-scheme=Verlet
+Number of degrees of freedom in T-Coupling group rest is 12987.00
+Estimate for the relative computational load of the PME mesh part: 0.21
+
+GROMACS reminds you: "Sisters Have Always Fascinated Me" (Speech)
+
+Analysing residue names:
+There are:     1      Other residues
+There are:    10        Ion residues
+There are:  2151      Water residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 36x36x36, spacing 0.111 0.111 0.111
+This run will generate roughly 1 Mb of data
+                      :-) GROMACS - gmx mdrun, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx mdrun, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_2/EM
+Command line:
+  gmx mdrun -deffnm min2
+
+Compiled SIMD: SSE2, but for this host/run AVX2_256 might be better (see log).
+The current CPU can measure timings more accurately than the code in
+gmx mdrun was configured to use. This might affect your simulation
+speed as accurate timings are needed for load-balancing.
+Please consider rebuilding gmx mdrun with the GMX_USE_RDTSCP=ON CMake option.
+Reading file min2.tpr, VERSION 2019.1 (single precision)
+
+Using 1 MPI thread
+Using 4 OpenMP threads 
+
+
+Steepest Descents:
+   Tolerance (Fmax)   =  1.00000e+02
+   Number of steps    =           10
+
+Energy minimization reached the maximum number of steps before the forces
+reached the requested precision Fmax < 100.
+
+writing lowest energy coordinates.
+
+Steepest Descents did not converge to Fmax < 100 in 11 steps.
+Potential Energy  = -8.3125391e+04
+Maximum force     =  2.1372287e+04 on atom 1
+Norm of force     =  5.1859150e+02
+
+GROMACS reminds you: "The Candlelight Was Just Right" (Beastie Boys)
+
+Starting constant volume equilibration...
+                      :-) GROMACS - gmx grompp, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx grompp, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_2/NVT
+Command line:
+  gmx grompp -f /tmp/tmphozbbmzv/job_working_directory/000/3/working/MDP/nvt_2.mdp -c ../EM/min2.gro -p /tmp/tmphozbbmzv/job_working_directory/000/3/working/morph.top -o nvt2.tpr
+
+Setting the LD random seed to -902054215
+Generated 45 of the 45 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+Generated 45 of the 45 1-4 parameter combinations
+Excluding 3 bonded neighbours molecule type 'Merged_Molecule'
+Excluding 3 bonded neighbours molecule type 'NA'
+Excluding 3 bonded neighbours molecule type 'CL'
+Excluding 3 bonded neighbours molecule type 'WAT'
+Velocities were taken from a Maxwell distribution at 300 K
+Removing all charge groups because cutoff-scheme=Verlet
+
+NOTE 1 [file morph.top, line 232]:
+  The bond in molecule-type Merged_Molecule between atoms 7 H and 13 H has
+  an estimated oscillational period of 8.0e-03 ps, which is less than 10
+  times the time step of 1.0e-03 ps.
+  Maybe you forgot to change the constraints mdp option.
+
+Number of degrees of freedom in T-Coupling group System is 12987.00
+Estimate for the relative computational load of the PME mesh part: 0.23
+
+There was 1 note
+
+GROMACS reminds you: "I spent a lot of money on booze, birds and fast cars. The rest I just squandered." (George Best)
+
+Analysing residue names:
+There are:     1      Other residues
+There are:    10        Ion residues
+There are:  2151      Water residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 300 K
+Calculated rlist for 1x1 atom pair-list as 1.205 nm, buffer size 0.005 nm
+Set rlist, assuming 4x4 atom pair-list, to 1.200 nm, buffer size 0.000 nm
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 36x36x36, spacing 0.111 0.111 0.111
+This run will generate roughly 1 Mb of data
+                      :-) GROMACS - gmx mdrun, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx mdrun, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_2/NVT
+Command line:
+  gmx mdrun -deffnm nvt2
+
+Compiled SIMD: SSE2, but for this host/run AVX2_256 might be better (see log).
+The current CPU can measure timings more accurately than the code in
+gmx mdrun was configured to use. This might affect your simulation
+speed as accurate timings are needed for load-balancing.
+Please consider rebuilding gmx mdrun with the GMX_USE_RDTSCP=ON CMake option.
+Reading file nvt2.tpr, VERSION 2019.1 (single precision)
+Changing nstlist from 20 to 100, rlist from 1.2 to 1.2
+
+
+Using 1 MPI thread
+Using 4 OpenMP threads 
+
+starting mdrun 'BioSimSpace System'
+50 steps,      0.1 ps.
+
+Writing final coordinates.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:        1.308        0.327      399.9
+                 (ns/day)    (hour/ns)
+Performance:       13.471        1.782
+
+GROMACS reminds you: "What if you're wrong about the great Ju Ju at the bottom of the sea?" (Richard Dawkins)
+
+Constant volume equilibration complete.
+Starting constant pressure equilibration...
+                      :-) GROMACS - gmx grompp, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx grompp, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_2/NPT
+Command line:
+  gmx grompp -f /tmp/tmphozbbmzv/job_working_directory/000/3/working/MDP/npt_2.mdp -c ../NVT/nvt2.gro -p /tmp/tmphozbbmzv/job_working_directory/000/3/working/morph.top -t ../NVT/nvt2.cpt -o npt2.tpr
+
+Setting the LD random seed to -652502066
+Generated 45 of the 45 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+Generated 45 of the 45 1-4 parameter combinations
+Excluding 3 bonded neighbours molecule type 'Merged_Molecule'
+Excluding 3 bonded neighbours molecule type 'NA'
+Excluding 3 bonded neighbours molecule type 'CL'
+Excluding 3 bonded neighbours molecule type 'WAT'
+Removing all charge groups because cutoff-scheme=Verlet
+
+NOTE 1 [file morph.top, line 232]:
+  The bond in molecule-type Merged_Molecule between atoms 7 H and 13 H has
+  an estimated oscillational period of 8.0e-03 ps, which is less than 10
+  times the time step of 1.0e-03 ps.
+  Maybe you forgot to change the constraints mdp option.
+
+Number of degrees of freedom in T-Coupling group System is 12987.00
+Reading Coordinates, Velocities and Box size from old trajectory
+Will read whole trajectory
+Last frame         -1 time    0.050   
+Using frame at t = 0.05 ps
+Starting time for run is 0 ps
+Estimate for the relative computational load of the PME mesh part: 0.23
+
+There was 1 note
+
+GROMACS reminds you: "When doing HPC, don't communica" (Jim Demmel)
+
+Analysing residue names:
+There are:     1      Other residues
+There are:    10        Ion residues
+There are:  2151      Water residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 300 K
+Calculated rlist for 1x1 atom pair-list as 1.205 nm, buffer size 0.005 nm
+Set rlist, assuming 4x4 atom pair-list, to 1.200 nm, buffer size 0.000 nm
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 36x36x36, spacing 0.111 0.111 0.111
+This run will generate roughly 1 Mb of data
+                      :-) GROMACS - gmx mdrun, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx mdrun, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_2/NPT
+Command line:
+  gmx mdrun -deffnm npt2
+
+Compiled SIMD: SSE2, but for this host/run AVX2_256 might be better (see log).
+The current CPU can measure timings more accurately than the code in
+gmx mdrun was configured to use. This might affect your simulation
+speed as accurate timings are needed for load-balancing.
+Please consider rebuilding gmx mdrun with the GMX_USE_RDTSCP=ON CMake option.
+Reading file npt2.tpr, VERSION 2019.1 (single precision)
+Changing nstlist from 20 to 100, rlist from 1.2 to 1.2
+
+
+Using 1 MPI thread
+Using 4 OpenMP threads 
+
+starting mdrun 'BioSimSpace System'
+50 steps,      0.1 ps.
+
+Writing final coordinates.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:        1.290        0.323      399.9
+                 (ns/day)    (hour/ns)
+Performance:       13.659        1.757
+
+GROMACS reminds you: "People are DNA's way of making more DNA." (Edward O. Wilson)
+
+Constant pressure equilibration complete.
+Starting production MD simulation...
+                      :-) GROMACS - gmx grompp, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx grompp, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_2/Production_MD
+Command line:
+  gmx grompp -f /tmp/tmphozbbmzv/job_working_directory/000/3/working/MDP/md_2.mdp -c ../NPT/npt2.gro -p /tmp/tmphozbbmzv/job_working_directory/000/3/working/morph.top -t ../NPT/npt2.cpt -o md2.tpr
+
+
+NOTE 1 [file /tmp/tmphozbbmzv/job_working_directory/000/3/working/MDP/md_2.mdp]:
+  With PME there is a minor soft core effect present at the cut-off,
+  proportional to (LJsigma/rcoulomb)^6. This could have a minor effect on
+  energy conservation, but usually other effects dominate. With a common
+  sigma value of 0.34 nm the fraction of the particle-particle potential at
+  the cut-off at lambda=0.5 is around 2.5e-04, while ewald-rtol is 1.0e-05.
+
+Setting the LD random seed to 551042888
+Generated 45 of the 45 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+Generated 45 of the 45 1-4 parameter combinations
+Excluding 3 bonded neighbours molecule type 'Merged_Molecule'
+Excluding 3 bonded neighbours molecule type 'NA'
+Excluding 3 bonded neighbours molecule type 'CL'
+Excluding 3 bonded neighbours molecule type 'WAT'
+Removing all charge groups because cutoff-scheme=Verlet
+
+NOTE 2 [file morph.top, line 232]:
+  The bond in molecule-type Merged_Molecule between atoms 7 H and 13 H has
+  an estimated oscillational period of 8.0e-03 ps, which is less than 10
+  times the time step of 1.0e-03 ps.
+  Maybe you forgot to change the constraints mdp option.
+
+Number of degrees of freedom in T-Coupling group System is 12987.00
+Reading Coordinates, Velocities and Box size from old trajectory
+Will read whole trajectory
+Last frame         -1 time    0.050   
+Using frame at t = 0.05 ps
+Starting time for run is 0 ps
+Estimate for the relative computational load of the PME mesh part: 0.47
+
+There were 2 notes
+
+GROMACS reminds you: "Wedged as we are between two eternities of idleness, there is no excuse for being idle now" (Anthony Burgess)
+
+Analysing residue names:
+There are:     1      Other residues
+There are:    10        Ion residues
+There are:  2151      Water residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 300 K
+Calculated rlist for 1x1 atom pair-list as 0.812 nm, buffer size 0.012 nm
+Set rlist, assuming 4x4 atom pair-list, to 0.800 nm, buffer size 0.000 nm
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 42x42x42, spacing 0.096 0.096 0.096
+This run will generate roughly 1 Mb of data
+                      :-) GROMACS - gmx mdrun, 2019.1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2018, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx mdrun, version 2019.1
+Executable:   /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1/bin/gmx
+Data prefix:  /home/people/tsenapathi/miniconda3/envs/__gromacs@2019.1
+Working dir:  /tmp/tmphozbbmzv/job_working_directory/000/3/working/Lambda_2/Production_MD
+Command line:
+  gmx mdrun -deffnm md2
+
+Compiled SIMD: SSE2, but for this host/run AVX2_256 might be better (see log).
+The current CPU can measure timings more accurately than the code in
+gmx mdrun was configured to use. This might affect your simulation
+speed as accurate timings are needed for load-balancing.
+Please consider rebuilding gmx mdrun with the GMX_USE_RDTSCP=ON CMake option.
+Reading file md2.tpr, VERSION 2019.1 (single precision)
+Changing nstlist from 10 to 50, rlist from 0.8 to 0.86
+
+
+Using 1 MPI thread
+Using 4 OpenMP threads 
+
+starting mdrun 'BioSimSpace System'
+2000 steps,      2.0 ps.
+
+step 2: One or more water molecules can not be settled.
+Check for bad contacts and/or reduce the timestep if appropriate.
+Wrote pdb files with previous and current coordinates
+
+WARNING: Listed nonbonded interaction between particles 6 and 15
+at distance 47.750 which is larger than the table limit 1.860 nm.
+
+This is likely either a 1,4 interaction, or a listed interaction inside
+a smaller molecule you are decoupling during a free energy calculation.
+Since interactions at distances beyond the table cannot be computed,
+they are skipped until they are inside the table limit again. You will
+only see this message once, even if it occurs for several interactions.
+
+IMPORTANT: This should not happen in a stable simulation, so there is
+probably something wrong with your system. Only change the table-extension
+distance in the mdp file if you are really sure that is the reason.
+
+
+
+WARNING: Listed nonbonded interaction between particles 2 and 15
+at distance 47.627 which is larger than the table limit 1.860 nm.
+
+This is likely either a 1,4 interaction, or a listed interaction inside
+a smaller molecule you are decoupling during a free energy calculation.
+Since interactions at distances beyond the table cannot be computed,
+they are skipped until they are inside the table limit again. You will
+only see this message once, even if it occurs for several interactions.
+
+IMPORTANT: This should not happen in a stable simulation, so there is
+probably something wrong with your system. Only change the table-extension
+distance in the mdp file if you are really sure that is the reason.
+
+
+/scratch2/tsenapathi/Projects/BRIDGE/galaxy-tools-compchem/tools/free_energy/alchemical_run/gmx_fep.sh: line 104: 13890 Segmentation fault      gmx mdrun -deffnm md$LAMBDA
+Production MD complete.
+Ending. Job completed for lambda = 2
