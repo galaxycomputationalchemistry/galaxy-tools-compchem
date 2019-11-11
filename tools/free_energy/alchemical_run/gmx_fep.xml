@@ -358,7 +358,7 @@ dh_hist_spacing          = 0.1
                 <option value="h-bonds" selected="true">H-bonds</option>
                 <option value="all-bonds">All bonds</option>
             </param>
-            <param name="lincs_order" type="integer" value="4" label="lincs-order" help="Accuracy of LINCS algorithm. For normal MD simulations an order of 4 usually suffices, 6 is needed for large time-steps with virtual sites or BD."/>
+            <param name="lincs_order" type="integer" value="4" label="LINCS order" help="Accuracy of LINCS algorithm. For normal MD simulations an order of 4 usually suffices, 6 is needed for large time-steps with virtual sites or BD."/>
             <param name="lincs_iter" type="integer" value="1" label="LINCS iterations" help="Number of iterations to correct for rotational lengthening in LINCS. For normal runs a single step is sufficient."/>
             <param name="lincs_warnangle" type="integer" value="30" label="LINCS maximum angle" help="Maximum angle that a bond can rotate before LINCS will complain / [deg]"/>
             </when>
@@ -480,7 +480,7 @@ dh_hist_spacing          = 0.1
     - For more details about alchemical free energy calculations see http://www.alchemistry.org/wiki/Main_Page
     - For details about GROMACS simulations see http://manual.gromacs.org/documentation/2019-rc1/user-guide/mdp-options.html
 
-When you need to run the simulation outside Glalaxy, you can generate and down load all the input files from this tool.
+When you need to run the simulation outside Galaxy, you can generate and down load all the input files from this tool.
 
 1. Simply download the output "Input files".
 2. Untar it using tar -xvf  Galaxy3-\[Input_files\].tar
