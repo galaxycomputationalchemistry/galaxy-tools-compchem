@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # _________ read inputs from the galaxy wrapper and define some variables ____________ 
 
