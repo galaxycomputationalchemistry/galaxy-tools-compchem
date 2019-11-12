@@ -24,7 +24,7 @@
         <option value="kBT">kBT</option>
     </param>
     <conditional name="lambda">
-        <param name="skip_lambda" type="select" label="Want to skip some lambda states?"  >
+        <param name="skip_lambda" type="select" label="Skip some lambda states?"  >
             <option value="no">No</option>
             <option value="yes">Yes</option>
         </param>
