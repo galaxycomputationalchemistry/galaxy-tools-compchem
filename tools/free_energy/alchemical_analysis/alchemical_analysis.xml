@@ -31,7 +31,7 @@
             <when value="no">
             </when>
             <when value="yes">
-                <param name="skiplambda" type="text" value="1-2-3" label="Indicies of lambda states to skip" help="Give lambda indices separated by '-' and they will be removed from the analysis."/>
+                <param name="skiplambda" type="text" value="1-2-3" label="Indices of lambda states to skip" help="Give lambda indices separated by '-' and they will be removed from the analysis."/>
             </when>
     </conditional>
     </inputs>
