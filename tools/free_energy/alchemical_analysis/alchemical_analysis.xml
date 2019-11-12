@@ -72,7 +72,7 @@ _____
 
 **Input**
 
-       - TAR archive file of the GROMACS XVG files from free energy simulations.
+       - TAR archive file of the GROMACS XVG files from free energy simulations. Note that simulations should be at least 100 ps in length.
 
 _____
 
