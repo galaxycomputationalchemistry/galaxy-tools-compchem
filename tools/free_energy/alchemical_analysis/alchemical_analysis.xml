@@ -21,7 +21,7 @@
     <param name="units" type="select" label="Units to report energies" >
         <option value="kcal">kcal</option>
         <option value="kJ">kJ</option>
-        <option value="kBT">kBT</option>
+        <option value="kBT">kT</option>
     </param>
     <conditional name="lambda">
         <param name="skip_lambda" type="select" label="Skip some lambda states?"  >
