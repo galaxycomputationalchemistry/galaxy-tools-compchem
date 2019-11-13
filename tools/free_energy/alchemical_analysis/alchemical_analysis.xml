@@ -15,7 +15,7 @@
     ]]></command>
     <inputs>
     <param format="tar" name="datain" type="data" label="TI/FEP data output"/>
-    <param name="prefix" type="text" value="md" label="Prefix for datafile sets" help="This should be md if you used the alchemical simulator tool"/>
+    <param name="prefix" type="text" value="md" label="Prefix for datafile sets" help="This should be md if you used the alchemical simulator tool."/>
     <param name="temp" type="integer" value="300" label="Temperature (K)"/>
     <param name="time" type="integer" value="0" label="Equilibration time (ps)" help="Discard data prior to this specified time as 'equilibration' data." />
     <param name="units" type="select" label="Units to report energies" >
@@ -54,7 +54,7 @@
             <param name="time" value="0"/>
             <param name="units" value="kcal"/>
             <param name="lambda" value="no"/>
-            <output name="change" file="dF_t.txt" />
+            <output name="change" file="Free_energy_change_dF(t).txt" />
         </test>
     </tests>  
     <help><![CDATA[   
