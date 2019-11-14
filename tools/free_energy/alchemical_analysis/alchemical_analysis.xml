@@ -7,15 +7,15 @@
        ln -s '$datain' ./data.tar &&
        tar xf ./data.tar && 
        mkdir ./RESULTS/ &&
-            #if $lambda.skip_lambda == "no"
+            #if $skiplambda = "":
                 alchemical_analysis -d data -o ./RESULTS -t '$temp' -s '$time' -c -q xvg -p '$prefix' -g -e -f 10 -w -u '$units' &>> '$output'
-            #else if $lambda.skip_lambda == "yes"
-                 alchemical_analysis -d data -o ./RESULTS -t '$temp' -s '$time' -k '$lambda.skiplambda' -c -q xvg -p '$prefix' -g -e -f 10 -w -u '$units' &>> '$output'
+            #else: 
+                 alchemical_analysis -d data -o ./RESULTS -t '$temp' -s '$time' -k '$skiplambda' -c -q xvg -p '$prefix' -g -e -f 10 -w -u '$units' &>> '$output'
             #end if
     ]]></command>
     <inputs>
     <param format="tar" name="datain" type="data" label="TI/FEP data output"/>
-    <param name="prefix" type="text" value="md" label="Prefix for datafile sets" help="This should be md if you used the alchemical simulator tool."/>
+    <param name="prefix" type="text" value="md" label="Prefix for datafile sets" help="This should be md if you used the alchemical simulator tool"/>
     <param name="temp" type="integer" value="300" label="Temperature (K)"/>
     <param name="time" type="integer" value="0" label="Equilibration time (ps)" help="Discard data prior to this specified time as 'equilibration' data." />
     <param name="units" type="select" label="Units to report energies" >
@@ -23,17 +23,7 @@
         <option value="kJ">kJ</option>
         <option value="kBT">kT</option>
     </param>
-    <conditional name="lambda">
-        <param name="skip_lambda" type="select" label="Skip some lambda states?"  >
-            <option value="no">No</option>
-            <option value="yes">Yes</option>
-        </param>
-            <when value="no">
-            </when>
-            <when value="yes">
-                <param name="skiplambda" type="text" value="1-2-3" label="Indices of lambda states to skip" help="Give lambda indices separated by '-' and they will be removed from the analysis."/>
-            </when>
-    </conditional>
+    <param name="skiplambda" type="text" label="Indices of lambda states to skip" help="Give a string of lambda indices separated by '-' and they will be removed from the analysis.  Default: will use all the windows "/>
     </inputs>
     <outputs>
         <data name="output" format="txt" label="output">
@@ -54,7 +44,7 @@
             <param name="time" value="0"/>
             <param name="units" value="kcal"/>
             <param name="lambda" value="no"/>
-            <output name="change" file="Free_energy_change_dF(t).txt" />
+            <output name="change" file="dF_t.txt" />
         </test>
     </tests>  
     <help><![CDATA[   
