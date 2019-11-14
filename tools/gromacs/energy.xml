@@ -9,12 +9,13 @@
     <command detect_errors="exit_code"><![CDATA[
 
         ln -s '$edr_input' ./edr_input.edr &&
-        echo $terms | tr , ' ' | gmx energy -f ./edr_input.edr -o ./energy.xvg
+        echo #echo str($terms).replace(',', ' ')# | gmx energy -f ./edr_input.edr -o ./energy.xvg
+        ## echo #echo ' '.join(str($terms).split(','))# | gmx energy -f ./edr_input.edr -o ./energy.xvg
 
     ]]></command>
 
     <inputs>
-        <param argument="edr_input" type="data" format='binary' label="EDR file" help="GROMACS energy binary file"/>
+        <param argument="edr_input" type="data" format="edr" label="EDR file" help="GROMACS energy binary file"/>
         <param argument="terms" type='select' label="Terms to calculate" multiple="true" help="Select terms for which values should be calculated">
             <option value="0">Angle</option>
             <option value="1">Proper dihedrals</option>
@@ -72,7 +73,7 @@
 
     </inputs>
     <outputs>
-        <data name="output1" format="itp" from_work_dir="energy.xvg"/>
+        <data name="output1" format="xvg" from_work_dir="energy.xvg"/>
         <data name="report" format="txt" from_work_dir="verbose.txt">
             <filter>capture_log</filter>
         </data>
@@ -81,7 +82,7 @@
         <test>
             <param name="edr_input" value="md_0_1.edr" />
             <param name="terms" value="10,12,13" />
-            <output name="output1" file="md_0_1.xvg" ftype="txt" lines_diff="12"/>
+            <output name="output1" file="md_0_1.xvg" ftype="xvg" lines_diff="12"/>
         </test>
     </tests>
     <help><![CDATA[

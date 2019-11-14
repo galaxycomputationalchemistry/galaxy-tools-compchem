@@ -137,12 +137,6 @@
                 <when value="no"/>
             </conditional>
 
-            <!-- <param name="outfiles" type="select" multiple="true" label="Produce the following output files" help="Produce CPT file for a subsequent MD run">
-                <option value="cpt">Produce CPT output</option>
-                <option value="edr">Produce EDR output</option>
-                <option value="xvg">Produce XVG output</option>
-            
-            </param> -->
 
             <!-- ITP inp -->
             <conditional name="posres">
@@ -164,7 +158,7 @@
                     <option value="false" selected="true">Use default generated group</option>
                 </param>
                 <when value="true">
-                    <param argument="ndx_in" type="data" format='txt' label="Index file"/>
+                    <param argument="ndx_in" type="data" format='ndx' label="Index file"/>
                 </when>
                 <when value="false"/>
             </conditional>
@@ -235,7 +229,7 @@
         <data name="output5" format="cpt" from_work_dir="outp.cpt">
             <filter>outps.cpt_out == 'true'</filter>
         </data>
-        <data name="output6" format="binary" from_work_dir="outp.edr">
+        <data name="output6" format="edr" from_work_dir="outp.edr">
             <filter>outps.edr_out == 'true'</filter>
         </data>
         <collection name="output7" type="list">

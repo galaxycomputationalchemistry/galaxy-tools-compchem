@@ -16,7 +16,7 @@
 
     <inputs>
         <param argument="gro_input" type="data" format='gro' label="GRO input file" help="Input structure"/>
-        <param argument="ndx_input" type="data" format='txt' label="Index (NDX) file" help="Index file containing the atoms which should be restrained"/>
+        <param argument="ndx_input" type="data" format='ndx' label="Index (NDX) file" help="Index file containing the atoms which should be restrained"/>
         <param argument="fc" type="text" value="1000 1000 1000" label="Force constants" help="Vector (in Cartesian space) specifying force constants for the restraints (kJ/mol nm^2)">
             <validator type="regex" message="Only numeric values and whitespace allowed">^[0-9 ]*$</validator>
         </param>
