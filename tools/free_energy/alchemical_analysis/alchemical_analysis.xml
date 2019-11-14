@@ -7,7 +7,7 @@
        ln -s '$datain' ./data.tar &&
        tar xf ./data.tar && 
        mkdir ./RESULTS/ &&
-            #if $skiplambda = "":
+            #if $skiplambda == "":
                 alchemical_analysis -d data -o ./RESULTS -t '$temp' -s '$time' -c -q xvg -p '$prefix' -g -e -f 10 -w -u '$units' &>> '$output'
             #else: 
                  alchemical_analysis -d data -o ./RESULTS -t '$temp' -s '$time' -k '$skiplambda' -c -q xvg -p '$prefix' -g -e -f 10 -w -u '$units' &>> '$output'
@@ -23,7 +23,7 @@
         <option value="kJ">kJ</option>
         <option value="kBT">kT</option>
     </param>
-    <param name="skiplambda" type="text" label="Indices of lambda states to skip" help="Give a string of lambda indices separated by '-' and they will be removed from the analysis.  Default: will use all the windows "/>
+    <param name="skiplambda" type="text" label="Indices of lambda states to skip" help="Give a string of lambda indices separated by '-' (e.g. 2-3) and they will be removed from the analysis.  Default: will use all the windows."/>
     </inputs>
     <outputs>
         <data name="output" format="txt" label="output">
@@ -44,7 +44,7 @@
             <param name="time" value="0"/>
             <param name="units" value="kcal"/>
             <param name="lambda" value="no"/>
-            <output name="change" file="dF_t.txt" />
+            <output name="change" file="Free_energy_change_dF(t).txt" />
         </test>
     </tests>  
     <help><![CDATA[   
