@@ -24,6 +24,7 @@
         <option value="kBT">kT</option>
     </param>
     <param name="skiplambda" type="text" label="Indices of lambda states to skip" help="Give a string of lambda indices separated by '-' (e.g. 2-3) and they will be removed from the analysis.  Default: will use all the windows."/>
+        <validator type="regex" message="no whitespace allowed">^[ ]*$</validator>
     </inputs>
     <outputs>
         <data name="output" format="txt" label="output">
