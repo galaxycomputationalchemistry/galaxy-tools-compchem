@@ -1,0 +1,87 @@
+<tool id="alchemical_analysis" name="Alchemical Analysis" version="1.0.2">
+    <description>Analysis of alchemical free energy calculations</description> 
+    <requirements>
+         <requirement type="package" version="1.0.2">alchemical-analysis</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+       ln -s '$datain' ./data.tar &&
+       tar xf ./data.tar && 
+       mkdir ./RESULTS/ &&
+            #if $skiplambda == "":
+                alchemical_analysis -d data -o ./RESULTS -t '$temp' -s '$time' -c -q xvg -p '$prefix' -g -e -f 10 -w -u '$units' &>> '$output'
+            #else: 
+                 alchemical_analysis -d data -o ./RESULTS -t '$temp' -s '$time' -k '$skiplambda' -c -q xvg -p '$prefix' -g -e -f 10 -w -u '$units' &>> '$output'
+            #end if
+    ]]></command>
+    <inputs>
+    <param format="tar" name="datain" type="data" label="TI/FEP data output"/>
+    <param name="prefix" type="text" value="md" label="Prefix for datafile sets" help="This should be md if you used the alchemical simulator tool"/>
+    <param name="temp" type="integer" value="300" label="Temperature (K)"/>
+    <param name="time" type="integer" value="0" label="Equilibration time (ps)" help="Discard data prior to this specified time as 'equilibration' data." />
+    <param name="units" type="select" label="Units to report energies" >
+        <option value="kcal">kcal</option>
+        <option value="kJ">kJ</option>
+        <option value="kBT">kT</option>
+    </param>
+    <param name="skiplambda" type="text" label="Indices of lambda states to skip" help="Give a string of lambda indices separated by '-' (e.g. 2-3) and they will be removed from the analysis.  Default: will use all the windows.">
+        <validator type="regex" message="Only numeric values and '-' allowed">^[0-9-]*$</validator>
+    </param>
+    </inputs>
+    <outputs>
+        <data name="output" format="txt" label="output">
+        </data>
+        <data name="results" format="txt" from_work_dir="./RESULTS/results.txt" label="Results"/>
+        <data name="change" format="txt" from_work_dir="./RESULTS/dF_t.txt" label="Free energy change dF(t)"/>
+        <data name="convergence" format="png" from_work_dir="./RESULTS/dF_t.png" label="Convergence Plot dF(t)"/>
+        <data name="overlap" format="png" from_work_dir="./RESULTS/O_MBAR.png" label="Overlap Matrix"/>
+        <data name="cfm" format="png" from_work_dir="./RESULTS/cfm.png" label="Curve Fitting Method (CFM) based consistency inspector"/>
+        <data name="df_state" format="png" from_work_dir="./RESULTS/dF_state_long.png" label="Free energy change breakdown"/>
+        <data name="ti_plot" format="png" from_work_dir="./RESULTS/dhdl_TI.png" label="Thermodynamic Integration plot"/>
+    </outputs>
+    <tests>
+         <test>
+            <param name="datain" value="data.tar" ftype="tar"/>
+            <param name="prefix" value="md"/>
+            <param name="temp" value="300"/>
+            <param name="time" value="0"/>
+            <param name="units" value="kcal"/>
+            <param name="lambda" value="no"/>
+            <output name="change" file="Free_energy_change_dF(t).txt" />
+        </test>
+    </tests>  
+    <help><![CDATA[   
+.. class:: infomark
+ 
+**What it does**
+        
+
+This tool can run analysis of alchemical free energy simulations.
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - TAR archive file of the GROMACS XVG files from free energy simulations. Note that simulations should be at least 100 ps in length.
+
+_____
+
+       
+.. class:: infomark
+
+**Output**
+
+       - Report and free energy outputs.
+       - Overlap matrix of free energy windows (as PNG).
+       - Convergence plot (as PNG).
+       - Curve Fitting Method (CFM) based consistency inspector (as PNG).
+       - Free energy change breakdown (as PNG).
+       - Thermodynamic Integration plot (as PNG).
+
+    ]]></help>
+    <citations>
+      <citation type="doi">10.1007/s10822-015-9840-9</citation>
+    </citations>
+</tool>
