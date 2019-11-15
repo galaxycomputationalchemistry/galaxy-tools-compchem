@@ -428,20 +428,20 @@ dh_hist_spacing          = 0.1
          <test>
             <param name="groin" value="morph.gro" ftype="gro"/>
             <param name="topin" value="morph.top" ftype="top"/>
-            <param name="minstep" value="10"/>
+            <param name="minstep" value="1000"/>
             <param name="nvtstep" value="50"/>
             <param name="nptstep" value="50"/>
-            <param name="mdstep" value="100"/>
+            <param name="mdstep" value="1000"/>
             <param name="seed" value="19880924"/>
-            <param name="cons" value="no"/>
             <param name="dt" value="0.001"/>
+            <param name="cons" value="no"/>
             <param name="path" value="global"/> 
-            <param name="lambda" value="2"/>
+            <param name="lambda" value="1"/>
             <param name="fep" value="0.00 0.50 1.00"/>
-            <param name="temperature" value="300.0"/>
             <param name="fepop" value="default"/>
-            <param name="input_fep" value="perform"/>
+            <param name="temperature" value="300.0"/>
             <param name="pressure" value="1.0"/>
+            <param name="input_fep" value="perform"/>
             <output name="dataout" file="TI_FEP_data_output.tar" compare="sim_size"/>
         </test>
         <test>
