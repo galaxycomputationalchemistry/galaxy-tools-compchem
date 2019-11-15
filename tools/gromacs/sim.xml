@@ -255,9 +255,9 @@
             <param name="str" value="gro"/>
             <param name="ensemble" value="npt" />
             <param name="posres_bool" value="false" />
-            <!-- <output name="output1" file="md_0_1.gro" ftype="gro" compare="sim_size"/>
-            <output name="output3" file="md_0_1.trr" ftype="trr" compare="sim_size"/> -->
-            <output name="output1" ftype="gro">
+            <output name="output1" file="md_0_1.gro" ftype="gro" compare="sim_size"/>
+            <output name="output3" file="md_0_1.trr" ftype="trr" compare="sim_size"/>
+            <!-- <output name="output1" ftype="gro">
                 <assert_contents>
                     <has_size value="2647999" />
                 </assert_contents>
@@ -265,7 +265,7 @@
             <output name="output3" ftype="trr">
                 <assert_contents>
                     <has_size value="10132584" />
-                </assert_contents>
+                </assert_contents> -->
             </output>
         </test>
 
