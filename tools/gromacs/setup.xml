@@ -45,16 +45,14 @@
 
         <param argument="ignore_h" type="boolean" label="Ignore hydrogens" truevalue="" falsevalue="no" help="Ignore hydrogen atoms that are in the coordinate file." />
 
-        <param name="capture_log" type="boolean" value="false" label="Generate detailed log" help="Generate detailed log information that can be summarized with ParseLog."/>
+        <expand macro="log" />
 
     </inputs>
     <outputs>
         <data name="output1" format="top" from_work_dir="topol.top"/>
         <data name="output2" format="gro" from_work_dir="processed.gro"/>
         <data name="output3" format="itp" from_work_dir="posres.itp"/>
-        <data name="report" format="txt" from_work_dir="verbose.txt">
-            <filter>capture_log</filter>
-        </data>
+        <expand macro="log_outputs" />
     </outputs>
     <tests>
         <test>
