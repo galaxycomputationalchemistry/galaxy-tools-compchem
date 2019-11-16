@@ -46,7 +46,7 @@
             <param name="time" value="0"/>
             <param name="units" value="kcal"/>
             <param name="lambda" value="no"/>
-            <output name="change" file="Free_energy_change_dF(t).txt" />
+            <output name="change" file="dF(t).txt" />
         </test>
     </tests>  
     <help><![CDATA[   
