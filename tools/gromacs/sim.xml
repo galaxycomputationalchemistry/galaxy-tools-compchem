@@ -265,8 +265,8 @@
             <output name="output3" ftype="trr">
                 <assert_contents>
                     <has_size value="10132584" />
-                </assert_contents> -->
-            </output>
+                </assert_contents>
+            </output> -->
         </test>
 
         <test>
