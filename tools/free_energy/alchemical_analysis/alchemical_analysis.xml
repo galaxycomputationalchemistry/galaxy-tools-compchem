@@ -2,6 +2,7 @@
     <description>Analysis of alchemical free energy calculations</description> 
     <requirements>
          <requirement type="package" version="1.0.2">alchemical-analysis</requirement>
+         <requirement type="package" version="3.0.3">pymbar</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
        ln -s '$datain' ./data.tar &&
