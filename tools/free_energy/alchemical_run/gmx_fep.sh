@@ -12,6 +12,7 @@ mkdir traj
 FREE_ENERGY=`pwd`
 MDP=$FREE_ENERGY/MDP
 
+set -e
 
 for i in `seq 0 $lam`
  do
