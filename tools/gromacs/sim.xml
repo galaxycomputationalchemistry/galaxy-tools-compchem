@@ -16,21 +16,15 @@
         ln -s '$gro_input' ./inp.gro &&
         ln -s '$top_input' ./top_input.top &&
 
-        #if $inps.itp_in != 'None':
+        #if $inps.itp_in:
             ln -s '$inps.itp_in' ./posres.itp &&
-            set posres_bool="true" &&
-        #else:
-            set posres_bool="false" &&
         #end if
 
-        #if $inps.cpt_in != 'None':
+        #if $inps.cpt_in:
             ln -s '$inps.cpt_in' ./inp.cpt &&
-            set cpt_bool="yes" &&
-        #else:
-            set cpt_bool="no" &&
         #end if
 
-        #if $inps.ndx_in != 'None':
+        #if $inps.ndx_in:
             ln -s '$inps.ndx_in' ./index.ndx &&
         #end if
 
@@ -77,8 +71,8 @@
                                                     ; nstxout-compressed replaces nstxtcout
                     compressed-x-grps   = System    ; group(s) to write to the compressed trajectory file
                     ; Bond parameters
-                    #if $cpt_bool == "yes":
-                        continuation          = $cpt_bool    ; Restarting after NPT 
+                    #if $inps.cpt_in:
+                    continuation          = yes    ; Restarting after NPT 
                     #end if
                     constraint_algorithm    = lincs      ; holonomic constraints 
                     constraints              = $sets.mdp.constraints  ; all bonds (even heavy atom-H bonds) constrained
@@ -107,7 +101,7 @@
                     ; Velocity generation
                     gen_vel    = no    ; Velocity generation is off
                 #end if
-                #if $posres_bool == "true":
+                #if $inps.itp_in:
                     define    = -DPOSRES  ; position restrain the protein
                     refcoord_scaling  = com
                 #end if
