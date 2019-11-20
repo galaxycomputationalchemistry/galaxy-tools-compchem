@@ -79,13 +79,11 @@
                 <param argument="emstep" type="float" label="Maximum step size /nm" value="0.01" min="0.0001" max="1.0" help="Initial step size in nm." />
             </when>
         </conditional>
-        <param name="capture_log" type="boolean" value="false" label="Generate detailed log" help="Generate detailed log information that can be summarized with ParseLog."/>
+        <expand macro="log" />
     </inputs>
     <outputs>
         <data name="output1" format="gro" from_work_dir="em.gro"/>
-        <data name="report" format="txt" from_work_dir="verbose.txt">
-            <filter>capture_log</filter>
-        </data>
+        <expand macro="log_outputs" />
     </outputs>
     <tests>
         <test>

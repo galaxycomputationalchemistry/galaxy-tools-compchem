@@ -1,0 +1,76 @@
+<tool id="gmx_makendx" name="Create GROMACS index files" version="@VERSION@">
+    <description>using make_ndx</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements" />
+
+    <command detect_errors="exit_code"><![CDATA[
+
+        ln -s '$input_file' ./input.$input_file.ext &&
+        (echo '$sel'; echo 'q') | gmx make_ndx -f ./input.$input_file.ext -o ./ndx.ndx &>> verbose.txt &&
+        cp ./ndx.ndx '$ndx'
+
+    ]]></command>
+
+    <inputs>
+        <param argument="input_file" type="data" format='gro,pdb' label="Input structure"/>
+        <param argument="sel" type="text" label="Selection command" help="Selection for the new index group, e.g. 'r34' to select residue 34. Use  the operators '|' (or) and &amp; (and) to combine predefined groups.">
+            <sanitizer>
+                <valid>
+                    <add value="|" />
+                    <add value="&amp;" />
+                    <add value="!" />
+                </valid>
+            </sanitizer>
+        </param>
+
+        <expand macro="log" />
+
+    </inputs>
+    <outputs>
+        <data name="ndx" format="ndx"/>
+        <expand macro="log_outputs" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input_file" value="md_0_1.gro" ftype="gro"/>
+            <param name="sel" value="! 1 &amp; 14" />
+            <output name="ndx" file="md_0_1.ndx">
+                <assert_contents>
+                    <has_line line="[ !Protein_&amp;_non-Water ]"/>
+                    <has_text text="38369 38370 38371 38372 38373 38374 38375 38376"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+Generates GROMACS custom index files.
+
+_____
+
+.. class:: infomark
+
+**Input**
+
+    - A PDB or GRO file.
+    - A selection command for the new index group to be included in the output file. Combine previously defined groups using identifying values with the operators '|' (or) and & (and). For example, '1 | 4' will create a new index group containing all atoms contained within the first and fourth index groups already specified (according to their position in the input file).
+
+_____
+
+.. class:: infomark
+
+**Output**
+
+    - A GROMACS index (ndx) file, containing the 'default' index groups and the new group at the end of the file.
+
+    ]]></help>
+
+    <expand macro="citations" />
+</tool>

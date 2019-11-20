@@ -1,0 +1,74 @@
+<tool id="gmx_restraints" name="Create GROMACS position restraints files" version="@VERSION@">
+    <description>using genrestr</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements" />
+
+    <command detect_errors="exit_code"><![CDATA[
+
+        ln -s '$gro_input' ./gro_input.gro &&
+        ln -s '$ndx_input' ./ndx_input.ndx &&
+        echo '$index' | gmx genrestr -f ./gro_input.gro -n ./ndx_input.ndx -o posre.itp -fc $fc  &>> verbose.txt
+
+    ]]></command>
+
+    <inputs>
+        <param argument="gro_input" type="data" format='gro' label="GRO input file" help="Input structure"/>
+        <param argument="ndx_input" type="data" format='ndx' label="Index (NDX) file" help="Index file containing the atoms which should be restrained"/>
+        <param argument="fc" type="text" value="1000 1000 1000" label="Force constants" help="Vector (in Cartesian space) specifying force constants for the restraints (kJ/mol nm^2)">
+            <validator type="regex" message="Only numeric values and whitespace allowed">^[0-9 ]*$</validator>
+        </param>
+        <param argument="index" type="text" label="Index of group" help="Index of group for calculating position restraints - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0).">
+            <validator type="regex" message="Only numeric values allowed">^[0-9]*$</validator>
+        </param>
+
+        <expand macro="log" />
+
+    </inputs>
+    <outputs>
+        <data name="output1" format="itp" from_work_dir="posre.itp"/>
+        <expand macro="log_outputs" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="gro_input" value="md_0_1.gro" />
+            <param name="ndx_input" value="md_0_1.ndx" />
+            <param name="fc" value="500 600 700" />
+            <param name="index" value="16" />
+            <output name="output1" file="posre_cl.itp" ftype="itp"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+This tool calculates a position restraint (ITP) file for part of a system, specified in provided GRO and NDX files.
+
+_____
+
+.. class:: infomark
+
+**Input**
+
+       - GRO structure file.
+       - Index (NDX) file.
+       - Force constant vector (in Cartesian space) for applying restraints. E.g. '1000 1000 1000' will apply a force constraint of 1000 kJ/mol nm^2 along each (XYZ) axis.
+       - Index number of the group for which restraints should be calculated, i.e. the position of the group in the index file.
+
+_____
+
+
+.. class:: infomark
+
+**Output**
+
+       - Position restraint (itp) file, which may be useful for system equilibration.
+
+    ]]></help>
+
+    <expand macro="citations" />
+</tool>
