@@ -18,7 +18,7 @@
         ln -s '$top_input' ./top_input.top &&
   
         gmx grompp -f ./minim.mdp -c ./solv_ions.gro -r ./solv_ions.gro -p ./top_input.top -o em.tpr &>> verbose.txt &&
-        gmx mdrun -nt ${GALAXY_SLOTS:-4} -deffnm em &>> verbose.txt
+        gmx mdrun -nt "\${GALAXY_SLOTS:-4}" -deffnm em &>> verbose.txt
         
     ]]></command>
         <configfiles>
