@@ -44,7 +44,7 @@
             -o outp.tpr &>> verbose.txt &&
 
 
-        gmx mdrun -deffnm outp &>> verbose.txt
+        gmx mdrun -nt "\${GALAXY_SLOTS:-4}" -deffnm outp &>> verbose.txt
  
         #if $outps.str == 'pdb' or $outps.str == 'both'
             && gmx editconf -f outp.gro -o outp.pdb &>> verbose.txt

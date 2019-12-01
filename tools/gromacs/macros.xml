@@ -55,9 +55,6 @@
 
         </conditional>
 
-        <param name="capture_log" type="boolean" value="false" label="Generate detailed log" help="Generate detailed log information that can be summarized with ParseLog."/>
-
-
     </xml>
 
     <xml name="log">
