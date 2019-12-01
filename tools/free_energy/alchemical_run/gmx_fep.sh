@@ -47,7 +47,7 @@ do
 
     gmx grompp -f $MDP/em_steep_$LAMBDA.mdp -c $FREE_ENERGY/morph.gro -p $FREE_ENERGY/morph.top -o min$LAMBDA.tpr
 
-    gmx mdrun -nt ${GALAXY_SLOTS:-4} -deffnm min$LAMBDA
+    gmx mdrun -deffnm min$LAMBDA
 
     sleep 10
 
@@ -62,7 +62,7 @@ do
 
     gmx grompp -f $MDP/nvt_$LAMBDA.mdp -c ../EM/min$LAMBDA.gro -p $FREE_ENERGY/morph.top -o nvt$LAMBDA.tpr
 
-    gmx mdrun -nt ${GALAXY_SLOTS:-4} -deffnm nvt$LAMBDA
+    gmx mdrun -deffnm nvt$LAMBDA
 
     echo "Constant volume equilibration complete."
 
@@ -78,7 +78,7 @@ do
 
     gmx grompp -f $MDP/npt_$LAMBDA.mdp -c ../NVT/nvt$LAMBDA.gro -p $FREE_ENERGY/morph.top -t ../NVT/nvt$LAMBDA.cpt -o npt$LAMBDA.tpr
 
-    gmx mdrun -nt ${GALAXY_SLOTS:-4} -deffnm npt$LAMBDA
+    gmx mdrun -deffnm npt$LAMBDA
 
     echo "Constant pressure equilibration complete."
 
@@ -94,7 +94,7 @@ do
 
     gmx grompp -f $MDP/md_$LAMBDA.mdp -c ../NPT/npt$LAMBDA.gro -p $FREE_ENERGY/morph.top -t ../NPT/npt$LAMBDA.cpt -o md$LAMBDA.tpr
 
-    gmx mdrun -nt ${GALAXY_SLOTS:-4} -deffnm md$LAMBDA
+    gmx mdrun -deffnm md$LAMBDA
 
     echo "Production MD complete."
 
