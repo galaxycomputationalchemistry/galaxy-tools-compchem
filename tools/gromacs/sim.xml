@@ -255,7 +255,7 @@
     </outputs>
 
     <tests>
-        <test>
+        <test expect_num_outputs="3">
             <param name="gro_input" value="npt.gro" />
             <param name="top_input" value="topol_solv.top" />
             <!-- <param name="cpt_bool" value="yes" /> -->
@@ -283,7 +283,7 @@
             </output> -->
         </test>
 
-        <test>
+        <test expect_num_outputs="3">
             <param name="gro_input" value="npt.gro" />
             <param name="top_input" value="topol_solv.top" />
             <!-- <param name="cpt_bool" value="yes" /> -->
@@ -299,7 +299,7 @@
             <output name="output3" file="md_0_1.trr" ftype="trr" compare="sim_size"/>
         </test>
 
-        <test>
+        <test expect_num_outputs="3">
             <param name="gro_input" value="npt.gro" />
             <param name="top_input" value="topol_solv.top" />
             <!-- <param name="cpt_bool" value="yes" /> -->
@@ -316,7 +316,7 @@
             <output name="output3" file="md_0_1.trr" ftype="trr" compare="sim_size"/>
         </test>
 
-        <test>
+        <test expect_num_outputs="3">
             <param name="gro_input" value="em.gro" />
             <param name="top_input" value="topol_solv.top" />
             <!-- <param name="posres_bool" value="true" /> -->
