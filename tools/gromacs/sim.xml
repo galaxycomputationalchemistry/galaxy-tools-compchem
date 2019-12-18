@@ -5,7 +5,6 @@
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-
         #if $sets.mdp.mdpfile == "custom":
             ln -s '$sets.mdp.mdp_input' ./md.mdp &&
         #end if
@@ -203,6 +202,12 @@
                 <option value="true">Produce XVG output</option>
                 <option value="false" selected="true">No XVG output</option>
             </param>
+
+            <!-- TPR out -->
+            <param name="tpr_out" type="select" label="Produce TPR output" help="Produce TPR binary file" >
+                <option value="true">Produce TPR output</option>
+                <option value="false" selected="true">No TPR output</option>
+            </param>
         
         </section>
 
@@ -221,33 +226,36 @@
     </inputs>
     <outputs>
         <data name="output1" format="gro" from_work_dir="outp.gro">
-            <filter>outps.str == 'gro' or outps.str == 'both'</filter>
+            <filter>outps["str"] == 'gro' or outps["str"] == 'both'</filter>
         </data>
         <data name="output2" format="pdb" from_work_dir="outp.pdb">
-            <filter>outps.str == 'pdb' or outps.str == 'both'</filter>
+            <filter>outps["str"] == 'pdb' or outps["str"] == 'both'</filter>
         </data>
         <data name="output3" format="trr" from_work_dir="outp.trr">
-            <filter>outps.traj == 'trr' or outps.traj == 'both'</filter>
+            <filter>outps["traj"] == 'trr' or outps["traj"] == 'both'</filter>
         </data>
         <data name="output4" format="xtc" from_work_dir="outp.xtc">
-            <filter>outps.traj == 'xtc' or outps.traj == 'both'</filter>
+            <filter>outps["traj"] == 'xtc' or outps["traj"] == 'both'</filter>
         </data>
         <data name="output5" format="cpt" from_work_dir="outp.cpt">
-            <filter>outps.cpt_out == 'true'</filter>
+            <filter>outps["cpt_out"] == 'true'</filter>
         </data>
         <data name="output6" format="edr" from_work_dir="outp.edr">
-            <filter>outps.edr_out == 'true'</filter>
+            <filter>outps["edr_out"] == 'true'</filter>
         </data>
         <collection name="output7" type="list">
             <discover_datasets pattern="(?P&lt;designation&gt;.*)\.xvg" visible="true" directory="." />
-            <filter>outps.xvg_out == 'true'</filter>
+            <filter>outps["xvg_out"] == 'true'</filter>
         </collection>
+        <data name="output8" format="binary" from_work_dir="outp.tpr">
+            <filter>outps["tpr_out"] == 'true'</filter>
+        </data>
 
         <expand macro="log_outputs" />
     </outputs>
 
     <tests>
-        <test>
+        <test expect_num_outputs="3">
             <param name="gro_input" value="npt.gro" />
             <param name="top_input" value="topol_solv.top" />
             <!-- <param name="cpt_bool" value="yes" /> -->
@@ -257,10 +265,12 @@
             <!-- <param name="ndx_bool" value="false" /> -->
             <param name="traj" value="trr"/>
             <param name="str" value="gro"/>
+            <param name="tpr_out" value="true"/>
             <param name="ensemble" value="npt" />
             <!-- <param name="posres_bool" value="false" /> -->
             <output name="output1" file="md_0_1.gro" ftype="gro" compare="sim_size"/>
             <output name="output3" file="md_0_1.trr" ftype="trr" compare="sim_size"/>
+            <output name="output8" file="md_0_1.tpr" ftype="binary" compare="sim_size"/>
             <!-- <output name="output1" ftype="gro">
                 <assert_contents>
                     <has_size value="2647999" />
@@ -273,7 +283,7 @@
             </output> -->
         </test>
 
-        <test>
+        <test expect_num_outputs="3">
             <param name="gro_input" value="npt.gro" />
             <param name="top_input" value="topol_solv.top" />
             <!-- <param name="cpt_bool" value="yes" /> -->
@@ -289,7 +299,7 @@
             <output name="output3" file="md_0_1.trr" ftype="trr" compare="sim_size"/>
         </test>
 
-        <test>
+        <test expect_num_outputs="3">
             <param name="gro_input" value="npt.gro" />
             <param name="top_input" value="topol_solv.top" />
             <!-- <param name="cpt_bool" value="yes" /> -->
@@ -306,7 +316,7 @@
             <output name="output3" file="md_0_1.trr" ftype="trr" compare="sim_size"/>
         </test>
 
-        <test>
+        <test expect_num_outputs="3">
             <param name="gro_input" value="em.gro" />
             <param name="top_input" value="topol_solv.top" />
             <!-- <param name="posres_bool" value="true" /> -->
@@ -322,7 +332,6 @@
             <output name="output2" file="nvt.pdb" ftype="pdb" compare="sim_size"/>
             <output name="output4" file="nvt.xtc" ftype="xtc" compare="sim_size"/>
             <output name="output5" file="nvt.cpt" ftype="cpt" compare="sim_size"/>
-
         </test>
     </tests>
     
