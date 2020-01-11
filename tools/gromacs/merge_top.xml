@@ -1,4 +1,4 @@
-<tool id="gmx_merge_topology_files" name="Merge GROMACS topologies" version="0.1.0">
+<tool id="gmx_merge_topology_files" name="Merge GROMACS topologies" version="@VERSION@">
     <description>for example, for protein and ligand files</description>
     <macros>
         <import>macros.xml</import>
@@ -13,8 +13,8 @@
         python '$__tool_directory__/merge_top.py' top_input.top itps.txt
     ]]></command>
     <inputs>
-        <param argument="top_input" type="data" format='top' label="Topology (TOP) file"/>
-        <param argument="itp_inputs" type="data" format='itp' multiple="true" label="Position restraint file"/>
+        <param name="top_input" type="data" format='top' label="Topology (TOP) file" help="'Master' topology into which subordinate topologies will be added."/>
+        <param name="itp_inputs" type="data" format='top,itp' multiple="true" label="Topologies (TOP or ITP)" help="One or more topologies for insertion into the main topology. Either TOP or ITP format. Can include position restraint files."/>
     </inputs>
     <outputs>
         <data name="output" format="top" from_work_dir="top_output.top"/>
@@ -27,7 +27,31 @@
         </test>
     </tests>
     <help><![CDATA[
-        Use this tool to combine GROMACS topologies - for example, the topology files for a ligand and protein.
+
+.. class:: infomark
+
+**What it does**
+
+This tool merges GROMACS topologies - for example, the topology files for a ligand and protein. TOP files contain references to other subordinate TOP files using the `#include` tag. In Galaxy, these tags need to be replaced directly with the contents of the topology files they refer to.
+
+_____
+
+.. class:: infomark
+
+**Input**
+
+       - TOP file for the main topology
+       - One or more subordinate topologies (TOP or ITP) which can be inserted into the main topology if specified by an `#include` tag.
+
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - TOP file.
+
     ]]></help>
     <expand macro="citations" />
 </tool>

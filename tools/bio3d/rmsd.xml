@@ -1,5 +1,5 @@
 <tool id="bio3d_rmsd" name="RMSD Analysis" version="@VERSION@">
-    <description>RMSD using Bio3D</description>
+    <description> using Bio3D</description>
     <macros>
         <import>macros.xml</import>
     </macros>
@@ -75,20 +75,20 @@
         <expand macro="analysis_inputs"/>
         <conditional name="rmsd">
            <param name="sele" type="select" label="Select domains">
-             <option value="calpha">Calpha</option>
-             <option value="cbeta">Cbeta</option>
+             <option value="calpha">C-alpha</option>
+             <option value="cbeta">C-beta</option>
              <option value="backbone">Backbone</option>
              <option value="sidechain">Sidechain</option>
              <option value="protein">Protein</option>
              <option value="ligand">Ligand</option>
-             <option value="nucleic">Nucleic Acids</option>
+             <option value="nucleic">Nucleic acids</option>
              <option value="loop">Loop</option>
              <option value="water">Water</option>
              <option value="hyd">Hydrogens</option>
-             <option value="noh">Non Hydrogens</option>
-             <option value="elety">Atom Names</option>
-             <option value="resid">Resid</option>
-             <option value="segid">Segid</option>
+             <option value="noh">Non-hydrogens</option>
+             <option value="elety">Atom names</option>
+             <option value="resid">Residue ID</option>
+             <option value="segid">Segment ID</option>
            </param>
            <when value="calpha">
            </when>
@@ -105,8 +105,8 @@
            <when value="nucleic">
            </when>
            <when value="loop">
-             <param name="res1"  type="text" label="Resid of the loop starting residue"/>
-             <param name="res2"  type="text" label="Resid of the loop ending residue"/>
+             <param name="res1"  type="text" label="ID of the residue at the start of the loop"/>
+             <param name="res2"  type="text" label="ID of the residue at the end of the loop"/>
            </when>
            <when value="water">
            </when>
@@ -115,20 +115,20 @@
           <when value="noh">
           </when> 
           <when value="elety">
-            <param name="elety"  type="text" value="CA" label="Atom Name"/>
+            <param name="elety"  type="text" value="CA" label="Atom name"/>
           </when>
           <when value="resid">
-            <param name="resid"  type="text" value="BGLC" label="Resid"/>
+            <param name="resid"  type="text" value="BGLC" label="Residue ID"/>
           </when>
           <when value="segid">
-            <param name="segid"  type="text" value="SUBS" label="Segid"/>
+            <param name="segid"  type="text" value="SUBS" label="Segment ID"/>
           </when>
         </conditional>
     </inputs>
     <outputs>
         <data format="tabular" name="output" label="RMSD raw data"/>
         <data format="png" name="rmsd_plot" label="RMSD plot"/>
-        <data format="png" name="rmsd_hist_plot" label="RMSD Histogram Plot"/>
+        <data format="png" name="rmsd_hist_plot" label="RMSD histogram plot"/>
     </outputs>
     <tests>
         <test>
@@ -144,7 +144,7 @@
 **What it does**
 
 The Root Mean Square Deviation (RMSD) is a standard measure of structural distance between coordinates.
-This tool can calculate and plot the RMSD of the selected section.
+This tool can calculate and plot the RMSD of the selected section of the protein (or other molecule).
 
 _____
 
@@ -163,8 +163,8 @@ _____
 
 **Output**
 
-       - Image (as PNG) of the rmsd plot.
-       - Image (as PNG) of the rmsd histogram plot.
+       - Image (as PNG) of the RMSD plot.
+       - Image (as PNG) of the RMSD histogram plot.
        - Tab-separated file of raw data.
 
     ]]></help>

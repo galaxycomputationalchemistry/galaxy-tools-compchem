@@ -1,0 +1,379 @@
+<tool id="gmx_sim" name="GROMACS simulation" version="@VERSION@.1">
+    <description>for system equilibration or data collection</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        #if $sets.mdp.mdpfile == "custom":
+            ln -s '$sets.mdp.mdp_input' ./md.mdp &&
+        #end if
+        #if $sets.mdp.mdpfile == "default":
+            ln -s '$md' ./md.mdp &&
+        #end if
+
+        ln -s '$gro_input' ./inp.gro &&
+        ln -s '$top_input' ./top_input.top &&
+
+        #if $inps.itp_in:
+            ln -s '$inps.itp_in' ./posres.itp &&
+        #end if
+
+        #if $inps.cpt_in:
+            ln -s '$inps.cpt_in' ./inp.cpt &&
+        #end if
+
+        #if $inps.ndx_in:
+            ln -s '$inps.ndx_in' ./index.ndx &&
+        #end if
+
+        gmx grompp 
+            -f ./md.mdp 
+            -c ./inp.gro 
+            #if $inps.cpt_in:
+                -t ./inp.cpt
+            #end if
+            #if $inps.itp_in:
+                -r ./inp.gro
+            #end if
+            #if $inps.ndx_in:
+                -n ./index.ndx
+            #end if
+            -p ./top_input.top 
+            -o outp.tpr &>> verbose.txt &&
+
+
+        gmx mdrun -nt "\${GALAXY_SLOTS:-4}" -deffnm outp &>> verbose.txt
+ 
+        #if $outps.str == 'pdb' or $outps.str == 'both'
+            && gmx editconf -f outp.gro -o outp.pdb &>> verbose.txt
+        #end if
+
+        && cat md.mdp &>> verbose.txt
+
+    ]]></command>
+        <configfiles>
+            <!-- .mdp file for the gromacs simulation -->
+            <configfile name="md">
+                #if $sets.mdp.mdpfile == 'default':
+                    title    = OPLS Lysozyme MD simulation 
+                    ; Run parameters
+                    integrator  = $sets.mdp.integrator    ; leap-frog integrator
+                    nsteps    = $sets.mdp.md_steps  ; 2 * 500000 = 1000 ps (1 ns)
+                    dt        = $sets.mdp.step_length    ; 2 fs
+                    ; Output control
+                    nstxout            = $sets.mdp.write_freq    ; save coordinates every 10.0 ps
+                    nstvout            = $sets.mdp.write_freq    ; save velocities every 10.0 ps
+                    nstenergy          = $sets.mdp.write_freq    ; save energies every 10.0 ps
+                    nstlog            = $sets.mdp.write_freq    ; update log file every 10.0 ps
+                    nstxout-compressed  = $sets.mdp.write_freq      ; save compressed coordinates every 10.0 ps
+                                                    ; nstxout-compressed replaces nstxtcout
+                    compressed-x-grps   = System    ; group(s) to write to the compressed trajectory file
+                    ; Bond parameters
+                    #if $inps.cpt_in:
+                    continuation          = yes    ; Restarting after NPT 
+                    #end if
+                    constraint_algorithm    = lincs      ; holonomic constraints 
+                    constraints              = $sets.mdp.constraints  ; all bonds (even heavy atom-H bonds) constrained
+                    lincs_iter              = 1        ; accuracy of LINCS
+                    lincs_order              = 4        ; also related to accuracy
+                    ; Neighborsearching
+                    cutoff-scheme   = $sets.mdp.cutoffscheme
+                    ns_type        = grid    ; search neighboring grid cells
+                    nstlist        = 10      ; 20 fs, largely irrelevant with Verlet scheme
+                    rcoulomb      = $sets.mdp.rcoulomb    ; Short-range electrostatic cut-off
+                    rlist       = $sets.mdp.rlist ; Cut-off distance for the short-range neighbor list.
+                    rvdw        = $sets.mdp.rvdw    ; Short-range Van der Waals cut-off
+                    ; Electrostatics
+                    coulombtype      = $sets.mdp.coulombtype    ; method for electrostatics calculations e.g. PME
+                    pme_order      = 4        ; cubic interpolation
+                    fourierspacing  = 0.16    ; grid spacing for FFT
+                    ; Temperature coupling is on
+                    tcoupl    = V-rescale              ; modified Berendsen thermostat
+                    tc-grps    = Protein Non-Protein  ; two coupling groups - more accurate
+                    tau_t    = 0.1    0.1          ; time constant, in ps
+                    ref_t    = $sets.mdp.temperature $sets.mdp.temperature           ; reference temperature, one for each group, in K
+                    ; Periodic boundary conditions
+                    pbc    = xyz    ; 3-D PBC
+                    ; Dispersion correction
+                    DispCorr  = EnerPres  ; account for cut-off vdW scheme
+                    ; Velocity generation
+                    gen_vel    = no    ; Velocity generation is off
+                #end if
+                #if $inps.itp_in:
+                    define    = -DPOSRES  ; position restrain the protein
+                    refcoord_scaling  = com
+                #end if
+                #if $sets.ensemble == "nvt":
+                    pcoupl    = no     ; no pressure coupling in NVT
+                #else: 
+                    ; Pressure coupling is on
+                    pcoupl            = Parrinello-Rahman      ; Pressure coupling on in NPT
+                    pcoupltype          = isotropic              ; uniform scaling of box vectors
+                    tau_p            = 2.0                ; time constant, in ps
+                    ref_p            = 1.0                ; reference pressure, in bar
+                    compressibility     = 4.5e-5              ; isothermal compressibility of water, bar^-1
+                #end if
+
+            </configfile>
+
+        </configfiles>
+    <inputs>
+        <param argument="gro_input" type="data" format='gro' label="GRO structure file"/>
+        <param argument="top_input" type="data" format='top' label="Topology (TOP) file"/>
+
+        <section name="inps" title="Inputs" expanded="false">
+        
+            <!-- CPT inp -->
+            <!-- <conditional name="cpt_inp">
+                <param name="cpt_bool" type="select" label="Use a checkpoint (CPT) file" help="CPT file from a previous MD run">
+                    <option value="yes">Continue simulation from a CPT file</option>
+                    <option value="no" selected="true">No CPT input</option>
+                </param>
+                <when value="yes">
+                    <param argument="cpt_in" type="data" format='cpt' label="Checkpoint file"/>
+                </when>
+                <when value="no"/>
+            </conditional> -->
+            
+            <param argument="cpt_in" type="data" format='cpt' label="Checkpoint (CPT) file" optional="true" help="CPT file from a previous MD run. Leave empty if no checkpoint should be used."/>
+
+            <!-- ITP inp -->
+            <!-- <conditional name="posres">
+                <param name="posres_bool" type="select" label="Apply position restraints" help="Used e.g. for equilibration of solvent around a protein" value="false">
+                    <option value="true">Apply position restraints</option>
+                    <option value="false" selected="true">No position restraints</option>
+                </param>
+                <when value="true">
+                    <param argument="itp_in" type="data" format='itp' label="Position restraint (ITP) file"/>
+                </when>
+                <when value="false"/>
+            </conditional> -->
+
+            <param argument="itp_in" type="data" format='itp' label="Position restraint (ITP) file" optional="true" help="Apply position restraints using a ITP file. Leave empty if no position restraints should be used."/>
+
+            <!-- NDX inp -->
+            <!-- <conditional name="ndx_inp">
+                <param name="ndx_bool" type="select" label="Use a custom index (ndx) file" help="Use an index file specifying custom atom groups.">
+                    <option value="true">Use custom index file</option>
+                    <option value="false" selected="true">Use default generated group</option>
+                </param>
+                <when value="true">
+                    <param argument="ndx_in" type="data" format='ndx' label="Index file"/>
+                </when>
+                <when value="false"/>
+            </conditional> -->
+
+            <param argument="ndx_in" type="data" format='ndx' label="Index (ndx) file" optional="true" help="Use an index file specifying custom atom groups. Leave empty to use default generated group"/>
+
+        </section>
+
+        <section name="outps" title="Outputs" expanded="false">
+            <!-- TRAJ out -->
+            <param argument="traj" type="select" label="Trajectory output">
+                <option value='none'>Return no trajectory output</option>
+                <option value='xtc'>Return .xtc file (reduced precision)</option>
+                <option value='trr'>Return .trr file (full precision)</option>
+                <option value='both'>Return both .xtc and .trr files</option>
+            </param>
+
+            <!-- STR out -->
+            <param argument="str" type="select" label="Structure output">
+                <option value='none'>Return no structure output</option>
+                <option value='gro'>Return .gro file</option>
+                <option value='pdb'>Return .pdb file</option>
+                <option value='both'>Return both .gro and .pdb files</option>
+            </param>
+            
+            <!-- CPT out -->
+            <param name="cpt_out" type="select" label="Produce a checkpoint (CPT) file" help="Produce CPT file for a subsequent MD run">
+                <option value="true">Produce CPT output</option>
+                <option value="false" selected="true">No CPT output</option>
+            </param>
+
+            <!-- EDR out -->
+            <param name="edr_out" type="select" label="Produce an energy (EDR) file" help="Produce file containing energies associated with the simulation">
+                <option value="true">Produce EDR output</option>
+                <option value="false" selected="true">No EDR output</option>
+            </param>
+
+            <!-- XVG out -->
+            <param name="xvg_out" type="select" label="Produce XVG output" help="Produce tabular XVG file (e.g. forces from pulling simulations)" >
+                <option value="true">Produce XVG output</option>
+                <option value="false" selected="true">No XVG output</option>
+            </param>
+
+            <!-- TPR out -->
+            <param name="tpr_out" type="select" label="Produce TPR output" help="Produce TPR binary file" >
+                <option value="true">Produce TPR output</option>
+                <option value="false" selected="true">No TPR output</option>
+            </param>
+        
+        </section>
+
+        <section name="sets" title="Settings" expanded="false">
+            <!-- other ... -->
+            <param name="ensemble" label="Ensemble" type="select" help="NVT ensemble (constant number of particles, volume and temperature) or NPT ensemble (constant number of particles, pressure and temperature)">
+                <option value="nvt">Isothermal-isochoric ensemble (NVT)</option>
+                <option value="npt">Isothermal-isobaric ensemble (NPT)</option>
+            </param>
+
+            <expand macro="md_inputs"/>
+        </section>
+
+        <expand macro="log" />
+
+    </inputs>
+    <outputs>
+        <data name="output1" format="gro" from_work_dir="outp.gro">
+            <filter>outps["str"] == 'gro' or outps["str"] == 'both'</filter>
+        </data>
+        <data name="output2" format="pdb" from_work_dir="outp.pdb">
+            <filter>outps["str"] == 'pdb' or outps["str"] == 'both'</filter>
+        </data>
+        <data name="output3" format="trr" from_work_dir="outp.trr">
+            <filter>outps["traj"] == 'trr' or outps["traj"] == 'both'</filter>
+        </data>
+        <data name="output4" format="xtc" from_work_dir="outp.xtc">
+            <filter>outps["traj"] == 'xtc' or outps["traj"] == 'both'</filter>
+        </data>
+        <data name="output5" format="cpt" from_work_dir="outp.cpt">
+            <filter>outps["cpt_out"] == 'true'</filter>
+        </data>
+        <data name="output6" format="edr" from_work_dir="outp.edr">
+            <filter>outps["edr_out"] == 'true'</filter>
+        </data>
+        <data name="output7" format="xvg" from_work_dir="outp_pullf.xvg">
+            <filter>outps["xvg_out"] == 'true'</filter>
+        </data>
+        <!-- <collection name="output7" type="list">
+            <discover_datasets pattern="(?P&lt;designation&gt;.*)\.xvg" visible="true" directory="." />
+            <filter>outps["xvg_out"] == 'true'</filter>
+        </collection> -->
+        <data name="output8" format="binary" from_work_dir="outp.tpr">
+            <filter>outps["tpr_out"] == 'true'</filter>
+        </data>
+
+        <expand macro="log_outputs" />
+    </outputs>
+
+    <tests>
+        <test expect_num_outputs="3">
+            <param name="gro_input" value="npt.gro" />
+            <param name="top_input" value="topol_solv.top" />
+            <!-- <param name="cpt_bool" value="yes" /> -->
+            <param name="cpt_in" value="npt.cpt" />
+            <param name="mdpfile" value="custom" />
+            <param name="mdp_input" value="md.mdp" />
+            <!-- <param name="ndx_bool" value="false" /> -->
+            <param name="traj" value="trr"/>
+            <param name="str" value="gro"/>
+            <param name="tpr_out" value="true"/>
+            <param name="ensemble" value="npt" />
+            <!-- <param name="posres_bool" value="false" /> -->
+            <output name="output1" file="md_0_1.gro" ftype="gro" compare="sim_size"/>
+            <output name="output3" file="md_0_1.trr" ftype="trr" compare="sim_size"/>
+            <output name="output8" file="md_0_1.tpr" ftype="binary" compare="sim_size"/>
+            <!-- <output name="output1" ftype="gro">
+                <assert_contents>
+                    <has_size value="2647999" />
+                </assert_contents>
+            </output>
+            <output name="output3" ftype="trr">
+                <assert_contents>
+                    <has_size value="10132584" />
+                </assert_contents>
+            </output> -->
+        </test>
+
+        <test expect_num_outputs="3">
+            <param name="gro_input" value="npt.gro" />
+            <param name="top_input" value="topol_solv.top" />
+            <!-- <param name="cpt_bool" value="yes" /> -->
+            <param name="cpt_in" value="npt.cpt" />
+            <!-- <param name="ndx_bool" value="false" /> -->
+            <param name="traj" value="trr"/>
+            <param name="str" value="both"/>
+            <expand macro="test_params"/>
+            <param name="ensemble" value="npt" />
+            <!-- <param name="posres_bool" value="false" /> -->
+            <output name="output1" file="md_0_1.gro" ftype="gro" compare="sim_size"/>
+            <output name="output2" file="md_0_1.pdb" ftype="pdb" compare="sim_size"/>
+            <output name="output3" file="md_0_1.trr" ftype="trr" compare="sim_size"/>
+        </test>
+
+        <test expect_num_outputs="3">
+            <param name="gro_input" value="npt.gro" />
+            <param name="top_input" value="topol_solv.top" />
+            <!-- <param name="cpt_bool" value="yes" /> -->
+            <param name="cpt_in" value="npt.cpt" />
+            <!-- <param name="ndx_bool" value="true" /> -->
+            <param name="ndx_in" value="index.ndx" />
+            <param name="traj" value="trr"/>
+            <param name="str" value="both"/>
+            <expand macro="test_params"/>
+            <param name="ensemble" value="npt" />
+            <!-- <param name="posres_bool" value="false" /> -->
+            <output name="output1" file="md_0_1.gro" ftype="gro" compare="sim_size"/>
+            <output name="output2" file="md_0_1.pdb" ftype="pdb" compare="sim_size"/>
+            <output name="output3" file="md_0_1.trr" ftype="trr" compare="sim_size"/>
+        </test>
+
+        <test expect_num_outputs="3">
+            <param name="gro_input" value="em.gro" />
+            <param name="top_input" value="topol_solv.top" />
+            <!-- <param name="posres_bool" value="true" /> -->
+            <param name="itp_in" value="posres.itp" />
+            <!-- <param name="cpt_bool" value="no" /> -->
+            <param name="cpt_out" value="true" />
+            <!-- <param name="ndx_bool" value="false" /> -->
+            <param name="traj" value="xtc"/>
+            <param name="str" value="pdb"/>
+            <param name="ensemble" value="nvt" />
+            <expand macro="test_params"/>
+            
+            <output name="output2" file="nvt.pdb" ftype="pdb" compare="sim_size"/>
+            <output name="output4" file="nvt.xtc" ftype="xtc" compare="sim_size"/>
+            <output name="output5" file="nvt.cpt" ftype="cpt" compare="sim_size"/>
+        </test>
+    </tests>
+    
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+This tool performs a molecular dynamics simulation with GROMACS.
+
+_____
+
+.. class:: infomark
+
+**Input**
+
+       - GRO structure file.
+       - Topology (TOP) file.
+
+A variety of other options can also be specified:
+       - MDP parameter file to take advantage of all GROMACS features. Otherwise, choose parameters through the Galaxy interface. See the `manual`_ for more information on the options.
+       - Accepting and producing checkpoint (CPT) input/output files, which allows sequential MD simulations, e.g. when performing NVT and NPT equilibration followed by a production simulation.
+       - Position restraint (ITP) file, useful for equilibrating solvent around a protein.
+       - Choice of ensemble: NVT or NPT.
+       - Whether to return trajectory (XTC or TRR) and/or structure (GRO or PDB) files.
+
+.. _`manual`: http://manual.gromacs.org/documentation/2018/user-guide/mdp-options.html
+
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - Structure and/or trajectory files as specified in the input.
+
+    ]]></help>
+
+    <expand macro="citations" />
+</tool>

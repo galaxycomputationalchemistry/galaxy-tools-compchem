@@ -1,5 +1,5 @@
-<tool id="packmol" name="PACKMOL" version="18.169">
-    <description>Initial configurations for Molecular Dynamics Simulations by packing optimization</description>
+<tool id="packmol" name="PACKMOL" version="18.169.1">
+    <description>- initial configurations for molecular dynamics simulations by packing optimization</description>
     <macros>
         <import>macros_packmol.xml</import>
     </macros>
@@ -27,12 +27,12 @@ params = json.load(open(input_json_path, "r"))
 
 # get the inputs
 input_iter = []
-#for $i, $s in enumerate( $packmol_format.packmol_inputs )
+#for $i, $s in enumerate( $packmol_inputs )  ## enumerate( $packmol_format.packmol_inputs )
 pmfile_index = $i
 pmfile_path = "${s.input.file_name}"
 input_iter.append(pmfile_path)
-params["packmol_format"]["packmol_inputs"][pmfile_index]["file"] = pmfile_path
-params["packmol_format"]["packmol_inputs"][pmfile_index]["datasetname"] = "${s.input.name}"
+params["packmol_inputs"][pmfile_index]["file"] = pmfile_path  ## params["packmol_format"]["packmol_inputs"]
+params["packmol_inputs"][pmfile_index]["datasetname"] = "${s.input.name}"  ## params["packmol_format"]["packmol_inputs"]
 #end for
 
 params["outfile"] = "$outfile"
@@ -49,17 +49,18 @@ with open("$parameteroutfile",'w+') as f:
         </configfile>
     </configfiles>
     <inputs>
-        <conditional name="packmol_format">
+
+        <!-- <conditional name="packmol_format">
             <param name="selected_format" type="select" label="Select a file format:">
                 <option value="pdb" selected="true">pdb</option>
-                <!--option value="xyz">xyz</option>
+                <option value="xyz">xyz</option>
                 <option value="tinker">tinker</option>
-                <option value="moldy">moldy</option-->
+                <option value="moldy">moldy</option>
             </param>
             <when value="pdb">
                 <expand macro="multiple_input" name="packmol_inputs" format="pdb" label="pdb input with molecule type" help_text="Select a pdb file in .pdb format"/>
             </when>
-            <!--when value="xyz">
+            <when value="xyz">
                 <expand macro="multiple_input" name="packmol_inputs" format="xyz" label="xyz input with molecule type" help_text="Select a xyz file in .xyz format"/>
             </when>
             <when value="tinker">
@@ -67,23 +68,24 @@ with open("$parameteroutfile",'w+') as f:
             </when>
             <when value="moldy">
                 <expand macro="multiple_input" name="packmol_inputs" format="moldy" label="moldy input with molecule type" help_text="Select a moldy file in .moldy format"/>
-            </when-->
-        </conditional>
-        <section name="allparams" title="General Parameters" expanded="false">
-            <param name="tolerance" type="float" value="2.0" label="distance tolerance" min="0.0" max="100.0"/>
-            <param name="nloop" type="integer" value="20" label="maximum number of optimisation loops" min="1" max="10000"/>
-            <param name="maxit" type="integer" value="20" label="maximum number of gencan iterations per loop" min="1" max="10000"/>
-            <param name="seed" type="integer" value="-1" label="random number generator seed, default of -1 used the computer time to set the seed" />
+            </when>
+        </conditional> -->
+        <expand macro="multiple_input" name="packmol_inputs" format="pdb" label="PDB input with molecule type" help_text="Select a PDB file in .pdb format"/>
+        <section name="allparams" title="General parameters" expanded="false">
+            <param name="tolerance" type="float" value="2.0" label="Distance tolerance" min="0.0" max="100.0"/>
+            <param name="nloop" type="integer" value="20" label="Maximum number of optimisation loops" min="1" max="10000"/>
+            <param name="maxit" type="integer" value="20" label="Maximum number of gencan iterations per loop" min="1" max="10000"/>
+            <param name="seed" type="integer" value="-1" label="Random number generator seed, default of -1 uses the computer time to set the seed" />
         </section>
     </inputs>
     <outputs>
         <data format="pdb" name="outfile" label="${tool.name}: structure output">
-        <change_format>
+        <!-- <change_format>
             <when input="selected_format" value="pdb" format="pdb"/>
-            <!-- <when input="selected_format" value="xyz" format="xyz"/>
+            <when input="selected_format" value="xyz" format="xyz"/>
             <when input="selected_format" value="tinker" format="tinker"/>
-            <when input="selected_format" value="moldy" format="moldy"/> -->
-        </change_format>
+            <when input="selected_format" value="moldy" format="moldy"/>
+        </change_format> -->
         </data>
         <data format="txt" name="parameteroutfile" label="${tool.name}: parameter output"/>
     </outputs>
@@ -128,14 +130,14 @@ with open("$parameteroutfile",'w+') as f:
 
 **What it does**
 
-Packmol creates initial MD configurations from input molecules. For example, create a water and urea mixture.
+Packmol creates initial MD configurations from input molecules - for example, creating a water and urea mixture.
 
 .. class:: infomark
 
 **How it works**
 
-- Select a molecule file type e.g. pdb,xyz
-- Select single molecule from your history (can select multiple)
+- Select a molecule file type e.g. pdb, xyz
+- Select a single molecule from your history (can select multiple)
 - For each molecule:
    - choose how many molecules to create (number variable)
    - optionally choose:
@@ -149,7 +151,7 @@ Packmol creates initial MD configurations from input molecules. For example, cre
 
 **Outputs created**
 
-- A pdb file, view this in Galaxy by clicking on visualise and choosing a viewer. The NGLViewer works well for small molecules.
+- A pdb file; view this in Galaxy by clicking on the 'visualize' icon and choosing a viewer. The NGLViewer works well for small molecules.
 - A packmol input script (for debugging and repeatability)
 
 .. class:: infomark
@@ -163,7 +165,7 @@ Packmol creates initial MD configurations from input molecules. For example, cre
 
 **Known issues**
 
-- fixed constraint only allows 1 atom but this is not set for the user. user has to set this. Job may fail.
+- fixed constraint only allows 1 atom but this is not set for the user. The user has to set this parameter. The job may fail.
 
 .. _`userguide`: http://m3g.iqm.unicamp.br/packmol/userguide.shtml#more
 .. _`volume guesser`: http://m3g.iqm.unicamp.br/packmol/utilities.shtml

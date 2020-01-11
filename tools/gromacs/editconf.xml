@@ -1,0 +1,112 @@
+<tool id="gmx_editconf" name="GROMACS structure configuration" version="@VERSION@">
+    <description>using editconf</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements" />
+
+    <command detect_errors="exit_code"><![CDATA[
+
+        ln -s '$input_file' ./input.$input_file.ext &&
+        gmx editconf
+            -f ./input.$input_file.ext
+            -o ./output.${output_format}
+            #if $box.config == "true":
+                -d $box.dim 
+                -bt $box.type
+            #end if
+            &>> verbose.txt &&
+
+        cp ./output.${output_format} '$output'
+
+    ]]></command>
+
+    <inputs>
+        <param argument="input_file" type="data" format='gro,pdb' label="Input structure"/>
+        <param argument="output_format" type="select" label="Output format">
+            <option value="gro">GRO file</option>
+            <option value="pdb">PDB file</option>
+        </param>
+        
+        <conditional name="box">
+            <param argument="config" type="select" label="Configure box?">
+                <option value="true">Yes</option>
+                <option value="false" selected="true">No</option>
+            </param>
+            <when value="true">
+                <param argument="dim" type="float" label="Box dimensions in nanometers" value="0.0" min="0.0" max="10.0" help="Dimensions of the box in which simulation will take place" />
+                <param argument="type" type="select" label="Box type"
+                    help="triclinic is a triclinic box, cubic is a rectangular box with all sides equal dodecahedron represents a rhombic dodecahedron and octahedron is a truncated octahedron. The last two are special cases of a triclinic box. The length of the three box vectors of the truncated octahedron is the shortest distance between two opposite hexagons. Relative to a cubic box with some periodic image distance, the volume of a dodecahedron with this same periodic distance is 0.71 times that of the cube, and that of a truncated octahedron is 0.77 times.">
+                    <option value="cubic">Rectangular box with all sides equal</option>
+                    <option value="triclinic">Triclinic</option>
+                    <option value="dodecahedron">represents a rhombic dodecahedron</option>
+                    <option value="octahedron">truncated octahedron</option>
+                </param>
+            </when>
+            <when value="false"/>
+        </conditional>
+
+    <expand macro="log" />
+
+    </inputs>
+    <outputs>
+        <data name="output" format="gro">
+            <change_format>
+                <when input="output_format" value="gro" format="gro"/>
+                <when input="output_format" value="pdb" format="pdb"/>
+            </change_format>
+        </data>
+        <expand macro="log_outputs" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input_file" value="processed.gro" ftype="gro"/>
+            <param name="output_format" value="gro" />
+            <param name="config" value="true" />
+            <param name="dim" value="1.0" />
+            <param name="type" value="cubic" />
+            <output name="output" file="newbox.gro"/>
+        </test>
+        <test>
+            <param name="input_file" value="npt.gro" ftype="gro"/>
+            <param name="output_format" value="pdb" />
+            <param name="config" value="false" />
+            <output name="output" file="npt.pdb"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+This tool performs the initial setup prior to a GROMACS simulation. This entails producing a topology from an input structure using the pdb2gmx command and also defining a simulation box with editconf.
+
+Please note that the tool will only successfully generate a topology for residues it recognizes (i.e. standard amino acids). If the structure contains other components such as ligands, these should be separately parameterized with the AmberTools or ACPYPE tools. In this case, make sure to also use an AMBER forcefield for this tool to ensure compatability with the ligand topology. 
+
+_____
+
+.. class:: infomark
+
+**Input**
+
+       - PDB file.
+       - Water model and forcefield must be specified.
+       - Parameters for the simulation box (dimensions and shape).
+     
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - GROMACS topology (TOP) file.
+       - Position restraint (itp) file, which may be useful for system equilibration.
+       - GRO structure file.
+
+    ]]></help>
+
+    <expand macro="citations" />
+</tool>

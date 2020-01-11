@@ -1,0 +1,12 @@
+; position restraints for CL of LYSOZYME in water
+
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+38369    1        500        600        700
+38370    1        500        600        700
+38371    1        500        600        700
+38372    1        500        600        700
+38373    1        500        600        700
+38374    1        500        600        700
+38375    1        500        600        700
+38376    1        500        600        700

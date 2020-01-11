@@ -1,5 +1,5 @@
 <tool id="bio3d_rmsf" name="RMSF Analysis" version="@VERSION@">
-    <description>rmsf using Bio3D</description>
+    <description> using Bio3D</description>
     <macros>
         <import>macros.xml</import>
     </macros>
@@ -74,20 +74,20 @@
        <expand macro="analysis_inputs"/>
         <conditional name="rmsf">
            <param name="sele" type="select" label="Select domains">
-             <option value="calpha">Calpha</option>
-             <option value="cbeta">Cbeta</option>
+             <option value="calpha">C-alpha</option>
+             <option value="cbeta">C-beta</option>
              <option value="backbone">Backbone</option>
              <option value="sidechain">Sidechain</option>
              <option value="protein">Protein</option>
              <option value="ligand">Ligand</option>
-             <option value="nucleic">Nucleic Acids</option>
+             <option value="nucleic">Nucleic acids</option>
              <option value="loop">Loop</option>
              <option value="water">Water</option>
              <option value="hyd">Hydrogens</option>
-             <option value="noh">Non Hydrogens</option>
-             <option value="elety">Atom Names</option>
-             <option value="resid">Resid</option>
-             <option value="segid">Segid</option>
+             <option value="noh">Non-hydrogens</option>
+             <option value="elety">Atom names</option>
+             <option value="resid">Residue ID</option>
+             <option value="segid">Segment ID</option>
            </param>
            <when value="calpha">
            </when>
@@ -104,8 +104,8 @@
            <when value="nucleic">
            </when>
            <when value="loop">
-             <param name="res1" type="text" label="Resid of the loop starting residue"/>
-             <param name="res2" type="text" label="Resid of the loop ending residue"/>
+             <param name="res1"  type="text" label="ID of the residue at the start of the loop"/>
+             <param name="res2"  type="text" label="ID of the residue at the end of the loop"/>
            </when>
            <when value="water">
            </when>
@@ -114,25 +114,31 @@
           <when value="noh">
           </when> 
           <when value="elety">
-            <param name="elety"  type="text" value="CA" label="Atom Name"/>
+            <param name="elety"  type="text" value="CA" label="Atom name"/>
           </when>
           <when value="resid">
-            <param name="resid"  type="text" value="BGLC" label="Resid"/>
+            <param name="resid"  type="text" value="BGLC" label="Residue ID"/>
           </when>
           <when value="segid">
-            <param name="segid"  type="text" value="SUBS" label="Segid"/>
+            <param name="segid"  type="text" value="SUBS" label="Segment ID"/>
           </when>
         </conditional>
     </inputs>
     <outputs>
-        <data format="tabular" name="output" label="rmsf raw data"/>
-        <data format="png" name="rmsf_plot" label="rmsf plot"/>
+        <data format="tabular" name="output" label="RMSF raw data"/>
+        <data format="png" name="rmsf_plot" label="RMSF plot"/>
     </outputs>
     <tests>
         <test>
             <expand macro="tests_inputs"/>
             <param name="sele" value="calpha"/>
-            <output name="output" file="rmsf_raw_data.tabular" /> 
+            <output name="output" >
+              <assert_contents>
+                <has_line_matching expression="1\t0.297.*" />
+                <has_line_matching expression="418\t0.410.*" />
+                <has_line_matching expression="433\t0.300.*" />
+              </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
@@ -141,8 +147,9 @@
 
 **What it does**
 
-The Root Mean Square Fluctuation (RMSF) conformational variance that analysis can analyze the
-portions of structure that are fluctuating from their mean structure the most (or least). This tool can calculate and plot the RMSF of the selected section.
+The Root Mean Square Fluctuation (RMSF) provides a measure of conformational variance i.e. which
+portions of structure are fluctuating from their mean structure the most (or least). 
+This tool can calculate and plot the RMSF of the selected section of the protein (or other molecule).
 
 _____
 
@@ -159,7 +166,7 @@ _____
 
 **Output**
 
-       - Image (as PNG) of the rmsf plot
+       - Image (as PNG) of the RMSF plot
        - Tab-separated file of raw data
 
 
