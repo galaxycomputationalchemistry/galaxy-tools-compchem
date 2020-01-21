@@ -11,7 +11,7 @@
     #if $trj.trj_op == 'trjcat':
         mkdir trajs &&
         #for $value, $file in enumerate($trj_input):
-            ln -s $file trajs/traj_${value}.$file.ext &&
+            ln -s '$file' trajs/traj_${value}.${file.ext} &&
         #end for
 
         gmx trjcat
@@ -24,9 +24,9 @@
         ln -s '$str_input' ./str.${str_input.ext} &&
         ln -s '$trj_input' ./traj.${trj_input.ext} &&
         #if $trj.center:
-        echo '$trj.index_center $trj.index_output' | gmx trjconv
+            echo '$trj.index_center $trj.index_output' | gmx trjconv
         #else
-        echo '$trj.index_output' | gmx trjconv
+            echo '$trj.index_output' | gmx trjconv
         #end if
             -f ./traj.${trj_input.ext}
             -s ./str.${str_input.ext}
@@ -87,24 +87,19 @@
                 <param name="trj_input" type="data" format='xtc,trr' label="Input trajectories" help="In XTC or TRR format, but please do not mix the two. Please note this tool does not currently take order into account when concatenating." multiple="true"/>
                 <param name="cat" type="boolean" label="Do not discard double time frames" truevalue="-cat" falsevalue="-nocat"/>
             </when>
-
         </conditional>
-
         <param name="output_format" type="select" label="Output format" >
             <option value="xtc">XTC</option>
             <option value="trr">TRR</option>
             <option value="pdb">PDB</option>
             <option value="gro">GRO</option>
         </param>
-
         <section title="Time" name='time' expanded="true">
             <param name="b" type="integer" label="Start time" help="Time (ps) of first frame to read from trajectory" value="0" min="0"/>
             <param name="e" type="integer" label="End time" help="Time (ps) of last frame to read from trajectory" value="-1"  min="-1"/> <!-- stupidly this has different default values for trjconv and trjcat -->
             <param name="dt" type="integer" label="Write frames at this time interval (ps)" help="Only write frame when t is exactly divisible by this value. Leave as 0 to record all frames." value="0"  min="0"/>
         </section>
-
         <expand macro="log" />
-
     </inputs>
     <outputs>
         <data name="output" format="xtc">
@@ -175,6 +170,5 @@ _____
 
 
     ]]></help>
-
     <expand macro="citations" />
 </tool>
