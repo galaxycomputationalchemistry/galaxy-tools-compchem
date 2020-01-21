@@ -1,0 +1,181 @@
+<tool id="gmx_trj" name="Modify/convert GROMACS trajectories" version="@VERSION@">
+    <description>using trjconv and trjcat</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements" />
+
+    <command detect_errors="exit_code"><![CDATA[
+
+    #if $trj.trj_op == 'trjcat':
+        #set x = 0
+        #for $file in $trj_input:
+            ln -s $file ./traj_${x}.${file.ext} && 
+            #set x += 1
+        #end for
+
+        gmx trjcat
+            -f traj*${file.ext} ## here we assume that they all have the same ext, probably reasonable
+            $trj.cat
+            -e '$time.e'
+
+    #elif $trj.trj_op == 'trjconv':
+        ln -s $ndx_input ./index.ndx &&
+        ln -s $str_input ./str.${str_input.ext} &&
+        ln -s $trj_input ./traj.${trj_input.ext} &&
+        #if $trj.center:
+        echo '$trj.index_center $trj.index_output' | gmx trjconv
+        #else
+        echo '$trj.index_output' | gmx trjconv
+        #end if
+            -f ./traj.${trj_input.ext}
+            -s ./str.${str_input.ext}
+            -n ./index.ndx
+            $trj.center
+            -pbc $trj.pbc
+            -ur $trj.ur
+            -boxcenter $trj.boxcenter
+            -e #echo str($time.e).replace('-1', '1000000000000000')#
+
+    #end if
+            -b '$time.b'
+            -dt '$time.dt'
+            -o ./output.${output_format} &&
+            
+    cp ./output.${output_format} $output
+
+    ]]></command>
+
+    <inputs>
+        <conditional name="trj">
+            <param name="trj_op" type="select" label="Modify a trajectory or concatenate multiple trajectories?">
+                <option value="trjconv">Modify (trjconv)</option>
+                <option value="trjcat">Concatenate (trjcat)</option>
+            </param>
+            <when value="trjconv">
+                <param name="trj_input" type="data" format='xtc,trr' label="Input trajectory" help="In XTC or TRR format."/>
+                <param name="str_input" type="data" format='pdb,gro,tpr' label="Input structure" help="In PDB, GRO or TPR format."/>
+                <param name="ndx_input" type="data" format='ndx' label="Index (NDX) file" help="In NDX format."/>
+                <param name="index_output" type="text" label="Index of group to save in the output" help="Index of group to save in the output - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0).">
+                    <validator type="regex" message="Only numeric values allowed">^[0-9]*$</validator>
+                </param>
+                <param name="center" type="boolean" label="Center system in box" truevalue="-center" falsevalue=""/>
+                <param name="index_center" type="text" label="Index of group for centering" optional="true" help="Index of group for centering - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0). Leave blank if centering is not required.">
+                    <validator type="regex" message="Only numeric values allowed">^[0-9]*$</validator>
+                </param>
+                <param name="pbc" type="select" label="PBC treatment" >
+                    <option value="none">none</option>
+                    <option value="mol">mol</option>
+                    <option value="res">res</option>
+                    <option value="atom">atom</option>
+                    <option value="nojump">nojump</option>
+                    <option value="cluster">cluster</option>
+                    <option value="whole">whole</option>
+                </param>
+                <param name="ur" type="select" label="Unit cell representation" >
+                    <option value="rect">rect</option>
+                    <option value="tric" selected="true">tric</option>
+                    <option value="zero">zero</option>
+                </param>
+                <param name="boxcenter" type="select" label="Center for PBC and centering treatment" >
+                    <option value="rect">rect</option>
+                    <option value="tric">tric</option>
+                    <option value="compact">compact</option>
+                </param>
+            </when>
+            <when value="trjcat">
+                <param name="trj_input" type="data" format='xtc,trr' label="Input trajectories" help="In XTC or TRR format, but please do not mix the two. Please note this tool does not currently take order into account when concatenating." multiple="true"/>
+                <param name="cat" type="boolean" label="Do not discard double time frames" truevalue="-cat" falsevalue="-nocat"/>
+            </when>
+
+        </conditional>
+
+        <param name="output_format" type="select" label="Output format" >
+            <option value="xtc">XTC</option>
+            <option value="trr">TRR</option>
+            <option value="pdb">PDB</option>
+            <option value="gro">GRO</option>
+        </param>
+
+        <section title="Time" name='time' expanded="true">
+            <param name="b" type="integer" label="Start time" help="Time (ps) of first frame to read from trajectory" value="0" min="0"/>
+            <param name="e" type="integer" label="End time" help="Time (ps) of last frame to read from trajectory" value="-1"  min="-1"/> <!-- stupidly this has different default values for trjconv and trjcat -->
+            <param name="dt" type="integer" label="Write frames at this time interval (ps)" help="Only write frame when t is exactly divisible by this value. Leave as 0 to record all frames." value="0"  min="0"/>
+        </section>
+
+        <expand macro="log" />
+
+    </inputs>
+    <outputs>
+        <data name="output" format="xtc">
+            <change_format>
+                <when input="output_format" value="trr" format="trr"/>
+                <when input="output_format" value="xtc" format="xtc"/>
+                <when input="output_format" value="gro" format="dcd"/>
+                <when input="output_format" value="pdb" format="pdb"/>
+            </change_format>
+        </data>
+    </outputs> 
+    <tests>
+        <test>
+            <!-- gmx trjcat -f npt.xtc nvt.xtc -cat -o test.xtc -->
+            <param name="trj_op" value="trjcat" />
+            <param name="trj_input" value="npt.xtc,nvt.xtc" />
+            <param name="b" value="0" />
+            <param name="e" value="-1" />
+            <param name="dt" value="0" />
+            <param name="cat" value="true" />
+            <output name="output" file="trjcat.xtc" ftype="xtc"/>
+        </test>
+        <test>
+            <!-- echo '1 1' | gmx trjconv -f npt.xtc -s npt.tpr -n -center -pbc mol -ur compact -o npt_c.xtc -->
+            <param name="trj_op" value="trjconv" />
+            <param name="trj_input" value="npt.xtc" />
+            <param name="str_input" value="npt.tpr" ftype="tpr"/>
+            <param name="ndx_input" value="index.ndx" />
+            <param name="b" value="0" />
+            <param name="e" value="-1" />
+            <param name="dt" value="0" />
+            <param name="index_output" value="1" />
+            <param name="index_center" value="1" />
+            <param name="center" value="true" />
+            <param name="pbc" value="mol" />
+            <param name="ur" value="compact" />
+            <param name="ur" value="tric" />
+            <output name="output" file="trjconv.xtc" ftype="xtc"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+This tool allows manipulation of GROMACS trajectories, drawing on the trjcat and trjconv commands.
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - One or more trajectory file (XTC or TRR)
+       - Structure file (optional)
+       - Various options can be set
+
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - GROMACS trajectory or structure file (XTC, TRR, PDB, GRO)
+
+
+    ]]></help>
+
+    <expand macro="citations" />
+</tool>
