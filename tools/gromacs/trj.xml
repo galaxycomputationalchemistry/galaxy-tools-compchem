@@ -9,21 +9,20 @@
     <command detect_errors="exit_code"><![CDATA[
 
     #if $trj.trj_op == 'trjcat':
-        #set x = 0
-        #for $file in $trj_input:
-            ln -s $file ./traj_${x}.${file.ext} && 
-            #set x += 1
+        mkdir trajs &&
+        #for $value, $file in enumerate($trj_input):
+            ln -s $file trajs/traj_${value}.$file.ext &&
         #end for
 
         gmx trjcat
-            -f traj*${file.ext} ## here we assume that they all have the same ext, probably reasonable
+            -f trajs/traj* ## here we assume that they all have the same ext, probably reasonable
             $trj.cat
             -e '$time.e'
 
     #elif $trj.trj_op == 'trjconv':
-        ln -s $ndx_input ./index.ndx &&
-        ln -s $str_input ./str.${str_input.ext} &&
-        ln -s $trj_input ./traj.${trj_input.ext} &&
+        ln -s '$ndx_input' ./index.ndx &&
+        ln -s '$str_input' ./str.${str_input.ext} &&
+        ln -s '$trj_input' ./traj.${trj_input.ext} &&
         #if $trj.center:
         echo '$trj.index_center $trj.index_output' | gmx trjconv
         #else
@@ -43,7 +42,7 @@
             -dt '$time.dt'
             -o ./output.${output_format} &&
             
-    cp ./output.${output_format} $output
+    mv ./output.${output_format} '$output'
 
     ]]></command>
 
