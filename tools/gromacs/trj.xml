@@ -38,10 +38,10 @@
             -e #echo str($time.e).replace('-1', '1000000000000000')#
 
     #end if
-            -b '$time.b'
-            -dt '$time.dt'
-            -o ./output.${output_format} &&
-            
+    -b '$time.b'
+    -dt '$time.dt'
+    -o ./output.${output_format} &&
+      
     mv ./output.${output_format} '$output'
 
     ]]></command>
