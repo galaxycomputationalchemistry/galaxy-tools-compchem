@@ -1,7 +1,7 @@
 # 'sudo required' will give us 7,5 GB memory, but has slower startup times, as we start a VM instead of a Container
 sudo: required
 language: python
-cache: pip
+##cache: pip
 
 python: 2.7
 
