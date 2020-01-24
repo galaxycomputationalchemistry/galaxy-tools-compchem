@@ -1,0 +1,87 @@
+<tool id="mdanalysis_ramachandran" name="Ramachandran Analysis" version="@VERSION@">
+	<description>- Ramachandran plot for proteins</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>   
+    <expand macro="requirements">
+        <requirement type="package" version="0.9.0">seaborn</requirement>
+    </expand>
+    <command detect_errors="exit_code">
+<![CDATA[
+        #if $subselection.residues == 'Yes':
+            python '$__tool_directory__/ramachandran.py' 
+                --itraj '$trajin' 
+                --istr '$strin' 
+                --itrajext '$trajin.ext'
+                --istrext '$strin.ext'
+                --isegid1 '$segid1'
+                --iresid1 '$subselection.resid1'
+                --iresid2 '$subselection.resid2'
+                --o_plot1 '$o_plot1'
+                --o_plot2 '$o_plot2'
+            2>&1
+        #else:
+            python '$__tool_directory__/ramachandran.py' 
+                --itraj '$trajin' 
+                --istr '$strin' 
+                --itrajext '$trajin.ext'
+                --istrext '$strin.ext'
+                --isegid1 '$segid1'
+                --o_plot1 '$o_plot1'
+                --o_plot2 '$o_plot2'
+            2>&1
+        #end if
+]]></command>
+    <inputs>
+        <expand macro="analysis_inputs"/>
+        <param name="segid1"  type="text" value="PROA" label="Segment ID of atom 1"/>
+        <conditional name="subselection">
+        <param name="residues" type="select" label="Refine with a resID selection" help="Choose residues to refine the selection">
+         <option selected="True" value="No">No</option>
+         <option value="Yes">Yes</option>
+        </param>
+        <when value="No">
+        </when>
+        <when value="Yes">
+        <param name="resid1"  type="text" value="5" label="ResID to start subselection"/>
+        <param name="resid2"  type="text" value="10" label="ResID to end subselection"/>
+        </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data format="png" name="o_plot1" label="MDAnalysis Ramachandran plot"/>
+        <data format="png" name="o_plot2" label="Seaborn Ramachandran plot"/>
+    </outputs>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+        
+Ramachandran plot
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Trajectory file (DCD).
+       - PDB file.
+       - Segment IDs, residue IDs and names of two atoms to calculate RDF values.
+
+Note that a MDAnalysis 'segment' is a larger organizational unit, for example one protein or all the solvent molecules or simply the whole system.
+
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - Tab-separated file of raw data of the e2e histo
+       - Image (as png) of the e2e histo
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>
