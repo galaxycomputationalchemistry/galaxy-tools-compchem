@@ -27,11 +27,9 @@
             #end if
             -l '$output_val'
             $norm
-            ##-b "\${GALAXY_MEMORY_MB:-4096}"
             $periodic
             $dynamic_shift
             --verbose
-            ##-n "\${GALAXY_SLOTS:-1}"
 
     ]]></command>
     <inputs>
