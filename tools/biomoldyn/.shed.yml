@@ -1,0 +1,14 @@
+name: biomoldyn
+owner: chemteam
+description: "Tools for MD analysis"
+homepage_url: https://github.com/moldyn/
+long_description: |
+    Tools for MD analysis developed by the Biomolecular Dynamics group (https://github.com/moldyn/) at the University of Freiburg, including dimensionality reduction, clustering, Langevin simulations and dcTMD
+remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/
+type: unrestricted
+categories:
+  - Molecular Dynamics
+  - Computational chemistry
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the package: {{ tool_name }}"
