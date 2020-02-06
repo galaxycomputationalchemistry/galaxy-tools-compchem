@@ -1,8 +1,9 @@
 import argparse
 import sys
 
-import numpy as np
 import MDAnalysis as mda
+import numpy as np
+
 from MDAnalysis.analysis import distances
 
 
@@ -15,7 +16,7 @@ def parse_command_line(argv):
     parser.add_argument('--list1', help='list 2')
     parser.add_argument('--list2', help='list 2')
     parser.add_argument('--output', help='output')
-    parser.add_argument('--header',  dest='header', action='store_true')
+    parser.add_argument('--header', dest='header', action='store_true')
     return parser.parse_args()
 
 
@@ -38,13 +39,18 @@ for ts in u.trajectory:
     distances.distance_array(c_o_m1, c_o_m2, result=d[ts.frame])
 
 d = np.hstack((
-    np.array(np.reshape(np.arange(0, d.shape[0]), (d.shape[0],1)), dtype=int), # add column w frame
+    np.array(np.reshape(np.arange(
+        0, d.shape[0]), (d.shape[0], 1)), dtype=int),  # add column w frame
     np.reshape(d, (d.shape[0], d.shape[1] * d.shape[2]))
 ))
 
 if args.header:
-    header = 'Frame\t' + '\t'.join(['-'.join(pair) for pair in zip(sum([[n,]*len(list2) for n in list1], []),list(list2)*len(list1),  ) ]).replace(' ', '_')
+    header = 'Frame\t' + '\t'.join(
+        ['-'.join(pair) for pair in zip(
+            sum([[n, ] * len(list2) for n in list1], []),
+            list(list2) * len(list1),)]).replace(' ', '_')
 else:
     header = ''
 
-np.savetxt(args.output, d, header=header, comments='', fmt=['%d']+['%f']*(d.shape[1] - 1), delimiter='\t')
+np.savetxt(args.output, d, header=header, comments='',
+           fmt=['%d'] + ['%f'] * (d.shape[1] - 1), delimiter='\t')
