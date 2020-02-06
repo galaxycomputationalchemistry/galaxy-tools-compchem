@@ -2,9 +2,9 @@ import argparse
 import sys
 
 import MDAnalysis as mda
-import numpy as np
-
 from MDAnalysis.analysis import distances
+
+import numpy as np
 
 
 def parse_command_line(argv):
