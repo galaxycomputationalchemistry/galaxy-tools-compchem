@@ -26,6 +26,7 @@ def parse_command_line(argv):
     parser.add_argument('--iname2', help='name 2')
     parser.add_argument('--output', help='output')
     parser.add_argument('--odistance_plot', help='odistance plot')
+    parser.add_argument('--header',  dest='header', action='store_true')
     return parser.parse_args()
 
 
@@ -42,6 +43,8 @@ x = u.select_atoms(atom1)
 y = u.select_atoms(atom2)
 
 with open(args.output, 'w') as f:
+    if args.header:
+        f.write('Frame\tDistance')
     for t in u.trajectory:
         r = x.positions - y.positions
         d = np.linalg.norm(r)

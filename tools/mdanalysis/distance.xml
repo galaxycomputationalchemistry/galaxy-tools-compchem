@@ -6,33 +6,57 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code">
 <![CDATA[
-     python '$__tool_directory__/distance.py' 
-        --itraj '$trajin' 
-        --istr '$strin'
-        --itrajext '$trajin.ext'
-        --istrext '$strin.ext'
-        --isegid1 '$segid1' 
-        --iresid1 '$resid1' 
-        --iname1 '$name1'
-        --isegid2 '$segid2'
-        --iresid2 '$resid2' 
-        --iname2 '$name2'
-        --output '$output'
-        --odistance_plot '$distance_plot'
-    2>&1
+    #if $inps.inps == 'one':
+        python '$__tool_directory__/distance_single.py' 
+            --isegid1 '$inps.segid1' 
+            --iresid1 '$inps.resid1' 
+            --iname1 '$inps.name1'
+            --isegid2 '$inps.segid2'
+            --iresid2 '$inps.resid2' 
+            --iname2 '$inps.name2'
+            --odistance_plot '$distance_plot'
+        2>&1
+    #elif $inps.inps == 'multiple':
+        python '$__tool_directory__/distance_multiple.py' 
+            --list1 '$inps.list1'
+            --list2 '$inps.list2'
+    #end if
+            --itraj '$trajin' 
+            --istr '$strin'
+            --itrajext '$trajin.ext'
+            --istrext '$strin.ext'
+            --output '$output'
+            $header
+
 ]]></command>
     <inputs>
         <expand macro="analysis_inputs"/>
-        <param name="segid1"  type="text" value="PRO" label="Segment ID of atom 1"/>
-        <param name="resid1"  type="text" value="212" label="Residue ID of atom 1"/>
-        <param name="name1"  type="text" value="OE2" label="Atom name of atom 1"/>
-        <param name="segid2"  type="text" value="HET" label="Segment ID of atom 2"/>
-        <param name="resid2"  type="text" value="3" label="Residue ID of atom 2"/>
-        <param name="name2"  type="text" value="C1" label="Atom name of atom 2"/>
+
+        <conditional name="inps">
+            <param argument="inps" type="select" label="Number of pairwise distances to calculate?">
+                <option value="one" selected="true">One</option>
+                <option value="multiple">Multiple</option>
+            </param>
+            <when value="one">
+                <param name="segid1"  type="text" value="PRO" label="Segment ID of atom 1"/>
+                <param name="resid1"  type="text" value="212" label="Residue ID of atom 1"/>
+                <param name="name1"  type="text" value="OE2" label="Atom name of atom 1"/>
+                <param name="segid2"  type="text" value="HET" label="Segment ID of atom 2"/>
+                <param name="resid2"  type="text" value="3" label="Residue ID of atom 2"/>
+                <param name="name2"  type="text" value="C1" label="Atom name of atom 2"/>
+            </when>
+            <when value="multiple">
+                <param name="list1"  type="data" format="text" label="Selection groups (list 1)"/>
+                <param name="list2"  type="data" format="text" label="Selection groups (list 2)"/>
+            </when>
+        </conditional>
+        <param name="header" type="boolean" truevalue="--header" falsevalue="" label="Include header in output file"/>
     </inputs>
     <outputs>
-        <data format="tabular" name="output" label="Distance Analysis raw data"/>  
-        <data format="png" name="distance_plot" label="Distance Analysis Plot"/>
+        <data format="tabular" name="output" label="Distance Analysis raw data"/>
+        <data format="png" name="distance_plot" label="Distance Analysis Plot">
+            <filter>inps == 'one'</filter>
+        </data>
     </outputs>
     <tests>
         <test>
@@ -43,6 +67,7 @@
             <param name="segid2" value="HET"/>
             <param name="resid2" value="3"/>
             <param name="name2" value="C1"/>
+            <param name="header" value="false"/>
             <output name="output" file="Distance_Analysis_raw_data.tabular" />
         </test>
         <test>
@@ -53,11 +78,27 @@
             <param name="segid2" value="SYSTEM"/>
             <param name="resid2" value="3"/>
             <param name="name2" value="C1"/>
+            <param name="header" value="false"/>
             <output name="output">
                 <assert_contents>
                     <has_n_columns n="2" />
-                    <has_line_matching expression="0\s+3.8.*" />
-                    <has_line_matching expression="14\s+3.2.*" />
+                    <has_line_matching expression="0\s+3.893.*" />
+                    <has_line_matching expression="14\s+3.262.*" />
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+            <expand macro="tests_inputs_gmx"/>
+            <param name="inps" value="multiple"/>
+            <param name="list1" value="list1.txt"/>
+            <param name="list2" value="list2.txt"/>
+            <param name="header" value="true"/>
+            <output name="output">
+                <assert_contents>
+                    <has_n_columns n="2" />
+                    <has_line_matching expression="Frame\s+resid_212_and_name_OE2-resid_3_and_name_C1" />
+                    <has_line_matching expression="0\s+3.893.*" />
+                    <has_line_matching expression="14\s+3.262.*" />
                 </assert_contents>
             </output>
         </test>
@@ -67,7 +108,9 @@
 
 **What it does**
         
-This tool calculates and plots the distance between the two atoms.
+This tool calculates and plots the distance between pairs of atoms. Two modes are 
+available: single pair mode, where distances are calculated between two specified 
+atoms, and multiple pair mode, where two lists of atoms need to be provided.
 
 _____
 
@@ -78,9 +121,27 @@ _____
 
        - Trajectory file  (DCD).
        - PDB file.
-       - Segment IDs, Residue IDs and names of two atoms to calculate distances.
 
-Note that a MDAnalysis 'segment' is a larger organizational unit,  for example one protein or all the solvent molecules or simply the whole system.
+In single pair mode, segment IDs, residue IDs and names of two atoms are selected. 
+Note that a MDAnalysis 'segment' is a larger organizational unit,  for example one 
+protein or all the solvent molecules or simply the whole system.
+
+In multiple pair mode, two files need to be uploaded, each with one or more atom 
+groups defined using the MDAnalysis atom selection, each on a new line. For example:
+
+::
+
+    resid 163
+    resid 56
+    resid 12 and type N
+
+All possible distances between the two sets of atom groups will be calculated. For 
+example, if List 1 contains 5 atoms and List 2 contains 8 atoms, the output file will
+contain 40 columns, each with the distance between one group in List 1 and one group
+in List 2.
+
+Note that in multiple pair mode, if the group has multiple atoms, the center of mass
+will be used for the calculation.
 
 _____
 
