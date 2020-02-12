@@ -2,7 +2,7 @@
   <token name="@VERSION@">19.0.1</token>
   <xml name="requirements">
     <requirements>
-      <requirement type="package" version="19.0">ambertools</requirement>
+      <requirement type="package" version="19.11">ambertools</requirement>
       <yield/>
     </requirements>
   </xml>
