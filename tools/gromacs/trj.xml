@@ -44,7 +44,7 @@
     -b '$time.b'
     -dt '$time.dt'
     -o ./output.${output_format} &&
-      
+    &>> verbose.txt &&
     mv ./output.${output_format} '$output'
 
     ]]></command>
@@ -77,13 +77,13 @@
                 </param>
                 <param name="ur" type="select" label="Unit cell representation" >
                     <option value="rect">rect</option>
-                    <option value="tric" selected="true">tric</option>
-                    <option value="zero">zero</option>
+                    <option value="tric">tric</option>
+                    <option value="compact">compact</option>
                 </param>
                 <param name="boxcenter" type="select" label="Center for PBC and centering treatment" >
                     <option value="rect">rect</option>
-                    <option value="tric">tric</option>
-                    <option value="compact">compact</option>
+                    <option value="tric" selected="true">tric</option>
+                    <option value="zero">zero</option>
                 </param>
             </when>
             <when value="trjcat">
@@ -109,7 +109,7 @@
             <change_format>
                 <when input="output_format" value="trr" format="trr"/>
                 <when input="output_format" value="xtc" format="xtc"/>
-                <when input="output_format" value="gro" format="dcd"/>
+                <when input="output_format" value="gro" format="gro"/>
                 <when input="output_format" value="pdb" format="pdb"/>
             </change_format>
         </data>
