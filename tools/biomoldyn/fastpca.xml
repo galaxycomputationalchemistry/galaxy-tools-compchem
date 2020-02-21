@@ -1,0 +1,127 @@
+<tool id="fastpca" name="fastpca" version="@VERSION@">
+    <description>- dimensionality reduction of MD simulations</description>
+    <macros>
+        <token name="@VERSION@">0.9.1</token>
+    </macros>
+    <requirements>
+         <requirement type="package" version="@VERSION@">fastpca</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        fastpca
+            -f '$input'
+            -p '$output_proj'
+            #if str($inputs.cov) == 'None':
+                -c '$output_cov'
+            #elif str($inputs.vec) == 'None':
+                -C '$inputs.cov'
+            #end if
+            #if str($inputs.vec) == 'None':
+                -v $output_vec
+            #else:
+                -V '$inputs.vec'
+            #end if
+            #if str($inputs.stats) == 'None':
+                -s '$output_stats'
+            #else:
+                -S '$inputs.stats'
+            #end if
+            -l '$output_val'
+            $norm
+            $periodic
+            $dynamic_shift
+            --verbose
+
+    ]]></command>
+    <inputs>
+        <param format="tabular,xtc" name="input" type="data" label="Input data" help="Either a whitespace-separated tabular file or GROMACS XTC file."/>
+        <section name="inputs" title="Inputs" expanded="true" help="Use these (optional) inputs to project new data onto a previously computed principal space. If not set, the PCA will be computed from scratch and will not be comparable to previous runs." >
+            <param format="tabular" name="cov" type="data" label="Precomputed covariance/correlation matrix" optional="true"/>
+            <param format="tabular" name="vec" type="data" label="Precomputed eigenvectors" optional="true"/>
+            <param format="tabular" name="stats" type="data" label="Precomputed statistics (mean values, sigmas and boundary shifts)" optional="true"/>
+        </section>
+
+        <param name="norm" type="select" label="How to normalize input:" help="Generally, normalization using the covariance matrix is appropriate when the variable scales are similar, and the correlation matrix is used when variables are on different scales." >
+            <option value="">Covariance</option>
+            <option value="-N">Correlation</option>
+        </param>
+        <param name="periodic" type="boolean" label="Compute covariance and PCA on a torus?" truevalue="-P" falsevalue="" value="false" help="Useful for computing PCA on periodic data - for example, dihedral angles."/>
+        <param name="dynamic_shift" type="boolean" label="Use dynamic shifting for periodic projection correction" truevalue="-D" falsevalue="" value="false" help="Default is fale, i.e. simply shift to region of lowest density"/>
+    </inputs>
+    <outputs>
+        <data name="output_proj" format="tabular"/>
+        <data name="output_cov" format="tabular">
+            <filter>inputs["cov"] == None</filter>
+        </data>
+        <data name="output_vec" format="tabular">
+            <filter>inputs["vec"] == None</filter>
+        </data>
+        <data name="output_stats" format="tabular">
+            <filter>inputs["stats"] == None</filter>
+        </data>
+        <data name="output_val" format="tabular"/>
+    </outputs>
+    <tests>
+        <!-- fastpca -f contacts.dat -p proj.dat -c cov.dat -v vec.dat -s stats.dat -l val.dat -N -->
+        <test>
+            <param name="input" value="contacts.dat"/>
+            <param name="norm" value="-N"/>
+            <param name="periodic" value="false"/>
+            <param name="dynamic_shift" value="false"/>
+            <output name="output_proj" file="proj.dat"/>
+            <output name="output_cov" file="cov.dat"/>
+            <output name="output_vec" file="vec.dat"/>
+            <output name="output_stats" file="stats.dat"/>
+            <output name="output_val" file="val.dat"/>
+        </test>
+        <!-- fastpca -f contacts2.dat -p proj2.dat -C cov.dat -V vec.dat -S stats.dat -l val2.dat -N -->
+        <test>
+            <param name="input" value="contacts2.dat"/>
+            <param name="cov" value="cov.dat"/>
+            <param name="stats" value="stats.dat"/>
+            <param name="norm" value="-N"/>
+            <param name="periodic" value="false"/>
+            <param name="dynamic_shift" value="false"/>
+            <output name="output_proj" file="proj2.dat"/>
+            <output name="output_val" file="val2.dat"/>
+        </test>
+    </tests>  
+    <help><![CDATA[   
+.. class:: infomark
+ 
+**What it does**
+        
+Dimensionality reduction of molecular dynamics trajectories. Data can be input as 
+tabular or GROMACS XTC files. In addition, data can be projected into a previously 
+computed coordinate space by providing precomputed eigenvectors, statistics and 
+a correlation/covariance matrix. 
+
+Data can be normalized using the either the covariance or correlation matrix. Data
+can also be calculated on a torus, which is useful for periodic data, such as protein
+dihedral angles.
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Tabular or XTC file
+       - If you want to project data into a previously calculated principal space, you can upload precomputed eigenvectors, statistics and correlation/covariance matrix.
+
+_____
+
+       
+.. class:: infomark
+
+**Output**
+
+       - Projected data (tabular file) with each column representing a principal component
+       - Eigenvectors, statistics and covariance/correlation matrix
+
+    ]]></help>
+    <citations>
+      <citation type="doi">10.1063/1.4998259</citation>
+    </citations>
+</tool>
+
