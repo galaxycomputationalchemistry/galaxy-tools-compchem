@@ -55,7 +55,7 @@
               <assert_contents>
                   <has_size value="461416" delta="2000"/>
               </assert_contents>
-            <output>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
