@@ -51,10 +51,10 @@
             <param name="conversion" value="traj" />
             <param name="output_format" value="netcdf" />
             <param name="input_file" value="traj.trr" ftype="trr"/>
-            <output name="output" file="traj.netcdf">
-              <assert_stdout>
-                  <has_size value="452000" delta="100000"/>
-              </assert_stdout>
+            <output name="output">
+              <assert_contents>
+                  <has_size value="452000" delta="5000"/>
+              </assert_contents>
             </output>
         </test>
     </tests>
