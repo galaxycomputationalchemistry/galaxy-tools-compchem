@@ -1,4 +1,4 @@
-<tool id="md_converter" name="MDTraj file converter" version="1.9.3.1">
+<tool id="md_converter" name="MDTraj file converter" version="1.9.3.2">
 
     <description>- interconvert between MD trajectory file formats.</description>
 
@@ -14,7 +14,7 @@
 
     ]]></command>
     <inputs>
-        <param argument="input_file" type="data" format='xtc, trr, dcd, netcdf' label="Input file for conversion"/>
+        <param argument="input_file" type="data" format='xtc,trr,dcd,netcdf' label="Input file for conversion"/>
         <param argument="output_format" type="select" label="Output format">
             <option value="trr">TRR file</option>
             <option value="xtc">XTC file</option>
@@ -32,7 +32,7 @@
                 <when input="output_format" value="netcdf" format="netcdf"/>
             </change_format>
         </data>
-    </outputs> 
+    </outputs>
 
     <tests>
         <test>
@@ -51,12 +51,16 @@
             <param name="conversion" value="traj" />
             <param name="output_format" value="netcdf" />
             <param name="input_file" value="traj.trr" ftype="trr"/>
-            <output name="output" file="traj.netcdf" compare="sim_size"/>
+            <output name="output" file="traj.netcdf">
+              <assert_contents>
+                  <has_size value="461416" delta="2000"/>
+              </assert_contents>
+            <output>
         </test>
     </tests>
     <help><![CDATA[
 **What it does**
-        
+
 This tool interconverts between MD trajectory file formats: xtc, trr, dcd and netcdf.
 
 _____
@@ -67,10 +71,10 @@ _____
 **Input**
 
        - Trajectory file (trr, xtc, dcd, netcdf)
-     
+
 _____
 
-        
+
 .. class:: infomark
 
 **Output**
