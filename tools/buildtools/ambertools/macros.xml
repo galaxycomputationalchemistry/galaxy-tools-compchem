@@ -6,9 +6,6 @@
       <yield/>
     </requirements>
   </xml>
-  <xml name="jinja_requirement">
-     <requirement type="package">jinja2</requirement>
-  </xml>
   <xml name="citations">
     <citations>
       <citation type="doi">10.1002/jcc.20290</citation>

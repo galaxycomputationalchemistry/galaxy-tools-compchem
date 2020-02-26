@@ -4,7 +4,7 @@
     <import>macros.xml</import>
   </macros>
   <expand macro="requirements">
-      <expand macro="jinja_requirement"></expand>
+     <requirement type="package" version="2.11.1">jinja2</requirement>
   </expand>
   <command detect_errors="exit_code">
     <![CDATA[
@@ -51,17 +51,17 @@ with open("$parameteroutfile",'w+') as f:
           <option value="multiple">Multiple Trajectory Protocol (MTP)</option>
         </param>
         <when value="single">
-          <param format="txt,prmtop" name="ligand" type="data" label="AMBER prmtop input for Ligand"/>
-          <param format="txt,prmtop" name="receptor" type="data" label="AMBER prmtop input for Receptor"/>
-          <param format="txt,prmtop" name="complex" type="data" label="AMBER prmtop input for Complex"/>
-          <param format="txt,prmtop" optional="true" name="solvatedcomplex" type="data" label="AMBER prmtop input for Solvated Complex" help="This is optional. Not required if trajectory already has solvent removed"/>
+          <param format="txt" name="ligand" type="data" label="AMBER prmtop input for Ligand"/>
+          <param format="txt" name="receptor" type="data" label="AMBER prmtop input for Receptor"/>
+          <param format="txt" name="complex" type="data" label="AMBER prmtop input for Complex"/>
+          <param format="txt" optional="true" name="solvatedcomplex" type="data" label="AMBER prmtop input for Solvated Complex" help="This is optional. Not required if trajectory already has solvent removed"/>
           <param format="netcdf" name="trajcomplex" type="data" label="NetCDF trajectory input for Complex" help="Trajectory of the (solvated) complex"/>
         </when>
         <when value="multiple">
-          <param format="txt,prmtop" name="ligand" type="data" label="AMBER prmtop input for Ligand"/>
-          <param format="txt,prmtop" name="receptor" type="data" label="AMBER prmtop input for Receptor"/>
-          <param format="txt,prmtop" name="complex" type="data" label="AMBER prmtop input for Complex"/>
-          <param format="txt,prmtop" optional="true" name="solvatedcomplex" type="data" label="AMBER prmtop input for Solvated Complex" help="This is optional. Not required if trajectory alraeady has solvent removed"/>
+          <param format="txt" name="ligand" type="data" label="AMBER prmtop input for Ligand"/>
+          <param format="txt" name="receptor" type="data" label="AMBER prmtop input for Receptor"/>
+          <param format="txt" name="complex" type="data" label="AMBER prmtop input for Complex"/>
+          <param format="txt" optional="true" name="solvatedcomplex" type="data" label="AMBER prmtop input for Solvated Complex" help="This is optional. Not required if trajectory alraeady has solvent removed"/>
           <param format="netcdf" name="trajligand" type="data" label="NetCDF trajectory input for Ligand"/>
           <param format="netcdf" name="trajreceptor" type="data" label="NetCDF trajectory input for Receptor"/>
           <param format="netcdf" name="trajcomplex" type="data" label="NetCDF trajectory input for Complex"/>
@@ -72,10 +72,10 @@ with open("$parameteroutfile",'w+') as f:
       <param name="startframe" type="integer" value="1" label="First frame to analyse" min="1" max="100000000"/>
       <param name="endframe" type="integer" value="9999999" label="Final frame to analyse" min="1" max="100000000"/>
       <param name="interval" type="integer" value="1" label="interval between frames analysed" min="1" max="10000"/>
-      <param name="entropy" type="integer" value="1" label="quasi-harmonic entropy calculation" min="0" max="1" help="1- calculate the quasi-harmonic entropy or 0 - do not"/>
-      <param name="use_sander" type="integer" value="0" label="use sander" min="0" max="1" help="0 - defaults to no (will use sander if needed). 1 - always use sander"/>
+      <param name="entropy" type="boolean" checked="true" truevalue="1" falsevalue="0" label="quasi-harmonic entropy calculation" help="Calculate the quasi-harmonic entropy"/>
+      <param name="use_sander" type="boolean" checked="false" label="use sander" truevalue="1" falsevalue="0" help="defaults to false (will use sander if needed)."/>
       <param name="verbose" type="integer" value="2" label="verbosity" min="0" max="3" help="0 - not verbose 3 - ultra verbose"/>
-      <param name="keep_files" type="integer" value="0" label="keep additional files" min="0" max="1" help="0 - no, 1 - yes"/>
+      <param name="keep_files" type="boolean" checked="false" truevalue="1" falsevalue="0" label="keep additional files" help="defaults to false, no extra files kept"/>
       <param name="strip_mask" type="text" value=":WAT:Cl-:Na+" label="Strip mask" help="Enter a mask for removing unneeded atoms (water/ions)from the solvated prmtop"/>
     </section>
     <section name="calcdetails" title="Details of calculation and parameters" expanded="true">
@@ -111,7 +111,7 @@ with open("$parameteroutfile",'w+') as f:
           <option value="no">no</option>
         </param>
         <when value="yes">
-          <param name="csv_format" type="integer" value="1" label="CSV format" min="0" max="1" help="defaults to yes (1). Choose 0 for unformatted text output"/>
+          <param name="csv_format" type="boolean" checked="true"  truevalue="1" falsevalue="0" label="CSV format" help="Defaults to true, CSV format. Choose false for unformatted text output"/>
           <param name="dec_verbose" type="integer" value="1" label="Decomposition Verbosity" min="0" max="2" help="choose how verbose the output is. 0 - not verbose, 2- very verbose"/>
           <param name="idecomp" type="integer" value="1" label="Energy Decomposition Scheme" min="1" max="4" help="choose an energy decomposition scheme. 1 - 2 - 3 - 4"/>
         </when>
@@ -130,8 +130,8 @@ with open("$parameteroutfile",'w+') as f:
             <param name="ligand" value="ligand.prmtop" ftype="txt"/>
             <param name="receptor" value="receptor.prmtop" ftype="txt"/>
             <param name="complex" value="complex.prmtop" ftype="txt"/>
-	    <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
-            <param name="allparams|entropy" value="0"/>
+            <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
+            <param name="allparams|entropy" value="false"/>
             <param name="calcdetails|gbcalc|calctype" value="yes"/>
             <param name="calcdetails|gbcalc|igb" value="2"/>
             <param name="calcdetails|gbcalc|saltcon" value="0.100"/>
@@ -147,10 +147,10 @@ with open("$parameteroutfile",'w+') as f:
             <param name="ligand" value="ligand.prmtop" ftype="txt"/>
             <param name="receptor" value="receptor.prmtop" ftype="txt"/>
             <param name="complex" value="complex.prmtop" ftype="txt"/>
-	    <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
+            <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
             <param name="allparams|startframe" value="1"/>
             <param name="allparams|endframe" value="1"/>
-            <param name="allparams|entropy" value="0"/>
+            <param name="allparams|entropy" value="false"/>
             <param name="calcdetails|gbcalc|calctype" value="yes"/>
             <param name="calcdetails|gbcalc|igb" value="2"/>
             <param name="calcdetails|gbcalc|saltcon" value="0.100"/>
@@ -162,7 +162,7 @@ with open("$parameteroutfile",'w+') as f:
                 <has_text text="GENERALIZED BORN:" />
                 <has_text text="DELTA TOTAL                -56." />
                 <has_text text="POISSON BOLTZMANN:" />
-		<has_text text="DELTA TOTAL                -47" />
+                <has_text text="DELTA TOTAL                -47" />
               </assert_contents>
             </output>
             <output name="decompoutfile">
@@ -233,6 +233,6 @@ with open("$parameteroutfile",'w+') as f:
     ]]>
   </help>
   <expand macro="citations">
-	  <expand macro="mmpbsa_citation"/>
+      <expand macro="mmpbsa_citation"/>
   </expand>
 </tool>

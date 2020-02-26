@@ -2,7 +2,7 @@
 #  
 &general
 startframe={{ allparams.startframe }}, endframe={{ allparams.endframe }}, interval={{ allparams.interval }},
-verbose={{ allparams.verbose }}, keep_files={{ allparams.keep_files }}, strip_mask={{ allparams.strip_mask }}, use_sander={{ allparams.use_sander }}, entropy={{ allparams.entropy }}
+verbose={{ allparams.verbose }}, keep_files={{ allparams.keep_files | int }}, strip_mask={{ allparams.strip_mask }}, use_sander={{ allparams.use_sander | int }}, entropy={{ allparams.entropy | int }}
 /
 {% if calcdetails.gbcalc.calctype == 'yes' %}
 &gb
@@ -16,7 +16,7 @@ istrng={{ calcdetails.pbcalc.istrng }}, fillratio={{ calcdetails.pbcalc.fillrati
 {% endif %}
 {% if calcdetails.decomposition.decomposition == 'yes' %}
 &decomp
-csv_format={{ calcdetails.decomposition.csv_format }}, dec_verbose={{ calcdetails.decomposition.dec_verbose }}, idecomp={{ calcdetails.decomposition.idecomp }}, 
+csv_format={{ calcdetails.decomposition.csv_format | int }}, dec_verbose={{ calcdetails.decomposition.dec_verbose }}, idecomp={{ calcdetails.decomposition.idecomp }}, 
 /
 {% endif %}
 
