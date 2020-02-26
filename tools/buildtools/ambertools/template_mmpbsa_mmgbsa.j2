@@ -1,0 +1,22 @@
+# Template for mmpbsa in Galaxy
+#  
+&general
+startframe={{ allparams.startframe }}, endframe={{ allparams.endframe }}, interval={{ allparams.interval }},
+verbose={{ allparams.verbose }}, keep_files={{ allparams.keep_files }}, strip_mask={{ allparams.strip_mask }}, use_sander={{ allparams.use_sander }}, entropy={{ allparams.entropy }}
+/
+{% if calcdetails.gbcalc.calctype == 'yes' %}
+&gb
+igb={{ calcdetails.gbcalc.igb }}, saltcon={{ calcdetails.gbcalc.saltcon }}
+/
+{% endif %}
+{% if calcdetails.pbcalc.calctype == 'yes' %}
+&pb
+istrng={{ calcdetails.pbcalc.istrng }}, fillratio={{ calcdetails.pbcalc.fillratio }}, inp={{ calcdetails.pbcalc.inp }},radiopt={{ calcdetails.pbcalc.radiopt }}
+/
+{% endif %}
+{% if calcdetails.decomposition.decomposition == 'yes' %}
+&decomp
+csv_format={{ calcdetails.decomposition.csv_format }}, dec_verbose={{ calcdetails.decomposition.dec_verbose }}, idecomp={{ calcdetails.decomposition.idecomp }}, 
+/
+{% endif %}
+

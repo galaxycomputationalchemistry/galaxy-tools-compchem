@@ -6,6 +6,9 @@
       <yield/>
     </requirements>
   </xml>
+  <xml name="jinja_requirement">
+     <requirement type="package">jinja2</requirement>
+  </xml>
   <xml name="citations">
     <citations>
       <citation type="doi">10.1002/jcc.20290</citation>
@@ -16,5 +19,8 @@
         {http://ambermd.org/CiteAmber.php}, }</citation>
       <yield/>
     </citations>
+  </xml>
+  <xml name="mmpbsa_citation">
+     <citation type="doi">10.1021/ct300418h</citation>
   </xml>
 </macros>
