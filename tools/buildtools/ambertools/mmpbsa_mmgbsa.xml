@@ -1,10 +1,11 @@
 <tool id="mmpbsa_mmgbsa" name="mmpbsa mmgbsa" version="@VERSION@">
-  <description>- estimate ligand binding affinities </description>
+  <description>- estimate ligand binding affinities
+  </description>
   <macros>
     <import>macros.xml</import>
   </macros>
   <expand macro="requirements">
-     <requirement type="package" version="2.11.1">jinja2</requirement>
+    <requirement type="package" version="2.11.1">jinja2</requirement>
   </expand>
   <command detect_errors="exit_code">
     <![CDATA[
@@ -19,8 +20,9 @@
     ]]>
   </command>
   <configfiles>
-    <inputs name="inputs" />
-    <configfile name="mmpbsa_script"><![CDATA[
+    <inputs name="inputs"/>
+    <configfile name="mmpbsa_script">
+      <![CDATA[
 
 import os
 import sys
@@ -88,8 +90,7 @@ with open("$parameteroutfile",'w+') as f:
           <param name="igb" type="integer" value="5" label="igb GB model" min="0" max="7" help="5 - default"/>
           <param name="saltcon" type="float" value="0.150" label="Salt Concentration (M)" min="0.0" max="2.0"/>
         </when>
-        <when value="no">
-        </when>
+        <when value="no"></when>
       </conditional>
       <conditional name="pbcalc">
         <param name="calctype" type="select" label="Poisson Boltzman calculation" help="Choose carry out Poisson Boltzman Calculation">
@@ -102,8 +103,7 @@ with open("$parameteroutfile",'w+') as f:
           <param name="inp" type="integer" value="1" label="Nonpolar solvation method" min="1" max="2" help="1 - default"/>
           <param name="radiopt" type="integer" value="0" label="Use optimized radii?" min="0" max="2" help="0 - default do not use these"/>
         </when>
-        <when value="no">
-        </when>
+        <when value="no"></when>
       </conditional>
       <conditional name="decomposition">
         <param name="decomposition" type="select" label="Decomposition Analysis" help="Choose to carry out decomposition analysis">
@@ -111,12 +111,11 @@ with open("$parameteroutfile",'w+') as f:
           <option value="no">no</option>
         </param>
         <when value="yes">
-          <param name="csv_format" type="boolean" checked="true"  truevalue="1" falsevalue="0" label="CSV format" help="Defaults to true, CSV format. Choose false for unformatted text output"/>
+          <param name="csv_format" type="boolean" checked="true" truevalue="1" falsevalue="0" label="CSV format" help="Defaults to true, CSV format. Choose false for unformatted text output"/>
           <param name="dec_verbose" type="integer" value="1" label="Decomposition Verbosity" min="0" max="2" help="choose how verbose the output is. 0 - not verbose, 2- very verbose"/>
           <param name="idecomp" type="integer" value="1" label="Energy Decomposition Scheme" min="1" max="4" help="choose an energy decomposition scheme. 1 - 2 - 3 - 4"/>
         </when>
-        <when value="no">
-        </when>
+        <when value="no"></when>
       </conditional>
     </section>
   </inputs>
@@ -125,70 +124,71 @@ with open("$parameteroutfile",'w+') as f:
     <data format="txt" name="decompoutfile" label="${tool.name}: Decomposition Statistics"/>
     <data format="txt" name="parameteroutfile" label="${tool.name}: parameter output"/>
   </outputs>
-    <tests>
-        <test>
-            <param name="ligand" value="ligand.prmtop" ftype="txt"/>
-            <param name="receptor" value="receptor.prmtop" ftype="txt"/>
-            <param name="complex" value="complex.prmtop" ftype="txt"/>
-            <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
-            <conditional name="allparams">
-                <param name="entropy" value="false"/>
-            </conditional>
-            <conditional name="gbcalc">
-                <param name="calctype" value="yes" />
-                <param name="igb" value="2" />
-                <param name="saltcon" value="0.100" />
-            </conditional>
-            <conditional name="decomposition">
-                <param name="decomposition" value="no" />
-            </conditional>
-            <output name="resultoutfile">
-              <assert_contents>
-                <has_text text="GENERALIZED BORN:" />
-                <has_text text="DELTA TOTAL                -53." />
-              </assert_contents>
-            </output>
-        </test>
-        <test>
-            <param name="ligand" value="ligand.prmtop" ftype="txt"/>
-            <param name="receptor" value="receptor.prmtop" ftype="txt"/>
-            <param name="complex" value="complex.prmtop" ftype="txt"/>
-            <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
-            <conditional name="allparams">
-                <param name="startframe" value="1" />
-                <param name="endframe" value="1" />
-                <param name="entropy" value="false"/>
-            </conditional>
-            <conditional name="gbcalc">
-                <param name="calctype" value="yes" />
-                <param name="igb" value="2" />
-                <param name="saltcon" value="0.100" />
-            </conditional>
-            <conditional name="pbcalc">
-                <param name="calctype" value="yes" />
-                <param name="istrng" value="0.100" />
-            </conditional>
-            <conditional name="decomposition">
-                <param name="decomposition" value="yes" />
-            </conditional>
-            <output name="resultoutfile">
-              <assert_contents>
-                <has_text text="GENERALIZED BORN:" />
-                <has_text text="DELTA TOTAL                -56." />
-                <has_text text="POISSON BOLTZMANN:" />
-                <has_text text="DELTA TOTAL                -47" />
-              </assert_contents>
-            </output>
-            <output name="decompoutfile">
-              <assert_contents>
-                <has_text text="idecomp = 1: Per-residue decomp adding 1-4 interactions to Internal" />
-                <has_text text="HIE 240,R HIE 240" />
-                <has_text text="RAL 241,L RAL   1,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0" />
-              </assert_contents>
-            </output>
-        </test>
-    </tests>
-  <help><![CDATA[
+  <tests>
+    <test>
+      <param name="ligand" value="ligand.prmtop" ftype="txt"/>
+      <param name="receptor" value="receptor.prmtop" ftype="txt"/>
+      <param name="complex" value="complex.prmtop" ftype="txt"/>
+      <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
+      <conditional name="allparams">
+        <param name="entropy" value="false"/>
+      </conditional>
+      <conditional name="gbcalc">
+        <param name="calctype" value="yes"/>
+        <param name="igb" value="2"/>
+        <param name="saltcon" value="0.100"/>
+      </conditional>
+      <conditional name="decomposition">
+        <param name="decomposition" value="no"/>
+      </conditional>
+      <output name="resultoutfile">
+        <assert_contents>
+          <has_text text="GENERALIZED BORN:"/>
+          <has_text text="DELTA TOTAL                -53."/>
+        </assert_contents>
+      </output>
+    </test>
+    <test>
+      <param name="ligand" value="ligand.prmtop" ftype="txt"/>
+      <param name="receptor" value="receptor.prmtop" ftype="txt"/>
+      <param name="complex" value="complex.prmtop" ftype="txt"/>
+      <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
+      <conditional name="allparams">
+        <param name="startframe" value="1"/>
+        <param name="endframe" value="1"/>
+        <param name="entropy" value="false"/>
+      </conditional>
+      <conditional name="gbcalc">
+        <param name="calctype" value="yes"/>
+        <param name="igb" value="2"/>
+        <param name="saltcon" value="0.100"/>
+      </conditional>
+      <conditional name="pbcalc">
+        <param name="calctype" value="yes"/>
+        <param name="istrng" value="0.100"/>
+      </conditional>
+      <conditional name="decomposition">
+        <param name="decomposition" value="yes"/>
+      </conditional>
+      <output name="resultoutfile">
+        <assert_contents>
+          <has_text text="GENERALIZED BORN:"/>
+          <has_text text="DELTA TOTAL                -56."/>
+          <has_text text="POISSON BOLTZMANN:"/>
+          <has_text text="DELTA TOTAL                -47"/>
+        </assert_contents>
+      </output>
+      <output name="decompoutfile">
+        <assert_contents>
+          <has_text text="idecomp = 1: Per-residue decomp adding 1-4 interactions to Internal"/>
+          <has_text text="HIE 240,R HIE 240"/>
+          <has_text text="RAL 241,L RAL   1,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0"/>
+        </assert_contents>
+      </output>
+    </test>
+  </tests>
+  <help>
+    <![CDATA[
     .. class:: infomark
 
     **What it does**
@@ -226,7 +226,7 @@ with open("$parameteroutfile",'w+') as f:
     **Test data**
 
     - The test data for this tool comes from an `Amber Tutorial`_ and the original dataset_ is available.
-    - For convenience, water has been stripped from the .mdcrd trajectory and this has been converted to netcdf format. 
+    - For convenience, water has been stripped from the .mdcrd trajectory and this has been converted to netcdf format.
 
     .. code-block:: python
 
@@ -239,7 +239,7 @@ with open("$parameteroutfile",'w+') as f:
       traj[0:2].save('1err_desolvated_mini.nc')
 
 
-    .. _`Amber Tutorial`: http://ambermd.org/tutorials/advanced/tutorial3/py_script/index.htm 
+    .. _`Amber Tutorial`: http://ambermd.org/tutorials/advanced/tutorial3/py_script/index.htm
     .. _`AmberTools Manual`: https://ambermd.org/doc12/Amber18.pdf
     .. _dataset: http://ambermd.org/tutorials/advanced/tutorial3/py_script/files/Est_Rec_top_mdcrd.tgz
 
@@ -247,6 +247,6 @@ with open("$parameteroutfile",'w+') as f:
     ]]>
   </help>
   <expand macro="citations">
-      <expand macro="mmpbsa_citation"/>
+    <expand macro="mmpbsa_citation"/>
   </expand>
 </tool>
