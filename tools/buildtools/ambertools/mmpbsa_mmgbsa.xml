@@ -131,11 +131,17 @@ with open("$parameteroutfile",'w+') as f:
             <param name="receptor" value="receptor.prmtop" ftype="txt"/>
             <param name="complex" value="complex.prmtop" ftype="txt"/>
             <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
-            <param name="allparams|entropy" value="false"/>
-            <param name="calcdetails|gbcalc|calctype" value="yes"/>
-            <param name="calcdetails|gbcalc|igb" value="2"/>
-            <param name="calcdetails|gbcalc|saltcon" value="0.100"/>
-            <param name="calcdetails|decomposition|decomposition" value="no"/>
+            <conditional name="allparams">
+                <param name="entropy" value="false"/>
+            </conditional>
+            <conditional name="gbcalc">
+                <param name="calctype" value="yes" />
+                <param name="igb" value="2" />
+                <param name="saltcon" value="0.100" />
+            </conditional>
+            <conditional name="decomposition">
+                <param name="decomposition" value="no" />
+            </conditional>
             <output name="resultoutfile">
               <assert_contents>
                 <has_text text="GENERALIZED BORN:" />
@@ -148,15 +154,23 @@ with open("$parameteroutfile",'w+') as f:
             <param name="receptor" value="receptor.prmtop" ftype="txt"/>
             <param name="complex" value="complex.prmtop" ftype="txt"/>
             <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
-            <param name="allparams|startframe" value="1"/>
-            <param name="allparams|endframe" value="1"/>
-            <param name="allparams|entropy" value="false"/>
-            <param name="calcdetails|gbcalc|calctype" value="yes"/>
-            <param name="calcdetails|gbcalc|igb" value="2"/>
-            <param name="calcdetails|gbcalc|saltcon" value="0.100"/>
-            <param name="calcdetails|pbcalc|calctype" value="yes"/>
-            <param name="calcdetails|pbcalc|istrng" value="0.100"/>
-            <param name="calcdetails|decomposition|decomposition" value="yes"/>
+            <conditional name="allparams">
+                <param name="startframe" value="1" />
+                <param name="endframe" value="1" />
+                <param name="entropy" value="false"/>
+            </conditional>
+            <conditional name="gbcalc">
+                <param name="calctype" value="yes" />
+                <param name="igb" value="2" />
+                <param name="saltcon" value="0.100" />
+            </conditional>
+            <conditional name="pbcalc">
+                <param name="calctype" value="yes" />
+                <param name="istrng" value="0.100" />
+            </conditional>
+            <conditional name="decomposition">
+                <param name="decomposition" value="yes" />
+            </conditional>
             <output name="resultoutfile">
               <assert_contents>
                 <has_text text="GENERALIZED BORN:" />
