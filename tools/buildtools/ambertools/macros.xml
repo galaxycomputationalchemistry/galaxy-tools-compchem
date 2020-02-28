@@ -17,4 +17,7 @@
       <yield/>
     </citations>
   </xml>
+  <xml name="mmpbsa_citation">
+     <citation type="doi">10.1021/ct300418h</citation>
+  </xml>
 </macros>
