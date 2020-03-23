@@ -5,12 +5,14 @@
   </macros>
   <expand macro="requirements">
     <requirement type="package" version="3.2.0">parmed</requirement>
+     <requirement type="package" version="2019.1">gromacs</requirement>
     <requirement type="package" version="2.11.1">jinja2</requirement>
   </expand>
   <command detect_errors="exit_code">
     <![CDATA[
    python '$templating_script' '$inputs' &&
    export AMBERHOME=\$CONDA_PREFIX && 
+   ln -s \$CONDA_PREFIX/share/gromacs/top/amber99sb.ff &&
    parmed -i ligand.script -O &&
    parmed -i receptor.script -O &&
    parmed -i complex.script -O &&
@@ -37,7 +39,16 @@ template_environment = Environment(loader=FileSystemLoader(currentpath),lstrip_b
 template = template_environment.get_template('template_parmconv.j2')
 print(params)
 
-params['prmtop_in'] =   '$prmtop_in'
+params['fmt'] = '$param_inputs.fmt'
+#if str($param_inputs.fmt)  == 'AMBER':
+params["top_in"] = '$param_inputs.top_in'
+#else:
+params["top_in"] = '$param_inputs.top_in'
+params["str_in"] = '$param_inputs.str_in'
+#end if
+
+print(params)
+
 params['prmtop_ligand'] =   '$prmtop_ligand'
 params['prmtop_receptor'] =  '$prmtop_receptor'
 params['prmtop_complex'] =   '$prmtop_complex'
@@ -60,15 +71,27 @@ for system in systems:
     </configfile>
   </configfiles>
   <inputs>
-    <param name="fmt" type="select" display="radio" label="Force Field Parameter format">
-      <option selected="True" value="AMBER">AMBER prmtop</option>
+      <conditional name="param_inputs">
+        <param name="fmt" type="select" label="Force Field format">
+      <option selected="True" value="AMBER">AMBER</option>
       <option value="CHARMM">CHARMM</option>
-      <option value="CHARMM">GROMACS top</option>
-    </param>
-    <param name="prmtop_in" type="data" label="Input Parameter/Topology file" format="txt"/>
+      <option value="GROMACS">GROMACS</option>
+        </param>
+        <when value="AMBER">
+         <param name="top_in" type="data" label="Input Topology file" format="txt"/>
+        </when>
+        <when value="GROMACS">
+         <param name="top_in" type="data" label="Input Topology file" format="top"/>
+         <param name="str_in" type="data" label="Input Structure file" format="gro"/>
+        </when>
+        <when value="CHARMM">
+         <param name="top_in" type="data" label="Input Topology file" format="txt"/>
+         <param name="str_in" type="data" label="Input Structure file" format="pdb"/>
+        </when>
+    </conditional>
     <param name="stripmask_ligand" type="text" label="Stripmask selection to define the ligand" value="!:UNL"></param>
-    <param name="stripmask_receptor" type="text" label="Stripmask selection to define the receptor" value=":WAT,SOL,UNL"></param>
-    <param name="stripmask_complex" type="text" label="Stripmask selection to define the complex" value=":WAT,SOL"></param>
+    <param name="stripmask_receptor" type="text" label="Stripmask selection to define the receptor" value=":NA,SOL,UNL"></param>
+    <param name="stripmask_complex" type="text" label="Stripmask selection to define the complex" value=":NA,SOL"></param>
     <param name="stripmask_solvatedcomplex" type="text" label="Stripmask selection to define solvated complex"></param>
 
   </inputs>
