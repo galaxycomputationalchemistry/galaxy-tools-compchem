@@ -1,0 +1,252 @@
+<tool id="mmpbsa_mmgbsa" name="mmpbsa mmgbsa" version="@VERSION@">
+  <description>- estimate ligand binding affinities
+  </description>
+  <macros>
+    <import>macros.xml</import>
+  </macros>
+  <expand macro="requirements">
+    <requirement type="package" version="2.11.1">jinja2</requirement>
+  </expand>
+  <command detect_errors="exit_code">
+    <![CDATA[
+    python '$mmpbsa_script' '$inputs' &&
+    export AMBERHOME=\$CONDA_PREFIX &&
+    #if $input.simulation.solvatedcomplex:
+        MMPBSA.py -O -i '$parameteroutfile' -sp '$input.simulation.solvatedcomplex' -cp '$input.simulation.complex' -rp '$input.simulation.receptor' -lp '$input.simulation.ligand' -y '$input.simulation.trajcomplex' -o '$resultoutfile' -do '$decompoutfile'
+    #else:
+        MMPBSA.py -O -i '$parameteroutfile' -cp '$input.simulation.complex' -rp '$input.simulation.receptor' -lp '$input.simulation.ligand' -y '$input.simulation.trajcomplex' -o '$resultoutfile' -do '$decompoutfile'
+    #end if
+
+    ]]>
+  </command>
+  <configfiles>
+    <inputs name="inputs"/>
+    <configfile name="mmpbsa_script">
+      <![CDATA[
+
+import os
+import sys
+import json
+
+from jinja2 import Environment, FileSystemLoader
+
+input_json_path = sys.argv[1]
+params = json.load(open(input_json_path, "r"))
+
+
+currentpath = "$__tool_directory__"  # should work generally
+template_environment = Environment(loader=FileSystemLoader(currentpath),lstrip_blocks=True, trim_blocks=True)
+template = template_environment.get_template('template_mmpbsa_mmgbsa.j2')
+print(params)
+
+with open("$parameteroutfile",'w+') as f:
+    f.write(template.render(params))
+
+]]>
+    </configfile>
+  </configfiles>
+  <inputs>
+    <section name="input" title="Input" expanded="true">
+      <conditional name="simulation">
+        <param name="simtype" type="select" label="Single or Multiple Trajectories" help="For a single complex in water choose Single. For complex, receptor and ligand trajectories choose multiple">
+          <option selected="True" value="single">Single Trajectory Protocol (STP)</option>
+          <option value="multiple">Multiple Trajectory Protocol (MTP)</option>
+        </param>
+        <when value="single">
+          <param format="txt" name="ligand" type="data" label="AMBER prmtop input for Ligand"/>
+          <param format="txt" name="receptor" type="data" label="AMBER prmtop input for Receptor"/>
+          <param format="txt" name="complex" type="data" label="AMBER prmtop input for Complex"/>
+          <param format="txt" optional="true" name="solvatedcomplex" type="data" label="AMBER prmtop input for Solvated Complex" help="This is optional. Not required if trajectory already has solvent removed"/>
+          <param format="netcdf" name="trajcomplex" type="data" label="NetCDF trajectory input for Complex" help="Trajectory of the (solvated) complex"/>
+        </when>
+        <when value="multiple">
+          <param format="txt" name="ligand" type="data" label="AMBER prmtop input for Ligand"/>
+          <param format="txt" name="receptor" type="data" label="AMBER prmtop input for Receptor"/>
+          <param format="txt" name="complex" type="data" label="AMBER prmtop input for Complex"/>
+          <param format="txt" optional="true" name="solvatedcomplex" type="data" label="AMBER prmtop input for Solvated Complex" help="This is optional. Not required if trajectory alraeady has solvent removed"/>
+          <param format="netcdf" name="trajligand" type="data" label="NetCDF trajectory input for Ligand"/>
+          <param format="netcdf" name="trajreceptor" type="data" label="NetCDF trajectory input for Receptor"/>
+          <param format="netcdf" name="trajcomplex" type="data" label="NetCDF trajectory input for Complex"/>
+        </when>
+      </conditional>
+    </section>
+    <section name="allparams" title="General parameters" expanded="false">
+      <param name="startframe" type="integer" value="1" label="First frame to analyse" min="1" max="100000000"/>
+      <param name="endframe" type="integer" value="9999999" label="Final frame to analyse" min="1" max="100000000"/>
+      <param name="interval" type="integer" value="1" label="interval between frames analysed" min="1" max="10000"/>
+      <param name="entropy" type="boolean" checked="true" truevalue="1" falsevalue="0" label="quasi-harmonic entropy calculation" help="Calculate the quasi-harmonic entropy"/>
+      <param name="use_sander" type="boolean" checked="false" label="use sander" truevalue="1" falsevalue="0" help="defaults to false (will use sander if needed)."/>
+      <param name="verbose" type="integer" value="2" label="verbosity" min="0" max="3" help="0 - not verbose 3 - ultra verbose"/>
+      <param name="keep_files" type="boolean" checked="false" truevalue="1" falsevalue="0" label="keep additional files" help="defaults to false, no extra files kept"/>
+      <param name="strip_mask" type="text" value=":WAT:Cl-:Na+" label="Strip mask" help="Enter a mask for removing unneeded atoms (water/ions)from the solvated prmtop"/>
+    </section>
+    <section name="calcdetails" title="Details of calculation and parameters" expanded="true">
+      <conditional name="gbcalc">
+        <param name="calctype" type="select" label="General Born calculation" help="Choose carry out General Born Calculation">
+          <option selected="True" value="yes">yes</option>
+          <option value="no">no</option>
+        </param>
+        <when value="yes">
+          <param name="igb" type="integer" value="5" label="igb GB model" min="0" max="7" help="5 - default"/>
+          <param name="saltcon" type="float" value="0.150" label="Salt Concentration (M)" min="0.0" max="2.0"/>
+        </when>
+        <when value="no"></when>
+      </conditional>
+      <conditional name="pbcalc">
+        <param name="calctype" type="select" label="Poisson Boltzman calculation" help="Choose carry out Poisson Boltzman Calculation">
+          <option value="yes">yes</option>
+          <option selected="True" value="no">no</option>
+        </param>
+        <when value="yes">
+          <param name="istrng" type="float" value="0.15" label="Ionic Strength (M)" min="0.0" max="2.0"/>
+          <param name="fillratio" type="float" value="4.0" label="Fill ratio" help="The ratio between the longest dimension of the rectangular finite-difference grid and that of the solute" min="0.0" max="10.0"/>
+          <param name="inp" type="integer" value="1" label="Nonpolar solvation method" min="1" max="2" help="1 - default"/>
+          <param name="radiopt" type="integer" value="0" label="Use optimized radii?" min="0" max="2" help="0 - default do not use these"/>
+        </when>
+        <when value="no"></when>
+      </conditional>
+      <conditional name="decomposition">
+        <param name="decomposition" type="select" label="Decomposition Analysis" help="Choose to carry out decomposition analysis">
+          <option selected="True" value="yes">yes</option>
+          <option value="no">no</option>
+        </param>
+        <when value="yes">
+          <param name="csv_format" type="boolean" checked="true" truevalue="1" falsevalue="0" label="CSV format" help="Defaults to true, CSV format. Choose false for unformatted text output"/>
+          <param name="dec_verbose" type="integer" value="1" label="Decomposition Verbosity" min="0" max="2" help="choose how verbose the output is. 0 - not verbose, 2- very verbose"/>
+          <param name="idecomp" type="integer" value="1" label="Energy Decomposition Scheme" min="1" max="4" help="choose an energy decomposition scheme. 1 - 2 - 3 - 4"/>
+        </when>
+        <when value="no"></when>
+      </conditional>
+    </section>
+  </inputs>
+  <outputs>
+    <data format="txt" name="resultoutfile" label="${tool.name}: Statistics"/>
+    <data format="txt" name="decompoutfile" label="${tool.name}: Decomposition Statistics"/>
+    <data format="txt" name="parameteroutfile" label="${tool.name}: parameter output"/>
+  </outputs>
+  <tests>
+    <test>
+      <param name="ligand" value="ligand.prmtop" ftype="txt"/>
+      <param name="receptor" value="receptor.prmtop" ftype="txt"/>
+      <param name="complex" value="complex.prmtop" ftype="txt"/>
+      <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
+      <conditional name="allparams">
+        <param name="entropy" value="false"/>
+      </conditional>
+      <conditional name="gbcalc">
+        <param name="calctype" value="yes"/>
+        <param name="igb" value="2"/>
+        <param name="saltcon" value="0.100"/>
+      </conditional>
+      <conditional name="decomposition">
+        <param name="decomposition" value="no"/>
+      </conditional>
+      <output name="resultoutfile">
+        <assert_contents>
+          <has_text text="GENERALIZED BORN:"/>
+          <has_text text="DELTA TOTAL                -53."/>
+        </assert_contents>
+      </output>
+    </test>
+    <test>
+      <param name="ligand" value="ligand.prmtop" ftype="txt"/>
+      <param name="receptor" value="receptor.prmtop" ftype="txt"/>
+      <param name="complex" value="complex.prmtop" ftype="txt"/>
+      <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
+      <conditional name="allparams">
+        <param name="startframe" value="1"/>
+        <param name="endframe" value="1"/>
+        <param name="entropy" value="false"/>
+      </conditional>
+      <conditional name="gbcalc">
+        <param name="calctype" value="yes"/>
+        <param name="igb" value="2"/>
+        <param name="saltcon" value="0.100"/>
+      </conditional>
+      <conditional name="pbcalc">
+        <param name="calctype" value="yes"/>
+        <param name="istrng" value="0.100"/>
+      </conditional>
+      <conditional name="decomposition">
+        <param name="decomposition" value="yes"/>
+      </conditional>
+      <output name="resultoutfile">
+        <assert_contents>
+          <has_text text="GENERALIZED BORN:"/>
+          <has_text text="DELTA TOTAL                -56."/>
+          <has_text text="POISSON BOLTZMANN:"/>
+          <has_text text="DELTA TOTAL                -47"/>
+        </assert_contents>
+      </output>
+      <output name="decompoutfile">
+        <assert_contents>
+          <has_text text="idecomp = 1: Per-residue decomp adding 1-4 interactions to Internal"/>
+          <has_text text="HIE 240,R HIE 240"/>
+          <has_text text="RAL 241,L RAL   1,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0"/>
+        </assert_contents>
+      </output>
+    </test>
+  </tests>
+  <help>
+    <![CDATA[
+    .. class:: infomark
+
+    **What it does**
+
+    This tool calculates the Molecular Mechanics Poisson-Boltzman Surface Area (MMPBSA) which is an estimate of the binding free energy between a ligand and a receptor.
+
+    .. class:: infomark
+
+    **How it works**
+
+    Prior to using this tool simulations of the ligand complexed with the receptor must be run. This tool, which wraps AmberTools will need a prmtop (Amber style parameter topology file for the receptor, ligand and the complex) and the trajectory in netCDF format.
+
+    - Single Trajectory Estimate: A simulation of the complex in water is run in advance. The trajectory of this complex is used to estimate the MMPBSA or MMGBSA depending on the options chosen. A General Born (GB) calculation is recommended as this calculation finishes quickly.
+    - Multiple Trajectory Estimate: A simulation of the complex in water, the receptor in water and the ligand in water are run in advance. This is useful the ligand is expected to have a significantly different conformation in solution vs in the complex. The trajectory of this complex is used to estimate the MMPBSA or MMGBSA depending on the options chosen. A General Born (GB) calculation is recommended as this calculation finishes quickly.
+
+    .. class:: infomark
+
+    **Outputs created**
+
+    - The statistics file which includes all information about the frames analysed and average energies. The DELTA G binding is estimated. If negative this is a favourable binding. Note that by default the entropy contribution to binding (unfavourable) is not calculated. A normal mode analysis is needed.
+    - The decomposition file contains a breakdown of each residues contribution to the energy. For example using the default Energy Decomposition Scheme (1) the interaction of each residue with the rest of the system is calculated and listed.
+    - The parameter file contains the input parameters passed from Galaxy to MMPBSA.py in the expected MMPBSA input format.
+
+    .. class:: infomark
+
+    **User guide and documentation**
+
+    - The `AmberTools Manual`_
+    - The `Amber Tutorial`_ on using MMPBSA.py
+    - There are many more complex flags available. This Galaxy wrapper only supports GB and PB binding free energies and decomposition. Parallel calculations are not supported at present.
+    - This Galaxy tool is based on MMPBSA.py. More details on options that are not details in the Manual and Tutorials can be found in the code - see "$CONDA_PREFIX/lib/python3.7/site-packages/MMPBSA_mods/input_parser.py" and "$CONDA_PREFIX/lib/python3.7/site-packages/MMPBSA_mods/main.py".
+
+    .. class:: infomark
+
+    **Test data**
+
+    - The test data for this tool comes from an `Amber Tutorial`_ and the original dataset_ is available.
+    - For convenience, water has been stripped from the .mdcrd trajectory and this has been converted to netcdf format.
+
+    .. code-block:: python
+
+      import mdtraj as md
+      traj = md.load('1err_prod.mdcrd', top='1err.solvated.prmtop')
+      topology = traj.topology
+      atoms_to_keep = topology.select('not water')
+      traj.restrict_atoms(atoms_to_keep)
+      traj.save('1err_desolvated.nc')
+      traj[0:2].save('1err_desolvated_mini.nc')
+
+
+    .. _`Amber Tutorial`: http://ambermd.org/tutorials/advanced/tutorial3/py_script/index.htm
+    .. _`AmberTools Manual`: https://ambermd.org/doc12/Amber18.pdf
+    .. _dataset: http://ambermd.org/tutorials/advanced/tutorial3/py_script/files/Est_Rec_top_mdcrd.tgz
+
+
+    ]]>
+  </help>
+  <expand macro="citations">
+    <expand macro="mmpbsa_citation"/>
+  </expand>
+</tool>
