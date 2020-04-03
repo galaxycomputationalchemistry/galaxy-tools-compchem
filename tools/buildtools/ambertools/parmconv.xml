@@ -1,11 +1,11 @@
-<tool id="parmconv" name="Convert Parameters" version="@VERSION@" >
+<tool id="parmconv" name="Convert Parameters" version="@VERSION@">
   <description>- for use with MMPBSA</description>
   <macros>
     <import>macros.xml</import>
   </macros>
   <expand macro="requirements">
     <requirement type="package" version="3.2.0">parmed</requirement>
-     <requirement type="package" version="2019.1">gromacs</requirement>
+    <requirement type="package" version="2019.1">gromacs</requirement>
     <requirement type="package" version="2.11.1">jinja2</requirement>
   </expand>
   <command detect_errors="exit_code">
@@ -70,18 +70,18 @@ for system in systems:
     </configfile>
   </configfiles>
   <inputs>
-      <conditional name="param_inputs">
-        <param name="fmt" type="select" label="Force Field format">
-      <option selected="True" value="AMBER">AMBER</option>
-      <option value="GROMACS">GROMACS</option>
-        </param>
-        <when value="AMBER">
-         <param name="top_in" type="data" label="Input Topology file" format="txt"/>
-        </when>
-        <when value="GROMACS">
-         <param name="top_in" type="data" label="Input Topology file" format="top"/>
-         <param name="str_in" type="data" label="Input Structure file" format="gro"/>
-        </when>
+    <conditional name="param_inputs">
+      <param name="fmt" type="select" label="Force Field format">
+        <option selected="True" value="AMBER">AMBER</option>
+        <option value="GROMACS">GROMACS</option>
+      </param>
+      <when value="AMBER">
+        <param name="top_in" type="data" label="Input Topology file" format="txt"/>
+      </when>
+      <when value="GROMACS">
+        <param name="top_in" type="data" label="Input Topology file" format="top"/>
+        <param name="str_in" type="data" label="Input Structure file" format="gro"/>
+      </when>
     </conditional>
     <param name="stripmask_ligand" type="text" label="Ligand selection" value="!:UNL" help="Define a valid AMBER stripmask that will select only the ligand"></param>
     <param name="stripmask_receptor" type="text" label="Receptor selection" value=":NA,SOL,UNL" help="Define a valid AMBER stripmask that will select only the receptor"></param>
@@ -96,14 +96,15 @@ for system in systems:
     <data format="txt" name="prmtop_solvatedcomplex" label="solvated complex prmtop"/>
   </outputs>
   <tests>
-    <test> <!--example in this test is not solvated but sufficient -->
+    <test>
+      <!--example in this test is not solvated but sufficient -->
       <param name="fmt" value="AMBER"/>
       <conditional name="param_inputs">
         <param name="top_in" value="complex.prmtop"/>
       </conditional>
-     <param name="stripmask_ligand" value="!:RAL"/>
-     <param name="stripmask_receptor" value=":NA,CL,SOL,WAT,RAL"/>
-     <param name="stripmask_complex" value=":NA,CL,SOL,WAT"/>
+      <param name="stripmask_ligand" value="!:RAL"/>
+      <param name="stripmask_receptor" value=":NA,CL,SOL,WAT,RAL"/>
+      <param name="stripmask_complex" value=":NA,CL,SOL,WAT"/>
       <output name="prmtop_ligand">
         <assert_contents>
           <has_text text="      61      15"/>
@@ -128,14 +129,16 @@ for system in systems:
         </assert_contents>
       </output>
     </test>
-    <test> <!--example in this test is from @sbrays' gromacs tests. It has no ligand but is sufficient and will not take extra space in the repo! -->
+    <test>
+      <!--example in this test is from @sbrays' gromacs tests. It has no ligand but is sufficient and will not take extra space in the repo! -->
       <param name="fmt" value="GROMACS"/>
       <conditional name="param_inputs">
         <param name="top_in" value="topol_solv.top"/>
         <param name="str_in" value="solv_ions.gro"/>
       </conditional>
-     <param name="stripmask_ligand" value="!:CL"/> <!-- pretending CL is a ligand -->
-     <param name="stripmask_receptor" value=":NA,CL,SOL,WAT"/>
+      <param name="stripmask_ligand" value="!:CL"/>
+      <!-- pretending CL is a ligand -->
+      <param name="stripmask_receptor" value=":NA,CL,SOL,WAT"/>
       <output name="prmtop_ligand">
         <assert_contents>
           <has_text text="       8      59"/>
@@ -186,16 +189,7 @@ for system in systems:
     ]]>
   </help>
   <expand macro="citations">
-    <citation type="bibtex">@misc{parmed_2020,
-author = {ParmEd},
-title = {ParmEd/ParmEd},
-url={https://github.com/ParmEd/ParmEd},
-abstract = {Parameter/topology editor and molecular simulator. Contribute to ParmEd/ParmEd development by creating an account on GitHub.},
-urldate = {2020-04-03},
-publisher = {GitHub},
-year = {2020},
-month = mar,
-}</citation>
-
+    <citation type="bibtex">@misc{parmed_2020, author = {ParmEd}, title = {ParmEd/ParmEd}, url={https://github.com/ParmEd/ParmEd}, abstract = {Parameter/topology editor and molecular simulator. Contribute to ParmEd/ParmEd development by creating an
+      account on GitHub.}, urldate = {2020-04-03}, publisher = {GitHub}, year = {2020}, month = mar, }</citation>
   </expand>
 </tool>
