@@ -1,5 +1,5 @@
 <tool id="parmconv" name="Convert Parameters" version="@VERSION@">
-  <description> to AMBER prmtop in preparation for MMPBSA</description>
+  <description>to AMBER prmtop in preparation for MMPBSA</description>
   <macros>
     <import>macros.xml</import>
   </macros>
@@ -10,9 +10,10 @@
   </expand>
   <command detect_errors="exit_code">
     <![CDATA[
-   bash '$bash_script' \$CONDA_PREFIX  &&
    python '$templating_script' '$inputs' &&
-   export AMBERHOME=\$CONDA_PREFIX &&
+   PATH_TO_PARMED=\$(dirname `which parmed`) &&
+   export AMBERHOME=\$(dirname \$PATH_TO_PARMED) &&
+   export GMXDATA=\$AMBERHOME/share/gromacs/top/ &&
    parmed -i ligand.script -O &&
    parmed -i receptor.script -O &&
    parmed -i complex.script -O &&
@@ -22,11 +23,6 @@
   </command>
   <configfiles>
     <inputs name="inputs"/>
-    <configfile name="bash_script">
-      <![CDATA[
-      for i in "$1/share/gromacs/top/*.ff"; do ln -s \$i -f; done
-    ]]>
-    </configfile>
     <configfile name="templating_script">
       <![CDATA[
 
