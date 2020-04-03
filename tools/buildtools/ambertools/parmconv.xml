@@ -10,7 +10,7 @@
   </expand>
   <command detect_errors="exit_code">
     <![CDATA[
-   bash '$bash_script' \$CONDA_PREFIX  && 
+   bash '$bash_script' \$CONDA_PREFIX  &&
    python '$templating_script' '$inputs' &&
    export AMBERHOME=\$CONDA_PREFIX &&
    parmed -i ligand.script -O &&
@@ -24,7 +24,7 @@
     <inputs name="inputs"/>
     <configfile name="bash_script">
       <![CDATA[
-      for i in "$1/share/gromacs/top/*.ff"; do ln -s \$i; done
+      for i in "$1/share/gromacs/top/*.ff"; do ln -s \$i -f; done
     ]]>
     </configfile>
     <configfile name="templating_script">
@@ -185,4 +185,17 @@ for system in systems:
 
     ]]>
   </help>
+  <expand macro="citations">
+    <citation type="bibtex">@misc{parmed_2020,
+author = {ParmEd},
+title = {ParmEd/ParmEd},
+url={https://github.com/ParmEd/ParmEd},
+abstract = {Parameter/topology editor and molecular simulator. Contribute to ParmEd/ParmEd development by creating an account on GitHub.},
+urldate = {2020-04-03},
+publisher = {GitHub},
+year = {2020},
+month = mar,
+}</citation>
+
+  </expand>
 </tool>
