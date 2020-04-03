@@ -192,9 +192,11 @@ for system in systems:
         <param name="top_in" value="topol_solv.top"/>
         <param name="str_in" value="solv_ions.gro"/>
       </conditional>
-      <param name="stripmask_ligand" value="!:CL"/>
       <!-- pretending CL is a ligand -->
+      <param name="stripmask_ligand" value="!:CL"/>
       <param name="stripmask_receptor" value=":NA,CL,SOL,WAT"/>
+      <!-- test a fairly complex selection. All backbone oxygens in residues 1-500 but not in water, lysine or arginine -->
+      <param name="stripmask_solvatedcomplex" value=":1-500@O&amp;!(:WAT|:LYS,ARG)"/>
       <output name="prmtop_ligand">
         <assert_contents>
           <has_text text="       8      59"/>
@@ -208,6 +210,13 @@ for system in systems:
           <has_text text="%FLAG MASS"/>
           <has_text text="LYS VAL PHE "/>
           <not_has_text text="CL "/>
+        </assert_contents>
+      </output>
+      <output name="prmtop_solvatedcomplex">
+        <assert_contents>
+          <has_text text="   38265      59"/>
+          <has_text text="%FLAG MASS"/>
+          <has_text text="LYS VAL PHE"/>
         </assert_contents>
       </output>
     </test>
