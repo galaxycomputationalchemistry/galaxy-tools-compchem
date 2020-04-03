@@ -10,7 +10,8 @@
   <command detect_errors="exit_code">
     <![CDATA[
     python '$mmpbsa_script' '$inputs' &&
-    export AMBERHOME=\$CONDA_PREFIX &&
+    PATH_TO_MMPBSA=\$(dirname `which MMPBSA.py`) &&
+    export AMBERHOME=\$(dirname \$PATH_TO_MMPBSA) &&
     #if $input.simulation.solvatedcomplex:
         MMPBSA.py -O -i '$parameteroutfile' -sp '$input.simulation.solvatedcomplex' -cp '$input.simulation.complex' -rp '$input.simulation.receptor' -lp '$input.simulation.ligand' -y '$input.simulation.trajcomplex' -o '$resultoutfile' -do '$decompoutfile'
     #else:
