@@ -36,7 +36,6 @@ params = json.load(open(input_json_path, "r"))
 currentpath = "$__tool_directory__"  # should work generally
 template_environment = Environment(loader=FileSystemLoader(currentpath),lstrip_blocks=True, trim_blocks=True)
 template = template_environment.get_template('template_parmconv.j2')
-print(params)
 params['fmt'] = '$param_inputs.fmt'
 #if str($param_inputs.fmt)  == 'AMBER':
 params["top_in"] = '$param_inputs.top_in'
@@ -50,9 +49,35 @@ params['prmtop_complex'] =   '$prmtop_complex'
 params['prmtop_solvatedcomplex'] = '$prmtop_solvatedcomplex'
 print(params)
 
+
+def unescape(cond_text):
+    """
+    # Unescape if input has been escaped - credit @bgruening //github.com/bgruening/galaxytools.git get_online_data.py
+    """
+    mapped_chars = { '>' :'__gt__',
+                 '<' :'__lt__',
+                 "'" :'__sq__',
+                 '"' :'__dq__',
+                 '[' :'__ob__',
+                 ']' :'__cb__',
+                 '{' :'__oc__',
+                 '}' :'__cc__',
+                 '@' : '__at__',
+                 '\n' : '__cn__',
+                 '\r' : '__cr__',
+                 '\t' : '__tc__',
+                 '&' : '__and__'
+                 }
+    for key, value in mapped_chars.items():
+        cond_text = cond_text.replace( value, key )
+    return cond_text
+
 def run_template(params=params, system="ligand"):
+    """
+    # Render template on a selected system using a local parameter copy
+    """
     localparams=params.copy() # shallow copy ok for simple variables
-    localparams['stripmask']=localparams['stripmask_'+system]
+    localparams['stripmask']=unescape(localparams['stripmask_'+system])
     localparams['prmtop_out']=localparams['prmtop_'+system]
     print(localparams)
     with open(system+'.script','w+') as f:
@@ -79,11 +104,46 @@ for system in systems:
         <param name="str_in" type="data" label="Input Structure file" format="gro"/>
       </when>
     </conditional>
-    <param name="stripmask_ligand" type="text" label="Ligand selection" value="!:UNL" help="Define a valid AMBER stripmask that will select only the ligand"></param>
-    <param name="stripmask_receptor" type="text" label="Receptor selection" value=":NA,SOL,UNL" help="Define a valid AMBER stripmask that will select only the receptor"></param>
-    <param name="stripmask_complex" type="text" label="Complex selection" value=":NA,SOL" help="Define a valid AMBER stripmask that will select the complex (receptor with ligand)"></param>
-    <param name="stripmask_solvatedcomplex" type="text" label="Solvated Complex selection" help="Define a valid AMBER stripmask that will select the solvated complex (includes water and ions)"></param>
-
+    <param name="stripmask_ligand" type="text" label="Ligand selection" value="!:UNL" help="Define a valid AMBER stripmask that will select only the ligand">
+      <sanitizer>
+        <valid initial="string.printable">
+          <remove value="&amp;"/>
+        </valid>
+        <mapping initial="none">
+          <add source="&amp;" target="__and__"/>
+        </mapping>
+      </sanitizer>
+    </param>
+    <param name="stripmask_receptor" type="text" label="Receptor selection" value=":NA,SOL,UNL" help="Define a valid AMBER stripmask that will select only the receptor">
+      <sanitizer>
+        <valid initial="string.printable">
+          <remove value="&amp;"/>
+        </valid>
+        <mapping initial="none">
+          <add source="&amp;" target="__and__"/>
+        </mapping>
+      </sanitizer>
+    </param>
+    <param name="stripmask_complex" type="text" label="Complex selection" value=":NA,SOL" help="Define a valid AMBER stripmask that will select the complex (receptor with ligand)">
+      <sanitizer>
+        <valid initial="string.printable">
+          <remove value="&amp;"/>
+        </valid>
+        <mapping initial="none">
+          <add source="&amp;" target="__and__"/>
+        </mapping>
+      </sanitizer>
+    </param>
+    <param name="stripmask_solvatedcomplex" type="text" label="Solvated Complex selection" help="Define a valid AMBER stripmask that will select the solvated complex (includes water and ions)">
+      <sanitizer>
+        <valid initial="string.printable">
+          <remove value="&amp;"/>
+        </valid>
+        <mapping initial="none">
+          <add source="&amp;" target="__and__"/>
+        </mapping>
+      </sanitizer>
+    </param>
   </inputs>
   <outputs>
     <data format="txt" name="prmtop_ligand" label="ligand prmtop"/>
