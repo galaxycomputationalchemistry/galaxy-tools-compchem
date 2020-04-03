@@ -1,4 +1,4 @@
-<tool id="mmpbsa_mmgbsa" name="mmpbsa mmgbsa" version="@VERSION@">
+<tool id="mmpbsa_mmgbsa" name="mmpbsa mmgbsa" version="@VERSION@.1">
   <description>- estimate ligand binding affinities
   </description>
   <macros>
