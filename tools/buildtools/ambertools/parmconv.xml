@@ -10,18 +10,23 @@
   </expand>
   <command detect_errors="exit_code">
     <![CDATA[
+   bash '$bash_script' \$CONDA_PREFIX  && 
    python '$templating_script' '$inputs' &&
-   export AMBERHOME=\$CONDA_PREFIX && 
-   ln -s \$CONDA_PREFIX/share/gromacs/top/amber99sb.ff &&
+   export AMBERHOME=\$CONDA_PREFIX &&
    parmed -i ligand.script -O &&
    parmed -i receptor.script -O &&
    parmed -i complex.script -O &&
-   parmed -i solvatedcomplex.script -O 
+   parmed -i solvatedcomplex.script -O
 
       ]]>
   </command>
   <configfiles>
     <inputs name="inputs"/>
+    <configfile name="bash_script">
+      <![CDATA[
+      for i in "$1/share/gromacs/top/*.ff"; do ln -s \$i; done
+    ]]>
+    </configfile>
     <configfile name="templating_script">
       <![CDATA[
 
@@ -30,15 +35,12 @@ import sys
 import json
 
 from jinja2 import Environment, FileSystemLoader
-
 input_json_path = sys.argv[1]
 params = json.load(open(input_json_path, "r"))
-
 currentpath = "$__tool_directory__"  # should work generally
 template_environment = Environment(loader=FileSystemLoader(currentpath),lstrip_blocks=True, trim_blocks=True)
 template = template_environment.get_template('template_parmconv.j2')
 print(params)
-
 params['fmt'] = '$param_inputs.fmt'
 #if str($param_inputs.fmt)  == 'AMBER':
 params["top_in"] = '$param_inputs.top_in'
@@ -46,9 +48,6 @@ params["top_in"] = '$param_inputs.top_in'
 params["top_in"] = '$param_inputs.top_in'
 params["str_in"] = '$param_inputs.str_in'
 #end if
-
-print(params)
-
 params['prmtop_ligand'] =   '$prmtop_ligand'
 params['prmtop_receptor'] =  '$prmtop_receptor'
 params['prmtop_complex'] =   '$prmtop_complex'
@@ -74,7 +73,6 @@ for system in systems:
       <conditional name="param_inputs">
         <param name="fmt" type="select" label="Force Field format">
       <option selected="True" value="AMBER">AMBER</option>
-      <option value="CHARMM">CHARMM</option>
       <option value="GROMACS">GROMACS</option>
         </param>
         <when value="AMBER">
@@ -84,15 +82,11 @@ for system in systems:
          <param name="top_in" type="data" label="Input Topology file" format="top"/>
          <param name="str_in" type="data" label="Input Structure file" format="gro"/>
         </when>
-        <when value="CHARMM">
-         <param name="top_in" type="data" label="Input Topology file" format="txt"/>
-         <param name="str_in" type="data" label="Input Structure file" format="pdb"/>
-        </when>
     </conditional>
-    <param name="stripmask_ligand" type="text" label="Stripmask selection to define the ligand" value="!:UNL"></param>
-    <param name="stripmask_receptor" type="text" label="Stripmask selection to define the receptor" value=":NA,SOL,UNL"></param>
-    <param name="stripmask_complex" type="text" label="Stripmask selection to define the complex" value=":NA,SOL"></param>
-    <param name="stripmask_solvatedcomplex" type="text" label="Stripmask selection to define solvated complex"></param>
+    <param name="stripmask_ligand" type="text" label="Ligand selection" value="!:UNL" help="Define a valid AMBER stripmask that will select only the ligand"></param>
+    <param name="stripmask_receptor" type="text" label="Receptor selection" value=":NA,SOL,UNL" help="Define a valid AMBER stripmask that will select only the receptor"></param>
+    <param name="stripmask_complex" type="text" label="Complex selection" value=":NA,SOL" help="Define a valid AMBER stripmask that will select the complex but not waters or ions"></param>
+    <param name="stripmask_solvatedcomplex" type="text" label="Solvated Complex selection" help="Define a valid AMBER stripmask that will select the complex but not waters or ions"></param>
 
   </inputs>
   <outputs>
@@ -101,13 +95,71 @@ for system in systems:
     <data format="txt" name="prmtop_complex" label="complex prmtop"/>
     <data format="txt" name="prmtop_solvatedcomplex" label="solvated complex prmtop"/>
   </outputs>
+  <tests>
+    <test> <!--example in this test is not solvated but sufficient -->
+      <param name="fmt" value="AMBER"/>
+      <conditional name="param_inputs">
+        <param name="top_in" value="complex.prmtop"/>
+      </conditional>
+     <param name="stripmask_ligand" value="!:RAL"/>
+     <param name="stripmask_receptor" value=":NA,CL,SOL,WAT,RAL"/>
+     <param name="stripmask_complex" value=":NA,CL,SOL,WAT"/>
+      <output name="prmtop_ligand">
+        <assert_contents>
+          <has_text text="      61      15"/>
+          <has_text text="%FLAG MASS"/>
+          <has_text text="RAL"/>
+        </assert_contents>
+      </output>
+      <output name="prmtop_receptor">
+        <assert_contents>
+          <has_text text="    3880      15"/>
+          <has_text text="%FLAG MASS"/>
+          <has_text text="ALA LEU"/>
+          <not_has_text text="RAL "/>
+        </assert_contents>
+      </output>
+      <output name="prmtop_complex">
+        <assert_contents>
+          <has_text text="    3941      15"/>
+          <has_text text="%FLAG MASS"/>
+          <has_text text="ALA LEU"/>
+          <has_text text="RAL"/>
+        </assert_contents>
+      </output>
+    </test>
+    <test> <!--example in this test is from @sbrays' gromacs tests. It has no ligand but is sufficient and will not take extra space in the repo! -->
+      <param name="fmt" value="GROMACS"/>
+      <conditional name="param_inputs">
+        <param name="top_in" value="topol_solv.top"/>
+        <param name="str_in" value="solv_ions.gro"/>
+      </conditional>
+     <param name="stripmask_ligand" value="!:CL"/> <!-- pretending CL is a ligand -->
+     <param name="stripmask_receptor" value=":NA,CL,SOL,WAT"/>
+      <output name="prmtop_ligand">
+        <assert_contents>
+          <has_text text="       8      59"/>
+          <has_text text="%FLAG MASS"/>
+          <has_text text="CL"/>
+        </assert_contents>
+      </output>
+      <output name="prmtop_receptor">
+        <assert_contents>
+          <has_text text="    1960      59"/>
+          <has_text text="%FLAG MASS"/>
+          <has_text text="LYS VAL PHE "/>
+          <not_has_text text="CL "/>
+        </assert_contents>
+      </output>
+    </test>
+  </tests>
   <help>
     <![CDATA[
     .. class:: infomark
 
     **What it does**
 
-    This tool converts a single parameter/topology representing a solvated complex into parameter files for the ligand, receptor, complex and solvated complex in AMBER prmtop format. These files are needed for MMPBSA calculations. 
+    This tool converts parameter and topology files that represent a solvated complex into parameter files for the ligand, receptor, complex and solvated complex in AMBER prmtop format. These files are needed for MMPBSA calculations.
 
     .. class:: infomark
 
@@ -119,7 +171,7 @@ for system in systems:
 
     **Outputs created**
 
-    prmtop files for the ligand, receptor, complex and solvated complex
+    prmtop files for the ligand, receptor, complex and solvated complex.
 
     .. class:: infomark
 
