@@ -1,5 +1,5 @@
 <tool id="parmconv" name="Convert Parameters" version="@VERSION@">
-  <description>- for use with MMPBSA</description>
+  <description> to AMBER prmtop in preparation for MMPBSA</description>
   <macros>
     <import>macros.xml</import>
   </macros>
@@ -85,8 +85,8 @@ for system in systems:
     </conditional>
     <param name="stripmask_ligand" type="text" label="Ligand selection" value="!:UNL" help="Define a valid AMBER stripmask that will select only the ligand"></param>
     <param name="stripmask_receptor" type="text" label="Receptor selection" value=":NA,SOL,UNL" help="Define a valid AMBER stripmask that will select only the receptor"></param>
-    <param name="stripmask_complex" type="text" label="Complex selection" value=":NA,SOL" help="Define a valid AMBER stripmask that will select the complex but not waters or ions"></param>
-    <param name="stripmask_solvatedcomplex" type="text" label="Solvated Complex selection" help="Define a valid AMBER stripmask that will select the complex but not waters or ions"></param>
+    <param name="stripmask_complex" type="text" label="Complex selection" value=":NA,SOL" help="Define a valid AMBER stripmask that will select the complex (receptor with ligand)"></param>
+    <param name="stripmask_solvatedcomplex" type="text" label="Solvated Complex selection" help="Define a valid AMBER stripmask that will select the solvated complex (includes water and ions)"></param>
 
   </inputs>
   <outputs>
@@ -181,9 +181,11 @@ for system in systems:
     **User guide and documentation**
 
     - The `AmberTools Manual`_
+    - The `Parmed Documentation`_
 
 
     .. _`AmberTools Manual`: https://ambermd.org/doc12/Amber18.pdf
+    .. _`Parmed Documentation`: https://parmed.github.io/ParmEd/html/index.html
 
 
     ]]>
