@@ -97,11 +97,11 @@ for system in systems:
         <option value="GROMACS">GROMACS</option>
       </param>
       <when value="AMBER">
-        <param name="top_in" type="data" label="Input Topology file" format="txt"/>
+        <param name="top_in" type="data" label="Input topology (prmtop) file" format="txt"/>
       </when>
       <when value="GROMACS">
-        <param name="top_in" type="data" label="Input Topology file" format="top"/>
-        <param name="str_in" type="data" label="Input Structure file" format="gro"/>
+        <param name="top_in" type="data" label="Input topology (top) file" format="top"/>
+        <param name="str_in" type="data" label="Input structure (gro) file" format="gro"/>
       </when>
     </conditional>
     <param name="stripmask_ligand" type="text" label="Ligand selection" value="!:UNL" help="Define a valid AMBER stripmask that will select only the ligand">
@@ -134,7 +134,7 @@ for system in systems:
         </mapping>
       </sanitizer>
     </param>
-    <param name="stripmask_solvatedcomplex" type="text" label="Solvated Complex selection" help="Define a valid AMBER stripmask that will select the solvated complex (includes water and ions)">
+    <param name="stripmask_solvatedcomplex" type="text" label="Solvated complex selection" help="Define a valid AMBER stripmask that will select the solvated complex (includes water and ions)">
       <sanitizer>
         <valid initial="string.printable">
           <remove value="&amp;"/>
@@ -233,7 +233,7 @@ for system in systems:
 
     **How it works**
 
-    AmberTools parmed is used to strip unneeded atoms and save out the parameter files. The stripmasks are defined by the user.
+    AmberTools ParmEd is used to strip unneeded atoms and save out the parameter files. The stripmasks are defined by the user.
 
     .. class:: infomark
 
