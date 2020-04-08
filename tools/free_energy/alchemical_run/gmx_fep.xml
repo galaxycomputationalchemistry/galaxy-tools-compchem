@@ -442,7 +442,11 @@ dh_hist_spacing          = 0.1
             <param name="feop" value="default"/>
             <param name="input_fep" value="perform"/>
             <param name="pressure" value="1.0"/>
-            <output name="dataout" file="TI_FEP_data_output.tar" compare="sim_size"/>
+            <output name="report">
+                <assert_contents>
+                    <has_line line="Starting minimization for lambda = 0..." />
+                </assert_contents>
+            </output>
         </test>
         <test>
             <param name="groin" value="morph.gro" ftype="gro"/>
