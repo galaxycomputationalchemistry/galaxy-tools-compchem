@@ -1,5 +1,6 @@
-import parmed as pmd
 import argparse
+
+import parmed as pmd
 
 
 def merge_gro_files(prot_gro, lig_gro, cmplx_gro):
