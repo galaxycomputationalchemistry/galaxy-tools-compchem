@@ -33,7 +33,7 @@ def merge_top_files(prot_top, lig_top, cmplx_top):
                              '; Include ligand atomtypes\n[' +
                              lig_atomtypes +
                              '\n[ moleculetype ]\n' +
-                             + prot_top_sections[1])
+                             prot_top_sections[1])
     prot_top_sections = prot_top_combined.split('; Include water topology')
     prot_top_combined = (prot_top_sections[0] +
                          '; Include ligand topology\n' +
