@@ -11,6 +11,11 @@
         ln -s '$edr_input' ./edr_input.edr &&
         echo #echo str($terms).replace(',', ' ')# | gmx energy -f ./edr_input.edr -o ./energy.xvg
         ## echo #echo ' '.join(str($terms).split(','))# | gmx energy -f ./edr_input.edr -o ./energy.xvg
+        #if $fmt == 'tabular':
+            &&
+            grep '@\|#' energy.xvg &&
+            grep -v '@\|#' energy.xvg | sed 's/[[:space:]]*//' | sed  's/  /\t/g' > energy.tabular
+        #end if
 
     ]]></command>
 
@@ -67,20 +72,35 @@
             <option value="48">Protein lambda values</option>
             <option value="49">Non-protein lambda values</option>
         </param>
-
+        <param argument="fmt" type='select' label="Output format" help="Format for output; either standard GROMACS XVG, or Galaxy tabular file.">
+            <option value="xvg">GROMACS XVG format</option>
+            <option value="tabular" selected="true">Galaxy tabular</option>
+        </param>
 
     <expand macro="log" />
 
     </inputs>
     <outputs>
-        <data name="output1" format="xvg" from_work_dir="energy.xvg"/>
+        <data name="output1" format="xvg" from_work_dir="energy.xvg">
+            <filter>fmt == 'xvg'</filter>
+        </data>
+        <data name="output2" format="tabular" from_work_dir="energy.tabular">
+            <filter>fmt == 'tabular'</filter>
+        </data>
         <expand macro="log_outputs" />
     </outputs>
     <tests>
         <test>
             <param name="edr_input" value="md_0_1.edr" />
             <param name="terms" value="10,12,13" />
+            <param name="fmt" value="xvg" />
             <output name="output1" file="md_0_1.xvg" ftype="xvg" lines_diff="12"/>
+        </test>
+        <test>
+            <param name="edr_input" value="md_0_1.edr" />
+            <param name="terms" value="10,12,13" />
+            <param name="fmt" value="tabular" />
+            <output name="output1" file="md_0_1.tabular" ftype="tabular"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -107,7 +127,7 @@ _____
 
 **Output**
 
-       - Tabular file containing selected terms and some header lines
+       - Tabular or XVG file containing selected terms and some header lines
 
     ]]></help>
 
