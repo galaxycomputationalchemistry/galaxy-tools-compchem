@@ -83,6 +83,7 @@
     </inputs>
     <outputs>
         <data name="output1" format="gro" from_work_dir="em.gro"/>
+        <data name="output2" format="edr" from_work_dir="em.edr"/>
         <expand macro="log_outputs" />
     </outputs>
     <tests>
@@ -98,15 +99,34 @@
             <param name="md_steps" value="50000" />
             <param name="emtol" value="1000.0" />
             <param name="emstep" value="0.01" />
-
-            <output name="output1" file="em.gro" ftype="gro" compare="sim_size"/>
+            <output name="output1" ftype="gro" >
+                <assert_contents>
+                    <has_size value="1726975" />
+                </assert_contents>
+            </output>
+            <output name="output2" ftype="edr" >
+                <assert_contents>
+                    <!-- this binary can vary in size a lot unfortunately -->
+                    <has_size value="50000" delta="10000" />
+                </assert_contents>
+            </output>
         </test>
         <test>
             <param name="gro_input" value="solv_ions.gro" />
             <param name="top_input" value="topol_solv.top" />
             <param name="mdpfile" value="custom" />
             <param name="mdp_input" value="minim.mdp" />
-            <output name="output1" file="em.gro" ftype="gro" compare="sim_size"/>
+            <output name="output1" ftype="gro" >
+                <assert_contents>
+                    <has_size value="1726975" />
+                </assert_contents>
+            </output>
+            <output name="output2" ftype="edr" >
+                <assert_contents>
+                    <!-- this binary can vary in size a lot unfortunately -->
+                    <has_size value="50000" delta="10000" />
+                </assert_contents>
+            </output>
         </test>
 
     </tests>
