@@ -37,7 +37,8 @@
             <param name="ndx_input" value="index.ndx" />
             <param name="fc" value="500 600 700" />
             <param name="index" value="13" />
-            <output name="output1" file="posre_cl.itp" ftype="itp"/>
+            <!-- Galaxy seems to think this output is a binary (?) -->
+            <output name="output1" file="posre_cl.itp" lines_diff="2"/>
         </test>
     </tests>
     <help><![CDATA[

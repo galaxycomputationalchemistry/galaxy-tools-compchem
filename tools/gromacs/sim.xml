@@ -285,7 +285,7 @@
             </output>
             <output name="output8" ftype="binary">
                 <assert_contents>
-                    <has_size value="44708" />
+                    <has_size value="44164" />
                 </assert_contents>
             </output>
         </test>
@@ -380,12 +380,12 @@
             </output>
             <output name="output4" ftype="xtc">
                 <assert_contents>
-                    <has_size value="4910" delta="20" />
+                    <has_size value="4910" delta="20"/>
                 </assert_contents>
             </output>
             <output name="output5" ftype="cpt">
                 <assert_contents>
-                    <has_size value="3312" />
+                    <has_size value="3328" />
                 </assert_contents>
             </output>
         </test>

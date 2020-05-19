@@ -27,7 +27,7 @@
             <!-- .mdp file for the gromacs simulation -->
             <configfile name="ions">
 
-: Parameters are not so important here as no simulation is run
+; Parameters are not so important here as no simulation is run
 integrator  = steep
 emtol    = 1000.0
 emstep      = 0.01 
