@@ -69,10 +69,10 @@
             <output name="output" file="newbox.gro"/>
         </test>
         <test>
-            <param name="input_file" value="npt.gro" ftype="gro"/>
+            <param name="input_file" value="newbox.gro" ftype="gro"/>
             <param name="output_format" value="pdb" />
             <param name="config" value="false" />
-            <output name="output" file="npt.pdb"/>
+            <output name="output" file="newbox.pdb"/>
         </test>
     </tests>
     <help><![CDATA[

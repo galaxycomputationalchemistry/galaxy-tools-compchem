@@ -33,10 +33,10 @@
     </outputs>
     <tests>
         <test>
-            <param name="gro_input" value="md_0_1.gro" />
-            <param name="ndx_input" value="md_0_1.ndx" />
+            <param name="gro_input" value="str_ions.gro" />
+            <param name="ndx_input" value="index.ndx" />
             <param name="fc" value="500 600 700" />
-            <param name="index" value="16" />
+            <param name="index" value="13" />
             <output name="output1" file="posre_cl.itp" ftype="itp"/>
         </test>
     </tests>

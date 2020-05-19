@@ -26,6 +26,7 @@
         <configfiles>
             <!-- .mdp file for the gromacs simulation -->
             <configfile name="ions">
+
 : Parameters are not so important here as no simulation is run
 integrator  = steep
 emtol    = 1000.0
@@ -53,6 +54,18 @@ pbc            = xyz
             <option value="false">No</option>
         </param>
 
+        <section name="adv" title="Advanced options" expanded="false">
+            <!-- TRAJ out -->
+            <param argument="traj" type="select" label="Trajectory output">
+                <option value='none'>Return no trajectory output</option>
+                <option value='xtc'>Return .xtc file (reduced precision)</option>
+                <option value='trr'>Return .trr file (full precision)</option>
+                <option value='both'>Return both .xtc and .trr files</option>
+            </param>
+
+        
+        </section>
+
         <expand macro="log" />
 
     </inputs>
@@ -70,19 +83,27 @@ pbc            = xyz
             <output name="output1" ftype="gro">
                 <!-- replacement of water with ions is random, thus we cannot compare the whole file -->
                 <assert_contents>
-                    <has_text text="1.014   5.822   2.833"/>
-                    <has_text text="6.831   5.961   6.119"/>
-                    <has_text text="3.592   6.520   5.241"/>
+                    <has_text text="1.671   1.591   3.533"/>
+                    <has_text text="2.032   2.417   1.345"/>
+                    <has_text text="3.438   1.662   0.307"/>
+                    <has_text text="2218CL"/>
                 </assert_contents>
             </output>
-            <output name="output2" file="topol_solv.top" ftype="top"/>
+            <output name="output2" file="topol_solv.top" ftype="top" lines_diff="1"/>
         </test>
         <test>
             <param name="gro_input" value="newbox.gro" />
             <param name="neutralise" value="false" />
             <param name="top_input" value="topol.top" />
             <param name="water_model" value="spc216" />
-            <output name="output1" file="solv.gro" ftype="gro"/>
+            <output name="output1" ftype="gro">
+                <assert_contents>
+                    <has_text text="1.671   1.591   3.533"/>
+                    <has_text text="2.032   2.417   1.345"/>
+                    <has_text text="3.438   1.662   0.307"/>
+                    <not_has_text text="2218CL"/>
+                </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
