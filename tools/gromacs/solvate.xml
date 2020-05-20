@@ -83,9 +83,11 @@ pbc            = xyz
                 </assert_contents>
             </output>
             <output name="output2" file="topol_solv.top" ftype="top" lines_diff="4">
-                <has_line line="SOL         2130" />
-                <has_line line="NA               41" />
-                <has_line line="CL               43" />
+                <assert_contents>
+                    <has_line line="SOL         2130" />
+                    <has_line line="NA               41" />
+                    <has_line line="CL               43" />
+                </assert_contents>
             </output>
         </test>
         <test>
