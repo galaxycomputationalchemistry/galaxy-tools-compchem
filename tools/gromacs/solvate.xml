@@ -17,7 +17,7 @@
         #if $neutralise == "true":
             &&
             gmx grompp -f ./ions.mdp -c solv.gro -p ./top_input.top -o ions.tpr &>> verbose.txt &&
-            echo 'SOL' | gmx genion -s ions.tpr -o solv_ions.gro -p ./top_input.top -pname NA -nname CL -neutral &>> verbose.txt &&
+            echo 'SOL' | gmx genion -s ions.tpr -o solv_ions.gro -p ./top_input.top -pname NA -nname CL -neutral -conc $conc &>> verbose.txt &&
             mv solv_ions.gro solv.gro
         #end if
 
@@ -54,17 +54,7 @@ pbc            = xyz
             <option value="false">No</option>
         </param>
 
-        <section name="adv" title="Advanced options" expanded="false">
-            <!-- TRAJ out -->
-            <param argument="traj" type="select" label="Trajectory output">
-                <option value='none'>Return no trajectory output</option>
-                <option value='xtc'>Return .xtc file (reduced precision)</option>
-                <option value='trr'>Return .trr file (full precision)</option>
-                <option value='both'>Return both .xtc and .trr files</option>
-            </param>
-
-        
-        </section>
+        <param argument="conc" type="float" value="0" min="0" max="6" label="Specify salt concentration (sodium chloride) to add, in mol/liter" help="Note existing ions in the system are not taken into account - including those added if the neutralise option is selected. Ions are added by randomly replacing water molecules." />
 
         <expand macro="log" />
 
@@ -80,6 +70,7 @@ pbc            = xyz
             <param name="neutralise" value="true" />
             <param name="top_input" value="topol.top" />
             <param name="water_model" value="spc216" />
+            <param name="conc" value="1" />
             <output name="output1" ftype="gro">
                 <!-- replacement of water with ions is random, thus we cannot compare the whole file -->
                 <assert_contents>
@@ -87,15 +78,21 @@ pbc            = xyz
                     <has_text text="2.032   2.417   1.345"/>
                     <has_text text="3.438   1.662   0.307"/>
                     <has_text text="2218CL"/>
+                    <has_text text="2147NA"/>
                 </assert_contents>
             </output>
-            <output name="output2" file="topol_solv.top" ftype="top" lines_diff="1"/>
+            <output name="output2" file="topol_solv.top" ftype="top" lines_diff="4">
+                <has_line line="SOL         2130" />
+                <has_line line="NA               41" />
+                <has_line line="CL               43" />
+            </output>
         </test>
         <test>
             <param name="gro_input" value="newbox.gro" />
             <param name="neutralise" value="false" />
-            <param name="top_input" value="topol.top" />
+            <param name="top_input" value="topol.top"/>
             <param name="water_model" value="spc216" />
+            <param name="conc" value="0" />
             <output name="output1" ftype="gro">
                 <assert_contents>
                     <has_text text="1.671   1.591   3.533"/>
@@ -112,7 +109,7 @@ pbc            = xyz
 
 **What it does**
 
-This tool solvates a system prior to a GROMACS simulation. In addition, sodium or chloride ions will be added if necessary to ensure the system is charge-neutral.
+This tool solvates a system prior to a GROMACS simulation. In addition, sodium or chloride ions can be added if necessary to ensure the system is charge-neutral.
 
 _____
 
