@@ -1,6 +1,7 @@
-<tool id="gmx_editconf" name="GROMACS structure configuration" version="@VERSION@">
+<tool id="gmx_editconf" name="GROMACS structure configuration"  version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
     <description>using editconf</description>
     <macros>
+        <token name="@GALAXY_VERSION@">0</token>
         <import>macros.xml</import>
     </macros>
 

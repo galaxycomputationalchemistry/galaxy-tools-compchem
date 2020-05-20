@@ -1,7 +1,7 @@
-<tool id="gmx_energy" name="Extract energy components with GROMACS" version="@VERSION@">
-    <description>from an energy (EDR) file</description>
+<tool id="gmx_energy" name="Extract energy components with GROMACS" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
     <macros>
         <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
     </macros>
 
     <expand macro="requirements" />
