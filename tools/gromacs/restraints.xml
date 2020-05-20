@@ -1,7 +1,8 @@
-<tool id="gmx_restraints" name="Create GROMACS position restraints files" version="@VERSION@">
+<tool id="gmx_restraints" name="Create GROMACS position restraints files" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
     <description>using genrestr</description>
     <macros>
         <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
     </macros>
 
     <expand macro="requirements" />
@@ -10,8 +11,8 @@
 
         ln -s '$gro_input' ./gro_input.gro &&
         ln -s '$ndx_input' ./ndx_input.ndx &&
-        echo '$index' | gmx genrestr -f ./gro_input.gro -n ./ndx_input.ndx -o posre.itp -fc $fc  &>> verbose.txt
-
+        echo '$index' | gmx genrestr -f ./gro_input.gro -n ./ndx_input.ndx -o tmp.itp -fc $fc  &>> verbose.txt &&
+        tail -n +2 tmp.itp > posre.itp
     ]]></command>
 
     <inputs>
@@ -33,11 +34,12 @@
     </outputs>
     <tests>
         <test>
-            <param name="gro_input" value="md_0_1.gro" />
-            <param name="ndx_input" value="md_0_1.ndx" />
+            <param name="gro_input" value="str_ions.gro" />
+            <param name="ndx_input" value="index.ndx" />
             <param name="fc" value="500 600 700" />
-            <param name="index" value="16" />
-            <output name="output1" file="posre_cl.itp" ftype="itp"/>
+            <param name="index" value="13" />
+            <!-- Galaxy seems to think this output is a binary (?) -->
+            <output name="output1" file="posre_cl.itp" lines_diff="2"/>
         </test>
     </tests>
     <help><![CDATA[

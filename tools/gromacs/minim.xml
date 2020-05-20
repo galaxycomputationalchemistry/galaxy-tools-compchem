@@ -1,7 +1,8 @@
-<tool id="gmx_em" name="GROMACS energy minimization" version="@VERSION@">
+<tool id="gmx_em" name="GROMACS energy minimization" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
     <description>of the system prior to equilibration and production MD</description>
     <macros>
         <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
     </macros>
 
     <expand macro="requirements" />
@@ -88,7 +89,7 @@
     </outputs>
     <tests>
         <test>
-            <param name="gro_input" value="solv_ions.gro" />
+            <param name="gro_input" value="str_ions.gro" />
             <param name="top_input" value="topol_solv.top" />
             <param name="mdpfile" value="default" />
             <param name="integrator" value="steep" />
@@ -101,30 +102,30 @@
             <param name="emstep" value="0.01" />
             <output name="output1" ftype="gro" >
                 <assert_contents>
-                    <has_size value="1726975" />
+                    <has_size value="4281" />
                 </assert_contents>
             </output>
             <output name="output2" ftype="edr" >
                 <assert_contents>
                     <!-- this binary can vary in size a lot unfortunately -->
-                    <has_size value="50000" delta="10000" />
+                    <has_size value="5000" delta="1000" />
                 </assert_contents>
             </output>
         </test>
         <test>
-            <param name="gro_input" value="solv_ions.gro" />
+            <param name="gro_input" value="str_ions.gro" />
             <param name="top_input" value="topol_solv.top" />
             <param name="mdpfile" value="custom" />
             <param name="mdp_input" value="minim.mdp" />
             <output name="output1" ftype="gro" >
                 <assert_contents>
-                    <has_size value="1726975" />
+                    <has_size value="4281" />
                 </assert_contents>
             </output>
             <output name="output2" ftype="edr" >
                 <assert_contents>
                     <!-- this binary can vary in size a lot unfortunately -->
-                    <has_size value="50000" delta="10000" />
+                    <has_size value="5000" delta="1000" />
                 </assert_contents>
             </output>
         </test>
