@@ -43,8 +43,16 @@
             -o outp.tpr &>> verbose.txt &&
 
 
-        gmx mdrun -nt "\${GALAXY_SLOTS:-4}" -deffnm outp &>> verbose.txt
- 
+        gmx mdrun
+            -nt "\${GALAXY_SLOTS:-4}"
+            ## GPU
+            #if \${GROMACS_GPU:-0} == 1:
+                -ntmpi 1
+                -nb gpu
+                -pme gpu
+            #end if
+            -deffnm outp &>> verbose.txt
+
         #if $outps.str == 'pdb' or $outps.str == 'both'
             && gmx editconf -f outp.gro -o outp.pdb &>> verbose.txt
         #end if
