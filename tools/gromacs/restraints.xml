@@ -11,8 +11,8 @@
 
         ln -s '$gro_input' ./gro_input.gro &&
         ln -s '$ndx_input' ./ndx_input.ndx &&
-        echo '$index' | gmx genrestr -f ./gro_input.gro -n ./ndx_input.ndx -o posre.itp -fc $fc  &>> verbose.txt
-
+        echo '$index' | gmx genrestr -f ./gro_input.gro -n ./ndx_input.ndx -o tmp.itp -fc $fc  &>> verbose.txt &&
+        tail -n +2 tmp.itp > posre.itp
     ]]></command>
 
     <inputs>
