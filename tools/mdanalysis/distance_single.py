@@ -6,10 +6,11 @@ import sys
 import MDAnalysis as mda
 
 import matplotlib
-matplotlib.use('Agg')  # noqa
 import matplotlib.pyplot as plt
 
 import numpy as np
+
+matplotlib.use('Agg')  # noqa
 
 
 def parse_command_line(argv):

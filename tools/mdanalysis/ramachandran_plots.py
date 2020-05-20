@@ -9,12 +9,13 @@ import MDAnalysis as mda
 from MDAnalysis.lib.distances import calc_dihedrals
 
 import matplotlib
-matplotlib.use('Agg')  # noqa
 import matplotlib.pyplot as plt
 
 import numpy as np
 
 import seaborn as sns
+
+matplotlib.use('Agg')  # noqa
 
 
 def parse_command_line(argv):
