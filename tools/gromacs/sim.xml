@@ -1,7 +1,8 @@
-<tool id="gmx_sim" name="GROMACS simulation" version="@VERSION@.1">
+<tool id="gmx_sim" name="GROMACS simulation" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
     <description>for system equilibration or data collection</description>
     <macros>
         <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
@@ -43,8 +44,16 @@
             -o outp.tpr &>> verbose.txt &&
 
 
-        gmx mdrun -nt "\${GALAXY_SLOTS:-4}" -deffnm outp &>> verbose.txt
- 
+        gmx mdrun
+            -nt "\${GALAXY_SLOTS:-4}"
+            ## GPU
+            #if "\${GROMACS_GPU:-0}" == 1:
+                -ntmpi 1
+                -nb gpu
+                -pme gpu
+            #end if
+            -deffnm outp &>> verbose.txt
+
         #if $outps.str == 'pdb' or $outps.str == 'both'
             && gmx editconf -f outp.gro -o outp.pdb &>> verbose.txt
         #end if
@@ -259,7 +268,7 @@
 
     <tests>
         <test expect_num_outputs="3">
-            <param name="gro_input" value="npt.gro" />
+            <param name="gro_input" value="str_ions.gro" />
             <param name="top_input" value="topol_solv.top" />
             <!-- <param name="cpt_bool" value="yes" /> -->
             <param name="cpt_in" value="npt.cpt" />
@@ -271,23 +280,27 @@
             <param name="tpr_out" value="true"/>
             <param name="ensemble" value="npt" />
             <!-- <param name="posres_bool" value="false" /> -->
-            <output name="output1" file="md_0_1.gro" ftype="gro" compare="sim_size"/>
-            <output name="output3" file="md_0_1.trr" ftype="trr" compare="sim_size"/>
-            <output name="output8" file="md_0_1.tpr" ftype="binary" compare="sim_size"/>
-            <!-- <output name="output1" ftype="gro">
+            <output name="output1" ftype="gro">
                 <assert_contents>
-                    <has_size value="2647999" />
+                    <has_size value="6537" />
+                    <has_n_lines n="97" />
+                    <has_line line="TEST in water" />
                 </assert_contents>
             </output>
             <output name="output3" ftype="trr">
                 <assert_contents>
-                    <has_size value="10132584" />
+                    <has_size value="26136" />
                 </assert_contents>
-            </output> -->
+            </output>
+            <output name="output8" ftype="binary">
+                <assert_contents>
+                    <has_size value="44164" />
+                </assert_contents>
+            </output>
         </test>
 
         <test expect_num_outputs="3">
-            <param name="gro_input" value="npt.gro" />
+            <param name="gro_input" value="str_ions.gro" />
             <param name="top_input" value="topol_solv.top" />
             <!-- <param name="cpt_bool" value="yes" /> -->
             <param name="cpt_in" value="npt.cpt" />
@@ -297,13 +310,30 @@
             <expand macro="test_params"/>
             <param name="ensemble" value="npt" />
             <!-- <param name="posres_bool" value="false" /> -->
-            <output name="output1" file="md_0_1.gro" ftype="gro" compare="sim_size"/>
-            <output name="output2" file="md_0_1.pdb" ftype="pdb" compare="sim_size"/>
-            <output name="output3" file="md_0_1.trr" ftype="trr" compare="sim_size"/>
+            <output name="output1" ftype="gro">
+                <assert_contents>
+                    <has_size value="6537" />
+                    <has_n_lines n="97" />
+                    <has_line line="TEST in water" />
+                </assert_contents>
+            </output>            
+            <output name="output2" ftype="pdb">
+                <assert_contents>
+                    <has_size value="7582" />
+                    <has_n_lines n="100" />
+                    <has_line line="TITLE     TEST in water" />
+                    <has_line line="REMARK    THIS IS A SIMULATION BOX" />
+                </assert_contents>
+            </output>
+            <output name="output3" ftype="trr">
+                <assert_contents>
+                    <has_size value="26136" />
+                </assert_contents>
+            </output>
         </test>
 
         <test expect_num_outputs="3">
-            <param name="gro_input" value="npt.gro" />
+            <param name="gro_input" value="str_ions.gro" />
             <param name="top_input" value="topol_solv.top" />
             <!-- <param name="cpt_bool" value="yes" /> -->
             <param name="cpt_in" value="npt.cpt" />
@@ -314,13 +344,30 @@
             <expand macro="test_params"/>
             <param name="ensemble" value="npt" />
             <!-- <param name="posres_bool" value="false" /> -->
-            <output name="output1" file="md_0_1.gro" ftype="gro" compare="sim_size"/>
-            <output name="output2" file="md_0_1.pdb" ftype="pdb" compare="sim_size"/>
-            <output name="output3" file="md_0_1.trr" ftype="trr" compare="sim_size"/>
+            <output name="output1" ftype="gro" compare="sim_size">
+                <assert_contents>
+                    <has_size value="6537" />
+                    <has_n_lines n="97" />
+                    <has_line line="TEST in water" />
+                </assert_contents>
+            </output>
+            <output name="output2" ftype="pdb" compare="sim_size">
+                <assert_contents>
+                    <has_size value="7582" />
+                    <has_n_lines n="100" />
+                    <has_line line="TITLE     TEST in water" />
+                    <has_line line="REMARK    THIS IS A SIMULATION BOX" />
+                </assert_contents>
+            </output>
+            <output name="output3" ftype="trr" compare="sim_size">
+                <assert_contents>
+                    <has_size value="26136" />
+                </assert_contents>
+            </output>
         </test>
 
         <test expect_num_outputs="3">
-            <param name="gro_input" value="em.gro" />
+            <param name="gro_input" value="str_ions.gro" />
             <param name="top_input" value="topol_solv.top" />
             <!-- <param name="posres_bool" value="true" /> -->
             <param name="itp_in" value="posres.itp" />
@@ -332,9 +379,24 @@
             <param name="ensemble" value="nvt" />
             <expand macro="test_params"/>
             
-            <output name="output2" file="nvt.pdb" ftype="pdb" compare="sim_size"/>
-            <output name="output4" file="nvt.xtc" ftype="xtc" compare="sim_size"/>
-            <output name="output5" file="nvt.cpt" ftype="cpt" compare="sim_size"/>
+            <output name="output2" ftype="pdb">
+                <assert_contents>
+                    <has_size value="7582" />
+                    <has_n_lines n="100" />
+                    <has_line line="TITLE     TEST in water" />
+                    <has_line line="REMARK    THIS IS A SIMULATION BOX" />
+                </assert_contents>
+            </output>
+            <output name="output4" ftype="xtc">
+                <assert_contents>
+                    <has_size value="4910" delta="20"/>
+                </assert_contents>
+            </output>
+            <output name="output5" ftype="cpt">
+                <assert_contents>
+                    <has_size value="3350"  delta="20"/>
+                </assert_contents>
+            </output>
         </test>
     </tests>
     

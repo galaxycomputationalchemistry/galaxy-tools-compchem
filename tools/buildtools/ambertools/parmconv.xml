@@ -1,0 +1,262 @@
+<tool id="parmconv" name="Convert Parameters" version="@VERSION@">
+  <description>to AMBER prmtop in preparation for MMPBSA</description>
+  <macros>
+    <import>macros.xml</import>
+  </macros>
+  <expand macro="requirements">
+    <requirement type="package" version="3.2.0">parmed</requirement>
+    <requirement type="package" version="2019.1">gromacs</requirement>
+    <requirement type="package" version="2.11.1">jinja2</requirement>
+  </expand>
+  <command detect_errors="exit_code">
+    <![CDATA[
+   python '$templating_script' '$inputs' &&
+   PATH_TO_PARMED=\$(dirname `which parmed`) &&
+   export AMBERHOME=\$(dirname \$PATH_TO_PARMED) &&
+   export GMXDATA=\$AMBERHOME/share/gromacs/top/ &&
+   parmed -i ligand.script -O &&
+   parmed -i receptor.script -O &&
+   parmed -i complex.script -O &&
+   parmed -i solvatedcomplex.script -O
+
+      ]]>
+  </command>
+  <configfiles>
+    <inputs name="inputs"/>
+    <configfile name="templating_script">
+      <![CDATA[
+
+import os
+import sys
+import json
+
+from jinja2 import Environment, FileSystemLoader
+input_json_path = sys.argv[1]
+params = json.load(open(input_json_path, "r"))
+currentpath = "$__tool_directory__"  # should work generally
+template_environment = Environment(loader=FileSystemLoader(currentpath),lstrip_blocks=True, trim_blocks=True)
+template = template_environment.get_template('template_parmconv.j2')
+params['fmt'] = '$param_inputs.fmt'
+#if str($param_inputs.fmt)  == 'AMBER':
+params["top_in"] = '$param_inputs.top_in'
+#else:
+params["top_in"] = '$param_inputs.top_in'
+params["str_in"] = '$param_inputs.str_in'
+#end if
+params['prmtop_ligand'] =   '$prmtop_ligand'
+params['prmtop_receptor'] =  '$prmtop_receptor'
+params['prmtop_complex'] =   '$prmtop_complex'
+params['prmtop_solvatedcomplex'] = '$prmtop_solvatedcomplex'
+print(params)
+
+
+def unescape(cond_text):
+    """
+    # Unescape if input has been escaped - credit @bgruening //github.com/bgruening/galaxytools.git get_online_data.py
+    """
+    mapped_chars = { '>' :'__gt__',
+                 '<' :'__lt__',
+                 "'" :'__sq__',
+                 '"' :'__dq__',
+                 '[' :'__ob__',
+                 ']' :'__cb__',
+                 '{' :'__oc__',
+                 '}' :'__cc__',
+                 '@' : '__at__',
+                 '\n' : '__cn__',
+                 '\r' : '__cr__',
+                 '\t' : '__tc__',
+                 '&' : '__and__'
+                 }
+    for key, value in mapped_chars.items():
+        cond_text = cond_text.replace( value, key )
+    return cond_text
+
+def run_template(params=params, system="ligand"):
+    """
+    # Render template on a selected system using a local parameter copy
+    """
+    localparams=params.copy() # shallow copy ok for simple variables
+    localparams['stripmask']=unescape(localparams['stripmask_'+system])
+    localparams['prmtop_out']=localparams['prmtop_'+system]
+    print(localparams)
+    with open(system+'.script','w+') as f:
+        f.write(template.render(localparams))
+
+systems = ['ligand', 'receptor', 'complex', 'solvatedcomplex']
+for system in systems:
+    run_template(system=system)
+
+]]>
+    </configfile>
+  </configfiles>
+  <inputs>
+    <conditional name="param_inputs">
+      <param name="fmt" type="select" label="Force Field format">
+        <option selected="True" value="AMBER">AMBER</option>
+        <option value="GROMACS">GROMACS</option>
+      </param>
+      <when value="AMBER">
+        <param name="top_in" type="data" label="Input topology (prmtop) file" format="txt"/>
+      </when>
+      <when value="GROMACS">
+        <param name="top_in" type="data" label="Input topology (top) file" format="top"/>
+        <param name="str_in" type="data" label="Input structure (gro) file" format="gro"/>
+      </when>
+    </conditional>
+    <param name="stripmask_ligand" type="text" label="Ligand selection" value="!:UNL" help="Define a valid AMBER stripmask that will select only the ligand">
+      <sanitizer>
+        <valid initial="string.printable">
+          <remove value="&amp;"/>
+        </valid>
+        <mapping initial="none">
+          <add source="&amp;" target="__and__"/>
+        </mapping>
+      </sanitizer>
+    </param>
+    <param name="stripmask_receptor" type="text" label="Receptor selection" value=":NA,SOL,UNL" help="Define a valid AMBER stripmask that will select only the receptor">
+      <sanitizer>
+        <valid initial="string.printable">
+          <remove value="&amp;"/>
+        </valid>
+        <mapping initial="none">
+          <add source="&amp;" target="__and__"/>
+        </mapping>
+      </sanitizer>
+    </param>
+    <param name="stripmask_complex" type="text" label="Complex selection" value=":NA,SOL" help="Define a valid AMBER stripmask that will select the complex (receptor with ligand)">
+      <sanitizer>
+        <valid initial="string.printable">
+          <remove value="&amp;"/>
+        </valid>
+        <mapping initial="none">
+          <add source="&amp;" target="__and__"/>
+        </mapping>
+      </sanitizer>
+    </param>
+    <param name="stripmask_solvatedcomplex" type="text" label="Solvated complex selection" help="Define a valid AMBER stripmask that will select the solvated complex (includes water and ions)">
+      <sanitizer>
+        <valid initial="string.printable">
+          <remove value="&amp;"/>
+        </valid>
+        <mapping initial="none">
+          <add source="&amp;" target="__and__"/>
+        </mapping>
+      </sanitizer>
+    </param>
+  </inputs>
+  <outputs>
+    <data format="txt" name="prmtop_ligand" label="ligand prmtop"/>
+    <data format="txt" name="prmtop_receptor" label="receptor prmtop"/>
+    <data format="txt" name="prmtop_complex" label="complex prmtop"/>
+    <data format="txt" name="prmtop_solvatedcomplex" label="solvated complex prmtop"/>
+  </outputs>
+  <tests>
+    <test>
+      <!--example in this test is not solvated but sufficient -->
+      <param name="fmt" value="AMBER"/>
+      <conditional name="param_inputs">
+        <param name="top_in" value="complex.prmtop"/>
+      </conditional>
+      <param name="stripmask_ligand" value="!:RAL"/>
+      <param name="stripmask_receptor" value=":NA,CL,SOL,WAT,RAL"/>
+      <param name="stripmask_complex" value=":NA,CL,SOL,WAT"/>
+      <output name="prmtop_ligand">
+        <assert_contents>
+          <has_text text="      61      15"/>
+          <has_text text="%FLAG MASS"/>
+          <has_text text="RAL"/>
+        </assert_contents>
+      </output>
+      <output name="prmtop_receptor">
+        <assert_contents>
+          <has_text text="    3880      15"/>
+          <has_text text="%FLAG MASS"/>
+          <has_text text="ALA LEU"/>
+          <not_has_text text="RAL "/>
+        </assert_contents>
+      </output>
+      <output name="prmtop_complex">
+        <assert_contents>
+          <has_text text="    3941      15"/>
+          <has_text text="%FLAG MASS"/>
+          <has_text text="ALA LEU"/>
+          <has_text text="RAL"/>
+        </assert_contents>
+      </output>
+    </test>
+    <test>
+      <!--example in this test is from @sbrays' gromacs tests. It has no ligand but is sufficient and will not take extra space in the repo! -->
+      <param name="fmt" value="GROMACS"/>
+      <conditional name="param_inputs">
+        <param name="top_in" value="topol_solv.top"/>
+        <param name="str_in" value="solv_ions.gro"/>
+      </conditional>
+      <!-- pretending CL is a ligand -->
+      <param name="stripmask_ligand" value="!:CL"/>
+      <param name="stripmask_receptor" value=":NA,CL,SOL,WAT"/>
+      <!-- test a fairly complex selection. All backbone oxygens in residues 1-500 but not in water, lysine or arginine -->
+      <param name="stripmask_solvatedcomplex" value=":1-500@O&amp;!(:WAT|:LYS,ARG)"/>
+      <output name="prmtop_ligand">
+        <assert_contents>
+          <has_text text="       8      59"/>
+          <has_text text="%FLAG MASS"/>
+          <has_text text="CL"/>
+        </assert_contents>
+      </output>
+      <output name="prmtop_receptor">
+        <assert_contents>
+          <has_text text="    1960      59"/>
+          <has_text text="%FLAG MASS"/>
+          <has_text text="LYS VAL PHE "/>
+          <not_has_text text="CL "/>
+        </assert_contents>
+      </output>
+      <output name="prmtop_solvatedcomplex">
+        <assert_contents>
+          <has_text text="   38265      59"/>
+          <has_text text="%FLAG MASS"/>
+          <has_text text="LYS VAL PHE"/>
+        </assert_contents>
+      </output>
+    </test>
+  </tests>
+  <help>
+    <![CDATA[
+    .. class:: infomark
+
+    **What it does**
+
+    This tool converts parameter and topology files that represent a solvated complex into parameter files for the ligand, receptor, complex and solvated complex in AMBER prmtop format. These files are needed for MMPBSA calculations.
+
+    .. class:: infomark
+
+    **How it works**
+
+    AmberTools ParmEd is used to strip unneeded atoms and save out the parameter files. The stripmasks are defined by the user.
+
+    .. class:: infomark
+
+    **Outputs created**
+
+    prmtop files for the ligand, receptor, complex and solvated complex.
+
+    .. class:: infomark
+
+    **User guide and documentation**
+
+    - The `AmberTools Manual`_
+    - The `Parmed Documentation`_
+
+
+    .. _`AmberTools Manual`: https://ambermd.org/doc12/Amber18.pdf
+    .. _`Parmed Documentation`: https://parmed.github.io/ParmEd/html/index.html
+
+
+    ]]>
+  </help>
+  <expand macro="citations">
+    <citation type="bibtex">@misc{parmed_2020, author = {ParmEd}, title = {ParmEd/ParmEd}, url={https://github.com/ParmEd/ParmEd}, abstract = {Parameter/topology editor and molecular simulator. Contribute to ParmEd/ParmEd development by creating an
+      account on GitHub.}, urldate = {2020-04-03}, publisher = {GitHub}, year = {2020}, month = mar, }</citation>
+  </expand>
+</tool>

@@ -1,0 +1,14 @@
+# Template for parmconv in Galaxy
+{% if fmt == 'AMBER' %}
+parm {{ top_in }}
+{% elif fmt == 'GROMACS' %}
+gromber {{ top_in }} {{gro_in}}
+{% elif fmt == 'CHARMM' %}
+chamber {{ top_in }} {{gro_in}}
+{% else %}
+parm {{ top_in }}
+{% endif %}
+strip {{ stripmask }}
+summary
+outparm {{ prmtop_out }}
+quit

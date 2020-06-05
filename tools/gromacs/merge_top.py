@@ -1,38 +1,65 @@
-import re
-import sys
+import argparse
+
+import parmed as pmd
 
 
-def combine_tops(top_text, itp_texts):
-    """
-    Search through parent topology top_text and replace
-    #include lines with the relevant child topologies
-    from the dictionary itp_texts
-    """
-    for itp in itp_texts:
-        # split on include string, then rejoin around itp file
-        spl = re.split('#include ".*{}"\n'.format(itp), top_text)
-        top_text = itp_texts[itp].join(spl)
-    return top_text
+def merge_gro_files(prot_gro, lig_gro, cmplx_gro):
+    prot = pmd.load_file(prot_gro)
+    lig = pmd.load_file(lig_gro)
+    cmplx = prot + lig
+    cmplx.save(cmplx_gro)
 
 
-top = sys.argv[1]  # parent topology file
-itps_file = sys.argv[2]  # file with list of child topologies (.itp files)
+def merge_top_files(prot_top, lig_top, cmplx_top):
+    with open(lig_top, 'r') as f:
+        lig_top_sections = f.read().split('\n[')
 
-with open(itps_file) as f:
-    itps = f.read().split()
+    # open ligand topology
+    for n in range(len(lig_top_sections)):
+        if 'atomtypes' in lig_top_sections[n][:10]:
+            lig_atomtypes = lig_top_sections[n]
+            del lig_top_sections[n]
+            break
+    else:
+        lig_atomtypes = None
+    lig_top_updated = '\n['.join(lig_top_sections)
 
-with open(top, 'r') as f:
-    top_text = f.read()
+    # open protein topology
+    with open(prot_top, 'r') as f:
+        prot_top_combined = f.read()
+    if lig_atomtypes:
+        prot_top_sections = prot_top_combined.split('[ moleculetype ]\n')
+        prot_top_combined = (prot_top_sections[0] +
+                             '; Include ligand atomtypes\n[' +
+                             lig_atomtypes +
+                             '\n[ moleculetype ]\n' +
+                             prot_top_sections[1])
+    prot_top_sections = prot_top_combined.split('; Include water topology')
+    prot_top_combined = (prot_top_sections[0] +
+                         '; Include ligand topology\n' +
+                         lig_top_updated +
+                         '\n; Include water topology' +
+                         prot_top_sections[1])
+    prot_top_combined += 'base     1\n'
 
-itp_texts = {}  # create dictionary of child topologies
-for itp in itps:
-    with open(itp, 'r') as f:
-        itp_texts[itp] = f.read()
+    # save complex topology
+    with open(cmplx_top, 'w') as f:
+        f.write(prot_top_combined)
 
-for itp in itp_texts:
-    # child tops may also refer to each other; we need to check this
-    itp_texts[itp] = combine_tops(itp_texts[itp], itp_texts)
 
-with open('top_output.top', 'w') as f:
-    # now combine all children into the parent
-    f.write(combine_tops(top_text, itp_texts))
+def main():
+    parser = argparse.ArgumentParser(
+        description='Perform SMD runs for dynamic undocking')
+    parser.add_argument('--lig-top', help='Ligand TOP file.')
+    parser.add_argument('--prot-top', help='Protein TOP file.')
+    parser.add_argument('--lig-gro', help='Ligand GRO file.')
+    parser.add_argument('--prot-gro', help='Protein GRO file.')
+    parser.add_argument('--complex-top', help='Complex TOP file.')
+    parser.add_argument('--complex-gro', help='Complex GRO file.')
+    args = parser.parse_args()
+    merge_gro_files(args.prot_gro, args.lig_gro, args.complex_gro)
+    merge_top_files(args.prot_top, args.lig_top, args.complex_top)
+
+
+if __name__ == "__main__":
+    main()

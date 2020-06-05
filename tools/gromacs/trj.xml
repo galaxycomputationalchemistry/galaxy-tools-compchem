@@ -1,7 +1,8 @@
-<tool id="gmx_trj" name="Modify/convert GROMACS trajectories" version="@VERSION@">
+<tool id="gmx_trj" name="Modify/convert GROMACS trajectories" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
     <description>using trjconv and trjcat</description>
     <macros>
         <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
     </macros>
 
     <expand macro="requirements" />
@@ -125,9 +126,9 @@
             <param name="cat" value="true" />
             <output name="output" file="trjcat.xtc" ftype="xtc"/>
         </test>
-        <test>
+        <!-- <test> -->
             <!-- echo '1 1' | gmx trjconv -f npt.xtc -s npt.tpr -n -center -pbc mol -ur compact -o npt_c.xtc -->
-            <param name="trj_op" value="trjconv" />
+            <!-- <param name="trj_op" value="trjconv" />
             <param name="trj_input" value="npt.xtc" />
             <param name="str_input" value="npt.tpr" ftype="tpr"/>
             <param name="ndx_input" value="index.ndx" />
@@ -141,7 +142,7 @@
             <param name="ur" value="compact" />
             <param name="ur" value="tric" />
             <output name="output" file="trjconv.xtc" ftype="xtc"/>
-        </test>
+        </test> -->
     </tests>
     <help><![CDATA[
 

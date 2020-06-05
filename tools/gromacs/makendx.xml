@@ -1,7 +1,8 @@
-<tool id="gmx_makendx" name="Create GROMACS index files" version="@VERSION@">
+<tool id="gmx_makendx" name="Create GROMACS index files" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
     <description>using make_ndx</description>
     <macros>
         <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
     </macros>
 
     <expand macro="requirements" />
@@ -35,12 +36,12 @@
     </outputs>
     <tests>
         <test>
-            <param name="input_file" value="md_0_1.gro" ftype="gro"/>
-            <param name="sel" value="! 1 &amp; 14" />
-            <output name="ndx" file="md_0_1.ndx">
+            <param name="input_file" value="str_ions.gro" ftype="gro"/>
+            <param name="sel" value="! 1 &amp; 13" />
+            <output name="ndx">
                 <assert_contents>
-                    <has_line line="[ !Protein_&amp;_non-Water ]"/>
-                    <has_text text="38369 38370 38371 38372 38373 38374 38375 38376"/>
+                    <has_line line="[ !Protein_&amp;_CL ]"/>
+                    <has_text text="  93   94"/>
                 </assert_contents>
             </output>
         </test>

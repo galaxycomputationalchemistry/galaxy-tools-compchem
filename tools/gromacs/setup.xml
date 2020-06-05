@@ -1,7 +1,8 @@
-<tool id="gmx_setup" name="GROMACS initial setup" version="@VERSION@">
+<tool id="gmx_setup" name="GROMACS initial setup" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
     <description>of topology and GRO structure file</description>
     <macros>
         <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
     </macros>
 
     <expand macro="requirements" />
@@ -56,12 +57,10 @@
     </outputs>
     <tests>
         <test>
-            <param name="pdb_input" value="1AKI.pdb" />
+            <param name="pdb_input" value="init.pdb" />
             <param name="water" value="spce" />
             <param name="ff" value="oplsaa" />
             <param name="ignore_h" value="no" />
-            <param name="box_d" value="1.0" />
-            <param name="box_type" value="cubic" />
             <output name="output1" file="topol.top" ftype="top" compare="diff" lines_diff="20"/>
             <output name="output2" file="processed.gro" ftype="gro"/>
             <output name="output3" file="posres.itp" ftype="itp"/>
