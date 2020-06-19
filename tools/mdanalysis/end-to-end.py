@@ -1,18 +1,15 @@
 #!/usr/bin/env python
 
 import argparse
-import csv
-import sys
-
 import itertools
-import MDAnalysis as mda
-
+import sys
 import matplotlib
-matplotlib.use('Agg')  # noqa
 import matplotlib.pyplot as plt
-
 import numpy as np
 import numpy.linalg
+
+import MDAnalysis as mda
+matplotlib.use('Agg')  # noqa
 
 
 def parse_command_line(argv):
@@ -42,13 +39,11 @@ ctermatoms = "(segid %s and name C)" % \
 # not sure how robust this selection really is
 nterm = u.select_atoms(ntermatoms)[0]  # first atom named N
 cterm = u.select_atoms(ctermatoms)[-1]  # takes the last atom named 'C'
-#print(nterm, cterm)
-
 
 enddist = []
 
 for ts in u.trajectory:  # iterate through all frames
-    r = cterm.position - nterm.position  # end-to-end vector from atom positions
+    r = cterm.position - nterm.position  # e-to-e vector from atom positions
     d = numpy.linalg.norm(r)   # end-to-end distance
     enddist.append((ts.frame, d))
 
@@ -76,7 +71,7 @@ axs[0].set_ylabel(r"End to end distance  ($\AA$)")
 axs[0].legend()
 
 n, bins, patches = axs[1].hist(enddist[:, 1], color=next(
-    color), label=args.ilabel, alpha=0.5, density=True, stacked=True)  # , bins=20)
+    color), label=args.ilabel, alpha=0.5, density=True, stacked=True)
 
 axs[1].legend()
 axs[1].set_ylabel('Density Normalised Frequency')
@@ -84,8 +79,12 @@ axs[1].set_xlabel(r'End to end distance ($\AA$)')
 fig.suptitle(args.ititle1, fontsize=12, fontweight='bold')
 fig.subplots_adjust(top=0.45)
 
-print(" \n".join(
-    ['The End to End distance is measured between the following atoms:', str(nterm), str(cterm)]))
+print(
+    " \n".join(
+        [
+            'The End to End distance is measured between the following atoms:',
+            str(nterm),
+            str(cterm)]))
 
 # svg is better but sticking with png for now
 plt.savefig(args.o_plot, format='png')

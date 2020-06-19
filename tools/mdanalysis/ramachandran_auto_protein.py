@@ -1,34 +1,21 @@
 #!/usr/bin/env python
 
 import argparse
-import csv
 import sys
-
-import itertools
-import MDAnalysis as mda
-
+import h5py
+import base64
+import numpy as np
+import numpy.linalg
 import matplotlib
-matplotlib.use('Agg')  # noqa
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-
-import numpy as np
-import numpy.linalg
-from MDAnalysis.analysis.dihedrals import Ramachandran
-
-import numpy.linalg
-import numpy as np
-
 import seaborn as sns
 import importlib
 
-import os
-import sys
-import json
-
-import h5py
-import base64
+import MDAnalysis as mda
 from jinja2 import Environment, FileSystemLoader
+from MDAnalysis.analysis.dihedrals import Ramachandran
+matplotlib.use('Agg')  # noqa
 
 
 def parse_command_line(argv):
@@ -80,7 +67,10 @@ if args.iresid1 is not None and args.iresid2 is not None:
 r = u.select_atoms(selection)
 
 assert(r != u.select_atoms('name thiscannotpossiblyexist')
-       ), "The selection you specified returns an empty result. Check segment names and residue ID's. Also check the structure and trajectory file selected are the the correct ones"
+       ), \
+               """The selection you specified returns an empty result.
+               Check segment names and residue ID's. Also check the
+                structure and trajectory file selected are the correct ones"""
 
 if args.igroupby is not None:
     group_selections = {}  # dictionary of selections
@@ -97,10 +87,12 @@ if args.igroupby is not None:
             this_sel = "%s and resid %s" % (selection, e)
             group_selections[this_sel] = s
     else:
-        assert False, ("Invalid argument for igroupby. Only name and id are valid options.")
+        assert False, ("Invalid argument for igroupby. "
+                       "Only name and id are valid options.")
 
 
-def ramachandran_plot(atomgroup, selection, outputfile1, outputfile2, image_format='png'):
+def ramachandran_plot(atomgroup, selection, outputfile1, outputfile2,
+                      image_format='png'):
     # plot standard mdanalysis and seaborn 2D with kde
     R = Ramachandran(atomgroup).run()
     fig, ax = plt.subplots(figsize=plt.figaspect(1))
@@ -127,7 +119,6 @@ def ramachandran_plot(atomgroup, selection, outputfile1, outputfile2, image_form
         h.ax_joint.set_ylim(-180, 180)
         h.ax_joint.xaxis.set_major_locator(ticker.MultipleLocator(60))
         h.ax_joint.yaxis.set_major_locator(ticker.MultipleLocator(60))
-        # plt.tight_layout()  #<-- using this breaks the plot, but not using it causes a cut, so use bbox_inches
         plt.savefig(outputfile2, format=image_format, bbox_inches='tight')
 
 
@@ -144,8 +135,10 @@ if args.igroupby is not None:
         try:
             ramachandran_plot(v, str(k), "ramachandran1" +
                               str(k), "ramachandran2" + str(k))
-            plots.append({'Name': "%s" % (k), 'plot1': get_base64_encoded_image(
-                "ramachandran1" + str(k)), 'plot2': get_base64_encoded_image("ramachandran2" + str(k))})
+            plots.append({'Name': "%s" % (k), 'plot1':
+                         get_base64_encoded_image("ramachandran1" + str(k)),
+                         'plot2': get_base64_encoded_image("ramachandran2"
+                          + str(k))})
         except Exception as einstance:
             print(type(einstance))
             print(einstance.args)

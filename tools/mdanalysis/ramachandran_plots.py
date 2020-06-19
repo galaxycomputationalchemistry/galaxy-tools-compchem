@@ -4,19 +4,16 @@ import argparse
 import csv
 import sys
 import yaml
+import numpy as np
+import seaborn as sns
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 from collections import namedtuple
 
 import MDAnalysis as mda
 from MDAnalysis.lib.distances import calc_dihedrals
-
-import matplotlib
 matplotlib.use('Agg')  # noqa
-import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
-
-import numpy as np
-
-import seaborn as sns
 
 
 def parse_command_line(argv):
@@ -47,8 +44,8 @@ for k, v in params.items():
             assert (b in v[a]), "Key %s is missing in inputs: %s %s" % (
                 b, k, a)
             for c in ['segid', 'resid', 'name']:
-                assert (c in v[a][b]), "Key %s is missing in inputs: %s %s %s " % (
-                    c, k, a, b)
+                assert (c in v[a][b]), \
+                        "Key %s is missing in inputs: %s %s %s " % (c, k, a, b)
             atoms.append("(segid %s and resid %s and name %s)" %
                          (v[a][b]['segid'], v[a][b]['resid'], v[a][b]['name']))
         print(atoms)
