@@ -157,6 +157,7 @@ plots.insert(0, {'Name': selection, 'plot1': get_base64_encoded_image(
 
 template_environment = Environment(loader=FileSystemLoader(
     currentpath), lstrip_blocks=True, trim_blocks=True)
-template = template_environment.get_template('ramachandran_auto_protein_html.j2')
+template = template_environment.get_template(
+    'ramachandran_auto_protein_html.j2')
 with open(args.o_html1, 'w+') as f:
     f.write(template.render(title="Ramachandran Plots", plots=plots))
