@@ -1,0 +1,171 @@
+<tool id="traj_selections_and_merge" name="Trajectory select and merge" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+  <description>- select specific molecules and merge multiple trajectories.</description>
+  <macros>
+    <import>macros.xml</import>
+    <token name="@GALAXY_VERSION@">0</token>
+  </macros>
+  <expand macro="requirements"/>
+  <command detect_errors="exit_code">
+    <![CDATA[
+    ln -s '$strin' str.${strin.ext} &&
+    #for $trj in $trajs:
+        ln -s '$trj' `basename '$trj'`.${select.traj_fmt} &&
+    #end for
+    python '$mdtraj_script'
+        --istr str.${strin.ext}
+        --itraj *.${select.traj_fmt}
+        --isele '$selection'
+        --o_str output.${strin.ext} 
+        --o_trj output.${select.traj_fmt} &&
+    mv output.${strin.ext} '$outputstr' &&
+    mv output.${select.traj_fmt} '$outputtraj'
+    ]]>
+  </command>
+  <configfiles>
+    <configfile name="mdtraj_script">
+      <![CDATA[
+import mdtraj as md
+import sys
+import argparse
+
+def parse_command_line(argv):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--istr', help='input str')
+    parser.add_argument('--itraj', nargs='+', help='input traj')
+    parser.add_argument('--isele', help='selection')
+    parser.add_argument('--o_str', help='MDA Ramachandran plot')
+    parser.add_argument('--o_trj', help='Seaborn Ramachandran plot')
+    return parser.parse_args()
+
+args = parse_command_line(sys.argv)
+list_of_traj = []
+if args.itraj is not None:
+    list_of_traj.extend(args.itraj)
+
+try:
+    traj = md.load(list_of_traj, top=args.istr)
+except Exception as einstance:
+    print(type(einstance))
+    print(einstance.args)
+    print(einstance)
+topology = traj.topology
+try:
+    atoms_to_keep = topology.select(str(args.isele))
+except Exception as einstance:
+    print("Error: Check the selection is valid for the dataset chosen")
+    print(type(einstance))
+    print(einstance.args)
+    print(einstance)
+traj.restrict_atoms(atoms_to_keep)
+newstruct = traj.slice(1)
+newstruct.save(args.o_str)
+traj.save(args.o_trj)
+]]>
+    </configfile>
+  </configfiles>
+  <inputs>
+    <param format="pdb,gro" name="strin" type="data" label="PDB/GRO input"/>
+    <conditional name="select">
+      <param name="traj_fmt" type="select" label="Trajectory format" help="Select the trajectory format to filter by">
+        <option selected="True" value="dcd">dcd</option>
+        <option value="xtc">xtc</option>
+        <option value="netcdf">netcdf</option>
+        <option value="trr">trr</option>
+      </param>
+      <when value="dcd">
+        <param name="trajs" multiple="True" type="data" format="dcd" label="trajectory file(s) input"/>
+      </when>
+      <when value="xtc">
+        <param name="trajs" multiple="True" type="data" format="xtc" label="trajectory file(s) input"/>
+      </when>
+      <when value="netcdf">
+        <param name="trajs" multiple="True" type="data" format="netcdf" label="trajectory file(s) input"/>
+      </when>
+      <when value="trr">
+        <param name="trajs" multiple="True" type="data" format="trr" label="trajectory file(s) input"/>
+      </when>
+    </conditional>
+    <param name="selection" type="text" value="not water and not segname POT and not segname CLA" label="selection to keep" help="A valid mdtraj style selection string that selects atoms to keep in structure and trajectory file output"/>
+  </inputs>
+  <outputs>
+    <data name="outputstr" format_source="strin"/>
+    <data name="outputtraj" format_source="trajs"/>
+  </outputs>
+  <tests>
+    <test>
+      <param name="strin" value="test.pdb" ftype="pdb"/>
+      <conditional name="select">
+        <param name="traj_fmt" value="dcd"/>
+        <param name="trajs" value="test.dcd"/>
+      </conditional>
+      <param name="selection" value="not water and not segname SOD and not segname CLA"/>
+      <output name="outputstr">
+        <assert_contents>
+          <has_text text="ATOM      1  C1  BGL A   1 "/>
+          <has_text text="ATOM     24  HO6 BGL A   1"/>
+        </assert_contents>
+      </output>
+      <output name="outputtraj">
+        <assert_contents>
+          <has_size value="4000" delta="100"/>
+        </assert_contents>
+      </output>
+    </test>
+    <test>
+      <param name="strin" value="test.gro" ftype="gro"/>
+      <conditional name="select">
+        <param name="traj_fmt" value="xtc"/>
+        <param name="trajs" value="test.xtc"/>
+      </conditional>
+      <param name="selection" value="resname BGLC"/>
+      <output name="outputstr">
+        <assert_contents>
+          <has_text text="    1BGLC    C1    1"/>
+          <has_text text="    1BGLC   HO6   24"/>
+        </assert_contents>
+      </output>
+      <output name="outputtraj">
+        <assert_contents>
+          <has_size value="1940" delta="100"/>
+        </assert_contents>
+      </output>
+    </test>
+  </tests>
+  <help>
+    <![CDATA[
+.. class:: infomark
+
+**What it does**
+
+This tool is a filter and multijoin for trajectory files. You can select specific molecules (or atoms) and save out a new structure and trajectory file. If there are multiple trajectories selected, then these will all be combined into a single trajectory output.
+
+Use this tool to:
+  - reduce the size of trajectories for later analysis and help with selections where analysis tools may not have selection features that you need.
+  - combine trajectories for analysis, this is imperative for proper molecular dynamics analysis.
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Structure file (pdb,gro)
+       - Choose a format of trajectory file (trr,xtc, dcd, netcdf)
+       - Trajectory file(s) (the files displayed are filtered by the trajectory type chosen).
+       - A valid mdtraj selection for the system under consideration. For example: not water and segname CARA and not type H
+
+_____
+
+
+.. class:: infomark
+
+**Output**
+
+       - Structure file (same as input format)
+       - Trajectory file (same as input format)
+
+    ]]>
+  </help>
+  <expand macro="citations"/>
+</tool>

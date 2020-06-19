@@ -1,0 +1,18 @@
+name: mdtraj
+owner: chemteam
+description: "MDTraj is a python library that allows users to manipulate molecular dynamics (MD) trajectories"
+homepage_url: https://github.com/mdtraj/mdtraj
+long_description: |
+    MDTraj is a python library that allows users to manipulate molecular dynamics (MD) trajectories. Features include, Wide MD format support, including pdb, xtc, trr, dcd, binpos, netcdf, mdcrd, prmtop, and more. Extremely fast RMSD calculations (4x the speed of the original Theobald QCP). Extensive analysis functions including those that compute bonds, angles, dihedrals, hydrogen bonds, secondary structure, and NMR observables. Lightweight, Pythonic API.
+remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/
+type: unrestricted
+categories:
+  - Computational chemistry
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the MDTraj package: {{ tool_name }}"
+suite:
+  name: "suite_mdtraj"
+  description: "MDTraj is a python library that allows users to manipulate molecular dynamics (MD) trajectories"
+  long_description: |
+    MDTraj is a python library that allows users to manipulate molecular dynamics (MD) trajectories. Features include, Wide MD format support, including pdb, xtc, trr, dcd, binpos, netcdf, mdcrd, prmtop, and more. Extremely fast RMSD calculations (4x the speed of the original Theobald QCP). Extensive analysis functions including those that compute bonds, angles, dihedrals, hydrogen bonds, secondary structure, and NMR observables. Lightweight, Pythonic API.

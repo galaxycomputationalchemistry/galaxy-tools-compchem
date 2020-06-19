@@ -1,0 +1,15 @@
+<macros>
+  <token name="@TOOL_VERSION@">1.9.4</token>
+  <xml name="requirements">
+    <requirements>
+      <requirement type="package" version="@TOOL_VERSION@">mdtraj</requirement>
+      <yield/>
+    </requirements>
+  </xml>
+  <xml name="citations">
+    <citations>
+      <citation type="doi">10.1016/j.bpj.2015.08.015</citation>
+      <yield/>
+    </citations>
+  </xml>
+</macros>
