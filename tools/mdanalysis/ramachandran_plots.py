@@ -3,16 +3,23 @@
 import argparse
 import csv
 import sys
-import yaml
-import numpy as np
-import seaborn as sns
-import matplotlib
-import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
 from collections import namedtuple
 
 import MDAnalysis as mda
 from MDAnalysis.lib.distances import calc_dihedrals
+
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+
+
+import numpy as np
+
+import seaborn as sns
+
+
+import yaml
+
 matplotlib.use('Agg')  # noqa
 
 

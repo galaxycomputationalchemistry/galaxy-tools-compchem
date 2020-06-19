@@ -3,12 +3,15 @@
 import argparse
 import itertools
 import sys
+
+import MDAnalysis as mda
+
 import matplotlib
 import matplotlib.pyplot as plt
+
 import numpy as np
 import numpy.linalg
 
-import MDAnalysis as mda
 matplotlib.use('Agg')  # noqa
 
 

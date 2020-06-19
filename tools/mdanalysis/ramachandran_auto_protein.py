@@ -1,20 +1,27 @@
 #!/usr/bin/env python
 
 import argparse
-import sys
-import h5py
 import base64
-import numpy as np
-import numpy.linalg
+import importlib
+import sys
+
+import MDAnalysis as mda
+from MDAnalysis.analysis.dihedrals import Ramachandran
+
+import h5py
+
+from jinja2 import Environment, FileSystemLoader
+
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-import seaborn as sns
-import importlib
 
-import MDAnalysis as mda
-from jinja2 import Environment, FileSystemLoader
-from MDAnalysis.analysis.dihedrals import Ramachandran
+import numpy as np
+import numpy.linalg
+
+import seaborn as sns
+
+
 matplotlib.use('Agg')  # noqa
 
 
