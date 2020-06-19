@@ -1,43 +1,43 @@
 <macros>
-    <token name="@VERSION@">0.20.1</token>
-    <xml name="requirements">
-        <requirements>
-            <requirement type="package" version="@VERSION@">mdanalysis</requirement>
-            <yield/>
-        </requirements>
-    </xml>
-    <xml name="analysis_inputs">
-        <param format="dcd,xtc" name="trajin" type="data" label="DCD/XTC trajectory input"/>
-        <param format="pdb,gro" name="strin" type="data" label="PDB/GRO input"/>
-        <yield/>
-    </xml>
-    <xml name="sanitizer">
-        <sanitizer invalid_char="">
-            <valid initial="string.ascii_letters,string.digits"/>
-         </sanitizer>
-         <yield/>
-    </xml>
-    <xml name="sanitizer_resids">
-        <sanitizer invalid_char="">
-            <valid initial="string.digits"/>
-        </sanitizer>
-        <yield/>
-    </xml>
-    <xml name="tests_inputs">
-        <param name="trajin" value="test.dcd" ftype="dcd"/>
-        <param name="strin" value="test.pdb" ftype="pdb"/>
-        <yield/>
-    </xml>
-    <xml name="tests_inputs_gmx">
-        <param name="trajin" value="test.xtc" ftype="xtc"/>
-        <param name="strin" value="test.gro" ftype="gro"/>
-        <yield/>
-    </xml>
-    <xml name="citations">
-        <citations>
-            <citation type="doi">10.1093/bioinformatics/btz107</citation>
-            <citation type="doi">10.1002/jcc.21787</citation>
-            <yield/>
-        </citations>
-    </xml>
+  <token name="@VERSION@">0.20.1</token>
+  <xml name="requirements">
+    <requirements>
+      <requirement type="package" version="@VERSION@">mdanalysis</requirement>
+      <yield/>
+    </requirements>
+  </xml>
+  <xml name="analysis_inputs">
+    <param format="dcd,xtc" name="trajin" type="data" label="DCD/XTC trajectory input"/>
+    <param format="pdb,gro" name="strin" type="data" label="PDB/GRO input"/>
+    <yield/>
+  </xml>
+  <xml name="sanitizer">
+    <sanitizer invalid_char="">
+      <valid initial="string.ascii_letters,string.digits"/>
+    </sanitizer>
+    <yield/>
+  </xml>
+  <xml name="sanitizer_resids">
+    <sanitizer invalid_char="">
+      <valid initial="string.digits"/>
+    </sanitizer>
+    <yield/>
+  </xml>
+  <xml name="tests_inputs">
+    <param name="trajin" value="test.dcd" ftype="dcd"/>
+    <param name="strin" value="test.pdb" ftype="pdb"/>
+    <yield/>
+  </xml>
+  <xml name="tests_inputs_gmx">
+    <param name="trajin" value="test.xtc" ftype="xtc"/>
+    <param name="strin" value="test.gro" ftype="gro"/>
+    <yield/>
+  </xml>
+  <xml name="citations">
+    <citations>
+      <citation type="doi">10.1093/bioinformatics/btz107</citation>
+      <citation type="doi">10.1002/jcc.21787</citation>
+      <yield/>
+    </citations>
+  </xml>
 </macros>

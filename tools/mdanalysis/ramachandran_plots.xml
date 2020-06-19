@@ -1,37 +1,38 @@
 <tool id="mdanalysis_ramachandran_plot" name="Ramachandran Plots" version="@VERSION@+galaxy@GALAXY_VERSION@">
-    <description>- calculate and plot the distribution of two dihedrals in a trajectory</description>
-    <macros>
-        <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
-    </macros>
-    <expand macro="requirements">
-        <requirement type="package" version="1.3.1">scipy</requirement>
-        <requirement type="package" version="0.9.0">seaborn</requirement>
-        <requirement type="package" version="1.1.0">nbdime</requirement>
-        <requirement type="package" version="5.2">pyyaml</requirement>
-    </expand>
-    <command detect_errors="exit_code">
-<![CDATA[
+  <description>- calculate and plot the distribution of two dihedrals in a trajectory</description>
+  <macros>
+    <import>macros.xml</import>
+    <token name="@GALAXY_VERSION@">0</token>
+  </macros>
+  <expand macro="requirements">
+    <requirement type="package" version="1.3.1">scipy</requirement>
+    <requirement type="package" version="0.9.0">seaborn</requirement>
+    <requirement type="package" version="1.1.0">nbdime</requirement>
+    <requirement type="package" version="5.2">pyyaml</requirement>
+  </expand>
+  <command detect_errors="exit_code">
+    <![CDATA[
     python '$__tool_directory__/ramachandran_plots.py'
-        --itraj '$trajin' 
+        --itraj '$trajin'
         --istr '$strin'
         --itrajext '$trajin.ext'
 	--istrext '$strin.ext'
 	--iyml '$ymlin'
-        --output   '$output'  
+        --output   '$output'
         --oramachandran_plot '$ramachandran_plot'
     2>&1
-]]></command>
-    <inputs>
-        <expand macro="analysis_inputs"/>
-        <section name="ymlparam" title="Torsion Parameters" expanded="False">
-          <param format="txt" name="ymlin" type="data" label="Torsion parms in yml format"/>
-        </section>
-    </inputs>
-    <outputs>
-        <data format="tabular" name="output" label="Ramachandran Plot raw data"/>
-        <data format="png" name="ramachandran_plot" label="Ramachandran Plot"/>
-    </outputs>
+]]>
+  </command>
+  <inputs>
+    <expand macro="analysis_inputs"/>
+    <section name="ymlparam" title="Torsion Parameters" expanded="False">
+      <param format="txt" name="ymlin" type="data" label="Torsion parms in yml format"/>
+    </section>
+  </inputs>
+  <outputs>
+    <data format="tabular" name="output" label="Ramachandran Plot raw data"/>
+    <data format="png" name="ramachandran_plot" label="Ramachandran Plot"/>
+  </outputs>
   <tests>
     <test>
       <param name="trajin" value="test.dcd" ftype="dcd"/>
@@ -52,13 +53,14 @@
       </output>
     </test>
   </tests>
-    <help><![CDATA[
+  <help>
+    <![CDATA[
 .. class:: infomark
 
 **What it does**
-        
+
 A Ramachandran plot ([φ,ψ] plot) was originally developed as a way to visualize the energetically allowed regions for backbone dihedral angles ψ and φ of an amino acid.
-It can be also used to calculate glycosidic φ and ψ angles formed between carbohydrates. This tool can calculate and plot the histogram (Ramachandran plot) of user-defined φ and ψ angles of a trajectory. 
+It can be also used to calculate glycosidic φ and ψ angles formed between carbohydrates. This tool can calculate and plot the histogram (Ramachandran plot) of user-defined φ and ψ angles of a trajectory.
 
 
 _____
@@ -74,12 +76,12 @@ _____
 
 Note that a MDAnalysis 'segment' is a larger organizational unit, for example one protein or all the solvent molecules or simply the whole system.
 
-  - For protein φ and ψ dihedral definitions see https://proteinstructures.com/Structure/Structure/Ramachandran-plot.html 
-  - For glycan φ and ψ dihedral definitions, see 
+  - For protein φ and ψ dihedral definitions see https://proteinstructures.com/Structure/Structure/Ramachandran-plot.html
+  - For glycan φ and ψ dihedral definitions, see
      - `Glycan Structure Website`_ - The glycosidic torsion angle definition is adopted from the crystallographic definition; O5-C1-O1-C'x (Φ; phi), C1-O1-C'x-C'x-1 (Ψ; psi), and O1-C'6-C'5-O'5 (ω; omega). The torsion angle between the first residue of the N-glycan chain and the side chain of the asparagine residue is defined as O5-C1-N'D2-C'G (Φ; phi) and C1-N'D2-C'G-C'B (Ψ; psi). The torsion angle between the first residue of the O-glycan chain and the side chain of the serine residue is defined as O5-C1-O'G-C'B (Φ; phi) and C1-O'G-C'B-C'A (Ψ; psi). For threonine residue, OG1 is used instead of OG. The atom names are based on the CHARMM topology.
      - `Glycosciences Website`_ - NMR definition - Φ phi: H1-C1-O1-C′X Ψ psi: C1-O1-C′X-H′X ω omega: O1-C′6-C′5-H′5  Crystallographic definition - Φ phi: O5-C1-O1-C′X Ψ psi: C1-O1-C′X-C′X+1 ω omega: O1-C′6-C′5-O′5
 
-  - An example of a yaml formatted selection for φ-ψ of a small glycoprotein called PROF with a carbohydrate portion called CARA where φ=O5-C1-OG1-CB1 and ψ=C1-OG1-CB-CA for the selected segment and residue ids. 
+  - An example of a yaml formatted selection for φ-ψ of a small glycoprotein called PROF with a carbohydrate portion called CARA where φ=O5-C1-OG1-CB1 and ψ=C1-OG1-CB-CA for the selected segment and residue ids.
 
     .. code-block:: yaml
 
@@ -122,7 +124,7 @@ Note that a MDAnalysis 'segment' is a larger organizational unit, for example on
 
 _____
 
-        
+
 .. class:: infomark
 
 **Output**
@@ -131,8 +133,9 @@ _____
        - Image (as png) of the Ramachandran plot.
 
     .. _`Glycan Structure Website`: http://www.glycanstructure.org/fragment-db/howto
-    .. _`Glycosciences Website`: http://www.glycosciences.de/tools/glytorsion/ 
+    .. _`Glycosciences Website`: http://www.glycosciences.de/tools/glytorsion/
 
-    ]]></help>
-    <expand macro="citations" />
+    ]]>
+  </help>
+  <expand macro="citations"/>
 </tool>
