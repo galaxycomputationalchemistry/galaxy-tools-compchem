@@ -1,0 +1,143 @@
+<tool id="mdanalysis_ramachandran_protein" name="Ramachandran Analysis" version="@VERSION@+galaxy@GALAXY_VERSION@">
+  <description>- Ramachandran plot for proteins</description>
+  <macros>
+    <import>macros.xml</import>
+    <token name="@GALAXY_VERSION@">0</token>
+  </macros>
+  <expand macro="requirements">
+    <requirement type="package" version="0.9.0">seaborn</requirement>
+    <requirement type="package" version="2.10.0">h5py</requirement>
+    <requirement type="package" version="2.11.1">jinja2</requirement>
+  </expand>
+  <command detect_errors="exit_code">
+    <![CDATA[
+        python '$__tool_directory__/ramachandran_auto_protein.py'
+            --itraj '$trajin'
+            --istr '$strin'
+            --itrajext '$trajin.ext'
+            --istrext '$strin.ext'
+            --isegid1 '$segid1'
+            #if $subselection.residues == 'Yes':
+                --iresid1 '$subselection.resid1'
+                --iresid2 '$subselection.resid2'
+            #end if
+            #if $subselectionr.residuenames == 'Yes':
+                --iresname '$subselectionr.resname'
+            #end if
+            --itemplatepath '$__tool_directory__'
+            #if $groupby:
+                --igroupby '$groupby'
+            #end if
+            --o_plot1 '$o_plot1'
+            --o_plot2 '$o_plot2'
+            --o_data1 '$o_data1'
+            --o_html1 '$o_html1'
+        2>&1
+]]>
+  </command>
+  <inputs>
+    <expand macro="analysis_inputs"/>
+    <param name="segid1" type="text" value="PROA" label="Segment ID of atom 1"/>
+    <param name="groupby" type="select" label="Groupby analysis" help="Create a groupby of the selection using residue name or id">
+      <option selected="True" value="">No</option>
+      <option value="name">ResidueName</option>
+      <option value="id">ResidueID</option>
+    </param>
+    <conditional name="subselectionr">
+      <param name="residuenames" type="select" label="Refine with a resname selection" help="Choose residues to refine the selection">
+        <option selected="True" value="No">No</option>
+        <option value="Yes">Yes</option>
+      </param>
+      <when value="No"></when>
+      <when value="Yes">
+        <param name="resname" type="text" value="ALA" label="Resname"/>
+      </when>
+    </conditional>
+    <conditional name="subselection">
+      <param name="residues" type="select" label="Refine with a resID selection" help="Choose residues to refine the selection">
+        <option selected="True" value="No">No</option>
+        <option value="Yes">Yes</option>
+      </param>
+      <when value="No"></when>
+      <when value="Yes">
+        <param name="resid1" type="text" value="5" label="ResID to start subselection"/>
+        <param name="resid2" type="text" value="10" label="ResID to end subselection"/>
+      </when>
+    </conditional>
+  </inputs>
+  <outputs>
+    <data format="png" name="o_plot1" label="MDAnalysis Ramachandran plot"/>
+    <data format="png" name="o_plot2" label="Seaborn Ramachandran plot"/>
+    <data format="h5" name="o_data1" label="Ramachandran in HDF5 format"/>
+    <data format="html" name="o_html1" label="Ramachandran plot summary"/>
+  </outputs>
+  <tests>
+    <test>
+      <param name="trajin" value="test.dcd" ftype="dcd"/>
+      <param name="strin" value="test.pdb" ftype="pdb"/>
+      <param name="segid1" value="PRO"/>
+      <param name="groupby" value="name"/>
+      <output name="o_html1">
+        <assert_contents>
+          <has_text text="table"/>
+          <has_text text="(segid PRO) and resname MET"/>
+          <has_text text="(segid PRO) and resname VAL"/>
+        </assert_contents>
+      </output>
+      <output name="o_plot1">
+        <assert_contents>
+          <has_size value="53682" delta="3000"/>
+        </assert_contents>
+      </output>
+      <output name="o_plot2">
+        <assert_contents>
+          <has_size value="31740" delta="3000"/>
+        </assert_contents>
+      </output>
+      <output name="o_data1">
+        <assert_contents>
+          <has_size value="293824" delta="3000"/>
+        </assert_contents>
+      </output>
+    </test>
+  </tests>
+  <help>
+    <![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Creates a Ramachandran plot for proteins. All protein [φ,ψ] angles for a given segment ID are automatically selected for an entire trajectory and an averaged Ramachandran plot is returned. Optionally the selection can be refined by residue ID or residue name. Optionally the average Ramachandran plot can be deconvoluted and returned grouped by residue name or residue ID.
+
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Structure file (PDB)
+       - Trajectory file (DCD).
+       - Segment ID
+       - Optionally: Group data by residue name or residue ID
+       - Optionally: refine selection by residue ID range or residue name (e.g. ALA)
+
+Note that a MDAnalysis 'segment' is a larger organizational unit, for example one protein or all the solvent molecules or simply the whole system.
+
+_____
+
+
+.. class:: infomark
+
+**Output**
+
+       - Image (as png) of the Ramachandran from MDanalyis with the allowed regions as a background.
+       - Image (as png) of the Ramachandran plot as a distribution.
+       - Data (H5 format). All phi, psi timeseries raw data in HDF5 format.
+       - All plot images tabulated (in html). To view in Galaxy this tools needs to be whitelisted by a Galaxy Admin.
+
+    ]]>
+  </help>
+  <expand macro="citations"/>
+</tool>
