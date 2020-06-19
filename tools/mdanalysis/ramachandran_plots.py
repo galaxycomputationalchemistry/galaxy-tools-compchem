@@ -3,19 +3,20 @@
 import argparse
 import csv
 import sys
+import yaml
 from collections import namedtuple
 
 import MDAnalysis as mda
 from MDAnalysis.lib.distances import calc_dihedrals
 
 import matplotlib
+matplotlib.use('Agg')  # noqa
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 
 import numpy as np
 
 import seaborn as sns
-
-matplotlib.use('Agg')  # noqa
 
 
 def parse_command_line(argv):
@@ -24,30 +25,7 @@ def parse_command_line(argv):
     parser.add_argument('--istr', help='input str')
     parser.add_argument('--itrajext', help='input traj ext')
     parser.add_argument('--istrext', help='input str ext')
-    parser.add_argument('--isegid1', help='segid 1')
-    parser.add_argument('--iresid1', help='resid 1')
-    parser.add_argument('--iname1', help='name 1')
-    parser.add_argument('--isegid2', help='segid 2')
-    parser.add_argument('--iresid2', help='resid 2')
-    parser.add_argument('--iname2', help='name 2')
-    parser.add_argument('--isegid3', help='segid 3')
-    parser.add_argument('--iresid3', help='resid 3')
-    parser.add_argument('--iname3', help='name 3')
-    parser.add_argument('--isegid4', help='segid 4')
-    parser.add_argument('--iresid4', help='resid 4')
-    parser.add_argument('--iname4', help='name 4')
-    parser.add_argument('--isegid5', help='segid 1')
-    parser.add_argument('--iresid5', help='resid 1')
-    parser.add_argument('--iname5', help='name 1')
-    parser.add_argument('--isegid6', help='segid 2')
-    parser.add_argument('--iresid6', help='resid 2')
-    parser.add_argument('--iname6', help='name 2')
-    parser.add_argument('--isegid7', help='segid 3')
-    parser.add_argument('--iresid7', help='resid 3')
-    parser.add_argument('--iname7', help='name 3')
-    parser.add_argument('--isegid8', help='segid 4')
-    parser.add_argument('--iresid8', help='resid 4')
-    parser.add_argument('--iname8', help='name 4')
+    parser.add_argument('--iyml', help='input in yml format')
     parser.add_argument('--output', help='output')
     parser.add_argument('--oramachandran_plot', help='dihedral plot')
     return parser.parse_args()
@@ -55,35 +33,35 @@ def parse_command_line(argv):
 
 args = parse_command_line(sys.argv)
 
+with open(args.iyml) as file:
+    params = yaml.load(file, Loader=yaml.FullLoader)
+
 Dihedral = namedtuple(
     'Dihedral', ['atom1', 'atom2', 'atom3', 'atom4'])
+
+for k, v in params.items():
+    for a in ['phi', 'psi']:
+        assert (a in v), "Key %s is missing in inputs: %s " % (a, k)
+        atoms = []
+        for b in ['atom1', 'atom2', 'atom3', 'atom4']:
+            assert (b in v[a]), "Key %s is missing in inputs: %s %s" % (
+                b, k, a)
+            for c in ['segid', 'resid', 'name']:
+                assert (c in v[a][b]), "Key %s is missing in inputs: %s %s %s " % (
+                    c, k, a, b)
+            atoms.append("(segid %s and resid %s and name %s)" %
+                         (v[a][b]['segid'], v[a][b]['resid'], v[a][b]['name']))
+        print(atoms)
+        if a == 'phi':
+            dihe_phi = Dihedral(atoms[0], atoms[1], atoms[2], atoms[3])
+        if a == 'psi':
+            dihe_psi = Dihedral(atoms[0], atoms[1], atoms[2], atoms[3])
 
 # order of dihedral atom is the crystallographic definition
 # (see glycanstructure.org)
 
-# phi
-atom1 = "(segid %s and resid %s and name %s)" % \
-    (args.isegid1, args.iresid1, args.iname1)
-atom2 = "(segid %s and resid %s and name %s)" % \
-    (args.isegid2, args.iresid2, args.iname2)
-atom3 = "(segid %s and resid %s and name %s)" % \
-    (args.isegid3, args.iresid3, args.iname3)
-atom4 = "(segid %s and resid %s and name %s)" % \
-    (args.isegid4, args.iresid4, args.iname4)
-
-dihe_phi = Dihedral(atom1, atom2, atom3, atom4)
-
-# psi
-atom1 = "(segid %s and resid %s and name %s)" % \
-    (args.isegid5, args.iresid5, args.iname5)
-atom2 = "(segid %s and resid %s and name %s)" % \
-    (args.isegid6, args.iresid6, args.iname6)
-atom3 = "(segid %s and resid %s and name %s)" % \
-    (args.isegid7, args.iresid7, args.iname7)
-atom4 = "(segid %s and resid %s and name %s)" % \
-    (args.isegid8, args.iresid8, args.iname8)
-
-dihe_psi = Dihedral(atom1, atom2, atom3, atom4)
+assert(dihe_phi), "phi dihedral doesn't exist"
+assert(dihe_psi), "psi dihedral doesn't exist"
 
 
 def calc_torsion(dihedral):
@@ -120,8 +98,11 @@ with open(args.output, 'w') as f:
     writer.writerows(zip(phi_frame, phi_series, psi_series))
 
 with sns.axes_style("white"):
-    h = sns.jointplot(x=phi_series, y=psi_series, kind="kde", legend=True)
-    h.set_axis_labels(r'$\Phi$ (degrees)', r'$\Psi$ (degrees)')
+    h = sns.jointplot(x=phi_series, y=psi_series,
+                      kind="kde", space=0, legend=True)
+    h.set_axis_labels(r'$\phi$ (degrees)', r'$\psi$ (degrees)')
     h.ax_joint.set_xlim(-180, 180)
     h.ax_joint.set_ylim(-180, 180)
-    plt.savefig(args.oramachandran_plot, format='png')
+    h.ax_joint.xaxis.set_major_locator(ticker.MultipleLocator(60))
+    h.ax_joint.yaxis.set_major_locator(ticker.MultipleLocator(60))
+    plt.savefig(args.oramachandran_plot, format='png', bbox_inches='tight')
