@@ -1,60 +1,57 @@
 <tool id="mdanalysis_ramachandran_plot" name="Ramachandran Plots" version="@VERSION@+galaxy@GALAXY_VERSION@">
-  <description>- calculate and plot the distribution of two dihedrals in a trajectory</description>
-  <macros>
-    <import>macros.xml</import>
-    <token name="@GALAXY_VERSION@">0</token>
-  </macros>
-  <expand macro="requirements">
-    <requirement type="package" version="1.3.1">scipy</requirement>
-    <requirement type="package" version="0.9.0">seaborn</requirement>
-    <requirement type="package" version="1.1.0">nbdime</requirement>
-    <requirement type="package" version="5.2">pyyaml</requirement>
-  </expand>
-  <command detect_errors="exit_code">
-    <![CDATA[
+    <description>- calculate and plot the distribution of two dihedrals in a trajectory</description>
+    <macros>
+        <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
+    </macros>
+    <expand macro="requirements">
+        <requirement type="package" version="1.3.1">scipy</requirement>
+        <requirement type="package" version="0.9.0">seaborn</requirement>
+        <requirement type="package" version="1.1.0">nbdime</requirement>
+        <requirement type="package" version="5.2">pyyaml</requirement>
+    </expand>
+    <command detect_errors="exit_code"><![CDATA[
     python '$__tool_directory__/ramachandran_plots.py'
         --itraj '$trajin'
         --istr '$strin'
         --itrajext '$trajin.ext'
-	--istrext '$strin.ext'
-	--iyml '$ymlin'
+        --istrext '$strin.ext'
+        --iyml '$ymlin'
         --output   '$output'
         --oramachandran_plot '$ramachandran_plot'
     2>&1
-]]>
-  </command>
-  <inputs>
-    <expand macro="analysis_inputs"/>
-    <section name="ymlparam" title="Torsion Parameters" expanded="False">
-      <param format="txt" name="ymlin" type="data" label="Torsion parms in yml format"/>
-    </section>
-  </inputs>
-  <outputs>
-    <data format="tabular" name="output" label="Ramachandran Plot raw data"/>
-    <data format="png" name="ramachandran_plot" label="Ramachandran Plot"/>
-  </outputs>
-  <tests>
-    <test>
-      <param name="trajin" value="test.dcd" ftype="dcd"/>
-      <param name="strin" value="test.pdb" ftype="pdb"/>
-      <section name="ymlparam">
-        <param name="ymlin" value="test.yml"/>
-      </section>
-      <output name="output">
-        <assert_contents>
-          <has_text text="-144.503"/>
-          <has_text text="-140.553"/>
-        </assert_contents>
-      </output>
-      <output name="ramachandran_plot">
-        <assert_contents>
-          <has_size value="18522" delta="2000"/>
-        </assert_contents>
-      </output>
-    </test>
-  </tests>
-  <help>
-    <![CDATA[
+]]></command>
+    <inputs>
+        <expand macro="analysis_inputs" />
+        <section name="ymlparam" title="Torsion Parameters" expanded="False">
+            <param format="txt" name="ymlin" type="data" label="Torsion parms in yml format" />
+        </section>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="output" label="Ramachandran Plot raw data" />
+        <data format="png" name="ramachandran_plot" label="Ramachandran Plot" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="trajin" value="test.dcd" ftype="dcd" />
+            <param name="strin" value="test.pdb" ftype="pdb" />
+            <section name="ymlparam">
+                <param name="ymlin" value="test.yml" />
+            </section>
+            <output name="output">
+                <assert_contents>
+                    <has_text text="-144.503" />
+                    <has_text text="-140.553" />
+                </assert_contents>
+            </output>
+            <output name="ramachandran_plot">
+                <assert_contents>
+                    <has_size value="18522" delta="2000" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
 .. class:: infomark
 
 **What it does**
@@ -134,8 +131,6 @@ _____
 
     .. _`Glycan Structure Website`: http://www.glycanstructure.org/fragment-db/howto
     .. _`Glycosciences Website`: http://www.glycosciences.de/tools/glytorsion/
-
-    ]]>
-  </help>
-  <expand macro="citations"/>
+    ]]></help>
+    <expand macro="citations" />
 </tool>

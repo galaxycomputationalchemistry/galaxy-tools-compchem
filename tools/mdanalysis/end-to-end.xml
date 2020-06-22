@@ -1,55 +1,54 @@
 <tool id="mdanalysis_endtoend" name="End-to-End Analysis" version="@VERSION@+galaxy@GALAXY_VERSION@">
-	<description>- End-to-End distance timeseries and histogram for the given selections</description>
-	<macros>
-		<import>macros.xml</import>
-		<token name="@GALAXY_VERSION@">0</token>
-	</macros>
-	<expand macro="requirements"/>
-	<command detect_errors="exit_code">
-		<![CDATA[
+    <description>- End-to-End distance timeseries and histogram for the given selections</description>
+    <macros>
+        <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
+    </macros>
+    <expand macro="requirements"/>
+    <command detect_errors="exit_code">
+<![CDATA[
     python '$__tool_directory__/end-to-end.py'
         --itraj '$trajin'
         --istr '$strin'
         --itrajext '$trajin.ext'
         --istrext '$strin.ext'
         --isegid1 '$segid1'
-	--ilabel '$label1'
-	--ititle1 '$title1'
+        --ilabel '$label1'
+        --ititle1 '$title1'
         --output1 '$output1'
         --o_plot '$o_plot'
     2>&1
-]]>
-	</command>
-	<inputs>
-		<expand macro="analysis_inputs"/>
-		<param name="segid1" type="text" value="PROA" label="Segment ID of atom 1"/>
-		<param name="label1" type="text" value="N-C" label="data series label"/>
-		<param name="title1" type="text" value="End-to-End timeseries and histogram" label="Plot title"/>
-	</inputs>
-	<outputs>
-		<data format="tabular" name="output1" label="timeseries raw data"/>
-		<data format="png" name="o_plot" label="End-to-End Timeseries and Histogram Plot"/>
-	</outputs>
-	<tests>
-		<test>
-			<param name="trajin" value="test.dcd" ftype="dcd"/>
-			<param name="strin" value="test.pdb" ftype="pdb"/>
-			<param name="segid1" value="PRO"/>
-			<output name="output1">
-				<assert_contents>
-					<has_text text="3.921"/>
-					<has_text text="3.938"/>
-				</assert_contents>
-			</output>
-			<output name="o_plot">
-				<assert_contents>
-					<has_size value="39991" delta="3000"/>
-				</assert_contents>
-			</output>
-		</test>
-	</tests>
-	<help>
-		<![CDATA[
+]]></command>
+    <inputs>
+        <expand macro="analysis_inputs"/>
+        <param name="segid1" type="text" value="PROA" label="Segment ID of atom 1"/>
+        <param name="label1" type="text" value="N-C" label="data series label"/>
+        <param name="title1" type="text" value="End-to-End timeseries and histogram" label="Plot title"/>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="output1" label="timeseries raw data"/>
+        <data format="png" name="o_plot" label="End-to-End Timeseries and Histogram Plot"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="trajin" value="test.dcd" ftype="dcd"/>
+            <param name="strin" value="test.pdb" ftype="pdb"/>
+            <param name="segid1" value="PRO"/>
+            <output name="output1">
+                <assert_contents>
+                    <has_text text="3.921"/>
+                    <has_text text="3.938"/>
+                </assert_contents>
+            </output>
+            <output name="o_plot">
+                <assert_contents>
+                    <has_size value="39991" delta="3000"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help>
+        <![CDATA[
 .. class:: infomark
 
 **What it does**
@@ -81,6 +80,6 @@ _____
        - Image (as png) of the end-to-end timeseries and histogram
 
     ]]>
-	</help>
-	<expand macro="citations"/>
+    </help>
+    <expand macro="citations"/>
 </tool>
