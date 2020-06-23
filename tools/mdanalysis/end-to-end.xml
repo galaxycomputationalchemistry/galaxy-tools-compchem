@@ -22,13 +22,13 @@
     <inputs>
         <expand macro="analysis_inputs"/>
         <param name="segid1" type="text" value="PROA" label="Segment ID of atom 1">
-            <validator type="regex" message="Maximum of 8 characters allowed.">^[a-zA-Z0-9\-]{1,8}$</validator>
+            <validator type="regex" message="Maximum of 8 characters allowed.">^[a-zA-Z0-9]{1,8}$</validator>
         </param>
         <param name="label1" type="text" value="N-C" label="data series label">
-            <validator type="regex" message="Maximum of 8 characters allowed.">^[a-zA-Z0-9 ]{1,8}$</validator>
+            <validator type="regex" message="Maximum of 8 characters allowed.">^[a-zA-Z0-9\- ]{1,8}$</validator>
         </param>
         <param name="title1" type="text" value="End-to-End timeseries and histogram" label="Plot title">
-            <validator type="regex" message="Maximum of 36 characters allowed.">^[a-zA-Z0-9 ]{1,36}$</validator>
+            <validator type="regex" message="Maximum of 36 characters allowed.">^[a-zA-Z0-9\- ]{1,36}$</validator>
         </param>
     </inputs>
     <outputs>
