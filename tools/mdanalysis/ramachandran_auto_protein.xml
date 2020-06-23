@@ -16,12 +16,12 @@
             --itrajext '$trajin.ext'
             --istrext '$strin.ext'
             --isegid1 '$segid1'
-            #if $subselection.residues == 'Yes':
-                --iresid1 '$subselection.resid1'
-                --iresid2 '$subselection.resid2'
+            #if $resid1 and $resid2:
+                --iresid1 '$resid1'
+                --iresid2 '$resid2'
             #end if
-            #if $subselectionr.residuenames == 'Yes':
-                --iresname '$subselectionr.resname'
+            #if $resname:
+                --iresname '$resname'
             #end if
             --itemplatepath '$__tool_directory__'
             #if $groupby:
@@ -35,33 +35,22 @@
 ]]></command>
     <inputs>
         <expand macro="analysis_inputs" />
-        <param name="segid1" type="text" value="PROA" label="Segment ID of atom 1" />
-        <param name="groupby" type="select" label="Groupby analysis" help="Create a groupby of the selection using residue name or id">
-            <option selected="True" value="">No</option>
+        <param name="segid1" type="text" value="PROA" label="Segment ID of atom 1">
+            <validator type="regex" message="Maximum of 8 characters allowed.">^[a-zA-Z0-9]{1,8}$</validator>
+        </param>
+        <param name="groupby" type="select" optional="true" label="Groupby analysis" help="Create a groupby of the selection using residue name or id">
             <option value="name">ResidueName</option>
             <option value="id">ResidueID</option>
         </param>
-        <conditional name="subselectionr">
-            <param name="residuenames" type="select" label="Refine with a resname selection" help="Choose residues to refine the selection">
-                <option selected="True" value="No">No</option>
-                <option value="Yes">Yes</option>
-            </param>
-            <when value="No" />
-            <when value="Yes">
-                <param name="resname" type="text" value="ALA" label="Resname" />
-            </when>
-        </conditional>
-        <conditional name="subselection">
-            <param name="residues" type="select" label="Refine with a resID selection" help="Choose residues to refine the selection">
-                <option selected="True" value="No">No</option>
-                <option value="Yes">Yes</option>
-            </param>
-            <when value="No" />
-            <when value="Yes">
-                <param name="resid1" type="text" value="5" label="ResID to start subselection" />
-                <param name="resid2" type="text" value="10" label="ResID to end subselection" />
-            </when>
-        </conditional>
+        <param name="resname" optional="true" type="text" label="Residue Name" help="Choose a residue name to refine the selection, e.g. ALA">
+            <validator type="regex" message="Maximum of 8 characters allowed.">^[a-zA-Z0-9]{1,8}$</validator>
+        </param>
+        <param name="resid1" optional="true" type="text" label="start Residue ID" help="Choose a residue ID to refine the selection, e.g. 5">
+            <validator type="regex" message="Maximum of 6 digits allowed.">^[0-9]{1,6}$</validator>
+        </param>
+        <param name="resid2" optional="true" type="text" label="end Residue ID" help="Choose a residue ID to refine the selection, e.g. 10">
+            <validator type="regex" message="Maximum of 6 digits allowed.">^[0-9]{1,6}$</validator>
+        </param>
     </inputs>
     <outputs>
         <data format="png" name="o_plot1" label="MDAnalysis Ramachandran plot" />
