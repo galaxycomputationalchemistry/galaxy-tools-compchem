@@ -82,7 +82,7 @@ traj.save(args.o_trj)
             </when>
         </conditional>
         <param name="selection" type="text" value="not water and not segname POT and not segname CLA" label="selection to keep" help="A valid mdtraj style selection string that selects atoms to keep in structure and trajectory file output">
-            <validator type="regex" message="Maximum of 60 characters allowed.">^[a-zA-Z0-9]{1,60}$</validator>
+            <validator type="regex" message="Maximum of 60 characters and whitespace allowed.">^[a-zA-Z0-9 ]{1,60}$</validator>
         </param>
     </inputs>
     <outputs>
