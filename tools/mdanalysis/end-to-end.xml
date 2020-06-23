@@ -21,13 +21,13 @@
 ]]></command>
     <inputs>
         <expand macro="analysis_inputs"/>
-        <param name="segid1" type="text" value="PROA" label="Segment ID of atom 1">
+        <param name="segid1" type="text" value="PROA" label="Segment ID of the protein" help="A valid segment ID selection for the current molecular system">
             <validator type="regex" message="Maximum of 8 characters allowed.">^[a-zA-Z0-9]{1,8}$</validator>
         </param>
-        <param name="label1" type="text" value="N-C" label="data series label">
+        <param name="label1" type="text" value="N-C" label="data series label" help="Label for the data series, to be included in plot image output">
             <validator type="regex" message="Maximum of 8 characters allowed.">^[a-zA-Z0-9\- ]{1,8}$</validator>
         </param>
-        <param name="title1" type="text" value="End-to-End timeseries and histogram" label="Plot title">
+        <param name="title1" type="text" value="End-to-End timeseries and histogram" label="Plot title" help="Plot title, to be included in image output">
             <validator type="regex" message="Maximum of 36 characters allowed.">^[a-zA-Z0-9\- ]{1,36}$</validator>
         </param>
     </inputs>

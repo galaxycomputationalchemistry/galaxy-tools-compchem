@@ -24,7 +24,7 @@
     <inputs>
         <expand macro="analysis_inputs" />
         <section name="ymlparam" title="Torsion Parameters" expanded="False">
-            <param format="txt" name="ymlin" type="data" label="Torsion parms in yml format" />
+            <param format="txt" name="ymlin" type="data" label="Torsion parameters in yml format" help="Information in YAML format about the segid, resid, and name for atoms 1-4 of the phi and psi angles. Example formatting included in the main help text"/>
         </section>
     </inputs>
     <outputs>
