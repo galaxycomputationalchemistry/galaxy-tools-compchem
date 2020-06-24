@@ -1,0 +1,36 @@
+ramachandran1:
+  phi:
+    atom1:
+     segid: HET
+     resid: 3
+     name: O5
+    atom2:
+     segid: HET
+     resid: 3
+     name: C1
+    atom3:
+     segid: HET
+     resid: 2
+     name: O4
+    atom4:
+     segid: HET
+     resid: 2
+     name: C4
+  psi:
+    atom1:
+     segid: HET
+     resid: 3
+     name: C1
+    atom2:
+     segid: HET
+     resid: 2
+     name: O4
+    atom3:
+     segid: HET
+     resid: 2
+     name: C4
+    atom4:
+     segid: HET
+     resid: 2
+     name: C5
+  comment: pick visually using VMD using labels. Go to labels, dihedral to see the information about resname resid and atomname and then lookup the segname for ach atom. 
