@@ -24,7 +24,7 @@
         <param name="segid1" type="text" value="PROA" label="Segment ID of the protein" help="A valid segment ID selection for the current molecular system">
             <validator type="regex" message="Maximum of 8 characters allowed.">^[a-zA-Z0-9]{1,8}$</validator>
         </param>
-        <param name="label1" type="text" value="N-C" label="data series label" help="Label for the data series, to be included in plot image output">
+        <param name="label1" type="text" value="N-C" label="Data series label">
             <validator type="regex" message="Maximum of 8 characters allowed.">^[a-zA-Z0-9\- ]{1,8}$</validator>
         </param>
         <param name="title1" type="text" value="End-to-End timeseries and histogram" label="Plot title" help="Plot title, to be included in image output">
@@ -59,7 +59,7 @@
 
 **What it does**
 
-End-to-End distance timeseries and histogram for proteins. The terminii are chosen as ends with the N atom of the N-terminus and the C atom of the C-terminus chosen.
+End-to-End distance timeseries and histogram for proteins. The termini are chosen as ends with the N atom of the N-terminus and the C atom of the C-terminus chosen.
 
 _____
 
