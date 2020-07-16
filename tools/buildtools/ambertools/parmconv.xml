@@ -15,7 +15,6 @@
    PATH_TO_PARMED=\$(dirname `which parmed`) &&
    export AMBERHOME=\$(dirname \$PATH_TO_PARMED) &&
    export GMXDATA=\$AMBERHOME/share/gromacs/top/ &&
-   ln -s '$param_inputs.str_in' ./str_in.${param_inputs.str_in.ext} &&
    parmed -i ligand.script -O &&
    parmed -i receptor.script -O &&
    parmed -i complex.script -O &&
@@ -43,7 +42,7 @@ params['fmt'] = '$param_inputs.fmt'
 params["top_in"] = '$param_inputs.top_in'
 #else:
 params["top_in"] = '$param_inputs.top_in'
-params["str_in"] = './str_in.'+'$param_inputs.str_in.ext'
+params["str_in"] = '$param_inputs.str_in'
 #end if
 params['prmtop_ligand'] =   '$prmtop_ligand'
 params['prmtop_receptor'] =  '$prmtop_receptor'
