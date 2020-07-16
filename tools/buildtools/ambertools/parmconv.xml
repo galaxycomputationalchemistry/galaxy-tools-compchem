@@ -1,7 +1,8 @@
-<tool id="parmconv" name="Convert Parameters" version="@VERSION@">
+<tool id="parmconv" name="Convert Parameters" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
   <description>to AMBER prmtop in preparation for MMPBSA</description>
   <macros>
     <import>macros.xml</import>
+    <token name="@GALAXY_VERSION@">0</token>
   </macros>
   <expand macro="requirements">
     <requirement type="package" version="3.2.0">parmed</requirement>
@@ -14,6 +15,7 @@
    PATH_TO_PARMED=\$(dirname `which parmed`) &&
    export AMBERHOME=\$(dirname \$PATH_TO_PARMED) &&
    export GMXDATA=\$AMBERHOME/share/gromacs/top/ &&
+   ln -s '$param_inputs.str_in' ./str_in.${param_inputs.str_in.ext} &&
    parmed -i ligand.script -O &&
    parmed -i receptor.script -O &&
    parmed -i complex.script -O &&
@@ -41,7 +43,7 @@ params['fmt'] = '$param_inputs.fmt'
 params["top_in"] = '$param_inputs.top_in'
 #else:
 params["top_in"] = '$param_inputs.top_in'
-params["str_in"] = '$param_inputs.str_in'
+params["str_in"] = './str_in.'+'$param_inputs.str_in.ext'
 #end if
 params['prmtop_ligand'] =   '$prmtop_ligand'
 params['prmtop_receptor'] =  '$prmtop_receptor'
