@@ -198,6 +198,10 @@ for system in systems:
       <param name="stripmask_receptor" value=":NA,CL,SOL,WAT"/>
       <!-- test a fairly complex selection. All backbone oxygens in residues 1-500 but not in water, lysine or arginine -->
       <param name="stripmask_solvatedcomplex" value=":1-500@O&amp;!(:WAT|:LYS,ARG)"/>
+      <assert_stdout>
+        <has_text text="Getting coordinates"/>
+        <has_text text="Using topology directory"/>
+      </assert_stdout>
       <output name="prmtop_ligand">
         <assert_contents>
           <has_text text="       8      59"/>
