@@ -207,6 +207,8 @@ with open("$parameteroutfile",'w+') as f:
 
     Prior to using this tool simulations of the ligand complexed with the receptor must be run. This tool, which wraps AmberTools will need a prmtop (Amber style parameter topology file for the receptor, ligand and the complex) and the trajectory in netCDF format.
 
+   *Remember* that the complex should centered in the box (use convert trajectories or a similar toolkit)
+
     - Single Trajectory Estimate: A simulation of the complex in water is run in advance. The trajectory of this complex is used to estimate the MMPBSA or MMGBSA depending on the options chosen. A General Born (GB) calculation is recommended as this calculation finishes quickly.
     - Multiple Trajectory Estimate: A simulation of the complex in water, the receptor in water and the ligand in water are run in advance. This is useful the ligand is expected to have a significantly different conformation in solution vs in the complex. The trajectory of this complex is used to estimate the MMPBSA or MMGBSA depending on the options chosen. A General Born (GB) calculation is recommended as this calculation finishes quickly.
 
