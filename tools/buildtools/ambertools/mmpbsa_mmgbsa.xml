@@ -126,7 +126,7 @@ with open("$parameteroutfile",'w+') as f:
     <data format="txt" name="decompoutfile" label="${tool.name}: Decomposition Statistics"/>
     <data format="txt" name="parameteroutfile" label="${tool.name}: parameter output"/>
     <collection name="output_collection_for_debug" type="list" label="${tool.name} mdout debug " format="txt">
-        <discover_datasets pattern="(?P&lt;designation&gt;.+)\.mdout.*" format="txt" visible="true"/>
+        <discover_datasets pattern="(?P&lt;designation&gt;.+)\.mdout.*" format="txt" visible="false"/>
         <filter>allparams['keep_files'] == 1</filter>
     </collection>
   </outputs>
