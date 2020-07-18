@@ -11,14 +11,69 @@
   </expand>
   <command detect_errors="exit_code">
     <![CDATA[
-   python '$templating_script' '$inputs' &&
-   PATH_TO_PARMED=\$(dirname `which parmed`) &&
-   export AMBERHOME=\$(dirname \$PATH_TO_PARMED) &&
-   export GMXDATA=\$AMBERHOME/share/gromacs/top/ &&
-   parmed -i ligand.script -O &&
-   parmed -i receptor.script -O &&
-   parmed -i complex.script -O &&
-   parmed -i solvatedcomplex.script -O
+   #if '$param_inputs.modbehaviour.removedihe'==True or '$param_inputs.modbehaviour.removebox'==True:
+     python '$__tool_directory__/parmed_new_convert.py' 
+       --istr '$param_inputs.str_in'
+       --itop '$param_inputs.top_in'
+       #if '$param_inputs.modbehaviour.removedihe'==True  
+         --removedihe  
+       #end if
+       #if '$param_inputs.modbehaviour.removebox'==True 
+         --removebox
+       #end if
+       --iradii '$param_inputs.modbehaviour.radii' 
+       --istripmask '$stripmask_ligand'
+       --o_prmtop '$prmtop_ligand'
+     2>&1  && 
+     python '$__tool_directory__/parmed_new_convert.py' 
+       --istr '$param_inputs.str_in'
+       --itop '$param_inputs.top_in'
+       #if '$param_inputs.modbehaviour.removedihe'==True  
+         --removedihe  
+       #end if
+       #if '$param_inputs.modbehaviour.removebox'==True 
+         --removebox
+       #end if
+       --iradii '$param_inputs.modbehaviour.radii' 
+       --istripmask '$stripmask_receptor'
+       --o_prmtop '$prmtop_receptor'
+     2>&1 &&
+     python '$__tool_directory__/parmed_new_convert.py' 
+       --istr '$param_inputs.str_in'
+       --itop '$param_inputs.top_in'
+       #if '$param_inputs.modbehaviour.removedihe'==True  
+         --removedihe  
+       #end if
+       #if '$param_inputs.modbehaviour.removebox'==True 
+         --removebox
+       #end if
+       --iradii '$param_inputs.modbehaviour.radii' 
+       --istripmask '$stripmask_complex'
+       --o_prmtop '$prmtop_complex'
+     2>&1 &&
+     python '$__tool_directory__/parmed_new_convert.py' 
+       --istr '$param_inputs.str_in'
+       --itop '$param_inputs.top_in'
+       #if '$param_inputs.modbehaviour.removedihe'==True  
+         --removedihe  
+       #end if
+       #if '$param_inputs.modbehaviour.removebox'==True 
+         --removebox
+       #end if
+       --iradii '$param_inputs.modbehaviour.radii' 
+       --istripmask '$stripmask_solvatedcomplex'
+       --o_prmtop '$prmtop_solvatedcomplex'
+     2>&1
+   #else
+      python '$templating_script' '$inputs' &&
+      PATH_TO_PARMED=\$(dirname `which parmed`) &&
+      export AMBERHOME=\$(dirname \$PATH_TO_PARMED) &&
+      export GMXDATA=\$AMBERHOME/share/gromacs/top/ &&
+      parmed -i ligand.script -O &&
+      parmed -i receptor.script -O &&
+      parmed -i complex.script -O &&
+      parmed -i solvatedcomplex.script -O
+   #end if
 
       ]]>
   </command>
@@ -103,6 +158,17 @@ for system in systems:
       <when value="GROMACS">
         <param name="top_in" type="data" label="Input topology (top) file" format="top"/>
         <param name="str_in" type="data" label="Input structure (gro) file" format="gro"/>
+        <section name="modbehaviour" title="Modify behaviour" expanded="false">
+          <param name="removedihe" type="boolean" checked="false" label="Remove all zero period dihedrals" help="This will remove zero period dihedrals from the generated topology"/>
+          <param name="removebox" type="boolean" checked="false" label="Remove periodic box information" help="This will periodic information from the generated topology"/>
+          <param name="radii" type="select"  label="radii to use" help="Select the radii to use, defaults to mbondi">
+              <option selected="True" value="mbondi">mbondi</option>
+              <option value="mbondi2">mbondi2</option>
+              <option value="mbondi3">mbondi3</option>
+              <option value="bondi">bondi</option>
+              <option value="amber6">amber6</option>
+          </param>
+        </section>
       </when>
     </conditional>
     <param name="stripmask_ligand" type="text" label="Ligand selection" value="!:UNL" help="Define a valid AMBER stripmask that will select only the ligand">
