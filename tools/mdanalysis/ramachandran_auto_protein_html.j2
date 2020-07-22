@@ -1,0 +1,25 @@
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>{{ title }}</title>
+</head>
+
+<body>
+  <table>
+    <tr>
+      <th>Selection</th>
+      <th>Ramachandran scatter plot</th>
+      <th>Ramachandran histogram </th>
+    </tr>
+    {% for plot in plots %}
+    <tr>
+      <td>{{ plot['Name'] }}</td>
+      <td style="vertical-align:center"><img src="data:image/png;base64,{{plot['plot1']}}" /> </td>
+      <td style="vertical-align:center"><img src="data:image/png;base64,{{plot['plot2']}}" /> </td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+
+</html>

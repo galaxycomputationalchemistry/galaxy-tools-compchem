@@ -46,7 +46,7 @@ quit
             <param name="angle" value="20.0"/>
             <param name="sele1" value="water"/>
             <param name="sele2" value="not water"/>
-	    <output name="hbond" value="Number_of_H-bonds.txt"/>
+            <output name="hbond" value="Number_of_H-bonds.txt"/>
         </test>
         <test>
             <param name="trajin" value="test.xtc" ftype="xtc"/>
@@ -56,7 +56,7 @@ quit
             <param name="angle" value="20.0"/>
             <param name="sele1" value="water"/>
             <param name="sele2" value="not water"/>
-	    <output name="hbond" value="Number_of_H-bonds_gro.txt"/>
+            <output name="hbond" value="Number_of_H-bonds_gro.txt"/>
         </test>
     </tests>
     <help><![CDATA[
