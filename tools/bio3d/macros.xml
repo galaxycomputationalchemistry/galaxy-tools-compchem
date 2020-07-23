@@ -6,6 +6,15 @@
             <yield/>
         </requirements>
     </xml>
+    <xml name="annotations">
+        <edam_topics>
+            <edam_topic>topic_0081</edam_topic>
+            <edam_topic>topic_3332</edam_topic>
+        </edam_topics>
+        <edam_operations>
+            <edam_operation>operation_2480</edam_operation>
+        </edam_operations>
+    </xml>
     <xml name="analysis_inputs">
         <param format="dcd" name="dcdin" type="data" label="DCD trajectory input"/>
         <param format="pdb" name="pdbin" type="data" label="PDB input"/>
