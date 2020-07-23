@@ -8,7 +8,7 @@
     </xml>
     <xml name="annotations">
         <xrefs>
-            <xref type="bio.tools">mdanalysis</edam_topic>
+            <xref type="bio.tools">mdanalysis</xref>
         </xrefs>
         <edam_topics>
             <edam_topic>topic_0081</edam_topic>
