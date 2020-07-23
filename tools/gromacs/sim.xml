@@ -4,6 +4,7 @@
         <import>macros.xml</import>
         <token name="@GALAXY_VERSION@">0</token>
     </macros>
+    <expand macro="annotations"/>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         #if $sets.mdp.mdpfile == "custom":
