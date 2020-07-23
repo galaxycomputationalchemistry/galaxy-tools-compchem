@@ -3,6 +3,9 @@
     <macros>
         <token name="@VERSION@">1.9.3</token>
     </macros>
+    <requirements>
+        <requirement type="package" version="@VERSION@">mdtraj</requirement>
+    </requirements>
     <edam_topics>
         <edam_topic>topic_0176</edam_topic>
         <edam_topic>topic_3332</edam_topic>
@@ -11,9 +14,6 @@
         <edam_operation>operation_2409</edam_operation>
         <edam_operation>operation_2476</edam_operation>
     </edam_operations>
-    <requirements>
-        <requirement type="package" version="@VERSION@">mdtraj</requirement>
-    </requirements>
     <command detect_errors="exit_code"><![CDATA[
         ln -s '$traj' traj.${traj.ext} && 
         mdconvert traj.${traj.ext} -o output.${traj.ext} -i $start:$end:$stride && 

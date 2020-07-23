@@ -3,8 +3,8 @@
     <macros>
         <import>macros.xml</import>
     </macros>   
-    <expand macro="annotations"/>
     <expand macro="requirements" />
+    <expand macro="annotations"/>
     <command detect_errors="exit_code">
 <![CDATA[
     python '$__tool_directory__/angle.py' 
