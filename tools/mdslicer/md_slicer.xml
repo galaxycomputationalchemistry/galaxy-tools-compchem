@@ -4,7 +4,7 @@
         <token name="@VERSION@">1.9.3</token>
     </macros>
     <edam_topics>
-        <edam_topic>topic_0081</edam_topic>
+        <edam_topic>topic_0176</edam_topic>
         <edam_topic>topic_3332</edam_topic>
     </edam_topics>
     <edam_operations>
