@@ -10,6 +10,7 @@
         <requirement type="package" version="1.1.0">nbdime</requirement>
         <requirement type="package" version="5.2">pyyaml</requirement>
     </expand>
+    <expand macro="annotations"/>
     <command detect_errors="exit_code"><![CDATA[
     python '$__tool_directory__/ramachandran_plots.py'
         --itraj '$trajin'

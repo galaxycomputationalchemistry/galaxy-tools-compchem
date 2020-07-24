@@ -6,6 +6,7 @@
     <expand macro="requirements">
         <requirement type="package" version="0.20_38">r-lattice</requirement>
     </expand>
+    <expand macro="annotations"/>
     <command detect_errors="exit_code">
 <![CDATA[ 
    Rscript '$__tool_directory__/dccm.R'

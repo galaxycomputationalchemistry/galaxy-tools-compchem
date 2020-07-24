@@ -6,6 +6,7 @@
     <expand macro="requirements">
         <requirement type="package" version="0.25.1">pandas</requirement>
     </expand>
+    <expand macro="annotations"/>
     <command detect_errors="exit_code">
 <![CDATA[
      python '$__tool_directory__/hbonds.py' 

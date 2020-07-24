@@ -3,7 +3,9 @@
     <macros>
         <token name="@TOOL_VERSION@">3.2.0</token>
         <token name="@GALAXY_VERSION@">0</token>
+        <import>macros.xml</import>
     </macros>
+    <expand macro="annotations"/>
     <requirements>
         <requirement type="package" version="@TOOL_VERSION@">parmed</requirement>
     </requirements>

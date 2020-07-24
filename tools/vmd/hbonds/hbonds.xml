@@ -3,6 +3,14 @@
     <requirements>
         <requirement type="package" version="1.9.3">vmd</requirement>
     </requirements>
+    <edam_topics>
+        <edam_topic>topic_0176</edam_topic>
+        <edam_topic>topic_3332</edam_topic>
+    </edam_topics>
+    <edam_operations>
+        <edam_operation>operation_2409</edam_operation>
+        <edam_operation>operation_2476</edam_operation>
+    </edam_operations>
     <command detect_errors="exit_code">
 <![CDATA[
      ln -s '$__tool_directory__/hbonds.tcl' ./hbonds.tcl &&
