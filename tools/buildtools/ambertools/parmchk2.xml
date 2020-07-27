@@ -1,7 +1,8 @@
-<tool id="ambertools_parmchk2" name="ParmChk2" version="@VERSION@">
+<tool id="ambertools_parmchk2" name="ParmChk2" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
   <description>- Amber's parameter checker</description>
   <macros>
     <import>macros.xml</import>
+    <token name="@GALAXY_VERSION@">0</token>
   </macros>
   <expand macro="requirements"></expand>
   <command detect_errors="exit_code">

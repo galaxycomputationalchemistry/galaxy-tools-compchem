@@ -1,12 +1,13 @@
-<tool id="parmconv" name="Convert Parameters" version="@VERSION@">
+<tool id="parmconv" name="Convert Parameters" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
   <description>to AMBER prmtop in preparation for MMPBSA</description>
   <macros>
     <import>macros.xml</import>
+    <token name="@GALAXY_VERSION@">0</token>
   </macros>
   <expand macro="requirements">
     <requirement type="package" version="3.2.0">parmed</requirement>
-    <requirement type="package" version="2019.1">gromacs</requirement>
-    <requirement type="package" version="2.11.1">jinja2</requirement>
+    <requirement type="package" version="2020.2">gromacs</requirement>
+    <requirement type="package" version="2.11.2">jinja2</requirement>
   </expand>
   <command detect_errors="exit_code">
     <![CDATA[

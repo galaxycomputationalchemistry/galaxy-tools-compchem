@@ -1,4 +1,4 @@
-<tool id="mdanalysis_endtoend" name="End-to-End Analysis" version="@VERSION@+galaxy@GALAXY_VERSION@">
+<tool id="mdanalysis_endtoend" name="End-to-End Analysis" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
     <description>- End-to-End distance timeseries and histogram for the given selections</description>
     <macros>
         <import>macros.xml</import>

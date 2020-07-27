@@ -1,9 +1,11 @@
-<tool id="md_converter" name="MDTraj file converter" version="1.9.3.2">
-
+<tool id="md_converter" name="MDTraj file converter" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
     <description>- interconvert between MD trajectory file formats.</description>
-
+    <macros>
+        <token name="@TOOL_VERSION@">1.9.4</token>
+        <token name="@GALAXY_VERSION@">0</token>
+    </macros>
     <requirements>
-        <requirement type="package" version="1.9.3">mdtraj</requirement>
+        <requirement type="package" version="@TOOL_VERSION@">mdtraj</requirement>
     </requirements>
 
     <command detect_errors="exit_code"><![CDATA[

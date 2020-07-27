@@ -1,11 +1,11 @@
-<tool id="mdanalysis_ramachandran_protein" name="Ramachandran Analysis" version="@VERSION@+galaxy@GALAXY_VERSION@">
+<tool id="mdanalysis_ramachandran_protein" name="Ramachandran Analysis" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
     <description>- Ramachandran plot for proteins</description>
     <macros>
         <import>macros.xml</import>
         <token name="@GALAXY_VERSION@">0</token>
     </macros>
     <expand macro="requirements">
-        <requirement type="package" version="0.9.0">seaborn</requirement>
+        <requirement type="package" version="0.10.0">seaborn</requirement>
         <requirement type="package" version="2.10.0">h5py</requirement>
         <requirement type="package" version="2.11.1">jinja2</requirement>
     </expand>
