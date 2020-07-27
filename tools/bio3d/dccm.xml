@@ -97,7 +97,11 @@
         <test>
             <expand macro="tests_inputs"/>
             <param name="sele" value="calpha"/>
-            <output name="dccm_plot" file="dccm_plot.png" compare="sim_size" delta="20000" />
+            <output name="dccm_plot">
+              <assert_contents>
+                <has_size value="280600" delta="20000"/>
+              </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
