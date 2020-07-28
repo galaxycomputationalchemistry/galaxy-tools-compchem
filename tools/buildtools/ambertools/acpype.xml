@@ -5,7 +5,7 @@
         <token name="@GALAXY_VERSION@">0</token>
     </macros>
     <expand macro="requirements">
-        <requirement type="package" version="2020.05.27.16.15">acpype</requirement>
+        <requirement type="package" version="2020.07.25.08.41">acpype</requirement>
     </expand>
     <command detect_errors="exit_code"><![CDATA[
         ln -s '$input1' ./input1.${input1.ext} &&
