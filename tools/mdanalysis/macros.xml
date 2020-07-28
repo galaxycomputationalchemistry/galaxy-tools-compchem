@@ -1,8 +1,8 @@
 <macros>
-    <token name="@VERSION@">0.20.1</token>
+    <token name="@TOOL_VERSION@">1.0.0</token>
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="@VERSION@">mdanalysis</requirement>
+            <requirement type="package" version="@TOOL_VERSION@">mdanalysis</requirement>
             <yield/>
         </requirements>
     </xml>

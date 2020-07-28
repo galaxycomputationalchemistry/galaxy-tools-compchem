@@ -1,7 +1,8 @@
-<tool id="ambertools_antechamber" name="AnteChamber" version="@VERSION@">
+<tool id="ambertools_antechamber" name="AnteChamber" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
   <description>- Amber's molecular input file processor</description>
   <macros>
     <import>macros.xml</import>
+    <token name="@GALAXY_VERSION@">0</token>
   </macros>
   <expand macro="requirements"></expand>
   <command detect_errors="exit_code">

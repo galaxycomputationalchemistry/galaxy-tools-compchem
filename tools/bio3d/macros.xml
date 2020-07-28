@@ -1,8 +1,8 @@
 <macros>
-    <token name="@VERSION@">2.3.4</token>
+    <token name="@TOOL_VERSION@">2.4_1</token>
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="2.3_4">r-bio3d</requirement>
+            <requirement type="package" version="@TOOL_VERSION@">r-bio3d</requirement>
             <yield/>
         </requirements>
     </xml>

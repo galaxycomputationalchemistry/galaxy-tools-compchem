@@ -14,7 +14,7 @@ pdb <- read.pdb(pdbfile)
 method <- args[3]
 selection <- args[4]
 domain <- args[5]
-id <- args[6] 
+id <- args[6]
 pcid <- as.integer(id)
 
 pdbout <- args[7]
@@ -32,14 +32,14 @@ if (selection == "resid") {
 if (selection == "segid") {
     inds <- atom.select(pdb, segid = domain)
 }
-xyz <- fit.xyz(fixed=pdb$xyz, mobile=dcd, fixed.inds=inds$xyz, mobile.inds=inds$xyz)
+xyz <- fit.xyz(fixed = pdb$xyz, mobile =  dcd,
+    fixed.inds = inds$xyz, mobile.inds = inds$xyz)
 
 if (method == "FALSE") {
-    pc <- pca.xyz(xyz[,inds$xyz], use.svd=FALSE)
+    pc <- pca.xyz(xyz[, inds$xyz], use.svd = FALSE)
 }
 if (method == "TRUE") {
-    pc <- pca.xyz(xyz[,inds$xyz], use.svd=TRUE)
+    pc <- pca.xyz(xyz[, inds$xyz], use.svd = TRUE)
 }
 
-mktrj.pca(pc, pc=pcid, b=pc$au[,pcid], file=pdbout)
-
+mktrj.pca(pc, pc = pcid, b = pc$au[, pcid], file = pdbout)
