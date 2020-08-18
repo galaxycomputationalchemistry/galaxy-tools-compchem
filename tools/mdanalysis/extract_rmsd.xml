@@ -1,0 +1,109 @@
+<tool id="mdanalysis_extract_rmsd" name="Extract RMSD distance matrix data" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+    <description>from MD ensemble with MDAnalysis</description>
+    <macros>
+        <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
+    </macros>
+    <expand macro="requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        ##echo $strs && echo $strs[0] &&
+        #for t in $strs:
+            echo $t &>> ./strs.txt &&
+        #end for
+        #for t in $trajs:
+            echo $t &>> ./trajs.txt &&
+        #end for
+        
+        python '$__tool_directory__/extract_rmsd.py'
+            --trajs trajs.txt
+            --strs strs.txt
+            --ref-str '$refstr'
+            --traj-format '$trajs[0].ext'
+            --str-format '$strs[0].ext'
+            --ref-str-format '${refstr.ext}'
+            --outfile '$output'
+            --group '$group'
+            --fitting '$fitting'
+            --start '$start'
+            --end '$end'
+            --step '$step'
+
+]]></command>
+    <inputs>
+        <param type="data_collection" name="strs" label="Input structures" format="pdb,gro"/>
+        <param type="data_collection" name="trajs" label="Input trajectories" format="xtc,dcd,trr"/>
+        <param name="refstr" type="data" format="pdb,gro" label="Reference structure" help="Structure for aligning all trajectories against."/>
+        <param name='group' type='text' label='Group for RMSD calculation' />
+        <param name='fitting' type='text' label='Group for alignment prior to RMSD calculation' />
+        <param name="start" type="integer" min="0" value="0" label="First trajectory frame for RMSD calculation" />
+        <param name="end" type="integer"  min="0" value="0" label="End trajectory frame for RMSD calculation" />
+        <param name="step" type="integer"  min="1" value="1" label="Frequency of trajectory frame sampling for RMSD calculation" />
+    </inputs>
+    <outputs>
+        <data name="output" format="json" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="strs">
+                <collection type="list">
+                    <element name="str1" ftype="gro" value="test.gro" />
+                    <element name="str2" ftype="gro" value="test.gro" />
+                </collection>
+            </param>
+            <param name="trajs">
+                <collection type="list">
+                    <element name="traj1" ftype="xtc" value="test.xtc" />
+                    <element name="traj2" ftype="xtc" value="test.xtc" />
+                </collection>
+            </param>
+
+            <param name="refstr" ftype="pdb" value="test.pdb" />
+            <param name="fitting" value="protein" />
+            <param name="group" value="resname BGLC" />
+            <param name="start" value="0" />
+            <param name="end" value="15" />
+            <param name="step" value="1" />
+            <output name="output"> 
+                <assert_contents>
+                    <has_text text="[[[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]" />
+                    <has_size value="774" />
+                    <has_n_lines n="1" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+This tool takes collections of MD structures and trajectories and inputs and performs the following steps:
+  - aligns them to a reference structure
+  - calculates RMSD differences for a selected group of atoms between all possible pairs of trajectories at all time points
+  - returns RMSD data as a three-dimensional tensor.
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Collection of structure files  (PDB, GRO).
+       - Collection of trajectory files  (DCD, XTC, TRR).
+       - Single structure file for alignment.
+       - User selection of fitting group, alignment group, start and end frames of the trajectory, and a frame step for the calculation.
+
+_____
+
+
+.. class:: infomark
+
+**Output**
+
+The output consists of a three-dimensional numpy array saved in JSON format, with dimensions N x N x t, where N is the number of trajectories and t is the number of time frames. Thus, the file effectively contains multiple distance matrices (one for each time step) representing the RMSD between all pairs of trajectories for a chosen group of atoms.
+
+It may be more useful to flatten the tensor to a two-dimensional matrix by averaging or slicing on the time axis; this can be achieved using the 'Hierarchical clustering' tool.
+
+    ]]></help>
+    <expand macro="citations" />
+</tool>

@@ -1,0 +1,114 @@
+<tool id="biomd_rmsd_clustering" name="Hierarchical clustering" version="0.@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+    <description>from MD RMSD matrix data</description>
+    <macros>
+        <token name="@TOOL_VERSION@">1.5.2</token>
+        <token name="@GALAXY_VERSION@">0</token>
+    </macros>
+    <requirements>
+        <requirement type="package" version="@TOOL_VERSION@">scipy</requirement>
+        <requirement type="package" version="1.19.1">numpy</requirement>
+        <requirement type="package" version="3.3.1">matplotlib</requirement>
+    </requirements>
+    <command detect_errors="aggressive"><![CDATA[
+        python '$__tool_directory__/rmsd_clustering.py'
+            #if $inp.ext == 'json':
+                --json $inp
+                --outp-mat $outp_mat
+            #elif $inp.ext == 'tabular':
+                --mat $inp
+            #end if
+            --Z $Z
+            #if $dendrogram:
+                --dendrogram $dend
+                --clustering-method $clustering_method
+            #end if
+            #if $heatmap:
+                --heatmap $hmap
+                --cmap '$cmap'
+            #end if
+            --start '$start'
+            --end '$end'
+            $normalize
+]]></command>
+    <inputs>
+        <param label="JSON or tabular input file" type="data" format="json,tabular" name="inp" argument="--json"/>
+        <param label="First trajectory frame to calculate distance matrix" value="0" type="integer" name="start" argument="--start"/>
+        <param label="Last trajectory frame to calculate distance matrix" value="-1" type="integer" name="end" argument="--end"/>
+        <param label="Normalize the RMSD variation over the trajectories before averaging." checked="false" type="boolean" name="normalize" argument="--normalize" truevalue="--normalize" falsevalue=""/>
+        <param label="Output dendrogram?" type="boolean" name="dendrogram" argument="--dendrogram" />
+        <param label="Output distance matrix file?" type="boolean" name="heatmap" argument="--heatmap"/>
+        <param label="Method to use for clustering." type="select" name="clustering_method" argument="--clustering-method">
+            <option selected="true" value="average">average</option>
+            <option value="centroid">centroid</option>
+            <option value="complete">complete</option>
+            <option value="median">median</option>
+            <option value="single">single</option>
+            <option value="ward">ward</option>
+            <option value="weighted">weighted</option>
+        </param>
+        <param label="Matplotlib colormap to use for plotting distance matrix." value="plasma" type="text" name="cmap" argument="--cmap"/>
+    </inputs>
+    <outputs>
+        <data label="Tabular output file" format="tabular" name="outp_mat">
+            <filter>inp.ext == 'json'</filter>
+        </data>
+        <data label="Dendrogram" format="png" name="dend">
+            <filter>dendrogram</filter>
+        </data>
+        <data label="Heatmap" format="png" name="hmap">
+            <filter>heatmap</filter>
+        </data>
+        <data label="File for cluster linkage array" format="tabular" name="Z"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="inp" value="inp.json"/>
+            <param name="dendrogram" value="true"/>
+            <param name="heatmap" value="true"/>
+            <param name="clustering_method" value="average"/>
+            <param name="cmap" value="plasma"/>
+            <param name="start" value="0"/>
+            <param name="end" value="-1"/>
+            <param name="normalize" value="true"/>
+            <output name="outp_mat" value="outp_mat.tabular"/>
+            <output name="dend" value="dendrogram.png"/>
+            <output name="hmap" value="heatmap.png"/>
+            <output name="Z" value="Z.tabular"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+This tool takes the three-dimensional tensor file (in JSON format) produced by the 'Extract RMSD distance matrix data' tool and flattens it along the time axix to give a two-dimensional distance matrix.
+
+Optionally, it also plots the distance matrix as a heatmap with matplotlib, performs hierarchical clustering with scipy, and plots the corresponding dendrogram.
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Three-dimensional tensor (JSON).
+       - User selection of desired outputs, clustering method and other parameters
+
+_____
+
+
+.. class:: infomark
+
+**Output**
+
+       - Tabular file containing a two-dimensional N x N distance matrix, where N is the number of MD trajectories
+       - Optional: a heatmap representing the distance matrix.
+       - Optional: a tabular file containing the cluster linkage array produced by hierarchical clustering of the distance matrix
+       - Optional: A dendrogram representing the hierarchical clustering.
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1038/s41592-019-0686-2</citation>
+        <citation type="doi">{10.1109/MCSE.2007.55</citation>
+    </citations>
+</tool>
