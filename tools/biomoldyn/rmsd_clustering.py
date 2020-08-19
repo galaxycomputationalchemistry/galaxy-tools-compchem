@@ -1,32 +1,38 @@
 import argparse
 import json
-import numpy as np
+
 import matplotlib.pyplot as plt
 
-from scipy.cluster.hierarchy import linkage, fcluster, dendrogram, cophenet
+import numpy as np
+
+from scipy.cluster.hierarchy import cophenet, dendrogram, linkage
 from scipy.spatial.distance import pdist
+
 
 def json_to_np(fname, start=None, end=None):
     """
     Load json file and convert to numpy array
     """
-    with open(fname) as f: 
+    with open(fname) as f:
         k = json.load(f)
-    print(np.array(k)[:,:,start:end].shape)                                                                                                                                                                            
-    return np.array(k)[:,:,start:end]
+    print(np.array(k)[:, :, start:end].shape)
+    return np.array(k)[:, :, start:end]
+
 
 def flatten_tensor(tensor, normalize=True):
     """
     Flatten tensor to a 2D matrix along the time axis
     """
-    av = np.mean(tensor, axis=(0,1)) if normalize else 1
+    av = np.mean(tensor, axis=(0, 1)) if normalize else 1
     return np.mean(tensor/av, axis=2)
+
 
 def get_cluster_linkage_array(mat, clustering_method='average'):
     Z = linkage(mat, clustering_method)
     c, coph_dists = cophenet(Z, pdist(mat))
     print('Cophenetic correlation coefficient: {}'.format(c))
     return Z
+
 
 def plot_dist_mat(mat, output, cmap='plasma'):
     """
@@ -40,6 +46,7 @@ def plot_dist_mat(mat, output, cmap='plasma'):
     plt.draw()
     plt.savefig(output, format='png')
 
+
 def plot_dendrogram(Z, output):
     plt.figure(figsize=(25, 10))
     plt.title('Hierarchical Clustering Dendrogram')
@@ -52,19 +59,34 @@ def plot_dendrogram(Z, output):
     )
     plt.savefig(output, format='png')
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--json', help='JSON input file (for 3D tensor).')
     parser.add_argument('--mat', help='Input tabular file (for 2D matrix).')
     parser.add_argument('--outp-mat', help='Tabular output file.')
-    parser.add_argument('--Z', required=True, help='File for cluster linkage array.')
-    parser.add_argument('--dendrogram', help="Path to the output dendrogram file")
-    parser.add_argument('--heatmap', help="Path to the output distance matrix file")
-    parser.add_argument('--clustering-method', default='average', choices=['single', 'complete', 'average', 'centroid', 'median', 'ward', 'weighted'], help="Method to use for clustering.")
-    parser.add_argument('--cmap', type=str, default='plasma', help="Matplotlib colormap to use for plotting distance matrix.")
-    parser.add_argument('--start', type=int, help="First trajectory frame to calculate distance matrix")
-    parser.add_argument('--end', type=int, help="Last trajectory frame to calculate distance matrix")
-    parser.add_argument('--normalize', action="store_true", help="Normalize the RMSD variation over the trajectories before averaging.")
+    parser.add_argument('--Z', required=True,
+                        help='File for cluster linkage array.')
+    parser.add_argument('--dendrogram',
+                        help="Path to the output dendrogram file")
+    parser.add_argument('--heatmap',
+                        help="Path to the output distance matrix file")
+    parser.add_argument('--clustering-method', default='average',
+                        choices=['single', 'complete', 'average',
+                                 'centroid', 'median', 'ward', 'weighted'],
+                        help="Method to use for clustering.")
+    parser.add_argument('--cmap', type=str, default='plasma',
+                        help="Matplotlib colormap to use"
+                             "for plotting distance matrix.")
+    parser.add_argument('--start', type=int,
+                        help="First trajectory frame to"
+                             "calculate distance matrix")
+    parser.add_argument('--end', type=int,
+                        help="Last trajectory frame to"
+                             "calculate distance matrix")
+    parser.add_argument('--normalize', action="store_true",
+                        help="Normalize the RMSD variation over"
+                             "the trajectories before averaging.")
     args = parser.parse_args()
 
     print(args)
@@ -86,6 +108,7 @@ def main():
 
     if args.dendrogram:
         plot_dendrogram(Z, args.dendrogram)
+
 
 if __name__ == "__main__":
     main()
