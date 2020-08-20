@@ -1,0 +1,66 @@
+<tool id="biomd_extract_clusters" name="Extract clusters of MD trajectories" version="0.@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+    <description>from linkage matrix data</description>
+    <macros>
+        <token name="@TOOL_VERSION@">1.5.2</token>
+        <token name="@GALAXY_VERSION@">0</token>
+    </macros>
+    <requirements>
+        <requirement type="package" version="@TOOL_VERSION@">scipy</requirement>
+        <requirement type="package" version="1.19.1">numpy</requirement>
+        <requirement type="package" version="3.3.1">matplotlib</requirement>
+    </requirements>
+    <command><![CDATA[
+        python '$__tool_directory__/get_clusters.py'
+            --Z '$Z'
+            --threshold '$threshold'
+            --min-members '$min_members'
+            --output '$output'
+]]></command>
+    <inputs>
+        <param label="Clustering linkage array" format="tabular" type="data" name="Z" argument="--Z"/>
+        <param label="Distance cutoff" value="0" type="integer" name="threshold" argument="--threshold"/>
+        <param label="Minimum number of members of the cluster" value="0" type="integer" name="min_members" argument="--min-members"/>
+    </inputs>
+    <outputs>
+        <data label="Cluster members (JSON)" format="json" name="output"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="Z" value="Z.tabular"/>
+            <param name="threshold" value="2"/>
+            <param name="min_members" value="2"/>
+            <output name="output" value="clusters.json"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+This tool takes the hierarchical clustering linkage array (in tabular format) produced by the 'Hierarchical clustering' tool and returns a list of clusters and their members in JSON format.
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Clustering linkage array.
+       - User-selected distance threshold for clustering and minimum number of members a cluster must have to be returned.
+
+_____
+
+
+.. class:: infomark
+
+**Output**
+
+       - JSON file containing a list of clusters and their members.
+
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1038/s41592-019-0686-2</citation>
+        <citation type="doi">{10.1109/MCSE.2007.55</citation>
+    </citations>
+</tool>
