@@ -12,23 +12,23 @@
     <command detect_errors="aggressive"><![CDATA[
         python '$__tool_directory__/rmsd_clustering.py'
             #if $inp.ext == 'json':
-                --json $inp
-                --outp-mat $outp_mat
+                --json '$inp'
+                --outp-mat '$outp_mat'
             #elif $inp.ext == 'tabular':
-                --mat $inp
+                --mat '$inp'
             #end if
-            --Z $Z
+            --Z '$Z'
             #if $dendrogram:
-                --dendrogram $dend
-                --clustering-method $clustering_method
+                --dendrogram '$dend'
+                --clustering-method '$clustering_method'
             #end if
             #if $heatmap:
-                --heatmap $hmap
+                --heatmap '$hmap'
                 --cmap '$cmap'
             #end if
             --start '$start'
             --end '$end'
-            $normalize
+            '$normalize'
 ]]></command>
     <inputs>
         <param label="JSON or tabular input file" type="data" format="json,tabular" name="inp" argument="--json"/>
@@ -61,7 +61,7 @@
         <data label="File for cluster linkage array" format="tabular" name="Z"/>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="4">
             <param name="inp" value="inp.json"/>
             <param name="dendrogram" value="true"/>
             <param name="heatmap" value="true"/>

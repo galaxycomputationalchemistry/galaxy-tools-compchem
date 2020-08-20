@@ -6,7 +6,6 @@
     </macros>
     <expand macro="requirements"/>
     <command detect_errors="exit_code"><![CDATA[
-        ##echo $strs && echo $strs[0] &&
         #for t in $strs:
             echo $t &>> ./strs.txt &&
         #end for
@@ -65,9 +64,9 @@
             <param name="step" value="1" />
             <output name="output"> 
                 <assert_contents>
-                    <has_text text="[[[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]" />
-                    <has_size value="774" />
-                    <has_n_lines n="1" />
+                    <has_text text="0.0" n="20"/>
+                    <has_size value="1588" />
+                    <has_n_lines n="74" />
                 </assert_contents>
             </output>
         </test>
@@ -81,6 +80,7 @@ This tool takes collections of MD structures and trajectories and inputs and per
   - aligns them to a reference structure
   - calculates RMSD differences for a selected group of atoms between all possible pairs of trajectories at all time points
   - returns RMSD data as a three-dimensional tensor.
+
 _____
 
 

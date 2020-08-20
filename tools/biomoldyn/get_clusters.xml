@@ -11,10 +11,10 @@
     </requirements>
     <command><![CDATA[
         python '$__tool_directory__/get_clusters.py'
-            --Z $Z
+            --Z '$Z'
             --threshold '$threshold'
             --min-members '$min_members'
-            --output $output
+            --output '$output'
 ]]></command>
     <inputs>
         <param label="Clustering linkage array" format="tabular" type="data" name="Z" argument="--Z"/>

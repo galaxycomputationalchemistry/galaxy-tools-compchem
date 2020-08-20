@@ -13,7 +13,6 @@ def calc_rmsd(str_files, traj_files, ref_str, str_format, traj_format,
               ref_str_format, filepath_out, group, start, end, step,
               fitting_atoms):
     """
-    this function does everything
     the function will cycle through range 0 to no_t and load all files found.
 
     str_files: text file with filepaths for structures, one on each line
@@ -34,14 +33,12 @@ def calc_rmsd(str_files, traj_files, ref_str, str_format, traj_format,
     """
 
     # open list of files
-    with open(str_files) as f:
-        str_file_list = f.read().strip().split('\n')
+    with open(str_files) as f1, open(traj_files) as f2:
+        str_file_list = f1.read().strip().split('\n')
+        traj_file_list = f2.read().strip().split('\n')
 
-    with open(traj_files) as f:
-        traj_file_list = f.read().strip().split('\n')
-
-    if len(str_file_list) != len(traj_file_list):
-        raise IOError('Number of structure and trajectory files not equal.')
+        if sum(1 for line in f1) != sum(1 for line in f2):
+            raise IOError('Number of structure and trajectory files unequal.')
 
     no_t = len(traj_file_list)
 
@@ -90,7 +87,7 @@ def calc_rmsd(str_files, traj_files, ref_str, str_format, traj_format,
             data[traj2, traj1] = rmsd.rmsd[:, 2]
 
     with open(filepath_out, 'w') as f:
-        json.dump(data.tolist(), f)
+        json.dump(data.tolist(), f, indent=4, sort_keys=True)
 
     print("Done!")
     return

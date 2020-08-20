@@ -12,10 +12,10 @@ def separate_clusters(Z_fpath, threshold, min_members, output):
     cluster_dict = {n: [] for n in set(branch_assignments)}
     for n in range(len(branch_assignments)):
         cluster_dict[branch_assignments[n]].append(n)
-    cluster_dict = {int(d[0]): d[1] for d in cluster_dict.items()
-                    if len(d[1]) >= min_members}
+    cluster_dict = {int(k): v for k, v in cluster_dict.items()
+                    if len(v) >= min_members}
     with open(output, 'w') as f:
-        json.dump(cluster_dict, f)
+        json.dump(cluster_dict, f, indent=4, sort_keys=True)
 
 
 def main():
