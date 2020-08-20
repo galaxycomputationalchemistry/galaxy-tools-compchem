@@ -1,4 +1,5 @@
 import argparse
+import collections
 import json
 
 import numpy as np
@@ -9,8 +10,8 @@ from scipy.cluster.hierarchy import fcluster
 def separate_clusters(Z_fpath, threshold, min_members, output):
     Z = np.loadtxt(Z_fpath)
     branch_assignments = fcluster(Z, threshold, criterion='distance')
-    cluster_dict = {n: [] for n in set(branch_assignments)}
-    for n in range(len(branch_assignments)):
+    cluster_dict = collections.defaultdict(list)
+    for n, val in enumerate(branch_assignments):
         cluster_dict[branch_assignments[n]].append(n)
     cluster_dict = {int(k): v for k, v in cluster_dict.items()
                     if len(v) >= min_members}
