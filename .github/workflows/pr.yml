@@ -398,6 +398,14 @@ jobs:
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ env.GALAXY_HEAD_SHA }}
     - name: Install Planemo
       run: pip install planemo
+    - name: Deploy on testtoolshed
+      env:
+        SHED_KEY: ${{ secrets.tts_api_key }}
+      run: |
+        while read -r DIR; do
+            planemo shed_update --shed_target testtoolshed --shed_key "${{ env.SHED_KEY }}" --force_repository_creation "$DIR" || exit 1;
+        done < ../workflow_artifacts/changed_repositories.list
+      continue-on-error: true
     - name: Deploy on toolshed
       env:
         SHED_KEY: ${{ secrets.ts_api_key }}
