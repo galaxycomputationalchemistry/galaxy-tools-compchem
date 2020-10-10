@@ -24,21 +24,30 @@
         ln -s '$ndx_input' ./index.ndx &&
         ln -s '$str_input' ./str.${str_input.ext} &&
         ln -s '$trj_input' ./traj.${trj_input.ext} &&
-        #if $trj.center:
-            echo '$trj.index_center $trj.index_output' | gmx trjconv
-        #else
-            echo '$trj.index_output' | gmx trjconv
+
+    echo ## optionally pipe in the following
+	#if trj.pbc == 'cluster':
+	    '$trj.pbc.index_cluster'
+    #end if
+	#if $trj.center:
+        '$trj.index_center'
+    #end if
+
+	'$trj.index_output' | gmx trjconv
+
+      	-f ./traj.${trj_input.ext}
+        -s ./str.${str_input.ext}
+        -n ./index.ndx
+        ##$trj.center
+        #if '$trj.index_center':
+            -center
         #end if
-            -f ./traj.${trj_input.ext}
-            -s ./str.${str_input.ext}
-            -n ./index.ndx
-            $trj.center
-            -pbc $trj.pbc
-            -ur $trj.ur
-            -boxcenter $trj.boxcenter
-            #if $time.e != -1:
-                -e '$time.e'
-            #end if
+        -pbc $trj.pbc.pbc
+        -ur $trj.ur
+        -boxcenter $trj.boxcenter
+        #if $time.e != -1:
+            -e '$time.e'
+        #end if
 
     #end if
 
@@ -63,19 +72,32 @@
                 <param name="index_output" type="text" label="Index of group to save in the output" help="Index of group to save in the output - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0).">
                     <validator type="regex" message="Only numeric values allowed">^[0-9]*$</validator>
                 </param>
-                <param name="center" type="boolean" label="Center system in box" truevalue="-center" falsevalue=""/>
+                <!-- <param name="center" type="boolean" label="Center system in box" truevalue="-center" falsevalue=""/> -->
                 <param name="index_center" type="text" label="Index of group for centering" optional="true" help="Index of group for centering - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0). Leave blank if centering is not required.">
                     <validator type="regex" message="Only numeric values allowed">^[0-9]*$</validator>
                 </param>
-                <param name="pbc" type="select" label="PBC treatment" >
-                    <option value="none">none</option>
-                    <option value="mol">mol</option>
-                    <option value="res">res</option>
-                    <option value="atom">atom</option>
-                    <option value="nojump">nojump</option>
-                    <option value="cluster">cluster</option>
-                    <option value="whole">whole</option>
-                </param>
+                <conditional name="pbc">
+                    <param name="pbc" type="select" label="PBC treatment" >
+                        <option value="none">none</option>
+                        <option value="mol">mol</option>
+                        <option value="res">res</option>
+                        <option value="atom">atom</option>
+                        <option value="nojump">nojump</option>
+                        <option value="cluster">cluster</option>
+                        <option value="whole">whole</option>
+                    </param>
+                    <when value="cluster">
+                        <param name="index_cluster" type="text" label="Index of group to use for clustering" help="Index of group to use for clustering - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0).">
+                        <validator type="regex" message="Only numeric values allowed">^[0-9]*$</validator>
+                        </param>
+                    </when>
+                    <when value="none" />
+                    <when value="mol" />
+                    <when value="res" />
+                    <when value="atom" />
+                    <when value="nojump" />
+                    <when value="whole" />
+                </conditional>
                 <param name="ur" type="select" label="Unit cell representation" >
                     <option value="rect">rect</option>
                     <option value="tric">tric</option>
