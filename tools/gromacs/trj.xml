@@ -2,13 +2,19 @@
     <description>using trjconv and trjcat</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
+        <xml name="fit_when" token_option="none">
+            <when value="@OPTION@">
+                <param name="index_fit" type="text" label="Index of group to use for fitting" help="Index of group to use for fitting - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0).">
+                    <validator type="regex" message="Only numeric values allowed">^[0-9]*$</validator>
+                </param>
+            </when>
+        </xml>
     </macros>
 
     <expand macro="requirements" />
 
     <command detect_errors="exit_code"><![CDATA[
-
     #if $trj.trj_op == 'trjcat':
         mkdir trajs &&
         #for $value, $file in enumerate($trj_input):
@@ -26,25 +32,26 @@
         ln -s '$trj_input' ./traj.${trj_input.ext} &&
 
     echo ## optionally pipe in the following
-	#if trj.pbc == 'cluster':
+	#if $trj.fit.fit != 'none':
+	    '$trj.fit.index_fit'
+    #end if
+    #if $trj.pbc.pbc == 'cluster':
 	    '$trj.pbc.index_cluster'
     #end if
-	#if $trj.center:
-        '$trj.index_center'
-    #end if
-
-	'$trj.index_output' | gmx trjconv
-
+    '$trj.index_center'	'$trj.index_output' | gmx trjconv
       	-f ./traj.${trj_input.ext}
         -s ./str.${str_input.ext}
-        -n ./index.ndx
+        #if $ndx_input:
+            -n ./index.ndx
+        #end if
         ##$trj.center
-        #if '$trj.index_center':
+        #if $trj.index_center:
             -center
         #end if
         -pbc $trj.pbc.pbc
         -ur $trj.ur
         -boxcenter $trj.boxcenter
+        -fit $trj.fit.fit
         #if $time.e != -1:
             -e '$time.e'
         #end if
@@ -66,13 +73,12 @@
                 <option value="trjcat">Concatenate (trjcat)</option>
             </param>
             <when value="trjconv">
-                <param name="trj_input" type="data" format='xtc,trr' label="Input trajectory" help="In XTC or TRR format."/>
+                <param name="trj_input" type="data" format='xtc,trr,pdb,gro' label="Input trajectory" help="In XTC or TRR format; structure files with PDB or GRO format can also be used."/>
                 <param name="str_input" type="data" format='pdb,gro,tpr' label="Input structure" help="In PDB, GRO or TPR format."/>
-                <param name="ndx_input" type="data" format='ndx' label="Index (NDX) file" help="In NDX format."/>
-                <param name="index_output" type="text" label="Index of group to save in the output" help="Index of group to save in the output - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0).">
+                <param name="ndx_input" type="data" format='ndx' label="Index (NDX) file" optional="true" help="In NDX format. Optional."/>
+                <param name="index_output" value="0" type="text" label="Index of group to save in the output" help="Index of group to save in the output - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0).">
                     <validator type="regex" message="Only numeric values allowed">^[0-9]*$</validator>
                 </param>
-                <!-- <param name="center" type="boolean" label="Center system in box" truevalue="-center" falsevalue=""/> -->
                 <param name="index_center" type="text" label="Index of group for centering" optional="true" help="Index of group for centering - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0). Leave blank if centering is not required.">
                     <validator type="regex" message="Only numeric values allowed">^[0-9]*$</validator>
                 </param>
@@ -88,7 +94,7 @@
                     </param>
                     <when value="cluster">
                         <param name="index_cluster" type="text" label="Index of group to use for clustering" help="Index of group to use for clustering - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0).">
-                        <validator type="regex" message="Only numeric values allowed">^[0-9]*$</validator>
+                            <validator type="regex" message="Only numeric values allowed">^[0-9]*$</validator>
                         </param>
                     </when>
                     <when value="none" />
@@ -98,8 +104,8 @@
                     <when value="nojump" />
                     <when value="whole" />
                 </conditional>
-                <param name="ur" type="select" label="Unit cell representation" >
-                    <option value="rect">rect</option>
+                <param name="ur" type="select" label="Unit cell representation" help="Only has effect in combination with PBC treatment of mol, res or atom">
+                    <option value="rect" selected="true">rect</option>
                     <option value="tric">tric</option>
                     <option value="compact">compact</option>
                 </param>
@@ -108,6 +114,22 @@
                     <option value="tric" selected="true">tric</option>
                     <option value="zero">zero</option>
                 </param>
+                <conditional name="fit">
+                    <param name="fit" type="select" label="Fit molecule to reference structure in the reference file?" >
+                        <option value="none" selected="true">No fitting</option>
+                        <option value="rot+trans">rot+trans</option>
+                        <option value="rotxy+transxy">rotxy+transxy</option>
+                        <option value="translation">translation</option>
+                        <option value="transxy">transxy</option>
+                        <option value="progressive">progressive</option>
+                    </param>
+                    <when value="none"/>
+                    <expand macro="fit_when" option="rot+trans"/>
+                    <expand macro="fit_when" option="rotxy+transxy"/>
+                    <expand macro="fit_when" option="translation"/>
+                    <expand macro="fit_when" option="transxy"/>
+                    <expand macro="fit_when" option="progressive"/>
+                </conditional>
             </when>
             <when value="trjcat">
                 <param name="trj_input" type="data" format='xtc,trr' label="Input trajectories" help="In XTC or TRR format, but please do not mix the two. Please note this tool does not currently take order into account when concatenating." multiple="true"/>
@@ -148,9 +170,9 @@
             <param name="cat" value="true" />
             <output name="output" file="trjcat.xtc" ftype="xtc"/>
         </test>
-        <!-- <test> -->
+        <test>
             <!-- echo '1 1' | gmx trjconv -f npt.xtc -s npt.tpr -n -center -pbc mol -ur compact -o npt_c.xtc -->
-            <!-- <param name="trj_op" value="trjconv" />
+            <!-- <param name="trj_op" value="trjconv" /> -->
             <param name="trj_input" value="npt.xtc" />
             <param name="str_input" value="npt.tpr" ftype="tpr"/>
             <param name="ndx_input" value="index.ndx" />
@@ -164,7 +186,7 @@
             <param name="ur" value="compact" />
             <param name="ur" value="tric" />
             <output name="output" file="trjconv.xtc" ftype="xtc"/>
-        </test> -->
+        </test>
     </tests>
     <help><![CDATA[
 
