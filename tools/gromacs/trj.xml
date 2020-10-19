@@ -44,9 +44,12 @@
         #if $ndx_input:
             -n ./index.ndx
         #end if
-        ##$trj.center
         #if $trj.index_center:
             -center
+        #end if
+        #if $trj.sep:
+            -sep
+            -nzero 9  ## hopefully the traj has < 1 bn frames, or collection order will be wrong
         #end if
         -pbc $trj.pbc.pbc
         -ur $trj.ur
@@ -55,15 +58,16 @@
         #if $time.e != -1:
             -e '$time.e'
         #end if
-
     #end if
 
     -b '$time.b'
     -dt '$time.dt'
     -o ./output.${output_format} &&
-    &>> verbose.txt &&
-    mv ./output.${output_format} '$output'
-
+    &>> verbose.txt
+    #if not $trj.sep:
+        &&
+        mv ./output.${output_format} '$output'
+    #end if
     ]]></command>
 
     <inputs>
@@ -81,6 +85,10 @@
                 </param>
                 <param name="index_center" type="text" label="Index of group for centering" optional="true" help="Index of group for centering - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0). Leave blank if centering is not required.">
                     <validator type="regex" message="Only numeric values allowed">^[0-9]*$</validator>
+                </param>
+                <param name="sep" type="select" label="Write each trajectory frame to a separate GRO or PDB file?" help="Results will be stored as a Galaxy collection. Only has effect with PDB or GRO output, otherwise ignored">
+                    <option value="" selected="true">No</option>
+                    <option value="sep">Yes, write each frame separately</option>
                 </param>
                 <conditional name="pbc">
                     <param name="pbc" type="select" label="PBC treatment" >
@@ -134,6 +142,7 @@
             <when value="trjcat">
                 <param name="trj_input" type="data" format='xtc,trr' label="Input trajectories" help="In XTC or TRR format, but please do not mix the two. Please note this tool does not currently take order into account when concatenating." multiple="true"/>
                 <param name="cat" type="boolean" label="Do not discard double time frames" truevalue="-cat" falsevalue="-nocat"/>
+                <param name="sep" type="hidden" value="" />
             </when>
         </conditional>
         <param name="output_format" type="select" label="Output format" >
@@ -151,6 +160,7 @@
     </inputs>
     <outputs>
         <data name="output" format="xtc">
+            <filter>not trj.get("sep") or output_format in ["xtc", "trr"]</filter>
             <change_format>
                 <when input="output_format" value="trr" format="trr"/>
                 <when input="output_format" value="xtc" format="xtc"/>
@@ -158,7 +168,16 @@
                 <when input="output_format" value="pdb" format="pdb"/>
             </change_format>
         </data>
-    </outputs> 
+        <collection type="list" name="gro_frames" label="Trajectory frames">
+            <filter>trj.get("sep") and output_format == "gro"</filter>
+            <discover_datasets pattern="(?P&lt;designation&gt;^output[0-9]{9}\.gro$)" ext="gro"/>
+        </collection>
+        <collection type="list" name="pdb_frames" label="Trajectory frames">
+            <filter>trj.get("sep") and output_format == 'pdb'</filter>
+            <discover_datasets pattern="(?P&lt;designation&gt;^output[0-9]{9}\.pdb$)" ext="pdb"/>
+        </collection>
+        <expand macro="log_outputs" />
+    </outputs>
     <tests>
         <test>
             <!-- gmx trjcat -f npt.xtc nvt.xtc -cat -o test.xtc -->
@@ -181,11 +200,24 @@
             <param name="dt" value="0" />
             <param name="index_output" value="1" />
             <param name="index_center" value="1" />
-            <param name="center" value="true" />
             <param name="pbc" value="mol" />
-            <param name="ur" value="compact" />
             <param name="ur" value="tric" />
             <output name="output" file="trjconv.xtc" ftype="xtc"/>
+        </test>
+        <test>
+            <!-- test sep flag -->
+            <param name="trj_input" value="npt.xtc" />
+            <param name="str_input" value="npt.tpr" ftype="tpr"/>
+            <param name="ndx_input" value="index.ndx" />
+            <param name="b" value="0" />
+            <param name="e" value="-1" />
+            <param name="dt" value="0" />
+            <param name="index_output" value="0" />
+            <param name="sep" value="sep" />
+            <param name="output_format" value="pdb" />
+            <output_collection name="pdb_frames" type="list">
+                <element name="output00000007" ftype="pdb" file="frame7.pdb"/>
+            </output_collection>
         </test>
     </tests>
     <help><![CDATA[
