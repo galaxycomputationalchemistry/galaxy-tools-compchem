@@ -2,7 +2,7 @@
     <description>from MD ensemble with MDAnalysis</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
     <expand macro="requirements"/>
     <command detect_errors="exit_code"><![CDATA[
@@ -16,13 +16,10 @@
         python '$__tool_directory__/extract_rmsd.py'
             --trajs trajs.txt
             --strs strs.txt
-            --ref-str '$refstr'
             --traj-format '$trajs[0].ext'
             --str-format '$strs[0].ext'
-            --ref-str-format '${refstr.ext}'
             --outfile '$output'
             --group '$group'
-            --fitting '$fitting'
             --start '$start'
             --end '$end'
             --step '$step'
@@ -31,9 +28,7 @@
     <inputs>
         <param type="data_collection" name="strs" label="Input structures" format="pdb,gro"/>
         <param type="data_collection" name="trajs" label="Input trajectories" format="xtc,dcd,trr"/>
-        <param name="refstr" type="data" format="pdb,gro" label="Reference structure" help="Structure for aligning all trajectories against."/>
         <param name='group' type='text' label='Group for RMSD calculation' />
-        <param name='fitting' type='text' label='Group for alignment prior to RMSD calculation' />
         <param name="start" type="integer" min="0" value="0" label="First trajectory frame for RMSD calculation" />
         <param name="end" type="integer"  min="0" value="0" label="End trajectory frame for RMSD calculation" />
         <param name="step" type="integer"  min="1" value="1" label="Frequency of trajectory frame sampling for RMSD calculation" />
@@ -56,8 +51,6 @@
                 </collection>
             </param>
 
-            <param name="refstr" ftype="pdb" value="test.pdb" />
-            <param name="fitting" value="protein" />
             <param name="group" value="resname BGLC" />
             <param name="start" value="0" />
             <param name="end" value="15" />
@@ -65,7 +58,7 @@
             <output name="output"> 
                 <assert_contents>
                     <has_text text="0.0" n="20"/>
-                    <has_size value="1588" />
+                    <has_size value="1126" />
                     <has_n_lines n="74" />
                 </assert_contents>
             </output>
@@ -80,6 +73,8 @@ This tool takes collections of MD structures and trajectories and inputs and per
   - aligns them to a reference structure
   - calculates RMSD differences for a selected group of atoms between all possible pairs of trajectories at all time points
   - returns RMSD data as a three-dimensional tensor.
+
+Note: in an older version of this tool trajectories were aligned to a reference group prior to RMSD calculation. This is no longer supported; you should perform alignment yourself using a more efficient tool such as 'Modify/convert GROMACS trajectories'.
 
 _____
 
