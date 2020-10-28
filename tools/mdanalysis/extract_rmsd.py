@@ -2,9 +2,7 @@ import argparse
 import json
 
 import MDAnalysis as m
-from MDAnalysis.analysis import align, rms
-from MDAnalysis.analysis.base import AnalysisFromFunction
-from MDAnalysis.coordinates.memory import MemoryReader
+from MDAnalysis.analysis import rms
 
 import numpy as np
 
@@ -47,7 +45,8 @@ def calc_rmsd(str_files, traj_files, str_format, traj_format, filepath_out,
     for traj in range(no_t):
         # We no longer align here, users should do this themselves.
         universes[traj] = m.Universe(str_file_list[traj], traj_file_list[traj],
-                            format=traj_format, topology_format=str_format)
+                                     format=traj_format,
+                                     topology_format=str_format)
 
     print("All trajs loaded by MDAnalysis")
 
@@ -63,7 +62,6 @@ def calc_rmsd(str_files, traj_files, str_format, traj_format, filepath_out,
                 r = rms.rmsd(A, B)
                 data[traj1, traj2, frame] = r
                 data[traj2, traj1, frame] = r
-
 
     with open(filepath_out, 'w') as f:
         json.dump(data.tolist(), f, indent=4, sort_keys=True)
