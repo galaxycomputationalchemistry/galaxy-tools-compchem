@@ -2,7 +2,7 @@
     <description>for system equilibration or data collection</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
@@ -43,15 +43,15 @@
             -p ./top_input.top 
             -o outp.tpr &>> verbose.txt &&
 
-
-        gmx mdrun
-            -nt "\${GALAXY_SLOTS:-4}"
-            ## GPU
-            #if "\${GROMACS_GPU:-0}" == 1:
+        #if "\${GPU_AVAILABLE:-0}" == 1:
+            gmx_gpu mdrun
                 -ntmpi 1
                 -nb gpu
                 -pme gpu
-            #end if
+        #else:
+            gmx mdrun
+        #end if
+            -nt "\${GALAXY_SLOTS:-4}"
             -deffnm outp &>> verbose.txt
 
         #if $outps.str == 'pdb' or $outps.str == 'both'
