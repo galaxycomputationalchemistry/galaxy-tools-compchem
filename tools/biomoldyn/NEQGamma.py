@@ -129,17 +129,18 @@ def NEQGamma(file_names, output, output_frict, vel, T, av, sigma):
     dist = open(output, "w")
     frict = open(output_frict, "w")
 
-    dist.write(
-        "#x  force_integral  frict_coeff   wdiss   corrected_force_integral\n")
+    dist.write('\t'.join(('#x', 'force_integral',  'frict_coeff',
+                         'wdiss', 'corrected_force_integral\n')))
     for i in range(length_data):
-        dist.write("{:15.8f} {:20.8f} {:20.8f} {:20.8f} {:20.8f}\n".format(
+        dist.write("{:.8f}\t{:.8f}\t{:.8f}\t{:.8f}\t{:.8f}\n".format(
             x[i], av_forceintegral[i], av_intcorr[i], wdiss[i],
             av_forceintegral[i] - wdiss[i]))
 
-    frict.write("""#x   ACF   frict_coeff   """
-                """gauss_filtered_frict_coeff   av_window_frict_coeff\n""")
+    frict.write('\t'.join(('#x', 'ACF', 'frict_coeff',
+                           'gauss_filtered_frict_coeff',
+                           'av_window_frict_coeff\n')))
     for i in range(length_data):
-        frict.write("{:15.8f} {:20.8f} {:20.8f} {:20.8f} {:20.8f}\n".format(
+        frict.write("{:.8f}\t{:.8f}\t{:.8f}\t{:.8f}\t{:.8f}\n".format(
                 x[i], autocorr_set[i], av_intcorr[i], blurred[i], runn_av[i]))
 
     dist.close()
@@ -149,7 +150,7 @@ def NEQGamma(file_names, output, output_frict, vel, T, av, sigma):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="""dcTMD friciton correction
+    parser = argparse.ArgumentParser(description="""dcTMD friction correction
         (please cite: Wolf, S., Stock, G. Targeted Molecular Dynamics
         Calculations of Free Energy Profiles Using a Nonequilibrium
         Friction Correction. J. Chem. Theory Comput. 2018, 14(12), 6175-6182,

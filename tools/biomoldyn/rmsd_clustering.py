@@ -48,7 +48,8 @@ def plot_dist_mat(mat, output, cmap='plasma'):
 
 
 def plot_dendrogram(Z, output):
-    plt.figure(figsize=(25, 10))
+    # figure width scales with number of leaves
+    plt.figure(figsize=(0.25 * Z.shape[0], 10))
     plt.title('Hierarchical Clustering Dendrogram')
     plt.xlabel('Trajectory index')
     plt.ylabel('distance')

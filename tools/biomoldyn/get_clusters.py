@@ -23,7 +23,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--Z', required=True,
                         help='File for cluster linkage array.')
-    parser.add_argument('--threshold', type=int, required=True,
+    parser.add_argument('--threshold', type=float, required=True,
                         help='Distance cutoff.')
     parser.add_argument('--min-members', type=int, required=True,
                         help='Minimum number of members of the cluster.')

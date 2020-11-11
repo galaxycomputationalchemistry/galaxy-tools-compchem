@@ -2,7 +2,7 @@
     <description>from MD RMSD matrix data</description>
     <macros>
         <token name="@TOOL_VERSION@">1.5.2</token>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
     <requirements>
         <requirement type="package" version="@TOOL_VERSION@">scipy</requirement>
@@ -28,7 +28,7 @@
             #end if
             --start '$start'
             --end '$end'
-            '$normalize'
+            $normalize
 ]]></command>
     <inputs>
         <param label="JSON or tabular input file" type="data" format="json,tabular" name="inp" argument="--json"/>
@@ -74,6 +74,18 @@
             <output name="dend" value="dendrogram.png"/>
             <output name="hmap" value="heatmap.png"/>
             <output name="Z" value="Z.tabular"/>
+        </test>
+        <test expect_num_outputs="2">
+            <param name="inp" value="inp.json"/>
+            <param name="dendrogram" value="false"/>
+            <param name="heatmap" value="false"/>
+            <param name="clustering_method" value="average"/>
+            <param name="cmap" value="plasma"/>
+            <param name="start" value="0"/>
+            <param name="end" value="-1"/>
+            <param name="normalize" value="false"/>
+            <output name="outp_mat" value="outp_mat_unnormalized.tabular"/>
+            <output name="Z" value="Z_unnormalized.tabular"/>
         </test>
     </tests>
     <help><![CDATA[
