@@ -57,7 +57,7 @@
             <param name="step" value="1" />
             <output name="output"> 
                 <assert_contents>
-                    <has_text text="0.0" n="20"/>
+                    <has_text text="0.0" n="60"/>
                     <has_size value="1126" />
                     <has_n_lines n="74" />
                 </assert_contents>
