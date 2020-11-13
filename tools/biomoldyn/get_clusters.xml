@@ -2,7 +2,7 @@
     <description>from linkage matrix data</description>
     <macros>
         <token name="@TOOL_VERSION@">1.5.2</token>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
     <requirements>
         <requirement type="package" version="@TOOL_VERSION@">scipy</requirement>
@@ -18,7 +18,7 @@
 ]]></command>
     <inputs>
         <param label="Clustering linkage array" format="tabular" type="data" name="Z" argument="--Z"/>
-        <param label="Distance cutoff" value="0" type="integer" name="threshold" argument="--threshold"/>
+        <param label="Distance cutoff" value="0" type="float" name="threshold" argument="--threshold"/>
         <param label="Minimum number of members of the cluster" value="0" type="integer" name="min_members" argument="--min-members"/>
     </inputs>
     <outputs>
