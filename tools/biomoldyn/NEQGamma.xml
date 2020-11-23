@@ -2,12 +2,13 @@
     <description>for calculating friction and free energy profiles from TMD ensembles</description>
     <macros>
         <token name="@TOOL_VERSION@">1.5.2</token>
-        <token name="@VERSION_SUFFIX@">0</token>
+        <token name="@VERSION_SUFFIX@">1</token>
     </macros>
     <requirements>
         <requirement type="package" version="@TOOL_VERSION@">scipy</requirement>
         <requirement type="package" version="1.19.1">numpy</requirement>
         <requirement type="package" version="1.1.2">pandas</requirement>
+        <requirement type="package" version="3.8">python</requirement>
     </requirements>
     <command><![CDATA[
         #for t in $xvgs:
@@ -37,11 +38,11 @@
     </inputs>
     <outputs>
         <collection name="outp_col" type="list" label="Free energy data">
-            <discover_datasets pattern="(?P&lt;designation&gt;^cluster\d+)_outp\.txt$" ext="txt"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;^cluster\d+)_outp\.txt$" ext="tabular"/>
             <filter>json</filter>
         </collection>
         <collection name="outp_frict_col" type="list" label="Friction data">
-            <discover_datasets pattern="(?P&lt;designation&gt;^cluster\d+)_ofrict\.txt$" ext="txt"/>
+            <discover_datasets pattern="(?P&lt;designation&gt;^cluster\d+)_ofrict\.txt$" ext="tabular"/>
             <filter>json</filter>
         </collection>
         <data name="outp" from_work_dir="outp.txt" format="tabular" label="Free energy data">

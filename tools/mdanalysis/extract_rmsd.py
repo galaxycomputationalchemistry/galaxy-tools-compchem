@@ -36,29 +36,29 @@ def calc_rmsd(str_files, traj_files, str_format, traj_format, filepath_out,
 
     no_t = len(traj_file_list)
 
-    data = np.zeros((no_t, no_t,
-                    int((end - start)/step + ((end - start) % step > 0))))
-
-    # load files
-    universes = {}
+    # hard to find array size before loading files
+    universe_coordinate_data = []
 
     for traj in range(no_t):
         # We no longer align here, users should do this themselves.
-        universes[traj] = m.Universe(str_file_list[traj], traj_file_list[traj],
-                                     format=traj_format,
-                                     topology_format=str_format)
+        u = m.Universe(str_file_list[traj], traj_file_list[traj],
+                       format=traj_format, topology_format=str_format)
+        u.transfer_to_memory()
+        grp = u.select_atoms(group).universe
+        coordinates = grp.trajectory.coordinate_array[start:end:step]
+        universe_coordinate_data.append(coordinates)
 
+    universe_coordinate_data = np.array(universe_coordinate_data)
     print("All trajs loaded by MDAnalysis")
+    data = np.zeros((no_t, no_t, universe_coordinate_data.shape[1]))
 
     # calculate differences
     for traj1 in range(no_t):
         print("Calculating differences for traj {}".format(traj1))
         for traj2 in range(traj1):
             for frame in range(data.shape[2]):
-                universes[traj1].trajectory[frame]
-                universes[traj2].trajectory[frame]
-                A = universes[traj1].select_atoms(group).positions
-                B = universes[traj2].select_atoms(group).positions
+                A = universe_coordinate_data[traj1, frame]
+                B = universe_coordinate_data[traj2, frame]
                 r = rms.rmsd(A, B)
                 data[traj1, traj2, frame] = r
                 data[traj2, traj1, frame] = r
@@ -90,7 +90,6 @@ def main():
     parser.add_argument('--step', type=int,
                         help="Frame sampling frequency for RMSD calculation")
     args = parser.parse_args()
-
     calc_rmsd(args.strs, args.trajs, args.str_format,
               args.traj_format, args.outfile,
               args.group, args.start, args.end, args.step)
