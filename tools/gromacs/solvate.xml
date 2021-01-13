@@ -2,7 +2,7 @@
     <description>to structure and topology files</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
 
     <expand macro="requirements" />
@@ -15,7 +15,7 @@
 
         gmx solvate -cp ./gro_input.gro -cs ${water_model}.gro -o solv.gro -p ./top_input.top &>> verbose.txt &&
         gmx grompp -f ./ions.mdp -c solv.gro -p ./top_input.top -o ions.tpr &>> verbose.txt
-        #if $neutralise and $conc:  ## else this step would do nothing
+        #if $neutralise or $conc:  ## else this step would do nothing
             &&
             echo 'SOL' | gmx genion -s ions.tpr -o solv_ions.gro -p ./top_input.top -pname NA -nname CL $neutralise -conc $conc &>> verbose.txt &&
             mv solv_ions.gro solv.gro
