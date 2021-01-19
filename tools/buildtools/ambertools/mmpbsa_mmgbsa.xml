@@ -77,7 +77,7 @@ with open("$parameteroutfile",'w+') as f:
       <param name="endframe" type="integer" value="9999999" label="Final frame to analyse" min="1" max="100000000"/>
       <param name="interval" type="integer" value="1" label="interval between frames analysed" min="1" max="10000"/>
       <param name="entropy" type="boolean" checked="true" truevalue="1" falsevalue="0" label="quasi-harmonic entropy calculation" help="Calculate the quasi-harmonic entropy"/>
-      <param name="use_sander" type="boolean" checked="false" label="use sander" truevalue="1" falsevalue="0" help="defaults to false (will use sander if needed)."/>
+      <param name="use_sander" type="boolean" checked="false" label="use sander" truevalue="1" falsevalue="0" help="Forces MMPBSA.py to use sander for energy calculations, even when mmpbsa_py_energy will suffice."/>
       <param name="verbose" type="integer" value="2" label="verbosity" min="0" max="3" help="0 - not verbose 3 - ultra verbose"/>
       <param name="keep_files" type="boolean" checked="false" truevalue="1" falsevalue="0" label="keep additional files" help="defaults to false, no extra files kept"/>
       <param name="strip_mask" type="text" value=":WAT:Cl-:Na+" label="Strip mask" help="Enter a mask for removing unneeded atoms (water/ions)from the solvated prmtop"/>
@@ -89,8 +89,14 @@ with open("$parameteroutfile",'w+') as f:
           <option value="no">no</option>
         </param>
         <when value="yes">
-          <param name="igb" type="integer" value="5" label="igb GB model" min="0" max="7" help="5 - default"/>
-          <param name="saltcon" type="float" value="0.150" label="Salt Concentration (M)" min="0.0" max="2.0"/>
+          <param name="igb" type="select" value="5" label="Generalized GB model to use" min="0" max="7" help="5 - default">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="5">5</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </param>
+          <param name="saltcon" type="float" value="0" label="Salt Concentration (M)" min="0.0" max="6.0"/>
         </when>
         <when value="no"></when>
       </conditional>

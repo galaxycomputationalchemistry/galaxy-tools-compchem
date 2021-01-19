@@ -2,7 +2,7 @@
 #  
 &general
 startframe={{ allparams.startframe }}, endframe={{ allparams.endframe }}, interval={{ allparams.interval }},
-verbose={{ allparams.verbose }}, keep_files={{ allparams.keep_files | int }}, strip_mask={{ allparams.strip_mask }}, use_sander={{ allparams.use_sander | int }}, entropy={{ allparams.entropy | int }}
+verbose={{ allparams.verbose }}, keep_files={{ allparams.keep_files | int }}, strip_mask={{ allparams.strip_mask }}, use_sander={{ allparams.use_sander | int }}, entropy={{ allparams.entropy | int }},  netcdf=1
 /
 {% if calcdetails.gbcalc.calctype == 'yes' %}
 &gb
