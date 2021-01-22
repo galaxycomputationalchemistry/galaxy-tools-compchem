@@ -1,6 +1,5 @@
-<tool id="mmpbsa_mmgbsa" name="mmpbsa mmgbsa" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
-    <description>- estimate ligand binding affinities
-    </description>
+<tool id="mmpbsa_mmgbsa" name="MMPBSA/MMGBSA" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+    <description>tool for estimating ligand binding affinities</description>
     <macros>
         <import>macros.xml</import>
         <token name="@GALAXY_VERSION@">0</token>
@@ -72,7 +71,7 @@ with open("$parameteroutfile",'w+') as f:
             <param name="endframe" type="integer" value="9999999" label="Final frame to analyse" min="1" max="100000000"/>
             <param name="interval" type="integer" value="1" label="Interval between frames analyzed" min="1" max="10000"/>
             <param name="entropy" type="boolean" checked="true" truevalue="1" falsevalue="0" label="Perform quasi-harmonic entropy calculation?" help="Calculate the quasi-harmonic entropy"/>
-            <param name="use_sander" type="boolean" checked="false" label="Use sander" truevalue="1" falsevalue="0" help="Forces MMPBSA.py to use sander for energy calculations, even when mmpbsa_py_energy will suffice."/>
+            <param name="use_sander" type="boolean" checked="false" label="Use sander" truevalue="1" falsevalue="0" help="Forces MMPBSA.py to use sander for energy calculations, even when mmpbsa_py_energy will suffice. Default behavior is to use mmpbsa_py_energy where possible."/>
             <param name="keep_files" type="boolean" checked="false" truevalue="1" falsevalue="0" label="Keep additional files?" help="If specified, temporary files will be kept and stored in a collection, which may be helpful for debugging."/>
             <param name="strip_mask" type="text" value=":WAT:Cl-:Na+" label="Strip mask" help="Enter a mask for removing unneeded atoms (water and ions) from the solvated prmtop file"/>
         </section>
@@ -84,7 +83,7 @@ with open("$parameteroutfile",'w+') as f:
                 </param>
                 <when value="gb">
                     <param name="igb" type="select" value="5" label="GB model to use (igb)" help="5 options are available. Consult the AmberTools manual for more details. Note that some missing values (e.g. 3 and 4) are no longer supported.">
-                        <option value="0">0 - no generalized Born term is used</option>
+                        <!-- <option value="0">0 - no generalized Born term is used</option> -->
                         <option value="1">1 - Basic pairwise generalized Born model</option>
                         <option value="2">2 - OBC model</option>
                         <option value="5">5 - alternative OBC model</option>
@@ -92,12 +91,30 @@ with open("$parameteroutfile",'w+') as f:
                         <option value="8">8 - alternative GBn model</option>
                     </param>
                     <param name="saltcon" type="float" value="0" label="Salt concentration (M)" min="0.0" max="6.0"/>
+                    <param name="surfoff" type="float" value="0" label="Offset to correct (by addition) the value of the non-polar contribution to the solvation free energy term"/>
+                    <!-- <param name="surften" type="float" value="0.0072" label="Surface tension">
+                        <help><![CDATA[Surface tension in kcal / mol / Å<sup>2</sup>]]></help>
+                    </param> -->
+                    <param name="molsurf" type="boolean" checked="false" truevalue="1" falsevalue="0" label="Use the molsurf algorithm to calculate the surface area for the nonpolar solvation term?" help="The default behavior is to use LCPO (Linear Combination of Pairwise Overlaps)."/>
+                    <param name="probe" type="float" value="1.4" label="Radius of the probe molecule (supposed to be the size of a solvent molecule), in Å, to use when determining the molecular surface" help="Only applicable when the molsurf algorithm is selected." min="0"/>
+                    <param name="msoffset" type="float" value="0" label="Offset to apply to the individual atomic radii in the system when calculating the molsurf surface." />
                 </when>
                 <when value="pb">
                     <param name="istrng" type="float" value="0.15" label="Ionic strength (M)" min="0.0" max="2.0"/>
                     <param name="fillratio" type="float" value="4.0" label="Fill ratio" help="The ratio between the longest dimension of the rectangular finite-difference grid and that of the solute" min="0.0" max="10.0"/>
                     <param name="inp" type="integer" value="1" label="Nonpolar solvation method" min="1" max="2" help="1 - default"/>
                     <param name="radiopt" type="integer" value="0" label="Use optimized radii?" min="0" max="2" help="0 - default do not use these"/>
+                    <param name="cavity_offset" type="float" value="-0.5692" label="Offset value used to correct non-polar free energy contribution" help="Not used for APBS"/>
+                    <!-- <param name="cavity_surften" type="float" value="0.0378" label="Surface tension" help="Surface tension in kcal / mol / Å²"/> -->
+                    <param name="exdi" type="float" value="80.0" label="External dielectric constant"/>
+                    <param name="indi" type="float" value="0" label="Internal dielectric constant"/>
+                    <param name="scale" type="float" value="2.0" label="Resolution of the Poisson Boltzmann grid" help="Resolution of the Poisson Boltzmann grid, equal to the reciprocal of the grid spacing."/>
+                    <param name="linit" type="integer" value="1000" label="Maximum number of iterations of the linear Poisson Boltzmann equation to try"/>
+                    <param name="prbrad" type="select" label="Solvent probe radius in Å">
+                        <option value="1.4" selected="True">1.4</option>
+                        <option value="1.6">1.6</option>
+                    </param>
+                    <!-- <param name="sander_apbs" type="boolean" truevalue="1" falsevalue="0" label="" help=""/> -->
                 </when>
             </conditional>
             <conditional name="decomposition">
@@ -114,10 +131,10 @@ with open("$parameteroutfile",'w+') as f:
                         <option value="3">Complex, Receptor, Ligand, and DELTA energies, total, sidechain, and backbone contributions</option>
                     </param>
                     <param name="idecomp" type="select" value="1" label="Energy decomposition scheme to use" help="Choose an energy decomposition scheme.">
-                        <option value="1">Per-residue decomp with 1-4 terms added to internal potential terms</option>
-                        <option value="2">Per-residue decomp with 1-4 EEL added to EEL and 1-4 VDW added to VDW potential terms.</option>
-                        <option value="3">Pairwise decomp with 1-4 terms added to internal potential terms</option>
-                        <option value="4">Pairwise decomp with 1-4 EEL added to EEL and 1-4 VDW added to VDW potential terms</option>
+                        <option value="1">1 - Per-residue decomp with 1-4 terms added to internal potential terms</option>
+                        <option value="2">2 - Per-residue decomp with 1-4 EEL added to EEL and 1-4 VDW added to VDW potential terms.</option>
+                        <option value="3">3 - Pairwise decomp with 1-4 terms added to internal potential terms</option>
+                        <option value="4">4 - Pairwise decomp with 1-4 EEL added to EEL and 1-4 VDW added to VDW potential terms</option>
                     </param>
                 </when>
                 <when value="no"/>
@@ -142,8 +159,8 @@ with open("$parameteroutfile",'w+') as f:
             <param name="complex" value="complex.prmtop" ftype="txt"/>
             <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
             <conditional name="allparams">
-                <param name="entropy" value="false"/>
-                <param name="keep_files" value="true"/>
+                <param name="entropy" value="0"/>
+                <param name="keep_files" value="1"/>
             </conditional>
             <conditional name="gb_pb_calc">
                 <param name="calctype" value="gb"/>
@@ -168,15 +185,10 @@ with open("$parameteroutfile",'w+') as f:
             <conditional name="allparams">
                 <param name="startframe" value="1"/>
                 <param name="endframe" value="1"/>
-                <param name="entropy" value="false"/>
+                <param name="entropy" value="0"/>
             </conditional>
-            <conditional name="gbcalc">
-                <param name="calctype" value="yes"/>
-                <param name="igb" value="2"/>
-                <param name="saltcon" value="0.100"/>
-            </conditional>
-            <conditional name="pbcalc">
-                <param name="calctype" value="yes"/>
+            <conditional name="gb_pb_calc">
+                <param name="calctype" value="pb"/>
                 <param name="istrng" value="0.100"/>
             </conditional>
             <conditional name="decomposition">
@@ -184,17 +196,17 @@ with open("$parameteroutfile",'w+') as f:
             </conditional>
             <output name="resultoutfile">
                 <assert_contents>
-                <has_text text="GENERALIZED BORN:"/>
-                <has_text text="DELTA TOTAL                -56."/>
+                <!-- <has_text text="GENERALIZED BORN:"/>
+                <has_text text="DELTA TOTAL                -56."/> -->
                 <has_text text="POISSON BOLTZMANN:"/>
                 <has_text text="DELTA TOTAL                -47"/>
                 </assert_contents>
             </output>
             <output name="decompoutfile">
                 <assert_contents>
-                <has_text text="idecomp = 1: Per-residue decomp adding 1-4 interactions to Internal"/>
-                <has_text text="HIE 240,R HIE 240"/>
-                <has_text text="RAL 241,L RAL   1,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0"/>
+                    <has_text text="idecomp = 1: Per-residue decomp adding 1-4 interactions to Internal"/>
+                    <has_text text="HIE 240,R HIE 240"/>
+                    <!-- <has_text text="RAL 241,L RAL   1,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0"/> -->
                 </assert_contents>
             </output>
         </test>
@@ -236,27 +248,8 @@ If simulations were performed using the Galaxy GROMACS tools, the topology (in t
 - There are many more complex flags available. This Galaxy wrapper only supports GB and PB binding free energies and decomposition. Parallel calculations are not supported at present.
 - This Galaxy tool is based on MMPBSA.py. More details on options that are not described in the Manual and Tutorials can be found in the code - see "$CONDA_PREFIX/lib/python3.7/site-packages/MMPBSA_mods/input_parser.py" and "$CONDA_PREFIX/lib/python3.7/site-packages/MMPBSA_mods/main.py".
 
-.. class:: infomark
-
-**Test data**
-
-- The test data for this tool comes from an `Amber Tutorial`_ and the original dataset_ is available.
-- For convenience, water has been stripped from the .mdcrd trajectory and this has been converted to netcdf format.
-
-.. code-block:: python
-
-  import mdtraj as md
-  traj = md.load('1err_prod.mdcrd', top='1err.solvated.prmtop')
-  topology = traj.topology
-  atoms_to_keep = topology.select('not water')
-  traj.restrict_atoms(atoms_to_keep)
-  traj.save('1err_desolvated.nc')
-  traj[0:2].save('1err_desolvated_mini.nc')
-
-
 .. _`Amber Tutorial`: http://ambermd.org/tutorials/advanced/tutorial3/py_script/index.htm
 .. _`AmberTools Manual`: https://ambermd.org/doc12/Amber18.pdf
-.. _dataset: http://ambermd.org/tutorials/advanced/tutorial3/py_script/files/Est_Rec_top_mdcrd.tgz
 
     ]]></help>
     <expand macro="citations">
