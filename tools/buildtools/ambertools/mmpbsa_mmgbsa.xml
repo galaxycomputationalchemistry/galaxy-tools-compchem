@@ -107,7 +107,7 @@ with open("$parameteroutfile",'w+') as f:
                     <param name="cavity_offset" type="float" value="-0.5692" label="Offset value used to correct non-polar free energy contribution" help="Not used for APBS"/>
                     <!-- <param name="cavity_surften" type="float" value="0.0378" label="Surface tension" help="Surface tension in kcal / mol / Å²"/> -->
                     <param name="exdi" type="float" value="80.0" label="External dielectric constant"/>
-                    <param name="indi" type="float" value="0" label="Internal dielectric constant"/>
+                    <param name="indi" type="float" value="1.0" label="Internal dielectric constant"/>
                     <param name="scale" type="float" value="2.0" label="Resolution of the Poisson Boltzmann grid" help="Resolution of the Poisson Boltzmann grid, equal to the reciprocal of the grid spacing."/>
                     <param name="linit" type="integer" value="1000" label="Maximum number of iterations of the linear Poisson Boltzmann equation to try"/>
                     <param name="prbrad" type="select" label="Solvent probe radius in Å">
@@ -126,7 +126,7 @@ with open("$parameteroutfile",'w+') as f:
                     <param name="csv_format" type="boolean" checked="true" truevalue="1" falsevalue="0" label="CSV format" help="Output in CSV format; choose false for unformatted text output"/>
                     <param name="dec_verbose" type="select" value="0" label="Decomposition verbosity" help="Choose verbosity of the decomposition output file. Note that if the verbosity level selected is too high and the parser cannot find the requested information, the job will fail.">
                         <option value="0">DELTA energy, total contribution only</option>
-                        <option value="1">DELTA energy, total, sidechain, and backbone contributions</option>
+                        <option value="1" selected="true">DELTA energy, total, sidechain, and backbone contributions</option>
                         <option value="2">Complex, Receptor, Ligand, and DELTA energies, total contribution only</option>
                         <option value="3">Complex, Receptor, Ligand, and DELTA energies, total, sidechain, and backbone contributions</option>
                     </param>
@@ -196,8 +196,6 @@ with open("$parameteroutfile",'w+') as f:
             </conditional>
             <output name="resultoutfile">
                 <assert_contents>
-                <!-- <has_text text="GENERALIZED BORN:"/>
-                <has_text text="DELTA TOTAL                -56."/> -->
                 <has_text text="POISSON BOLTZMANN:"/>
                 <has_text text="DELTA TOTAL                -47"/>
                 </assert_contents>
@@ -206,7 +204,7 @@ with open("$parameteroutfile",'w+') as f:
                 <assert_contents>
                     <has_text text="idecomp = 1: Per-residue decomp adding 1-4 interactions to Internal"/>
                     <has_text text="HIE 240,R HIE 240"/>
-                    <!-- <has_text text="RAL 241,L RAL   1,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0"/> -->
+                    <has_text text="RAL 241,L RAL   1,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0"/>
                 </assert_contents>
             </output>
         </test>
@@ -246,7 +244,6 @@ If simulations were performed using the Galaxy GROMACS tools, the topology (in t
 - The `AmberTools Manual`_
 - The `Amber Tutorial`_ on using MMPBSA.py
 - There are many more complex flags available. This Galaxy wrapper only supports GB and PB binding free energies and decomposition. Parallel calculations are not supported at present.
-- This Galaxy tool is based on MMPBSA.py. More details on options that are not described in the Manual and Tutorials can be found in the code - see "$CONDA_PREFIX/lib/python3.7/site-packages/MMPBSA_mods/input_parser.py" and "$CONDA_PREFIX/lib/python3.7/site-packages/MMPBSA_mods/main.py".
 
 .. _`Amber Tutorial`: http://ambermd.org/tutorials/advanced/tutorial3/py_script/index.htm
 .. _`AmberTools Manual`: https://ambermd.org/doc12/Amber18.pdf
