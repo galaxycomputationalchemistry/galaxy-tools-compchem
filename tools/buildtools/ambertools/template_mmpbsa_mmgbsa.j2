@@ -2,16 +2,15 @@
 #  
 &general
 startframe={{ allparams.startframe }}, endframe={{ allparams.endframe }}, interval={{ allparams.interval }},
-verbose={{ allparams.verbose }}, keep_files={{ allparams.keep_files | int }}, strip_mask={{ allparams.strip_mask }}, use_sander={{ allparams.use_sander | int }}, entropy={{ allparams.entropy | int }}
+verbose=2, keep_files={{ allparams.keep_files | int }}, strip_mask={{ allparams.strip_mask }}, use_sander={{ allparams.use_sander | int }}, entropy={{ allparams.entropy | int }}, netcdf=1
 /
-{% if calcdetails.gbcalc.calctype == 'yes' %}
+{% if calcdetails.gb_pb_calc.calctype == 'gb' %}
 &gb
-igb={{ calcdetails.gbcalc.igb }}, saltcon={{ calcdetails.gbcalc.saltcon }}
+igb={{ calcdetails.gb_pb_calc.igb }}, saltcon={{ calcdetails.gb_pb_calc.saltcon }}, surfoff={{ calcdetails.gb_pb_calc.surfoff }}, molsurf={{ calcdetails.gb_pb_calc.molsurf | int}}, probe={{ calcdetails.gb_pb_calc.probe }}, msoffset={{ calcdetails.gb_pb_calc.msoffset }}
 /
-{% endif %}
-{% if calcdetails.pbcalc.calctype == 'yes' %}
+{% elif calcdetails.gb_pb_calc.calctype == 'pb' %}
 &pb
-istrng={{ calcdetails.pbcalc.istrng }}, fillratio={{ calcdetails.pbcalc.fillratio }}, inp={{ calcdetails.pbcalc.inp }},radiopt={{ calcdetails.pbcalc.radiopt }}
+istrng={{ calcdetails.gb_pb_calc.istrng }}, fillratio={{ calcdetails.gb_pb_calc.fillratio }}, inp={{ calcdetails.gb_pb_calc.inp }}, radiopt={{ calcdetails.gb_pb_calc.radiopt }}, cavity_offset={{ calcdetails.gb_pb_calc.cavity_offset }}, scale={{ calcdetails.gb_pb_calc.scale }}, linit={{ calcdetails.gb_pb_calc.linit }}, prbrad={{ calcdetails.gb_pb_calc.prbrad }}
 /
 {% endif %}
 {% if calcdetails.decomposition.decomposition == 'yes' %}
