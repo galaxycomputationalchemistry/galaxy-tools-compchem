@@ -1,8 +1,8 @@
 <tool id="parmconv" name="Convert Parameters" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
-  <description>to AMBER prmtop in preparation for MMPBSA</description>
+  <description>to AMBER prmtop in preparation for MMGBSA/MMPBSA</description>
   <macros>
     <import>macros.xml</import>
-    <token name="@GALAXY_VERSION@">0</token>
+    <token name="@GALAXY_VERSION@">1</token>
   </macros>
   <expand macro="requirements">
     <requirement type="package" version="3.2.0">parmed</requirement>
@@ -132,7 +132,7 @@ for system in systems:
   </configfiles>
   <inputs>
     <conditional name="param_inputs">
-      <param name="fmt" type="select" label="Force Field format">
+      <param name="fmt" type="select" label="Input format">
         <option selected="True" value="AMBER">AMBER</option>
         <option value="GROMACS">GROMACS</option>
       </param>
@@ -144,8 +144,8 @@ for system in systems:
         <param name="str_in" type="data" label="Input structure (gro) file" format="gro"/>
         <section name="modbehaviour" title="Modify behaviour" expanded="false">
           <param name="removedihe" type="boolean" truevalue="--removedihe" falsevalue="" checked="false" label="Remove all zero period dihedrals" help="This will remove zero period dihedrals from the generated topology"/>
-          <param name="removebox" type="boolean" truevalue="--removebox" falsevalue="" checked="false" label="Remove periodic box information" help="This will periodic information from the generated topology"/>
-          <param name="radii" type="select"  label="radii to use" help="Select the radii to use, defaults to mbondi">
+          <param name="removebox" type="boolean" truevalue="--removebox" falsevalue="" checked="false" label="Remove periodic box information" help="This will remove periodic information from the generated topology"/>
+          <param name="radii" type="select"  label="Radii to use" help="Select the radii to use. Default is mbondi.">
               <option selected="True" value="mbondi">mbondi</option>
               <option value="mbondi2">mbondi2</option>
               <option value="mbondi3">mbondi3</option>
@@ -282,13 +282,13 @@ for system in systems:
 
     **What it does**
 
-    This tool converts parameter and topology files that represent a solvated complex into parameter files for the ligand, receptor, complex and solvated complex in AMBER prmtop format. These files are needed for MMPBSA calculations.
+    This tool converts parameter and topology files that represent a solvated complex into parameter files for the ligand, receptor, complex and solvated complex in AMBER prmtop format. These files are needed for MMGBSA/MMPBSA calculations.
 
     .. class:: infomark
 
     **How it works**
 
-    AmberTools ParmEd is used to strip unneeded atoms and save out the parameter files. The stripmasks are defined by the user.
+    AmberTools ParmEd is used to strip unneeded atoms and save the parameter files. The stripmasks are defined by the user.
 
     .. class:: infomark
 
