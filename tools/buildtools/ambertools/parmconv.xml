@@ -11,54 +11,42 @@
   </expand>
   <command detect_errors="exit_code">
     <![CDATA[
-   #if '$param_inputs.modbehaviour.removedihe' or '$param_inputs.modbehaviour.removebox':
-     python '$__tool_directory__/parmed_new_convert.py' 
-       --istr '$param_inputs.str_in'
-       --itop '$param_inputs.top_in'
-       $param_inputs.modbehaviour.removedihe
-       $param_inputs.modbehaviour.removebox
-       --iradii '$param_inputs.modbehaviour.radii' 
-       --istripmask '$stripmask_ligand'
-       --o_prmtop '$prmtop_ligand'
-     2>&1  && 
-     python '$__tool_directory__/parmed_new_convert.py' 
-       --istr '$param_inputs.str_in'
-       --itop '$param_inputs.top_in'
-       $param_inputs.modbehaviour.removedihe
-       $param_inputs.modbehaviour.removebox
-       --iradii '$param_inputs.modbehaviour.radii' 
-       --istripmask '$stripmask_receptor'
-       --o_prmtop '$prmtop_receptor'
-     2>&1 &&
-     python '$__tool_directory__/parmed_new_convert.py' 
-       --istr '$param_inputs.str_in'
-       --itop '$param_inputs.top_in'
-       $param_inputs.modbehaviour.removedihe
-       $param_inputs.modbehaviour.removebox
-       --iradii '$param_inputs.modbehaviour.radii' 
-       --istripmask '$stripmask_complex'
-       --o_prmtop '$prmtop_complex'
-     2>&1 &&
-     python '$__tool_directory__/parmed_new_convert.py' 
-       --istr '$param_inputs.str_in'
-       --itop '$param_inputs.top_in'
-       $param_inputs.modbehaviour.removedihe
-       $param_inputs.modbehaviour.removebox
-       --iradii '$param_inputs.modbehaviour.radii' 
-       --istripmask '$stripmask_solvatedcomplex'
-       --o_prmtop '$prmtop_solvatedcomplex'
-     2>&1
-   #else
-      python '$templating_script' '$inputs' &&
-      PATH_TO_PARMED=\$(dirname `which parmed`) &&
-      export AMBERHOME=\$(dirname \$PATH_TO_PARMED) &&
-      export GMXDATA=\$AMBERHOME/share/gromacs/top/ &&
-      parmed -i ligand.script -O &&
-      parmed -i receptor.script -O &&
-      parmed -i complex.script -O &&
-      parmed -i solvatedcomplex.script -O
-   #end if
-
+    python '$__tool_directory__/parmconv.py'
+      --istr '$param_inputs.str_in'
+      --itop '$param_inputs.top_in'
+      $param_inputs.modbehaviour.removedihe
+      $param_inputs.modbehaviour.removebox
+      --iradii '$param_inputs.modbehaviour.radii'
+      --istripmask '$stripmask_ligand'
+      --o_prmtop '$prmtop_ligand'
+    2>&1  && 
+    python '$__tool_directory__/parmconv.py'
+      --istr '$param_inputs.str_in'
+      --itop '$param_inputs.top_in'
+      $param_inputs.modbehaviour.removedihe
+      $param_inputs.modbehaviour.removebox
+      --iradii '$param_inputs.modbehaviour.radii'
+      --istripmask '$stripmask_receptor'
+      --o_prmtop '$prmtop_receptor'
+    2>&1 &&
+    python '$__tool_directory__/parmconv.py'
+      --istr '$param_inputs.str_in'
+      --itop '$param_inputs.top_in'
+      $param_inputs.modbehaviour.removedihe
+      $param_inputs.modbehaviour.removebox
+      --iradii '$param_inputs.modbehaviour.radii'
+      --istripmask '$stripmask_complex'
+      --o_prmtop '$prmtop_complex'
+    2>&1 &&
+    python '$__tool_directory__/parmconv.py'
+      --istr '$param_inputs.str_in'
+      --itop '$param_inputs.top_in'
+      $param_inputs.modbehaviour.removedihe
+      $param_inputs.modbehaviour.removebox
+      --iradii '$param_inputs.modbehaviour.radii'
+      --istripmask '$stripmask_solvatedcomplex'
+      --o_prmtop '$prmtop_solvatedcomplex'
+    2>&1
       ]]>
   </command>
   <configfiles>
