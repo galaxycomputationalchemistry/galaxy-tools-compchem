@@ -11,16 +11,12 @@
   </expand>
   <command detect_errors="exit_code">
     <![CDATA[
-   #if '$param_inputs.modbehaviour.removedihe'==True or '$param_inputs.modbehaviour.removebox'==True:
+   #if '$param_inputs.modbehaviour.removedihe' or '$param_inputs.modbehaviour.removebox':
      python '$__tool_directory__/parmed_new_convert.py' 
        --istr '$param_inputs.str_in'
        --itop '$param_inputs.top_in'
-       #if '$param_inputs.modbehaviour.removedihe'==True  
-         --removedihe  
-       #end if
-       #if '$param_inputs.modbehaviour.removebox'==True 
-         --removebox
-       #end if
+       $param_inputs.modbehaviour.removedihe
+       $param_inputs.modbehaviour.removebox
        --iradii '$param_inputs.modbehaviour.radii' 
        --istripmask '$stripmask_ligand'
        --o_prmtop '$prmtop_ligand'
@@ -28,12 +24,8 @@
      python '$__tool_directory__/parmed_new_convert.py' 
        --istr '$param_inputs.str_in'
        --itop '$param_inputs.top_in'
-       #if '$param_inputs.modbehaviour.removedihe'==True  
-         --removedihe  
-       #end if
-       #if '$param_inputs.modbehaviour.removebox'==True 
-         --removebox
-       #end if
+       $param_inputs.modbehaviour.removedihe
+       $param_inputs.modbehaviour.removebox
        --iradii '$param_inputs.modbehaviour.radii' 
        --istripmask '$stripmask_receptor'
        --o_prmtop '$prmtop_receptor'
@@ -41,12 +33,8 @@
      python '$__tool_directory__/parmed_new_convert.py' 
        --istr '$param_inputs.str_in'
        --itop '$param_inputs.top_in'
-       #if '$param_inputs.modbehaviour.removedihe'==True  
-         --removedihe  
-       #end if
-       #if '$param_inputs.modbehaviour.removebox'==True 
-         --removebox
-       #end if
+       $param_inputs.modbehaviour.removedihe
+       $param_inputs.modbehaviour.removebox
        --iradii '$param_inputs.modbehaviour.radii' 
        --istripmask '$stripmask_complex'
        --o_prmtop '$prmtop_complex'
@@ -54,12 +42,8 @@
      python '$__tool_directory__/parmed_new_convert.py' 
        --istr '$param_inputs.str_in'
        --itop '$param_inputs.top_in'
-       #if '$param_inputs.modbehaviour.removedihe'==True  
-         --removedihe  
-       #end if
-       #if '$param_inputs.modbehaviour.removebox'==True 
-         --removebox
-       #end if
+       $param_inputs.modbehaviour.removedihe
+       $param_inputs.modbehaviour.removebox
        --iradii '$param_inputs.modbehaviour.radii' 
        --istripmask '$stripmask_solvatedcomplex'
        --o_prmtop '$prmtop_solvatedcomplex'
@@ -159,8 +143,8 @@ for system in systems:
         <param name="top_in" type="data" label="Input topology (top) file" format="top"/>
         <param name="str_in" type="data" label="Input structure (gro) file" format="gro"/>
         <section name="modbehaviour" title="Modify behaviour" expanded="false">
-          <param name="removedihe" type="boolean" checked="false" label="Remove all zero period dihedrals" help="This will remove zero period dihedrals from the generated topology"/>
-          <param name="removebox" type="boolean" checked="false" label="Remove periodic box information" help="This will periodic information from the generated topology"/>
+          <param name="removedihe" type="boolean" truevalue="--removedihe" falsevalue="" checked="false" label="Remove all zero period dihedrals" help="This will remove zero period dihedrals from the generated topology"/>
+          <param name="removebox" type="boolean" truevalue="--removebox" falsevalue="" checked="false" label="Remove periodic box information" help="This will periodic information from the generated topology"/>
           <param name="radii" type="select"  label="radii to use" help="Select the radii to use, defaults to mbondi">
               <option selected="True" value="mbondi">mbondi</option>
               <option value="mbondi2">mbondi2</option>
