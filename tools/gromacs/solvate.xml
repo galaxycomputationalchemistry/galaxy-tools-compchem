@@ -2,7 +2,7 @@
     <description>to structure and topology files</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">1</token>
+        <token name="@GALAXY_VERSION@">0</token>
     </macros>
 
     <expand macro="requirements" />
