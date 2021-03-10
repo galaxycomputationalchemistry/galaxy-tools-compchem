@@ -34,13 +34,13 @@ if (selection == "segid") {
     inds <- atom.select(pdb, segid = domain)
 }
 
-xyz <- fit.xyz(fixed=pdb$xyz, mobile=dcd, fixed.inds=inds$xyz, mobile.inds=inds$xyz)
-cij<-dccm(xyz[,inds$xyz])
+xyz <- fit.xyz(fixed = pdb$xyz, mobile = dcd, fixed.inds = inds$xyz,
+    mobile.inds = inds$xyz)
+cij <- dccm(xyz[, inds$xyz])
 
-write.table(cij, file = output, row.names = TRUE, col.names = FALSE, quote =FALSE, sep="\t")
+write.table(cij, file = output, row.names = TRUE,
+    col.names = FALSE, quote = FALSE, sep = "\t")
 
 png(dccm_plot)
 plot(cij)
 dev.off()
-
-

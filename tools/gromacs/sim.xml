@@ -43,15 +43,15 @@
             -p ./top_input.top 
             -o outp.tpr &>> verbose.txt &&
 
-
-        gmx mdrun
-            -nt "\${GALAXY_SLOTS:-4}"
-            ## GPU
-            #if "\${GROMACS_GPU:-0}" == 1:
+        #if "\${GPU_AVAILABLE:-0}" == 1:
+            gmx_gpu mdrun
                 -ntmpi 1
                 -nb gpu
                 -pme gpu
-            #end if
+        #else:
+            gmx mdrun
+        #end if
+            -nt "\${GALAXY_SLOTS:-4}"
             -deffnm outp &>> verbose.txt
 
         #if $outps.str == 'pdb' or $outps.str == 'both'
@@ -394,7 +394,7 @@
             </output>
             <output name="output5" ftype="cpt">
                 <assert_contents>
-                    <has_size value="3350"  delta="20"/>
+                    <has_size value="3350" delta="100"/>
                 </assert_contents>
             </output>
         </test>

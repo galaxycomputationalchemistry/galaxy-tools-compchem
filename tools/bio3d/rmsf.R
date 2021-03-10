@@ -18,14 +18,14 @@ if (selection == "string") {
     output <- args[5]
     rmsf_plot <- args[6]
     inds <- atom.select(pdb, string = domain)
-} 
+}
 if (selection == "resno") {
     res1 <- args[4]
     res2 <- args[5]
     output <- args[6]
     rmsf_plot <- args[7]
-    inds <- atom.select(pdb, resno=res1:res2)
-} 
+    inds <- atom.select(pdb, resno = res1:res2)
+}
 if (selection == "elety") {
     domain <- args[4]
     output <- args[5]
@@ -45,13 +45,14 @@ if (selection == "segid") {
     inds <- atom.select(pdb, segid = domain)
 }
 
-xyz <- fit.xyz(fixed=pdb$xyz, mobile=dcd, fixed.inds=inds$xyz, mobile.inds=inds$xyz)
+xyz <- fit.xyz(fixed = pdb$xyz, mobile = dcd,
+    fixed.inds = inds$xyz, mobile.inds = inds$xyz)
 
-rf <- rmsf(xyz[,inds$xyz])
+rf <- rmsf(xyz[, inds$xyz])
 
-write.table(rf, file = output, row.names = TRUE, col.names = FALSE, quote =FALSE, sep="\t")
+write.table(rf, file = output, row.names = TRUE,
+    col.names = FALSE, quote = FALSE, sep = "\t")
 
 png(rmsf_plot)
-plot(rf, ylab="RMSF", xlab="Residue Position", typ="l")
+plot(rf, ylab = "RMSF", xlab = "Residue Position", typ = "l")
 dev.off()
-

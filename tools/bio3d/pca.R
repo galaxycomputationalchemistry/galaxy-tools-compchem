@@ -23,7 +23,7 @@ pc1_rmsf <- args[9]
 
 if (selection == "string") {
     inds <- atom.select(pdb, string = domain)
-} 
+}
 if (selection == "elety") {
     inds <- atom.select(pdb, elety = domain)
 }
@@ -33,29 +33,30 @@ if (selection == "resid") {
 if (selection == "segid") {
     inds <- atom.select(pdb, segid = domain)
 }
-xyz <- fit.xyz(fixed=pdb$xyz, mobile=dcd, fixed.inds=inds$xyz, mobile.inds=inds$xyz)
+xyz <- fit.xyz(fixed = pdb$xyz, mobile = dcd,
+    fixed.inds = inds$xyz, mobile.inds = inds$xyz)
 
 if (method == "FALSE") {
-    pc <- pca.xyz(xyz[,inds$xyz], use.svd=FALSE)
+    pc <- pca.xyz(xyz[, inds$xyz], use.svd = FALSE)
 }
 if (method == "TRUE") {
-    pc <- pca.xyz(xyz[,inds$xyz], use.svd=TRUE)
+    pc <- pca.xyz(xyz[, inds$xyz], use.svd = TRUE)
 }
 
-write.table(pc$au[,1:2:3], file = output, row.names = TRUE, col.names = FALSE, quote =FALSE, sep="\t")
+write.table(pc$au[, 1:2:3], file = output, row.names = TRUE,
+    col.names = FALSE, quote = FALSE, sep = "\t")
 
 png(pca_plot)
-plot(pc, col=bwr.colors(nrow(xyz)) )
+plot(pc, col = bwr.colors(nrow(xyz)))
 dev.off()
 
 png(pca_cluster)
-hc <- hclust(dist(pc$z[,1:2]))
-grps <- cutree(hc, k=2)
-plot(pc, col=grps)
+hc <- hclust(dist(pc$z[, 1:2]))
+grps <- cutree(hc, k = 2)
+plot(pc, col = grps)
 dev.off()
 
 png(pc1_rmsf)
-plot.bio3d(pc$au[,1], ylab="PC1 (A)", xlab="Residue Position", typ="l")
-points(pc$au[,2], typ="l", col="blue")
+plot.bio3d(pc$au[, 1], ylab = "PC1 (A)", xlab = "Residue Position", typ = "l")
+points(pc$au[, 2], typ = "l", col = "blue")
 dev.off()
-

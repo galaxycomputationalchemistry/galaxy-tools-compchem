@@ -2,10 +2,10 @@
     <description>using acpype</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
     <expand macro="requirements">
-        <requirement type="package" version="2019.10.05.12.26">acpype</requirement>
+        <requirement type="package" version="2020.10.24.12.16">acpype</requirement>
     </expand>
     <command detect_errors="exit_code"><![CDATA[
         ln -s '$input1' ./input1.${input1.ext} &&
@@ -14,6 +14,7 @@
             -b base
             -m '$multiplicity'
             -a '$atomtype'
+            -c '$charge_method'
             -o gmx
     ]]></command>
     <inputs>
@@ -25,6 +26,11 @@
             <option value="amber">AMBER14SB</option>
             <option value="gaff2">gaff2</option>
             <option value="amber2">AMBER14SB + gaff2</option>
+        </param>
+        <param name="charge_method" type="select" value="bcc" label="Charge method">
+            <option value="bcc">bcc (default)</option>
+            <option value="gas">gas</option>
+            <option value="user">charges provided by user in mol2 file</option>
         </param>
         <param name="save_gro" type="boolean" value="false" label="Save GRO file?" help="Save atomic coordinates of ligand in GRO format."/>
     </inputs>
@@ -38,6 +44,7 @@
         <test>
             <param name="input1" value="JZ4.mol2"/>
             <param name="save_gro" value="True"/>
+            <param name="charge_method" value="bcc"/>
             <output name="output">
                 <assert_contents>
                     <has_line line="[ atoms ]"/>
@@ -46,6 +53,12 @@
                 </assert_contents>
             </output>
             <output name="gro_output" file="base_GMX.gro" lines_diff="2"/>
+        </test>
+        <test>
+            <param name="input1" value="LigA_output.mol2"/>
+            <param name="save_gro" value="false"/>
+            <param name="charge_method" value="user"/>
+            <output name="output" file="LigA_output.top" lines_diff="26"/>
         </test>
     </tests>
     <help><![CDATA[
