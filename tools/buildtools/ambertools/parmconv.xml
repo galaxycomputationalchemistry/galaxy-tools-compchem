@@ -11,42 +11,57 @@
   </expand>
   <command detect_errors="exit_code">
     <![CDATA[
-    python '$__tool_directory__/parmconv.py'
-      --istr '$param_inputs.str_in'
-      --itop '$param_inputs.top_in'
-      $param_inputs.modbehaviour.removedihe
-      $param_inputs.modbehaviour.removebox
-      --iradii '$param_inputs.modbehaviour.radii'
-      --istripmask '$stripmask_ligand'
-      --o_prmtop '$prmtop_ligand'
-    2>&1  && 
-    python '$__tool_directory__/parmconv.py'
-      --istr '$param_inputs.str_in'
-      --itop '$param_inputs.top_in'
-      $param_inputs.modbehaviour.removedihe
-      $param_inputs.modbehaviour.removebox
-      --iradii '$param_inputs.modbehaviour.radii'
-      --istripmask '$stripmask_receptor'
-      --o_prmtop '$prmtop_receptor'
-    2>&1 &&
-    python '$__tool_directory__/parmconv.py'
-      --istr '$param_inputs.str_in'
-      --itop '$param_inputs.top_in'
-      $param_inputs.modbehaviour.removedihe
-      $param_inputs.modbehaviour.removebox
-      --iradii '$param_inputs.modbehaviour.radii'
-      --istripmask '$stripmask_complex'
-      --o_prmtop '$prmtop_complex'
-    2>&1 &&
-    python '$__tool_directory__/parmconv.py'
-      --istr '$param_inputs.str_in'
-      --itop '$param_inputs.top_in'
-      $param_inputs.modbehaviour.removedihe
-      $param_inputs.modbehaviour.removebox
-      --iradii '$param_inputs.modbehaviour.radii'
-      --istripmask '$stripmask_solvatedcomplex'
-      --o_prmtop '$prmtop_solvatedcomplex'
-    2>&1
+    #if $param_inputs.fmt == "GROMACS":
+      echo "ligand" &&
+      python '$__tool_directory__/parmconv.py'
+        --istr '$param_inputs.str_in'
+        --itop '$param_inputs.top_in'
+        $param_inputs.modbehaviour.removedihe
+        $param_inputs.modbehaviour.removebox
+        --iradii '$param_inputs.modbehaviour.radii'
+        --istripmask '$stripmask_ligand'
+        --o_prmtop '$prmtop_ligand'
+      2>&1  &&
+      echo "receptor" &&
+      python '$__tool_directory__/parmconv.py'
+        --istr '$param_inputs.str_in'
+        --itop '$param_inputs.top_in'
+        $param_inputs.modbehaviour.removedihe
+        $param_inputs.modbehaviour.removebox
+        --iradii '$param_inputs.modbehaviour.radii'
+        --istripmask '$stripmask_receptor'
+        --o_prmtop '$prmtop_receptor'
+      2>&1 &&
+      echo "complex" &&
+      python '$__tool_directory__/parmconv.py'
+        --istr '$param_inputs.str_in'
+        --itop '$param_inputs.top_in'
+        $param_inputs.modbehaviour.removedihe
+        $param_inputs.modbehaviour.removebox
+        --iradii '$param_inputs.modbehaviour.radii'
+        --istripmask '$stripmask_complex'
+        --o_prmtop '$prmtop_complex'
+      2>&1 &&
+      echo "solv" &&
+      python '$__tool_directory__/parmconv.py'
+        --istr '$param_inputs.str_in'
+        --itop '$param_inputs.top_in'
+        $param_inputs.modbehaviour.removedihe
+        $param_inputs.modbehaviour.removebox
+        --iradii '$param_inputs.modbehaviour.radii'
+        --istripmask '$stripmask_solvatedcomplex'
+        --o_prmtop '$prmtop_solvatedcomplex'
+      2>&1
+    #else
+      python '$templating_script' '$inputs' &&
+      PATH_TO_PARMED=\$(dirname `which parmed`) &&
+      export AMBERHOME=\$(dirname \$PATH_TO_PARMED) &&
+      export GMXDATA=\$AMBERHOME/share/gromacs/top/ &&
+      parmed -i ligand.script -O &&
+      parmed -i receptor.script -O &&
+      parmed -i complex.script -O &&
+      parmed -i solvatedcomplex.script -O
+    #end if
       ]]>
   </command>
   <configfiles>
@@ -177,10 +192,8 @@ for system in systems:
       <sanitizer>
         <valid initial="string.printable">
           <remove value="&amp;"/>
+          <add value="&amp;"/>
         </valid>
-        <mapping initial="none">
-          <add source="&amp;" target="__and__"/>
-        </mapping>
       </sanitizer>
     </param>
   </inputs>
@@ -236,30 +249,70 @@ for system in systems:
       <param name="stripmask_receptor" value=":NA,CL,SOL,WAT"/>
       <!-- test a fairly complex selection. All backbone oxygens in residues 1-500 but not in water, lysine or arginine -->
       <param name="stripmask_solvatedcomplex" value=":1-500@O&amp;!(:WAT|:LYS,ARG)"/>
-      <assert_stdout>
-        <has_text text="Getting coordinates"/>
-        <has_text text="Using topology directory"/>
-      </assert_stdout>
       <output name="prmtop_ligand">
         <assert_contents>
-          <has_text text="       8      59"/>
           <has_text text="%FLAG MASS"/>
           <has_text text="CL"/>
+          <has_text text="SOLVENT_POINTERS"/>
+          <has_text text="BOX_DIMENSIONS"/>
         </assert_contents>
       </output>
       <output name="prmtop_receptor">
         <assert_contents>
-          <has_text text="    1960      59"/>
           <has_text text="%FLAG MASS"/>
           <has_text text="LYS VAL PHE "/>
+          <has_text text="SOLVENT_POINTERS"/>
+          <has_text text="BOX_DIMENSIONS"/>
           <not_has_text text="CL "/>
         </assert_contents>
       </output>
       <output name="prmtop_solvatedcomplex">
         <assert_contents>
-          <has_text text="   38265      59"/>
           <has_text text="%FLAG MASS"/>
           <has_text text="LYS VAL PHE"/>
+          <has_text text="SOLVENT_POINTERS"/>
+          <has_text text="BOX_DIMENSIONS"/>
+        </assert_contents>
+      </output>
+    </test>
+    <test>
+      <!-- test with removing dihedrals and periodicity -->
+      <param name="fmt" value="GROMACS"/>
+      <conditional name="param_inputs">
+        <param name="top_in" value="topol_solv.top"/>
+        <param name="str_in" value="solv_ions.gro"/>
+      </conditional>
+      <!-- dihedrals and periodicity -->
+      <param name="removedihe" value="--removedihe"/>
+      <param name="removebox" value="--removebox"/>
+      <!-- pretending CL is a ligand -->
+      <param name="stripmask_ligand" value="!:CL"/>
+      <param name="stripmask_receptor" value=":NA,CL,SOL,WAT"/>
+      <!-- test a fairly complex selection. All backbone oxygens in residues 1-500 but not in water, lysine or arginine -->
+      <param name="stripmask_solvatedcomplex" value=":1-500@O&amp;!(:WAT|:LYS,ARG)"/>
+      <output name="prmtop_ligand">
+        <assert_contents>
+          <has_text text="%FLAG MASS"/>
+          <has_text text="CL"/>
+          <not_has_text text="SOLVENT_POINTERS"/>
+          <not_has_text text="BOX_DIMENSIONS"/>
+        </assert_contents>
+      </output>
+      <output name="prmtop_receptor">
+        <assert_contents>
+          <has_text text="%FLAG MASS"/>
+          <has_text text="LYS VAL PHE "/>
+          <not_has_text text="CL "/>
+          <not_has_text text="SOLVENT_POINTERS"/>
+          <not_has_text text="BOX_DIMENSIONS"/>
+        </assert_contents>
+      </output>
+      <output name="prmtop_solvatedcomplex">
+        <assert_contents>
+          <has_text text="%FLAG MASS"/>
+          <has_text text="LYS VAL PHE"/>
+          <not_has_text text="SOLVENT_POINTERS"/>
+          <not_has_text text="BOX_DIMENSIONS"/>
         </assert_contents>
       </output>
     </test>
