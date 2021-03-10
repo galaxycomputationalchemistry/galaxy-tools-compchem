@@ -1,10 +1,11 @@
 import argparse
-import sys
 import io
+import sys
+from contextlib import redirect_stdout
+
 import parmed
 from parmed import amber, gromacs
 from parmed.tools.changeradii import ChRad
-from contextlib import redirect_stdout
 
 
 def parse_command_line(argv):
