@@ -161,37 +161,27 @@ for system in systems:
     <param name="stripmask_ligand" type="text" label="Ligand selection" value="!:UNL" help="Define a valid AMBER stripmask that will select only the ligand">
       <sanitizer>
         <valid initial="string.printable">
-          <remove value="&amp;"/>
+          <add value="&amp;"/>
         </valid>
-        <mapping initial="none">
-          <add source="&amp;" target="__and__"/>
-        </mapping>
       </sanitizer>
     </param>
     <param name="stripmask_receptor" type="text" label="Receptor selection" value=":NA,SOL,UNL" help="Define a valid AMBER stripmask that will select only the receptor">
       <sanitizer>
         <valid initial="string.printable">
-          <remove value="&amp;"/>
+          <add value="&amp;"/>
         </valid>
-        <mapping initial="none">
-          <add source="&amp;" target="__and__"/>
-        </mapping>
       </sanitizer>
     </param>
     <param name="stripmask_complex" type="text" label="Complex selection" value=":NA,SOL" help="Define a valid AMBER stripmask that will select the complex (receptor with ligand)">
       <sanitizer>
         <valid initial="string.printable">
-          <remove value="&amp;"/>
+          <add value="&amp;"/>
         </valid>
-        <mapping initial="none">
-          <add source="&amp;" target="__and__"/>
-        </mapping>
       </sanitizer>
     </param>
     <param name="stripmask_solvatedcomplex" type="text" label="Solvated complex selection" help="Define a valid AMBER stripmask that will select the solvated complex (includes water and ions)">
       <sanitizer>
         <valid initial="string.printable">
-          <remove value="&amp;"/>
           <add value="&amp;"/>
         </valid>
       </sanitizer>
