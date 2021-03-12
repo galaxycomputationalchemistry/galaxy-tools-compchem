@@ -2,9 +2,9 @@
 {% if fmt == 'AMBER' %}
 parm {{ top_in }}
 {% elif fmt == 'GROMACS' %}
-gromber {{ top_in }} {{gro_in}}
+gromber {{ top_in }} {{str_in}}
 {% elif fmt == 'CHARMM' %}
-chamber {{ top_in }} {{gro_in}}
+chamber {{ top_in }} {{str_in}}
 {% else %}
 parm {{ top_in }}
 {% endif %}
