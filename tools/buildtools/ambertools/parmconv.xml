@@ -12,7 +12,6 @@
   <command detect_errors="exit_code">
     <![CDATA[
     #if $param_inputs.fmt == "GROMACS":
-      echo "ligand" &&
       python '$__tool_directory__/parmconv.py'
         --istr '$param_inputs.str_in'
         --itop '$param_inputs.top_in'
@@ -22,7 +21,6 @@
         --istripmask '$stripmask_ligand'
         --o_prmtop '$prmtop_ligand'
       2>&1  &&
-      echo "receptor" &&
       python '$__tool_directory__/parmconv.py'
         --istr '$param_inputs.str_in'
         --itop '$param_inputs.top_in'
@@ -32,7 +30,6 @@
         --istripmask '$stripmask_receptor'
         --o_prmtop '$prmtop_receptor'
       2>&1 &&
-      echo "complex" &&
       python '$__tool_directory__/parmconv.py'
         --istr '$param_inputs.str_in'
         --itop '$param_inputs.top_in'
@@ -42,7 +39,6 @@
         --istripmask '$stripmask_complex'
         --o_prmtop '$prmtop_complex'
       2>&1 &&
-      echo "solv" &&
       python '$__tool_directory__/parmconv.py'
         --istr '$param_inputs.str_in'
         --itop '$param_inputs.top_in'
@@ -319,7 +315,7 @@ for system in systems:
 
     **How it works**
 
-    AmberTools ParmEd is used to strip unneeded atoms and save the parameter files. The stripmasks are defined by the user.
+    AmberTools' ParmEd is used to strip unneeded atoms and save the parameter files. The stripmasks are defined by the user.
 
     .. class:: infomark
 

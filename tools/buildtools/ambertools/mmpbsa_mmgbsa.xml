@@ -2,7 +2,7 @@
     <description>tool for estimating ligand binding affinities</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">1</token>
+        <token name="@GALAXY_VERSION@">0</token>
     </macros>
     <expand macro="requirements">
         <requirement type="package" version="2.11.2">jinja2</requirement>
@@ -222,8 +222,6 @@ This tool calculates the Molecular Mechanics Poisson-Boltzman Surface Area (MMPB
 **How it works**
 
 Prior to using this tool, simulations of the ligand complexed with the receptor must be run. This tool, which wraps AmberTools, requires a prmtop (Amber parameter topology) file for the receptor, ligand and the complex and the trajectory in netCDF format.
-
-Remember that the complex should be centered in the box (use a tool such as 'Modify/convert GROMACS trajectories' for this).
 
 - Single Trajectory Estimate: A single simulation of the complex in water is run. The trajectory of this complex is used to estimate the MMPBSA or MMGBSA, depending on the options chosen.
 - Multiple Trajectory Estimate: Separate simulations of the complex in water, the receptor in water and the ligand in water are run. This is useful if the ligand (or receptor) is expected to have a significantly different conformation in solution compared to in the complex, but is otherwise not recommended as it increases the uncertainty of the results. The trajectories are used to estimate the MMPBSA or MMGBSA depending on the options chosen.
