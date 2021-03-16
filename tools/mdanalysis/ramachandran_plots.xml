@@ -5,10 +5,10 @@
         <token name="@GALAXY_VERSION@">0</token>
     </macros>
     <expand macro="requirements">
-        <requirement type="package" version="1.5.2">scipy</requirement>
-        <requirement type="package" version="0.10.0">seaborn</requirement>
-        <requirement type="package" version="2.0.0">nbdime</requirement>
-        <requirement type="package" version="5.3.1">pyyaml</requirement>
+        <requirement type="package" version="1.6.1">scipy</requirement>
+        <requirement type="package" version="0.11.1">seaborn</requirement>
+        <requirement type="package" version="2.1.0">nbdime</requirement>
+        <requirement type="package" version="5.4.1">pyyaml</requirement>
     </expand>
     <command detect_errors="exit_code"><![CDATA[
     python '$__tool_directory__/ramachandran_plots.py'
