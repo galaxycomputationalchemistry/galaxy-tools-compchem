@@ -1,15 +1,15 @@
-# This file was created Tue Mar 16 15:30:16 2021
+# This file was created Tue Apr 13 07:01:26 2021
 # Created by:
-#                  :-) GROMACS - gmx energy, 2021-MODIFIED (-:
+#                 :-) GROMACS - gmx energy, 2021.1-MODIFIED (-:
 # 
-# Executable:   /home/runner/miniconda3/envs/__gromacs@2021/bin.AVX2_256/gmx
-# Data prefix:  /home/runner/miniconda3/envs/__gromacs@2021
-# Working dir:  /tmp/tmpby4kx7_o/job_working_directory/000/13/working
+# Executable:   /home/runner/miniconda3/envs/__gromacs@2021.1/bin.AVX_512/gmx
+# Data prefix:  /home/runner/miniconda3/envs/__gromacs@2021.1
+# Working dir:  /tmp/tmpbfc59qlp/job_working_directory/000/13/working
 # Command line:
 #   gmx energy -f ./edr_input.edr -o ./energy.xvg
 # gmx energy is part of G R O M A C S:
 #
-# Getting the Right Output Means no Artefacts in Calculating Stuff
+# Gromacs Runs One Microsecond At Cannonball Speeds
 #
 @    title "GROMACS Energies"
 @    xaxis  label "Time (ps)"

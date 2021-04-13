@@ -1,17 +1,17 @@
 ;
 ;	File 'topol.top' was generated
-;	By user: unknown (1000)
-;	On host: simon-notebook
-;	At date: Tue May 12 12:59:21 2020
+;	By user: unknown (1001)
+;	On host: fv-az220-994
+;	At date: Tue Mar 16 15:32:33 2021
 ;
 ;	This is a standalone topology file
 ;
 ;	Created by:
-;	                    :-) GROMACS - gmx pdb2gmx, 2019.1 (-:
+;	                 :-) GROMACS - gmx pdb2gmx, 2021-MODIFIED (-:
 ;	
-;	Executable:   /home/simon/miniconda3/envs/__gromacs@2019.1/bin/gmx
-;	Data prefix:  /home/simon/miniconda3/envs/__gromacs@2019.1
-;	Working dir:  /tmp/tmpg0ncnt9q/job_working_directory/000/10/working
+;	Executable:   /home/runner/miniconda3/envs/__gromacs@2021/bin.AVX2_256/gmx
+;	Data prefix:  /home/runner/miniconda3/envs/__gromacs@2021
+;	Working dir:  /tmp/tmpby4kx7_o/job_working_directory/000/27/working
 ;	Command line:
 ;	  gmx pdb2gmx -f ./pdb_input.pdb -o processed.gro -p topol.top -i posres.itp -water spce -ff oplsaa -noignh -merge all
 ;	Force field was read from the standard GROMACS share directory.
