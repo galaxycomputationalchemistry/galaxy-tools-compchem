@@ -907,4 +907,6 @@ TEST in water
 [ molecules ]
 ; Compound        #mols
 Protein             1
-CL               2
+SOL         2130
+NA               41
+CL               43
