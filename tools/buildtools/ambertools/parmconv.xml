@@ -2,12 +2,12 @@
   <description>to AMBER prmtop in preparation for MMGBSA/MMPBSA</description>
   <macros>
     <import>macros.xml</import>
-    <token name="@GALAXY_VERSION@">1</token>
+    <token name="@GALAXY_VERSION@">0</token>
   </macros>
   <expand macro="requirements">
-    <requirement type="package" version="3.2.0">parmed</requirement>
-    <requirement type="package" version="2020.4">gromacs</requirement>
-    <requirement type="package" version="2.11.2">jinja2</requirement>
+    <requirement type="package" version="3.4.1">parmed</requirement>
+    <requirement type="package" version="2021.1">gromacs</requirement>
+    <requirement type="package" version="3.0.1">jinja2</requirement>
   </expand>
   <command detect_errors="exit_code">
     <![CDATA[
