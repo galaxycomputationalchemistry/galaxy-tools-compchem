@@ -5,7 +5,7 @@
         <token name="@GALAXY_VERSION@">0</token>
     </macros>
     <expand macro="requirements">
-        <requirement type="package" version="2.11.2">jinja2</requirement>
+        <requirement type="package" version="3.0.1">jinja2</requirement>
     </expand>
     <command detect_errors="exit_code"><![CDATA[
         python '$mmpbsa_script' '$inputs' &&
