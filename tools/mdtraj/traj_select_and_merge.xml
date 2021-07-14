@@ -124,7 +124,7 @@ traj.save(args.o_trj)
             </output>
             <output name="outputtraj">
                 <assert_contents>
-                    <has_size value="1940" delta="100" />
+                    <has_size value="1812" delta="100" />
                 </assert_contents>
             </output>
         </test>
