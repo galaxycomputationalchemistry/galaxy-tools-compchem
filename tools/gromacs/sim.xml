@@ -255,14 +255,14 @@
         <data name="output7" format="xvg" from_work_dir="outp_pullf.xvg">
             <filter>outps["xvg_out"] == 'true'</filter>
         </data>
-        <data name="output8" format="xvg" from_work_dir="outp.xvg">
+        <data name="output7_1" format="xvg" from_work_dir="outp.xvg">
             <filter>outps["xvg_out"] == 'true'</filter>
         </data>
         <!-- <collection name="output7" type="list">
             <discover_datasets pattern="(?P&lt;designation&gt;.*)\.xvg" visible="true" directory="." />
             <filter>outps["xvg_out"] == 'true'</filter>
         </collection> -->
-        <data name="output9" format="binary" from_work_dir="outp.tpr">
+        <data name="output8" format="binary" from_work_dir="outp.tpr">
             <filter>outps["tpr_out"] == 'true'</filter>
         </data>
 
