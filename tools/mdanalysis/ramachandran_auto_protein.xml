@@ -5,8 +5,8 @@
         <token name="@GALAXY_VERSION@">0</token>
     </macros>
     <expand macro="requirements">
-        <requirement type="package" version="0.11.1">seaborn</requirement>
-        <requirement type="package" version="3.2.1">h5py</requirement>
+        <requirement type="package" version="0.11.2">seaborn</requirement>
+        <requirement type="package" version="3.3.0">h5py</requirement>
         <requirement type="package" version="3.0.1">jinja2</requirement>
     </expand>
     <command detect_errors="exit_code"><![CDATA[
