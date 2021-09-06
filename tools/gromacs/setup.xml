@@ -50,9 +50,9 @@
 
     </inputs>
     <outputs>
-        <data name="output1" format="top" from_work_dir="topol.top"/>
-        <data name="output2" format="gro" from_work_dir="processed.gro"/>
-        <data name="output3" format="itp" from_work_dir="posres.itp"/>
+        <data name="output1" format="top" from_work_dir="topol.top" label="GROMACS setup (TOP) on ${on_string}"/>
+        <data name="output2" format="gro" from_work_dir="processed.gro" label="GROMACS setup (GRO) on ${on_string}"/>
+        <data name="output3" format="itp" from_work_dir="posres.itp" label="GROMACS setup (ITP) on ${on_string}"/>
         <expand macro="log_outputs" />
     </outputs>
     <tests>
