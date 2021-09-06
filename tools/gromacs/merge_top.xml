@@ -1,7 +1,7 @@
 <tool id="gmx_merge_topology_files" name="Merge GROMACS topologies" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
     <description>and GRO files</description>
     <macros>
-        <token name="@TOOL_VERSION@">3.4.1</token>
+        <token name="@TOOL_VERSION@">3.4.3</token>
         <token name="@GALAXY_VERSION@">0</token>
     </macros>
     <requirements>
