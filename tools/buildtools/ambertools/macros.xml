@@ -1,5 +1,5 @@
 <macros>
-  <token name="@TOOL_VERSION@">21.3</token>
+  <token name="@TOOL_VERSION@">21.7</token>
   <xml name="requirements">
     <requirements>
       <requirement type="package" version="@TOOL_VERSION@">ambertools</requirement>
