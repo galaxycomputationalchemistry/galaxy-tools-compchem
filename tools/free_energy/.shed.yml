@@ -9,3 +9,6 @@ categories:
 auto_tool_repositories:
   name_template: "{{ tool_id }}"
   description_template: "Wrapper for the freeenergy package: {{ tool_name }}"
+maintainers:
+  - tsenapathi
+  - chrisbarnettster

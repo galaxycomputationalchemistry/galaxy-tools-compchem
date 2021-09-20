@@ -16,3 +16,6 @@ suite:
   description: "vmd is a program that can be used to analyse molecular dynamics trajectories."
   long_description: |
     VMD is a powerful tool for analysis of structures and trajectories. Numerous tools for analysis are available under the VMD Main menu item Extensions  $ \rightarrow $ Analysis. In addition to these built-in tools, VMD users often use custom-written scripts to analyze desired properties of the simulated systems. VMD Tcl scripting capabilities are very extensive, and provide boundless opportunities for analysis. In this following section, we will learn how to use built-in VMD features for standard analysis, as well as consider a simple example of scripting.  
+maintainers:
+  - chrisbarnettster
+  - simonbray

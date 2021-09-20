@@ -16,3 +16,6 @@ suite:
   description: "Bio3d is a program that can be used to analyse molecular dynamics trajectories."
   long_description: |
     Bio3D is an R package containing utilities for the analysis of protein structure, sequence and trajectory data.
+maintainers:
+  - chrisbarnettster
+  - tsenapathi
