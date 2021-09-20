@@ -46,7 +46,7 @@
             </output>
             <output name="ramachandran_plot">
                 <assert_contents>
-                    <has_size value="18522" delta="2000" />
+                    <has_size value="20000" delta="2000" />
                 </assert_contents>
             </output>
         </test>

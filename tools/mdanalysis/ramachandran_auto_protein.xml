@@ -78,7 +78,7 @@
             </output>
             <output name="o_plot2">
                 <assert_contents>
-                    <has_size value="31740" delta="3000" />
+                    <has_size value="112000" delta="3000" />
                 </assert_contents>
             </output>
             <output name="o_data1">

@@ -5,7 +5,8 @@ import csv
 import sys
 
 import MDAnalysis as mda
-import MDAnalysis.analysis.hbonds
+import MDAnalysis.analysis.hydrogenbonds
+from MDAnalysis.topology.guessers import guess_types, guess_gasteiger_charges
 
 import pandas as pd
 
@@ -35,10 +36,14 @@ distance = float(args.idistance)
 angle = float(args.iangle)
 
 u = mda.Universe(args.istr, args.itraj,
-                 topology_format=args.istrext, format=args.itrajext)
+                 topology_format=args.istrext, format=args.itrajext, guess_bonds=True)
+guessed_elements = guess_types(u.atoms.names)
+u.add_TopologyAttr('elements', guessed_elements)
+guessed_charges = guess_gasteiger_charges(u.atoms)
+u.add_TopologyAttr('charges', guessed_charges)
 
-h = MDAnalysis.analysis.hbonds.HydrogenBondAnalysis(
-    u, selection1, selection2, distance=distance, angle=angle)
+h = MDAnalysis.analysis.hydrogenbonds.HydrogenBondAnalysis(
+    u, between=[selection1, selection2], d_h_cutoff=distance, d_h_a_angle_cutoff=angle)
 h.run()
 h.generate_table()
 
