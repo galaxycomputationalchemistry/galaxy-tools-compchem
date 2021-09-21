@@ -1,0 +1,5 @@
+Hello! This is an automated update of the following tool: **tools/bio3d**. I created this PR because I think the tool's main dependency is out of date, i.e. there is a newer version available through conda.
+
+I have updated tools/bio3d from version 2.4_1 to 2.4_2.
+
+**Project home page:** http://thegrantlab.org/bio3d/index.php
