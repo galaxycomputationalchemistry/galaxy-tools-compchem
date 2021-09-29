@@ -99,7 +99,7 @@
             <param name="sele" value="calpha"/>
             <output name="dccm_plot">
               <assert_contents>
-                <has_size value="280500" delta="20000"/>
+                <has_size value="350000" delta="20000"/>
               </assert_contents>
             </output>
         </test>
