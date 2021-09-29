@@ -234,25 +234,25 @@
 
     </inputs>
     <outputs>
-        <data name="output1" format="gro" from_work_dir="outp.gro">
+        <data name="output1" format="gro" from_work_dir="outp.gro" label="GROMACS simulation (GRO) on ${on_string}">
             <filter>outps["str"] == 'gro' or outps["str"] == 'both'</filter>
         </data>
-        <data name="output2" format="pdb" from_work_dir="outp.pdb">
+        <data name="output2" format="pdb" from_work_dir="outp.pdb" label="GROMACS simulation (PDB) file on ${on_string}">
             <filter>outps["str"] == 'pdb' or outps["str"] == 'both'</filter>
         </data>
-        <data name="output3" format="trr" from_work_dir="outp.trr">
+        <data name="output3" format="trr" from_work_dir="outp.trr" label="GROMACS simulation (TRR) on ${on_string}">
             <filter>outps["traj"] == 'trr' or outps["traj"] == 'both'</filter>
         </data>
-        <data name="output4" format="xtc" from_work_dir="outp.xtc">
+        <data name="output4" format="xtc" from_work_dir="outp.xtc" label="GROMACS simulation (XTC) on ${on_string}">
             <filter>outps["traj"] == 'xtc' or outps["traj"] == 'both'</filter>
         </data>
-        <data name="output5" format="cpt" from_work_dir="outp.cpt">
+        <data name="output5" format="cpt" from_work_dir="outp.cpt" label="GROMACS simulation (CPT) on ${on_string}">
             <filter>outps["cpt_out"] == 'true'</filter>
         </data>
-        <data name="output6" format="edr" from_work_dir="outp.edr">
+        <data name="output6" format="edr" from_work_dir="outp.edr" label="GROMACS simulation (EDR) on ${on_string}">
             <filter>outps["edr_out"] == 'true'</filter>
         </data>
-        <data name="output7" format="xvg" from_work_dir="outp_pullf.xvg">
+        <data name="output7" format="xvg" from_work_dir="outp_pullf.xvg" label="GROMACS simulation (XVG) on ${on_string}">
             <filter>outps["xvg_out"] == 'true'</filter>
         </data>
         <data name="output7_1" format="xvg" from_work_dir="outp.xvg">
@@ -262,7 +262,7 @@
             <discover_datasets pattern="(?P&lt;designation&gt;.*)\.xvg" visible="true" directory="." />
             <filter>outps["xvg_out"] == 'true'</filter>
         </collection> -->
-        <data name="output8" format="binary" from_work_dir="outp.tpr">
+        <data name="output8" format="tpr" from_work_dir="outp.tpr">
             <filter>outps["tpr_out"] == 'true'</filter>
         </data>
 
@@ -272,7 +272,7 @@
     <tests>
         <test expect_num_outputs="3">
             <param name="gro_input" value="str_ions.gro" />
-            <param name="top_input" value="topol_solv.top" />
+            <param name="top_input" value="topol_md.top" />
             <!-- <param name="cpt_bool" value="yes" /> -->
             <param name="cpt_in" value="npt.cpt" />
             <param name="mdpfile" value="custom" />
@@ -295,16 +295,16 @@
                     <has_size value="26136" />
                 </assert_contents>
             </output>
-            <output name="output8" ftype="binary">
+            <output name="output8" ftype="tpr">
                 <assert_contents>
-                    <has_size value="44164" />
+                    <has_size value="44212" />
                 </assert_contents>
             </output>
         </test>
 
         <test expect_num_outputs="3">
             <param name="gro_input" value="str_ions.gro" />
-            <param name="top_input" value="topol_solv.top" />
+            <param name="top_input" value="topol_md.top" />
             <!-- <param name="cpt_bool" value="yes" /> -->
             <param name="cpt_in" value="npt.cpt" />
             <!-- <param name="ndx_bool" value="false" /> -->
@@ -337,7 +337,7 @@
 
         <test expect_num_outputs="3">
             <param name="gro_input" value="str_ions.gro" />
-            <param name="top_input" value="topol_solv.top" />
+            <param name="top_input" value="topol_md.top" />
             <!-- <param name="cpt_bool" value="yes" /> -->
             <param name="cpt_in" value="npt.cpt" />
             <!-- <param name="ndx_bool" value="true" /> -->
@@ -347,14 +347,13 @@
             <expand macro="test_params"/>
             <param name="ensemble" value="npt" />
             <!-- <param name="posres_bool" value="false" /> -->
-            <output name="output1" ftype="gro" compare="sim_size">
+            <output name="output1" ftype="gro">
                 <assert_contents>
                     <has_size value="6537" />
                     <has_n_lines n="97" />
-                    <has_line line="TEST in water" />
                 </assert_contents>
             </output>
-            <output name="output2" ftype="pdb" compare="sim_size">
+            <output name="output2" ftype="pdb">
                 <assert_contents>
                     <has_size value="7582" />
                     <has_n_lines n="100" />
@@ -362,16 +361,15 @@
                     <has_line line="REMARK    THIS IS A SIMULATION BOX" />
                 </assert_contents>
             </output>
-            <output name="output3" ftype="trr" compare="sim_size">
+            <output name="output3" ftype="trr">
                 <assert_contents>
                     <has_size value="26136" />
                 </assert_contents>
             </output>
         </test>
-
         <test expect_num_outputs="3">
             <param name="gro_input" value="str_ions.gro" />
-            <param name="top_input" value="topol_solv.top" />
+            <param name="top_input" value="topol_md.top" />
             <!-- <param name="posres_bool" value="true" /> -->
             <param name="itp_in" value="posres.itp" />
             <!-- <param name="cpt_bool" value="no" /> -->
@@ -381,7 +379,7 @@
             <param name="str" value="pdb"/>
             <param name="ensemble" value="nvt" />
             <expand macro="test_params"/>
-            
+
             <output name="output2" ftype="pdb">
                 <assert_contents>
                     <has_size value="7582" />

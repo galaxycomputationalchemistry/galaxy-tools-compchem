@@ -1,5 +1,5 @@
 <macros>
-    <token name="@TOOL_VERSION@">2020.4</token>
+    <token name="@TOOL_VERSION@">2021.3</token>
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="@TOOL_VERSION@">gromacs</requirement>
@@ -62,7 +62,7 @@
     </xml>
 
     <xml name="log_outputs">
-        <data name="report" format="txt" from_work_dir="verbose.txt">
+        <data name="report" format="txt" from_work_dir="verbose.txt" label="GROMACS log file on ${on_string}">
             <filter>capture_log</filter>
         </data>
     </xml>

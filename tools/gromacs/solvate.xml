@@ -2,7 +2,7 @@
     <description>to structure and topology files</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">1</token>
+        <token name="@GALAXY_VERSION@">0</token>
     </macros>
 
     <expand macro="requirements" />
@@ -17,7 +17,7 @@
         gmx grompp -f ./ions.mdp -c solv.gro -p ./top_input.top -o ions.tpr &>> verbose.txt
         #if $neutralise or $conc:  ## else this step would do nothing
             &&
-            echo 'SOL' | gmx genion -s ions.tpr -o solv_ions.gro -p ./top_input.top -pname NA -nname CL $neutralise -conc $conc &>> verbose.txt &&
+            echo 'SOL' | gmx genion -s ions.tpr -o solv_ions.gro -p ./top_input.top -pname NA -nname CL $neutralise -conc $conc -seed $seed &>> verbose.txt &&
             mv solv_ions.gro solv.gro
         #end if
 
@@ -54,13 +54,14 @@ pbc            = xyz
         </param>
 
         <param argument="conc" type="float" value="0" min="0" max="6" label="Specify salt concentration (sodium chloride) to add, in mol/liter" help="Note existing ions in the system are not taken into account - including those added if the neutralise option is selected. Ions are added by randomly replacing water molecules." />
+        <param argument="seed" type="integer" value="1" min="0" label="Random seed for adding ions" help="Select a random seed for replacing solvent with ions. Set to 0 to generate a seed." />
 
         <expand macro="log" />
 
     </inputs>
     <outputs>
-        <data name="output1" format="gro" from_work_dir="solv.gro"/>
-        <data name="output2" format="top" from_work_dir="./top_input.top"/>
+        <data name="output1" format="gro" from_work_dir="solv.gro" label="GROMACS solvation (GRO) on ${on_string}"/>
+        <data name="output2" format="top" from_work_dir="./top_input.top" label="GROMACS solvation (TOP) on ${on_string}"/>
         <expand macro="log_outputs" />
     </outputs>
     <tests>
@@ -71,7 +72,7 @@ pbc            = xyz
             <param name="water_model" value="spc216" />
             <param name="conc" value="1" />
             <output name="output1" ftype="gro">
-                <!-- replacement of water with ions is random, thus we cannot compare the whole file -->
+                <!-- file is big, thus we do not compare the whole file -->
                 <assert_contents>
                     <has_text text="1.671   1.591   3.533"/>
                     <has_text text="2.032   2.417   1.345"/>
@@ -80,7 +81,7 @@ pbc            = xyz
                     <has_text text="2147NA"/>
                 </assert_contents>
             </output>
-            <output name="output2" file="topol_solv.top" ftype="top" lines_diff="4">
+            <output name="output2" ftype="top">
                 <assert_contents>
                     <has_line line="SOL         2130" />
                     <has_line line="NA               41" />

@@ -216,7 +216,7 @@
             <param name="sep" value="sep" />
             <param name="output_format" value="pdb" />
             <output_collection name="pdb_frames" type="list">
-                <element name="output00000007" ftype="pdb" file="frame7.pdb"/>
+                <element name="output000000007.pdb" ftype="pdb" file="frame7.pdb"/>
             </output_collection>
         </test>
     </tests>
@@ -235,7 +235,7 @@ _____
 
 **Input**
 
-       - One or more trajectory file (XTC or TRR)
+       - One or more trajectory files (XTC or TRR)
        - Structure file (optional)
        - Various options can be set
 

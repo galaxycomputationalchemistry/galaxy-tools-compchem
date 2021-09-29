@@ -12,3 +12,4 @@ rcoulomb      = 1.0    ; Short-range electrostatic cut-off
 rlist       = 1.0 ; Cut-off distance for the short-range neighbor list.
 rvdw        = 1.0    ; Short-range Van der Waals cut-off
 pbc            = xyz     ; Periodic Boundary Conditions (yes/no)
+gen-seed       = 1
