@@ -17,4 +17,6 @@ suite:
   description: "Ambertools is a suite of tools for preparation and analysis of molecular dynamics."
   long_description: |
     AmberTools (http://ambermd.org/AmberTools.php) is a set of packages than can be to create forcefields (antechamber), prepare molecules(tleap) and much more.
-
+maintainers:
+  - chrisbarnettster
+  - simonbray

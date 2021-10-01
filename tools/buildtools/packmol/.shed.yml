@@ -11,3 +11,5 @@ type: unrestricted
 categories:
 - Molecular Dynamics
 - Computational chemistry
+maintainers:
+  - chrisbarnettster
