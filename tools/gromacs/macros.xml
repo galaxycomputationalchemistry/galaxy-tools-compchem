@@ -65,7 +65,7 @@
     </xml>
 
     <xml name="maxwarn">
-        <param name="mxw" value="0" min="0" argument="-maxwarn" type="integer" label="Maximum warnings to allow." help="This option allows you to override non-fatal warnings, that would otherwise cause the simulation to fail."/>
+        <param name="mxw" value="0" min="0" argument="-maxwarn" type="integer" label="Maximum warnings to allow." help="Do not use this unless you know what you are doing. This option allows you to override non-fatal warnings, that would otherwise cause the simulation to fail."/>
     </xml>
 
     <xml name="log_outputs">
