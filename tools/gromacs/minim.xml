@@ -2,7 +2,7 @@
     <description>of the system prior to equilibration and production MD</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
 
     <expand macro="requirements" />
@@ -18,7 +18,7 @@
         ln -s '$gro_input' ./solv_ions.gro &&
         ln -s '$top_input' ./top_input.top &&
   
-        gmx grompp -f ./minim.mdp -c ./solv_ions.gro -r ./solv_ions.gro -p ./top_input.top -o em.tpr &>> verbose.txt &&
+        gmx grompp -f ./minim.mdp -c ./solv_ions.gro -r ./solv_ions.gro -p ./top_input.top -o em.tpr @MAXWARN_CMD@ &>> verbose.txt &&
         gmx mdrun -nt "\${GALAXY_SLOTS:-4}" -deffnm em &>> verbose.txt
         
     ]]></command>
@@ -82,6 +82,7 @@
                 <param argument="seed" type="integer" label="Random seed" value="1" min="-1" help="Select a random seed for initial velocity generation. Set to -1 to generate a seed." />
             </when>
         </conditional>
+        <expand macro="maxwarn" />
         <expand macro="log" />
     </inputs>
     <outputs>

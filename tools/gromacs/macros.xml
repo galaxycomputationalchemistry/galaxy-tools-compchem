@@ -5,6 +5,9 @@
             <requirement type="package" version="@TOOL_VERSION@">gromacs</requirement>
         </requirements>
     </xml>
+
+    <token name="@MAXWARN_CMD@">-maxwarn '$mxw'</token>
+
     <xml name="citations">
         <citations>
             <citation type="doi">10.1016/j.softx.2015.06.001</citation>
@@ -59,6 +62,10 @@
 
     <xml name="log">
         <param name="capture_log" type="boolean" value="false" label="Generate detailed log" help="Generate detailed log information that can be summarized with ParseLog."/>
+    </xml>
+
+    <xml name="maxwarn">
+        <param name="mxw" value="0" min="0" argument="-maxwarn" type="integer" label="Maximum warnings to allow." help="Do not use this unless you know what you are doing. This option allows you to override non-fatal warnings, that would otherwise cause the simulation to fail."/>
     </xml>
 
     <xml name="log_outputs">
