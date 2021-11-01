@@ -7,7 +7,7 @@
   <expand macro="requirements">
     <requirement type="package" version="3.4.3">parmed</requirement>
     <requirement type="package" version="2021.3">gromacs</requirement>
-    <requirement type="package" version="3.0.1">jinja2</requirement>
+    <requirement type="package" version="3.0.2">jinja2</requirement>
   </expand>
   <command detect_errors="exit_code">
     <![CDATA[
