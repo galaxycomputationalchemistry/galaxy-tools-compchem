@@ -13,11 +13,11 @@
         ln -s '$gro_input' ./gro_input.gro &&
         ln -s '$top_input' ./top_input.top &&
 
-        gmx solvate -cp ./gro_input.gro -cs ${water_model}.gro -o solv.gro -p ./top_input.top >> verbose.txt 2>&1 &&
-        gmx grompp -f ./ions.mdp -c solv.gro -p ./top_input.top -o ions.tpr @MAXWARN_CMD@ >> verbose.txt 2>&1
+        gmx solvate -cp ./gro_input.gro -cs ${water_model}.gro -o solv.gro -p ./top_input.top &>> verbose.txt &&
+        gmx grompp -f ./ions.mdp -c solv.gro -p ./top_input.top -o ions.tpr @MAXWARN_CMD@ &>> verbose.txt 
         #if $neutralise or $conc:  ## else this step would do nothing
             &&
-            echo 'SOL' | gmx genion -s ions.tpr -o solv_ions.gro -p ./top_input.top -pname NA -nname CL $neutralise -conc $conc -seed $seed >> verbose.txt 2>&1 &&
+            echo 'SOL' | gmx genion -s ions.tpr -o solv_ions.gro -p ./top_input.top -pname NA -nname CL $neutralise -conc $conc -seed $seed &>> verbose.txt &&
             mv solv_ions.gro solv.gro
         #end if
 
