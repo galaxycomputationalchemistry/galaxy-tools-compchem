@@ -2,7 +2,7 @@
     <description>for system equilibration or data collection</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">3</token>
+        <token name="@GALAXY_VERSION@">2</token>
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
@@ -272,8 +272,8 @@
 
     <tests>
         <test expect_num_outputs="3">
-            <param name="gro_input" value="str_ions.gro" />
-            <param name="top_input" value="topol_md.top" />
+            <param name="gro_input" value="str_ions_test.gro" />
+            <param name="top_input" value="topol_md_test.top" />
             <!-- <param name="cpt_bool" value="yes" /> -->
             <param name="cpt_in" value="npt.cpt" />
             <param name="mdpfile" value="custom" />
@@ -304,8 +304,8 @@
         </test>
 
         <test expect_num_outputs="3">
-            <param name="gro_input" value="str_ions.gro" />
-            <param name="top_input" value="topol_md.top" />
+            <param name="gro_input" value="str_ions_test.gro" />
+            <param name="top_input" value="topol_md_test.top" />
             <!-- <param name="cpt_bool" value="yes" /> -->
             <param name="cpt_in" value="npt.cpt" />
             <!-- <param name="ndx_bool" value="false" /> -->
@@ -337,8 +337,8 @@
         </test>
 
         <test expect_num_outputs="3">
-            <param name="gro_input" value="str_ion.gro" />
-            <param name="top_input" value="topol_md.top" />
+            <param name="gro_input" value="str_ions_test.gro" />
+            <param name="top_input" value="topol_md_test.top" />
             <!-- <param name="cpt_bool" value="yes" /> -->
             <param name="cpt_in" value="npt.cpt" />
             <!-- <param name="ndx_bool" value="true" /> -->
@@ -370,7 +370,7 @@
         </test>
         <test expect_num_outputs="3">
             <param name="gro_input" value="str_ions_test.gro" />
-            <param name="top_input" value="topol_md.top" />
+            <param name="top_input" value="topol_md_test.top" />
             <!-- <param name="posres_bool" value="true" /> -->
             <param name="itp_in" value="posres.itp" />
             <!-- <param name="cpt_bool" value="no" /> -->
