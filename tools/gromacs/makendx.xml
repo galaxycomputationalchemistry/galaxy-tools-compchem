@@ -2,21 +2,25 @@
     <description>using make_ndx</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
 
     <expand macro="requirements" />
 
     <command detect_errors="exit_code"><![CDATA[
-
-        ln -s '$input_file' ./input.$input_file.ext &&
-        (echo '$sel'; echo 'q') | gmx make_ndx -f ./input.$input_file.ext -o ./ndx.ndx &>> verbose.txt &&
+        ln -s '$input_file' ./input.$extension &&
+        (echo '$sel'; echo 'q') | gmx make_ndx -f ./input.$extension -o ./ndx.ndx &>> verbose.txt &&
         cp ./ndx.ndx '$ndx'
 
     ]]></command>
 
     <inputs>
         <param argument="input_file" type="data" format='gro,pdb' label="Input structure"/>
+        <param argument="extension" type="select" label="Format of input structure file">
+                <option value='gro'>standard GROMACS structure file (.gro)</option>
+                <option value='pdb'>standard Protein Data Bank file (.pdb)</option>
+        </param>
+
         <param argument="sel" type="text" label="Selection command" help="Selection for the new index group, e.g. 'r34' to select residue 34. Use  the operators '|' (or) and &amp; (and) to combine predefined groups.">
             <sanitizer>
                 <valid>
