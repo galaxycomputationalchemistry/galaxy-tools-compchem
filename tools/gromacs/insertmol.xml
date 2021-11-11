@@ -15,7 +15,7 @@
         ln -s '$mol_input' ./mol_input.gro &&
 
         gmx insert-molecules -f ./gro_input.gro -ci ./mol_input.gro -o multiples.gro -nmol '$nmols'
-          #if $box.config == "true":
+          #if $str($box.config) == "true":
               -box $box.dim
           #end if
            

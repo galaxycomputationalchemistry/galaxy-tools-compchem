@@ -3,7 +3,7 @@
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="@TOOL_VERSION@">gromacs</requirement>
-          <yield/>
+        <yield/>
         </requirements>
     </xml>
 
