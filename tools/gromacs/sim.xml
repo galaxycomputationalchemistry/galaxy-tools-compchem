@@ -2,7 +2,7 @@
     <description>for system equilibration or data collection</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">2</token>
+        <token name="@GALAXY_VERSION@">3</token>
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
@@ -98,16 +98,28 @@
                     pme_order      = 4        ; cubic interpolation
                     fourierspacing  = 0.16    ; grid spacing for FFT
                     ; Temperature coupling is on
+                    #if $sets.mdp.couplinggroups.wholesystem =="true":
+                    tcouple   = V-recale ; modified Berendsen thermostat
+                    tc-grps = System ; coupling the whole system. Can be used in any system, beyond peptides. 
+                    tau_t    = 0.1 ; time constant in ps
+                    ref_t    = $sets.mdp.temperature
+                    #else
                     tcoupl    = V-rescale              ; modified Berendsen thermostat
-                    tc-grps    = Protein Non-Protein  ; two coupling groups - more accurate
+                    tc-grps   = Protein Non-Protein  ; two coupling groups - more accurate
                     tau_t    = 0.1    0.1          ; time constant, in ps
                     ref_t    = $sets.mdp.temperature $sets.mdp.temperature           ; reference temperature, one for each group, in K
+                    #end if
                     ; Periodic boundary conditions
                     pbc    = xyz    ; 3-D PBC
                     ; Dispersion correction
                     DispCorr  = EnerPres  ; account for cut-off vdW scheme
+                    #if $sets.ensemble =="nvt" and $sets.mdp.startingvelocities.startvel =="true":
                     ; Velocity generation
-                    gen_vel    = no    ; Velocity generation is off
+                    gen_vel    = yes    ; Velocity generation is ON
+                    #else
+                    ; Velocity generation
+                    gen_vel    = no    ; Velocity generation is OFF
+                    #end if
                 #end if
                 #if $inps.itp_in:
                     define    = -DPOSRES  ; position restrain the protein
@@ -130,7 +142,7 @@
     <inputs>
         <param argument="gro_input" type="data" format='gro' label="GRO structure file"/>
         <param argument="top_input" type="data" format='top' label="Topology (TOP) file"/>
-
+ 
         <section name="inps" title="Inputs" expanded="false">
         
             <!-- CPT inp -->
@@ -174,6 +186,7 @@
             </conditional> -->
 
             <param argument="ndx_in" type="data" format='ndx' label="Index (ndx) file" optional="true" help="Use an index file specifying custom atom groups. Leave empty to use default generated group"/>
+            
 
         </section>
 
@@ -226,7 +239,6 @@
                 <option value="nvt">Isothermal-isochoric ensemble (NVT)</option>
                 <option value="npt">Isothermal-isobaric ensemble (NPT)</option>
             </param>
-
             <expand macro="md_inputs"/>
         </section>
         

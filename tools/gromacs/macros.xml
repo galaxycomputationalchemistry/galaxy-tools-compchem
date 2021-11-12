@@ -3,9 +3,9 @@
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="@TOOL_VERSION@">gromacs</requirement>
+        <yield/>   
         </requirements>
     </xml>
-
     <token name="@MAXWARN_CMD@">-maxwarn '$mxw'</token>
 
     <xml name="citations">
@@ -24,6 +24,15 @@
                 <param argument="mdp_input" type="data" format='mdp' label="MD parameters (MDP) file (optional; default settings if not set)"/>
             </when>
             <when value="default">
+                <conditional name="startingvelocities">
+                   <param name="startvel" type="select" label="Starting Velocities">
+                       <option value="true">Assign starting velocities (recommended for NVT)</option>
+                       <option value="false" selected="true">Do not assign starting velocites (recommended for NPT)</option>
+                   </param>
+                     <when value="true"/>
+                     <when value="false"/>
+                </conditional>
+
                 <param argument="integrator" type="select" label="Choice of integrator">
                     <option value="md">A leap-frog algorithm for integrating Newton's equations of motion.</option>
                     <option value="sd">Stochastic dynamics integrator</option>
@@ -47,6 +56,14 @@
                 </param>
                 
                 <param argument="temperature" type="integer" label="Temperature /K" value="0" min="0" max="1000000" help="Temperature" />
+                <conditional name="couplinggroups">
+                   <param name="wholesystem" type="select" label="Number of groups to set for thermocoupling">
+                       <option value="true">Single coupling group (System)</option>
+                       <option value="false" selected="true">Two coupling groups (Protein and Non-Protein)</option>
+                   </param>
+                     <when value="true"/>
+                     <when value="false"/>
+                </conditional>
                 <param argument="step_length" type="float" label="Step length in ps" value="0" min="0.0001" max="1.0" help="Step length in ps." />
                 <param argument="write_freq" type="integer" label="Number of steps that elapse between saving data points (velocities, forces, energies)" value="0" min="0" max="1000000" help="Step length in ps." />
                 <param argument="rcoulomb" value="1.0" type="float" label="Distance for the Coulomb cut-off."/>
@@ -67,6 +84,7 @@
     <xml name="maxwarn">
         <param name="mxw" value="0" min="0" argument="-maxwarn" type="integer" label="Maximum warnings to allow." help="Do not use this unless you know what you are doing. This option allows you to override non-fatal warnings, that would otherwise cause the simulation to fail."/>
     </xml>
+
 
     <xml name="log_outputs">
         <data name="report" format="txt" from_work_dir="verbose.txt" label="GROMACS log file on ${on_string}">
