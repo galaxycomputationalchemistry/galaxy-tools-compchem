@@ -69,7 +69,7 @@
                 <param argument="rcoulomb" value="1.0" type="float" label="Distance for the Coulomb cut-off."/>
                 <param argument="rlist" value="1.0" type="float" label="Cut-off distance for the short-range neighbor list. Ignored if the Verlet cutoff scheme is set."/>
                 <param argument="rvdw" value="1.0" type="float" label="Short range van der Waals cutoff."/>
-                <param argument="md_steps" type="integer" label="Number of steps for the simulation" value="0" min="0" max="1000000" help="NPT steps" />
+                <param argument="md_steps" type="integer" label="Number of steps for the simulation" value="0" min="0" help="MD steps" />
                 
             </when>
 
