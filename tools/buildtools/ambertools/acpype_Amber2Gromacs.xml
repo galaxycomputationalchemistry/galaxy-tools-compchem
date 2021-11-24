@@ -14,8 +14,8 @@
         
     ]]></command>
     <inputs>
-        <param name="input1" type="data" format="prmtop" label="Amber Topology file" help="Topology file (prmtop) generated in Tleap"/>
-        <param name="input2" type="data" format="inpcrd" label="Amber Coordinate file" help="Coordinate file (inpcrd) generated in Tleap"/>
+        <param name="input1" type="data" format="txt" label="Amber Topology file" help="Topology file (prmtop) generated in Tleap"/>
+        <param name="input2" type="data" format="txt" label="Amber Coordinate file" help="Coordinate file (inpcrd) generated in Tleap"/>
     </inputs>
     <outputs>
         <data format="top" name="top_output" label="GROMACS Topology file (.top)" from_work_dir='*.top'/>
@@ -24,21 +24,21 @@
     </outputs>
     <tests>
         <test>
-            <param name="input1" value="helicase_complex_solv.prmtop"/>
-            <param name="input2" value="helicase_complex_solv.inpcrd"/>
+            <param name="input1" value="cid1.prmtop"/>
+            <param name="input2" value="cid1.inpcrd"/>
             <output name="top_output">
                 <assert_contents>
                     <has_line line="[ defaults ]"/>
-                    <has_text text="N3       N3          0.00000  0.00000   A     3.24287e-01   7.11280e-01 ; 1.82  0.1700"/>
-                    <has_text text="     1   N3     1   ALA     N    1     0.141400     14.01000 ; qtot 0.141"/>
+                    <has_text text="1               2               yes             0.5     0.8333"/>
+                    <has_text text=" ca       ca          0.00000  0.00000   A     3.39967e-01   3.59824e-01 ; 1.91  0.0860"/>
                 </assert_contents>
             </output>
             <output name="gro_output">
                 <assert_contents>
-                    <has_text text=" 130461"/>
-                    <has_text text="    1  ALA    N    1   9.858   5.847   4.355"/>
-                    <has_text text="40990  WAT   H230461   0.990   1.594   1.408"/>
-                    <has_text text="   13.77166    10.73903    10.32827"/>
+                    <has_text text=" 42"/>
+                    <has_text text="    1  UNL   C1    1  41.372  -2.389   7.399"/>
+                    <has_text text="    1  UNL  H42   42  41.256  -2.276   7.041"/>
+                    <has_text text="   11.59200    12.19000    23.64000"/>
                 </assert_contents>
             </output>
         </test>
