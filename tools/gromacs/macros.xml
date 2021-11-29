@@ -24,15 +24,6 @@
                 <param argument="mdp_input" type="data" format='mdp' label="MD parameters (MDP) file (optional; default settings if not set)"/>
             </when>
             <when value="default">
-                <conditional name="startingvelocities">
-                   <param name="startvel" type="select" label="Starting Velocities">
-                       <option value="true">Assign starting velocities (recommended for NVT)</option>
-                       <option value="false" selected="true">Do not assign starting velocites (recommended for NPT)</option>
-                   </param>
-                     <when value="true"/>
-                     <when value="false"/>
-                </conditional>
-
                 <param argument="integrator" type="select" label="Choice of integrator">
                     <option value="md">A leap-frog algorithm for integrating Newton's equations of motion.</option>
                     <option value="sd">Stochastic dynamics integrator</option>
