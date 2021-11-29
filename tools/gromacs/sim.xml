@@ -98,7 +98,7 @@
                     pme_order      = 4        ; cubic interpolation
                     fourierspacing  = 0.16    ; grid spacing for FFT
                     ; Temperature coupling is on
-                    tcouple   = V-rescale ; modified Berendsen thermostat
+                    tcoupl   = V-rescale ; modified Berendsen thermostat
                     #if $sets.mdp.systemTcouple == "true":
                     tc-grps = System ; coupling the whole system. Can be used in any system, beyond peptides.
                     tau_t    = 0.1 ; time constant in ps
