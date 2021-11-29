@@ -123,9 +123,9 @@
                     define    = -DPOSRES  ; position restrain the protein
                     refcoord_scaling  = com
                 #end if
-                #if $sets.ensemble == "nvt":
+                #if $sets.ensembleselect.ensemble == "nvt":
                     pcoupl    = no     ; no pressure coupling in NVT
-                #else: 
+                #else:
                     ; Pressure coupling is on
                     pcoupl            = Parrinello-Rahman      ; Pressure coupling on in NPT
                     pcoupltype          = isotropic              ; uniform scaling of box vectors
@@ -247,7 +247,7 @@
                   </when>
                   <when value="npt" />
             </conditional>            
-            <expand macro="md_inputs"/>
+          <expand macro="md_inputs"/>
         </section>
         
         <expand macro="maxwarn" />
