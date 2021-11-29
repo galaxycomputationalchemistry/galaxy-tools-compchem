@@ -98,13 +98,12 @@
                     pme_order      = 4        ; cubic interpolation
                     fourierspacing  = 0.16    ; grid spacing for FFT
                     ; Temperature coupling is on
-                    #if $sets.mdp.couplinggroups.wholesystem =="true":
                     tcouple   = V-rescale ; modified Berendsen thermostat
-                    tc-grps = System ; coupling the whole system. Can be used in any system, beyond peptides. 
+                    #if $sets.mdp.systemTcouple == "true":
+                    tc-grps = System ; coupling the whole system. Can be used in any system, beyond peptides.
                     tau_t    = 0.1 ; time constant in ps
                     ref_t    = $sets.mdp.temperature
                     #else
-                    tcoupl    = V-rescale              ; modified Berendsen thermostat
                     tc-grps   = Protein Non-Protein  ; two coupling groups - more accurate
                     tau_t    = 0.1    0.1          ; time constant, in ps
                     ref_t    = $sets.mdp.temperature $sets.mdp.temperature           ; reference temperature, one for each group, in K
@@ -113,12 +112,11 @@
                     pbc    = xyz    ; 3-D PBC
                     ; Dispersion correction
                     DispCorr  = EnerPres  ; account for cut-off vdW scheme
-                    #if $sets.ensemble =="nvt" and $sets.mdp.startingvelocities.startvel =="true":
                     ; Velocity generation
-                    gen_vel    = yes    ; Velocity generation is ON
-                    #else
-                    ; Velocity generation
+                    #if $sets.ensembleselect.ensemble == "npt" or $sets.ensembleselect.startvel == "false":
                     gen_vel    = no    ; Velocity generation is OFF
+                    #else
+                    gen_vel    = yes    ; Velocity generation is ON
                     #end if
                 #end if
                 #if $inps.itp_in:
@@ -235,10 +233,20 @@
 
         <section name="sets" title="Settings" expanded="false">
             <!-- other ... -->
-            <param name="ensemble" label="Ensemble" type="select" help="NVT ensemble (constant number of particles, volume and temperature) or NPT ensemble (constant number of particles, pressure and temperature)">
+            
+            <conditional name="ensembleselect">
+              <param name="ensemble" label="Ensemble" type="select" help="NVT ensemble (constant number of particles, volume and temperature) or NPT ensemble (constant number of particles, pressure and temperature)">
                 <option value="nvt">Isothermal-isochoric ensemble (NVT)</option>
                 <option value="npt">Isothermal-isobaric ensemble (NPT)</option>
-            </param>
+              </param>
+                  <when value="nvt">
+                     <param argument="startvel" type="select" label="Starting Velocities">
+                        <option value="true">Assign starting velocities (recommended for NVT)</option>
+                        <option value="false" selected="true">Do not assign starting velocities</option>
+                     </param>
+                  </when>
+                  <when value="npt" />
+            </conditional>            
             <expand macro="md_inputs"/>
         </section>
         
