@@ -46,15 +46,11 @@
                     <option value="Reaction-Field-zero">Reaction field electrostatics.</option>
                 </param>
                 
-                <param argument="temperature" type="integer" label="Temperature /K" value="0" min="0" max="1000000" help="Temperature" />
-                <conditional name="couplinggroups">
-                   <param name="wholesystem" type="select" label="Number of groups to set for thermocoupling">
+                <param name="temperature" type="integer" label="Temperature (K)" value="0" min="0" max="1000000" help="Temperature" />
+                   <param name="systemTcouple" type="select" label="Number of groups to set for thermocoupling">
                        <option value="true">Single coupling group (System)</option>
                        <option value="false" selected="true">Two coupling groups (Protein and Non-Protein)</option>
                    </param>
-                     <when value="true"/>
-                     <when value="false"/>
-                </conditional>
                 <param argument="step_length" type="float" label="Step length in ps" value="0" min="0.0001" max="1.0" help="Step length in ps." />
                 <param argument="write_freq" type="integer" label="Number of steps that elapse between saving data points (velocities, forces, energies)" value="0" min="0" max="1000000" help="Step length in ps." />
                 <param argument="rcoulomb" value="1.0" type="float" label="Distance for the Coulomb cut-off."/>
