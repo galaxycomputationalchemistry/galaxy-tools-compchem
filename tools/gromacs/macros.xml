@@ -5,7 +5,6 @@
             <requirement type="package" version="@TOOL_VERSION@">gromacs</requirement>
         </requirements>
     </xml>
-
     <token name="@MAXWARN_CMD@">-maxwarn '$mxw'</token>
 
     <xml name="citations">
@@ -45,14 +44,17 @@
                     <option value="P3M-AD">Particle-Particle Particle-Mesh algorithm with analytical derivative.</option>
                     <option value="Reaction-Field-zero">Reaction field electrostatics.</option>
                 </param>
-                
-                <param argument="temperature" type="integer" label="Temperature /K" value="0" min="0" max="1000000" help="Temperature" />
+                <param name="temperature" type="integer" label="Temperature (K)" value="0" min="0" max="1000000" help="Temperature" />
+                <param name="systemTcouple" type="select" label="Number of groups to set for thermocoupling">
+                    <option value="true">Single coupling group (System)</option>
+                    <option value="false" selected="true">Two coupling groups (Protein and Non-Protein)</option>
+                </param>
                 <param argument="step_length" type="float" label="Step length in ps" value="0" min="0.0001" max="1.0" help="Step length in ps." />
                 <param argument="write_freq" type="integer" label="Number of steps that elapse between saving data points (velocities, forces, energies)" value="0" min="0" max="1000000" help="Step length in ps." />
                 <param argument="rcoulomb" value="1.0" type="float" label="Distance for the Coulomb cut-off."/>
                 <param argument="rlist" value="1.0" type="float" label="Cut-off distance for the short-range neighbor list. Ignored if the Verlet cutoff scheme is set."/>
                 <param argument="rvdw" value="1.0" type="float" label="Short range van der Waals cutoff."/>
-                <param argument="md_steps" type="integer" label="Number of steps for the simulation" value="0" min="0" max="1000000" help="NPT steps" />
+                <param argument="md_steps" type="integer" label="Number of steps for the simulation" value="0" min="0" help="MD steps" />
                 
             </when>
 
@@ -67,6 +69,7 @@
     <xml name="maxwarn">
         <param name="mxw" value="0" min="0" argument="-maxwarn" type="integer" label="Maximum warnings to allow." help="Do not use this unless you know what you are doing. This option allows you to override non-fatal warnings, that would otherwise cause the simulation to fail."/>
     </xml>
+
 
     <xml name="log_outputs">
         <data name="report" format="txt" from_work_dir="verbose.txt" label="GROMACS log file on ${on_string}">
