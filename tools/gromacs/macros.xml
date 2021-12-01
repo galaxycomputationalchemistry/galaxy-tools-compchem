@@ -77,6 +77,22 @@
         </data>
     </xml>
 
+    <xml name="xvg_or_tab">
+        <param argument="fmt" type='select' label="Output format" help="Format for output; either standard GROMACS XVG, or Galaxy tabular file.">
+            <option value="xvg">GROMACS XVG format</option>
+            <option value="tabular" selected="true">Galaxy tabular</option>
+        </param>
+    </xml>
+
+    <xml name="xvg_or_tab_outputs" token_name="" token_label="">
+        <data name="output1" format="xvg" from_work_dir="@NAME@.xvg" label="@LABEL@">
+            <filter>fmt == 'xvg'</filter>
+        </data>
+        <data name="output2" format="tabular" from_work_dir="@NAME@.tabular" label="@LABEL@">
+            <filter>fmt == 'tabular'</filter>
+        </data>
+    </xml>
+
     <xml name="test_params">
         <param name="mdpfile" value="default" />
         <param name="step_length" value="0.002"/>

@@ -1,0 +1,86 @@
+<tool id="gmx_rg" name="GROMACS Radius of Gyration" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+    <description>of a molecular structure</description>
+    <macros>
+        <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
+    </macros>
+
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+
+        ln -s '$traj_input' ./traj_input.${traj_input.ext} &&
+        ln -s '$structure_input' ./structure_input.${structure_input.ext} &&
+        ln -s '$ndx_input' ./ndx_input.ndx &&
+
+        echo '$index' | gmx gyrate -f './traj_input.${traj_input.ext}' -s './structure_input.${structure_input.ext}' -n './ndx_input.ndx' -o rg.xvg
+
+        >> verbose.txt 2>&1
+        #if $fmt == 'tabular':
+            &&
+            grep '@\|#' rg.xvg &&
+            grep -v '@\|#' rg.xvg | sed 's/[[:space:]]*//' | sed  's/  /\t/g' > rg.tabular
+        #end if
+    
+    ]]></command>
+
+    <inputs>
+        <param name="traj_input" type="data" format='trr,xtc' label="Trajectory file" help="In XTC or TRR format"/>
+        <param name="structure_input" type="data" format='tpr' label="Structure file" help="In TPR format"/>
+        <param name="ndx_input" type="data" format='ndx' label="Index (NDX) file" help="Index file containing the molecules of interest"/>
+        <param name="index" type="text" label="Index of group" help="Index of group for calculating the radius of gyration - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0)." />
+        <expand macro="xvg_or_tab" />
+        <expand macro="log" />
+    </inputs>
+    <outputs>
+        <expand macro="xvg_or_tab_outputs" name="rg" label="Radius of Gyration on ${on_string}" />
+        <expand macro="log_outputs" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="traj_input" value="npt.xtc" />
+            <param name="structure_input" value="npt.tpr" />
+            <param name="ndx_input" value="index.ndx" />
+            <param name="index" value="1" />
+            <param name="fmt" value="xvg" />
+            <output name="output1" ftype="xvg">
+                <!-- file is big, thus we do not compare the whole file -->
+                <assert_contents>
+                    <has_text text="  0    0.605945    0.570801    0.439308    0.464255"/>
+                    <has_text text="0.1    0.603599    0.568297    0.439052    0.461449"/>
+                    <has_text text="0.2    0.608461    0.574886    0.442389     0.46287"/>
+                    <has_text text="0.3    0.605338    0.572752    0.438534     0.46099"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+This tool computes the radius of gyration of a molecular structure, which provides an idea of how compact versus how open or extended the molecule's most commonly adopted conformation is, and how it changes throughout a trajectory. It can often be determined experimentally, so computing this from a simulation and comparing the results can also allow the researcher to verify the accuracy of the chosen force field for that particular system.
+
+_____
+
+.. class:: infomark
+
+**Input**
+
+       - TPR file of the simulated system.
+       - XTC or TRR trajectory file from a prior simulation. 
+       - Index file generated using the 'Create GROMACS index files' tool (make_ndx).
+
+_____
+
+
+.. class:: infomark
+
+**Output**
+
+       - XVG file containing the radius of gyration at every frame of the trajectory.
+    ]]></help>
+
+    <expand macro="citations" />
+</tool>
+
