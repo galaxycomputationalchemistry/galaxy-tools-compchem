@@ -8,55 +8,41 @@
     <expand macro="requirements" />
 
     <command detect_errors="exit_code"><![CDATA[
-        cp "\$GMXDATA/top/${filename}" '${output1}'
+        cp "\$GMXDATA"'/top/${filename}' '${output1}'
     ]]></command>
     <inputs>
         <param name="filename" type="select"  label="File to copy">
             <option value="table6-12.xvg">table6-12.xvg</option>
             <option value="nsfactor.dat">nsfactor.dat</option>
             <option value="xlateat.dat">xlateat.dat</option>
-            <option value="ffG43a1.itp">ffG43a1.itp</option>
             <option value="spc216.gro">spc216.gro</option>
             <option value="residues.xml">residues.xml</option>
             <option value="specbond.dat">specbond.dat</option>
             <option value="tip5p.gro">tip5p.gro</option>
-            <option value="ffG53a6.itp">ffG53a6.itp</option>
             <option value="table6-10.xvg">table6-10.xvg</option>
-            <option value="ffG53a5.itp">ffG53a5.itp</option>
             <option value="random.dat">random.dat</option>
-            <option value="tip4p.itp">tip4p.itp</option>
             <option value="atom_nom.tbl">atom_nom.tbl</option>
             <option value="cb-shift.dat">cb-shift.dat</option>
-            <option value="ions.itp">ions.itp</option>
             <option value="table6-9.xvg">table6-9.xvg</option>
             <option value="defselection.dat">defselection.dat</option>
             <option value="bonds.dlg">bonds.dlg</option>
             <option value="vdwradii.dat">vdwradii.dat</option>
-            <option value="spc.itp">spc.itp</option>
             <option value="flexwat-ferguson.itp">flexwat-ferguson.itp</option>
             <option value="ps.m2p">ps.m2p</option>
             <option value="ffoplsaa-n.tst">ffoplsaa-n.tst</option>
             <option value="residues.dtd">residues.dtd</option>
-            <option value="spce.itp">spce.itp</option>
             <option value="residuetypes.dat">residuetypes.dat</option>
             <option value="table6-8.xvg">table6-8.xvg</option>
-            <option value="ffG45a3.itp">ffG45a3.itp</option>
-            <option value="README">README</option>
             <option value="sfactor.dat">sfactor.dat</option>
             <option value="co-shift.dat">co-shift.dat</option>
             <option value="ha-shift.dat">ha-shift.dat</option>
             <option value="ss.map">ss.map</option>
             <option value="ca-shift.dat">ca-shift.dat</option>
-            <option value="ffG43a2.itp">ffG43a2.itp</option>
             <option value="vdw-msms.dat">vdw-msms.dat</option>
             <option value="atommass.dat">atommass.dat</option>
             <option value="dgsolv.dat">dgsolv.dat</option>
             <option value="surface.dat">surface.dat</option>
-            <option value="tip3p.itp">tip3p.itp</option>
             <option value="electroneg.dat">electroneg.dat</option>
-            <option value="ffoplsaa.itp">ffoplsaa.itp</option>
-            <option value="flexspce.itp">flexspce.itp</option>
-            <option value="flexspc.itp">flexspc.itp</option>
             <option value="sw.itp">sw.itp</option>
             <option value="tip4p.gro">tip4p.gro</option>
             <option value="refi_aa.dat">refi_aa.dat</option>
