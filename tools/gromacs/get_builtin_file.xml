@@ -1,0 +1,495 @@
+<tool id="gmx_get_builtin_file" name="GROMACS copy file" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+    <description>from built-in datasets</description>
+    <macros>
+        <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
+    </macros>
+
+    <expand macro="requirements" />
+
+    <command detect_errors="exit_code"><![CDATA[
+        cp "\$GMXDATA"'/top/${filename}' '${output1}'
+    ]]></command>
+    <inputs>
+        <param name="filename" type="select"  label="File to copy">
+            <option value="table6-12.xvg">table6-12.xvg</option>
+            <option value="nsfactor.dat">nsfactor.dat</option>
+            <option value="xlateat.dat">xlateat.dat</option>
+            <option value="spc216.gro">spc216.gro</option>
+            <option value="residues.xml">residues.xml</option>
+            <option value="specbond.dat">specbond.dat</option>
+            <option value="tip5p.gro">tip5p.gro</option>
+            <option value="table6-10.xvg">table6-10.xvg</option>
+            <option value="random.dat">random.dat</option>
+            <option value="atom_nom.tbl">atom_nom.tbl</option>
+            <option value="cb-shift.dat">cb-shift.dat</option>
+            <option value="table6-9.xvg">table6-9.xvg</option>
+            <option value="defselection.dat">defselection.dat</option>
+            <option value="bonds.dlg">bonds.dlg</option>
+            <option value="vdwradii.dat">vdwradii.dat</option>
+            <option value="flexwat-ferguson.itp">flexwat-ferguson.itp</option>
+            <option value="ps.m2p">ps.m2p</option>
+            <option value="ffoplsaa-n.tst">ffoplsaa-n.tst</option>
+            <option value="residues.dtd">residues.dtd</option>
+            <option value="residuetypes.dat">residuetypes.dat</option>
+            <option value="table6-8.xvg">table6-8.xvg</option>
+            <option value="sfactor.dat">sfactor.dat</option>
+            <option value="co-shift.dat">co-shift.dat</option>
+            <option value="ha-shift.dat">ha-shift.dat</option>
+            <option value="ss.map">ss.map</option>
+            <option value="ca-shift.dat">ca-shift.dat</option>
+            <option value="vdw-msms.dat">vdw-msms.dat</option>
+            <option value="atommass.dat">atommass.dat</option>
+            <option value="dgsolv.dat">dgsolv.dat</option>
+            <option value="surface.dat">surface.dat</option>
+            <option value="electroneg.dat">electroneg.dat</option>
+            <option value="sw.itp">sw.itp</option>
+            <option value="tip4p.gro">tip4p.gro</option>
+            <option value="refi_aa.dat">refi_aa.dat</option>
+            <option value="edissoc.dat">edissoc.dat</option>
+            <option value="table6-11.xvg">table6-11.xvg</option>
+            <option value="phbres.dat">phbres.dat</option>
+            <option value="export.dlg">export.dlg</option>
+            <option value="elements.dat">elements.dat</option>
+            <option value="charmm27.ff/lipids.rtp">charmm27.ff/lipids.rtp</option>
+            <option value="charmm27.ff/rna.c.tdb">charmm27.ff/rna.c.tdb</option>
+            <option value="charmm27.ff/forcefield.doc">charmm27.ff/forcefield.doc</option>
+            <option value="charmm27.ff/ffnanonbonded.itp">charmm27.ff/ffnanonbonded.itp</option>
+            <option value="charmm27.ff/atomtypes.atp">charmm27.ff/atomtypes.atp</option>
+            <option value="charmm27.ff/watermodels.dat">charmm27.ff/watermodels.dat</option>
+            <option value="charmm27.ff/tip4p.itp">charmm27.ff/tip4p.itp</option>
+            <option value="charmm27.ff/dna.c.tdb">charmm27.ff/dna.c.tdb</option>
+            <option value="charmm27.ff/ions.itp">charmm27.ff/ions.itp</option>
+            <option value="charmm27.ff/spc.itp">charmm27.ff/spc.itp</option>
+            <option value="charmm27.ff/aminoacids.vsd">charmm27.ff/aminoacids.vsd</option>
+            <option value="charmm27.ff/spce.itp">charmm27.ff/spce.itp</option>
+            <option value="charmm27.ff/tip5p.itp">charmm27.ff/tip5p.itp</option>
+            <option value="charmm27.ff/rna.arn">charmm27.ff/rna.arn</option>
+            <option value="charmm27.ff/aminoacids.n.tdb">charmm27.ff/aminoacids.n.tdb</option>
+            <option value="charmm27.ff/rna.rtp">charmm27.ff/rna.rtp</option>
+            <option value="charmm27.ff/ffbonded.itp">charmm27.ff/ffbonded.itp</option>
+            <option value="charmm27.ff/rna.hdb">charmm27.ff/rna.hdb</option>
+            <option value="charmm27.ff/aminoacids.arn">charmm27.ff/aminoacids.arn</option>
+            <option value="charmm27.ff/ffnonbonded.itp">charmm27.ff/ffnonbonded.itp</option>
+            <option value="charmm27.ff/tip3p.itp">charmm27.ff/tip3p.itp</option>
+            <option value="charmm27.ff/tips3p.itp">charmm27.ff/tips3p.itp</option>
+            <option value="charmm27.ff/dna.hdb">charmm27.ff/dna.hdb</option>
+            <option value="charmm27.ff/dna.rtp">charmm27.ff/dna.rtp</option>
+            <option value="charmm27.ff/aminoacids.hdb">charmm27.ff/aminoacids.hdb</option>
+            <option value="charmm27.ff/ffnabonded.itp">charmm27.ff/ffnabonded.itp</option>
+            <option value="charmm27.ff/aminoacids.c.tdb">charmm27.ff/aminoacids.c.tdb</option>
+            <option value="charmm27.ff/aminoacids.rtp">charmm27.ff/aminoacids.rtp</option>
+            <option value="charmm27.ff/dna.n.tdb">charmm27.ff/dna.n.tdb</option>
+            <option value="charmm27.ff/dna.arn">charmm27.ff/dna.arn</option>
+            <option value="charmm27.ff/rna.n.tdb">charmm27.ff/rna.n.tdb</option>
+            <option value="charmm27.ff/rna.r2b">charmm27.ff/rna.r2b</option>
+            <option value="charmm27.ff/aminoacids.r2b">charmm27.ff/aminoacids.r2b</option>
+            <option value="charmm27.ff/cmap.itp">charmm27.ff/cmap.itp</option>
+            <option value="charmm27.ff/forcefield.itp">charmm27.ff/forcefield.itp</option>
+            <option value="charmm27.ff/lipids.hdb">charmm27.ff/lipids.hdb</option>
+            <option value="amber03.ff/forcefield.doc">amber03.ff/forcefield.doc</option>
+            <option value="amber03.ff/atomtypes.atp">amber03.ff/atomtypes.atp</option>
+            <option value="amber03.ff/watermodels.dat">amber03.ff/watermodels.dat</option>
+            <option value="amber03.ff/tip4p.itp">amber03.ff/tip4p.itp</option>
+            <option value="amber03.ff/ions.itp">amber03.ff/ions.itp</option>
+            <option value="amber03.ff/spc.itp">amber03.ff/spc.itp</option>
+            <option value="amber03.ff/aminoacids.vsd">amber03.ff/aminoacids.vsd</option>
+            <option value="amber03.ff/spce.itp">amber03.ff/spce.itp</option>
+            <option value="amber03.ff/tip5p.itp">amber03.ff/tip5p.itp</option>
+            <option value="amber03.ff/rna.arn">amber03.ff/rna.arn</option>
+            <option value="amber03.ff/aminoacids.n.tdb">amber03.ff/aminoacids.n.tdb</option>
+            <option value="amber03.ff/rna.rtp">amber03.ff/rna.rtp</option>
+            <option value="amber03.ff/ffbonded.itp">amber03.ff/ffbonded.itp</option>
+            <option value="amber03.ff/rna.hdb">amber03.ff/rna.hdb</option>
+            <option value="amber03.ff/aminoacids.arn">amber03.ff/aminoacids.arn</option>
+            <option value="amber03.ff/ffnonbonded.itp">amber03.ff/ffnonbonded.itp</option>
+            <option value="amber03.ff/urea.itp">amber03.ff/urea.itp</option>
+            <option value="amber03.ff/tip3p.itp">amber03.ff/tip3p.itp</option>
+            <option value="amber03.ff/dna.hdb">amber03.ff/dna.hdb</option>
+            <option value="amber03.ff/dna.rtp">amber03.ff/dna.rtp</option>
+            <option value="amber03.ff/aminoacids.hdb">amber03.ff/aminoacids.hdb</option>
+            <option value="amber03.ff/aminoacids.c.tdb">amber03.ff/aminoacids.c.tdb</option>
+            <option value="amber03.ff/tip4pew.itp">amber03.ff/tip4pew.itp</option>
+            <option value="amber03.ff/aminoacids.rtp">amber03.ff/aminoacids.rtp</option>
+            <option value="amber03.ff/dna.r2b">amber03.ff/dna.r2b</option>
+            <option value="amber03.ff/dna.arn">amber03.ff/dna.arn</option>
+            <option value="amber03.ff/rna.r2b">amber03.ff/rna.r2b</option>
+            <option value="amber03.ff/aminoacids.r2b">amber03.ff/aminoacids.r2b</option>
+            <option value="amber03.ff/forcefield.itp">amber03.ff/forcefield.itp</option>
+            <option value="gromos45a3.ff/ff_dum.itp">gromos45a3.ff/ff_dum.itp</option>
+            <option value="gromos45a3.ff/forcefield.doc">gromos45a3.ff/forcefield.doc</option>
+            <option value="gromos45a3.ff/atomtypes.atp">gromos45a3.ff/atomtypes.atp</option>
+            <option value="gromos45a3.ff/watermodels.dat">gromos45a3.ff/watermodels.dat</option>
+            <option value="gromos45a3.ff/tip4p.itp">gromos45a3.ff/tip4p.itp</option>
+            <option value="gromos45a3.ff/ions.itp">gromos45a3.ff/ions.itp</option>
+            <option value="gromos45a3.ff/spc.itp">gromos45a3.ff/spc.itp</option>
+            <option value="gromos45a3.ff/aminoacids.vsd">gromos45a3.ff/aminoacids.vsd</option>
+            <option value="gromos45a3.ff/spce.itp">gromos45a3.ff/spce.itp</option>
+            <option value="gromos45a3.ff/aminoacids.n.tdb">gromos45a3.ff/aminoacids.n.tdb</option>
+            <option value="gromos45a3.ff/ffbonded.itp">gromos45a3.ff/ffbonded.itp</option>
+            <option value="gromos45a3.ff/ffnonbonded.itp">gromos45a3.ff/ffnonbonded.itp</option>
+            <option value="gromos45a3.ff/tip3p.itp">gromos45a3.ff/tip3p.itp</option>
+            <option value="gromos45a3.ff/aminoacids.hdb">gromos45a3.ff/aminoacids.hdb</option>
+            <option value="gromos45a3.ff/aminoacids.c.tdb">gromos45a3.ff/aminoacids.c.tdb</option>
+            <option value="gromos45a3.ff/aminoacids.rtp">gromos45a3.ff/aminoacids.rtp</option>
+            <option value="gromos45a3.ff/aminoacids.r2b">gromos45a3.ff/aminoacids.r2b</option>
+            <option value="gromos45a3.ff/forcefield.itp">gromos45a3.ff/forcefield.itp</option>
+            <option value="amber99sb.ff/forcefield.doc">amber99sb.ff/forcefield.doc</option>
+            <option value="amber99sb.ff/atomtypes.atp">amber99sb.ff/atomtypes.atp</option>
+            <option value="amber99sb.ff/watermodels.dat">amber99sb.ff/watermodels.dat</option>
+            <option value="amber99sb.ff/tip4p.itp">amber99sb.ff/tip4p.itp</option>
+            <option value="amber99sb.ff/ions.itp">amber99sb.ff/ions.itp</option>
+            <option value="amber99sb.ff/spc.itp">amber99sb.ff/spc.itp</option>
+            <option value="amber99sb.ff/aminoacids.vsd">amber99sb.ff/aminoacids.vsd</option>
+            <option value="amber99sb.ff/spce.itp">amber99sb.ff/spce.itp</option>
+            <option value="amber99sb.ff/tip5p.itp">amber99sb.ff/tip5p.itp</option>
+            <option value="amber99sb.ff/rna.arn">amber99sb.ff/rna.arn</option>
+            <option value="amber99sb.ff/aminoacids.n.tdb">amber99sb.ff/aminoacids.n.tdb</option>
+            <option value="amber99sb.ff/rna.rtp">amber99sb.ff/rna.rtp</option>
+            <option value="amber99sb.ff/ffbonded.itp">amber99sb.ff/ffbonded.itp</option>
+            <option value="amber99sb.ff/rna.hdb">amber99sb.ff/rna.hdb</option>
+            <option value="amber99sb.ff/aminoacids.arn">amber99sb.ff/aminoacids.arn</option>
+            <option value="amber99sb.ff/ffnonbonded.itp">amber99sb.ff/ffnonbonded.itp</option>
+            <option value="amber99sb.ff/urea.itp">amber99sb.ff/urea.itp</option>
+            <option value="amber99sb.ff/tip3p.itp">amber99sb.ff/tip3p.itp</option>
+            <option value="amber99sb.ff/dna.hdb">amber99sb.ff/dna.hdb</option>
+            <option value="amber99sb.ff/dna.rtp">amber99sb.ff/dna.rtp</option>
+            <option value="amber99sb.ff/aminoacids.hdb">amber99sb.ff/aminoacids.hdb</option>
+            <option value="amber99sb.ff/aminoacids.c.tdb">amber99sb.ff/aminoacids.c.tdb</option>
+            <option value="amber99sb.ff/tip4pew.itp">amber99sb.ff/tip4pew.itp</option>
+            <option value="amber99sb.ff/aminoacids.rtp">amber99sb.ff/aminoacids.rtp</option>
+            <option value="amber99sb.ff/dna.r2b">amber99sb.ff/dna.r2b</option>
+            <option value="amber99sb.ff/dna.arn">amber99sb.ff/dna.arn</option>
+            <option value="amber99sb.ff/rna.r2b">amber99sb.ff/rna.r2b</option>
+            <option value="amber99sb.ff/aminoacids.r2b">amber99sb.ff/aminoacids.r2b</option>
+            <option value="amber99sb.ff/forcefield.itp">amber99sb.ff/forcefield.itp</option>
+            <option value="gromos43a2.ff/ff_dum.itp">gromos43a2.ff/ff_dum.itp</option>
+            <option value="gromos43a2.ff/forcefield.doc">gromos43a2.ff/forcefield.doc</option>
+            <option value="gromos43a2.ff/atomtypes.atp">gromos43a2.ff/atomtypes.atp</option>
+            <option value="gromos43a2.ff/watermodels.dat">gromos43a2.ff/watermodels.dat</option>
+            <option value="gromos43a2.ff/tip4p.itp">gromos43a2.ff/tip4p.itp</option>
+            <option value="gromos43a2.ff/ions.itp">gromos43a2.ff/ions.itp</option>
+            <option value="gromos43a2.ff/spc.itp">gromos43a2.ff/spc.itp</option>
+            <option value="gromos43a2.ff/aminoacids.vsd">gromos43a2.ff/aminoacids.vsd</option>
+            <option value="gromos43a2.ff/spce.itp">gromos43a2.ff/spce.itp</option>
+            <option value="gromos43a2.ff/aminoacids.n.tdb">gromos43a2.ff/aminoacids.n.tdb</option>
+            <option value="gromos43a2.ff/ffbonded.itp">gromos43a2.ff/ffbonded.itp</option>
+            <option value="gromos43a2.ff/ffnonbonded.itp">gromos43a2.ff/ffnonbonded.itp</option>
+            <option value="gromos43a2.ff/tip3p.itp">gromos43a2.ff/tip3p.itp</option>
+            <option value="gromos43a2.ff/aminoacids.hdb">gromos43a2.ff/aminoacids.hdb</option>
+            <option value="gromos43a2.ff/aminoacids.c.tdb">gromos43a2.ff/aminoacids.c.tdb</option>
+            <option value="gromos43a2.ff/aminoacids.rtp">gromos43a2.ff/aminoacids.rtp</option>
+            <option value="gromos43a2.ff/aminoacids.r2b">gromos43a2.ff/aminoacids.r2b</option>
+            <option value="gromos43a2.ff/forcefield.itp">gromos43a2.ff/forcefield.itp</option>
+            <option value="oplsaa.ff/forcefield.doc">oplsaa.ff/forcefield.doc</option>
+            <option value="oplsaa.ff/atomtypes.atp">oplsaa.ff/atomtypes.atp</option>
+            <option value="oplsaa.ff/watermodels.dat">oplsaa.ff/watermodels.dat</option>
+            <option value="oplsaa.ff/tip4p.itp">oplsaa.ff/tip4p.itp</option>
+            <option value="oplsaa.ff/ions.itp">oplsaa.ff/ions.itp</option>
+            <option value="oplsaa.ff/tip5pe.itp">oplsaa.ff/tip5pe.itp</option>
+            <option value="oplsaa.ff/spc.itp">oplsaa.ff/spc.itp</option>
+            <option value="oplsaa.ff/aminoacids.vsd">oplsaa.ff/aminoacids.vsd</option>
+            <option value="oplsaa.ff/spce.itp">oplsaa.ff/spce.itp</option>
+            <option value="oplsaa.ff/ethanol.itp">oplsaa.ff/ethanol.itp</option>
+            <option value="oplsaa.ff/tip5p.itp">oplsaa.ff/tip5p.itp</option>
+            <option value="oplsaa.ff/aminoacids.n.tdb">oplsaa.ff/aminoacids.n.tdb</option>
+            <option value="oplsaa.ff/ffbonded.itp">oplsaa.ff/ffbonded.itp</option>
+            <option value="oplsaa.ff/ffnonbonded.itp">oplsaa.ff/ffnonbonded.itp</option>
+            <option value="oplsaa.ff/tip3p.itp">oplsaa.ff/tip3p.itp</option>
+            <option value="oplsaa.ff/aminoacids.hdb">oplsaa.ff/aminoacids.hdb</option>
+            <option value="oplsaa.ff/aminoacids.c.tdb">oplsaa.ff/aminoacids.c.tdb</option>
+            <option value="oplsaa.ff/tip4pew.itp">oplsaa.ff/tip4pew.itp</option>
+            <option value="oplsaa.ff/methanol.itp">oplsaa.ff/methanol.itp</option>
+            <option value="oplsaa.ff/aminoacids.rtp">oplsaa.ff/aminoacids.rtp</option>
+            <option value="oplsaa.ff/1propanol.itp">oplsaa.ff/1propanol.itp</option>
+            <option value="oplsaa.ff/aminoacids.r2b">oplsaa.ff/aminoacids.r2b</option>
+            <option value="oplsaa.ff/forcefield.itp">oplsaa.ff/forcefield.itp</option>
+            <option value="oplsaa.ff/atomname2type.n2t">oplsaa.ff/atomname2type.n2t</option>
+            <option value="amber94.ff/forcefield.doc">amber94.ff/forcefield.doc</option>
+            <option value="amber94.ff/atomtypes.atp">amber94.ff/atomtypes.atp</option>
+            <option value="amber94.ff/watermodels.dat">amber94.ff/watermodels.dat</option>
+            <option value="amber94.ff/tip4p.itp">amber94.ff/tip4p.itp</option>
+            <option value="amber94.ff/ions.itp">amber94.ff/ions.itp</option>
+            <option value="amber94.ff/spc.itp">amber94.ff/spc.itp</option>
+            <option value="amber94.ff/aminoacids.vsd">amber94.ff/aminoacids.vsd</option>
+            <option value="amber94.ff/spce.itp">amber94.ff/spce.itp</option>
+            <option value="amber94.ff/tip5p.itp">amber94.ff/tip5p.itp</option>
+            <option value="amber94.ff/rna.arn">amber94.ff/rna.arn</option>
+            <option value="amber94.ff/aminoacids.n.tdb">amber94.ff/aminoacids.n.tdb</option>
+            <option value="amber94.ff/rna.rtp">amber94.ff/rna.rtp</option>
+            <option value="amber94.ff/ffbonded.itp">amber94.ff/ffbonded.itp</option>
+            <option value="amber94.ff/rna.hdb">amber94.ff/rna.hdb</option>
+            <option value="amber94.ff/aminoacids.arn">amber94.ff/aminoacids.arn</option>
+            <option value="amber94.ff/ffnonbonded.itp">amber94.ff/ffnonbonded.itp</option>
+            <option value="amber94.ff/urea.itp">amber94.ff/urea.itp</option>
+            <option value="amber94.ff/tip3p.itp">amber94.ff/tip3p.itp</option>
+            <option value="amber94.ff/dna.hdb">amber94.ff/dna.hdb</option>
+            <option value="amber94.ff/dna.rtp">amber94.ff/dna.rtp</option>
+            <option value="amber94.ff/aminoacids.hdb">amber94.ff/aminoacids.hdb</option>
+            <option value="amber94.ff/aminoacids.c.tdb">amber94.ff/aminoacids.c.tdb</option>
+            <option value="amber94.ff/tip4pew.itp">amber94.ff/tip4pew.itp</option>
+            <option value="amber94.ff/aminoacids.rtp">amber94.ff/aminoacids.rtp</option>
+            <option value="amber94.ff/dna.r2b">amber94.ff/dna.r2b</option>
+            <option value="amber94.ff/dna.arn">amber94.ff/dna.arn</option>
+            <option value="amber94.ff/rna.r2b">amber94.ff/rna.r2b</option>
+            <option value="amber94.ff/aminoacids.r2b">amber94.ff/aminoacids.r2b</option>
+            <option value="amber94.ff/forcefield.itp">amber94.ff/forcefield.itp</option>
+            <option value="gromos54a7.ff/dppc.itp">gromos54a7.ff/dppc.itp</option>
+            <option value="gromos54a7.ff/ff_dum.itp">gromos54a7.ff/ff_dum.itp</option>
+            <option value="gromos54a7.ff/forcefield.doc">gromos54a7.ff/forcefield.doc</option>
+            <option value="gromos54a7.ff/atomtypes.atp">gromos54a7.ff/atomtypes.atp</option>
+            <option value="gromos54a7.ff/watermodels.dat">gromos54a7.ff/watermodels.dat</option>
+            <option value="gromos54a7.ff/popc.itp">gromos54a7.ff/popc.itp</option>
+            <option value="gromos54a7.ff/tip4p.itp">gromos54a7.ff/tip4p.itp</option>
+            <option value="gromos54a7.ff/ions.itp">gromos54a7.ff/ions.itp</option>
+            <option value="gromos54a7.ff/spc.itp">gromos54a7.ff/spc.itp</option>
+            <option value="gromos54a7.ff/aminoacids.vsd">gromos54a7.ff/aminoacids.vsd</option>
+            <option value="gromos54a7.ff/tmcl.itp">gromos54a7.ff/tmcl.itp</option>
+            <option value="gromos54a7.ff/spce.itp">gromos54a7.ff/spce.itp</option>
+            <option value="gromos54a7.ff/aminoacids.n.tdb">gromos54a7.ff/aminoacids.n.tdb</option>
+            <option value="gromos54a7.ff/ffbonded.itp">gromos54a7.ff/ffbonded.itp</option>
+            <option value="gromos54a7.ff/ffnonbonded.itp">gromos54a7.ff/ffnonbonded.itp</option>
+            <option value="gromos54a7.ff/tip3p.itp">gromos54a7.ff/tip3p.itp</option>
+            <option value="gromos54a7.ff/aminoacids.hdb">gromos54a7.ff/aminoacids.hdb</option>
+            <option value="gromos54a7.ff/aminoacids.c.tdb">gromos54a7.ff/aminoacids.c.tdb</option>
+            <option value="gromos54a7.ff/aminoacids.rtp">gromos54a7.ff/aminoacids.rtp</option>
+            <option value="gromos54a7.ff/aminoacids.r2b">gromos54a7.ff/aminoacids.r2b</option>
+            <option value="gromos54a7.ff/forcefield.itp">gromos54a7.ff/forcefield.itp</option>
+            <option value="amber99sb-ildn.ff/forcefield.doc">amber99sb-ildn.ff/forcefield.doc</option>
+            <option value="amber99sb-ildn.ff/atomtypes.atp">amber99sb-ildn.ff/atomtypes.atp</option>
+            <option value="amber99sb-ildn.ff/watermodels.dat">amber99sb-ildn.ff/watermodels.dat</option>
+            <option value="amber99sb-ildn.ff/tip4p.itp">amber99sb-ildn.ff/tip4p.itp</option>
+            <option value="amber99sb-ildn.ff/ions.itp">amber99sb-ildn.ff/ions.itp</option>
+            <option value="amber99sb-ildn.ff/spc.itp">amber99sb-ildn.ff/spc.itp</option>
+            <option value="amber99sb-ildn.ff/aminoacids.vsd">amber99sb-ildn.ff/aminoacids.vsd</option>
+            <option value="amber99sb-ildn.ff/spce.itp">amber99sb-ildn.ff/spce.itp</option>
+            <option value="amber99sb-ildn.ff/tip5p.itp">amber99sb-ildn.ff/tip5p.itp</option>
+            <option value="amber99sb-ildn.ff/rna.arn">amber99sb-ildn.ff/rna.arn</option>
+            <option value="amber99sb-ildn.ff/aminoacids.n.tdb">amber99sb-ildn.ff/aminoacids.n.tdb</option>
+            <option value="amber99sb-ildn.ff/rna.rtp">amber99sb-ildn.ff/rna.rtp</option>
+            <option value="amber99sb-ildn.ff/ffbonded.itp">amber99sb-ildn.ff/ffbonded.itp</option>
+            <option value="amber99sb-ildn.ff/rna.hdb">amber99sb-ildn.ff/rna.hdb</option>
+            <option value="amber99sb-ildn.ff/aminoacids.arn">amber99sb-ildn.ff/aminoacids.arn</option>
+            <option value="amber99sb-ildn.ff/ffnonbonded.itp">amber99sb-ildn.ff/ffnonbonded.itp</option>
+            <option value="amber99sb-ildn.ff/urea.itp">amber99sb-ildn.ff/urea.itp</option>
+            <option value="amber99sb-ildn.ff/tip3p.itp">amber99sb-ildn.ff/tip3p.itp</option>
+            <option value="amber99sb-ildn.ff/dna.hdb">amber99sb-ildn.ff/dna.hdb</option>
+            <option value="amber99sb-ildn.ff/dna.rtp">amber99sb-ildn.ff/dna.rtp</option>
+            <option value="amber99sb-ildn.ff/aminoacids.hdb">amber99sb-ildn.ff/aminoacids.hdb</option>
+            <option value="amber99sb-ildn.ff/aminoacids.c.tdb">amber99sb-ildn.ff/aminoacids.c.tdb</option>
+            <option value="amber99sb-ildn.ff/tip4pew.itp">amber99sb-ildn.ff/tip4pew.itp</option>
+            <option value="amber99sb-ildn.ff/aminoacids.rtp">amber99sb-ildn.ff/aminoacids.rtp</option>
+            <option value="amber99sb-ildn.ff/dna.r2b">amber99sb-ildn.ff/dna.r2b</option>
+            <option value="amber99sb-ildn.ff/dna.arn">amber99sb-ildn.ff/dna.arn</option>
+            <option value="amber99sb-ildn.ff/rna.r2b">amber99sb-ildn.ff/rna.r2b</option>
+            <option value="amber99sb-ildn.ff/aminoacids.r2b">amber99sb-ildn.ff/aminoacids.r2b</option>
+            <option value="amber99sb-ildn.ff/forcefield.itp">amber99sb-ildn.ff/forcefield.itp</option>
+            <option value="gromos53a5.ff/ff_dum.itp">gromos53a5.ff/ff_dum.itp</option>
+            <option value="gromos53a5.ff/forcefield.doc">gromos53a5.ff/forcefield.doc</option>
+            <option value="gromos53a5.ff/atomtypes.atp">gromos53a5.ff/atomtypes.atp</option>
+            <option value="gromos53a5.ff/watermodels.dat">gromos53a5.ff/watermodels.dat</option>
+            <option value="gromos53a5.ff/tip4p.itp">gromos53a5.ff/tip4p.itp</option>
+            <option value="gromos53a5.ff/ions.itp">gromos53a5.ff/ions.itp</option>
+            <option value="gromos53a5.ff/spc.itp">gromos53a5.ff/spc.itp</option>
+            <option value="gromos53a5.ff/aminoacids.vsd">gromos53a5.ff/aminoacids.vsd</option>
+            <option value="gromos53a5.ff/spce.itp">gromos53a5.ff/spce.itp</option>
+            <option value="gromos53a5.ff/aminoacids.n.tdb">gromos53a5.ff/aminoacids.n.tdb</option>
+            <option value="gromos53a5.ff/ffbonded.itp">gromos53a5.ff/ffbonded.itp</option>
+            <option value="gromos53a5.ff/ffnonbonded.itp">gromos53a5.ff/ffnonbonded.itp</option>
+            <option value="gromos53a5.ff/tip3p.itp">gromos53a5.ff/tip3p.itp</option>
+            <option value="gromos53a5.ff/aminoacids.hdb">gromos53a5.ff/aminoacids.hdb</option>
+            <option value="gromos53a5.ff/aminoacids.c.tdb">gromos53a5.ff/aminoacids.c.tdb</option>
+            <option value="gromos53a5.ff/aminoacids.rtp">gromos53a5.ff/aminoacids.rtp</option>
+            <option value="gromos53a5.ff/aminoacids.r2b">gromos53a5.ff/aminoacids.r2b</option>
+            <option value="gromos53a5.ff/forcefield.itp">gromos53a5.ff/forcefield.itp</option>
+            <option value="gromos53a5.ff/atomname2type.n2t">gromos53a5.ff/atomname2type.n2t</option>
+            <option value="amberGS.ff/forcefield.doc">amberGS.ff/forcefield.doc</option>
+            <option value="amberGS.ff/atomtypes.atp">amberGS.ff/atomtypes.atp</option>
+            <option value="amberGS.ff/watermodels.dat">amberGS.ff/watermodels.dat</option>
+            <option value="amberGS.ff/tip4p.itp">amberGS.ff/tip4p.itp</option>
+            <option value="amberGS.ff/ions.itp">amberGS.ff/ions.itp</option>
+            <option value="amberGS.ff/spc.itp">amberGS.ff/spc.itp</option>
+            <option value="amberGS.ff/aminoacids.vsd">amberGS.ff/aminoacids.vsd</option>
+            <option value="amberGS.ff/spce.itp">amberGS.ff/spce.itp</option>
+            <option value="amberGS.ff/tip5p.itp">amberGS.ff/tip5p.itp</option>
+            <option value="amberGS.ff/rna.arn">amberGS.ff/rna.arn</option>
+            <option value="amberGS.ff/aminoacids.n.tdb">amberGS.ff/aminoacids.n.tdb</option>
+            <option value="amberGS.ff/rna.rtp">amberGS.ff/rna.rtp</option>
+            <option value="amberGS.ff/ffbonded.itp">amberGS.ff/ffbonded.itp</option>
+            <option value="amberGS.ff/rna.hdb">amberGS.ff/rna.hdb</option>
+            <option value="amberGS.ff/aminoacids.arn">amberGS.ff/aminoacids.arn</option>
+            <option value="amberGS.ff/ffnonbonded.itp">amberGS.ff/ffnonbonded.itp</option>
+            <option value="amberGS.ff/urea.itp">amberGS.ff/urea.itp</option>
+            <option value="amberGS.ff/tip3p.itp">amberGS.ff/tip3p.itp</option>
+            <option value="amberGS.ff/dna.hdb">amberGS.ff/dna.hdb</option>
+            <option value="amberGS.ff/dna.rtp">amberGS.ff/dna.rtp</option>
+            <option value="amberGS.ff/aminoacids.hdb">amberGS.ff/aminoacids.hdb</option>
+            <option value="amberGS.ff/aminoacids.c.tdb">amberGS.ff/aminoacids.c.tdb</option>
+            <option value="amberGS.ff/tip4pew.itp">amberGS.ff/tip4pew.itp</option>
+            <option value="amberGS.ff/aminoacids.rtp">amberGS.ff/aminoacids.rtp</option>
+            <option value="amberGS.ff/dna.r2b">amberGS.ff/dna.r2b</option>
+            <option value="amberGS.ff/dna.arn">amberGS.ff/dna.arn</option>
+            <option value="amberGS.ff/rna.r2b">amberGS.ff/rna.r2b</option>
+            <option value="amberGS.ff/aminoacids.r2b">amberGS.ff/aminoacids.r2b</option>
+            <option value="amberGS.ff/forcefield.itp">amberGS.ff/forcefield.itp</option>
+            <option value="amber96.ff/forcefield.doc">amber96.ff/forcefield.doc</option>
+            <option value="amber96.ff/atomtypes.atp">amber96.ff/atomtypes.atp</option>
+            <option value="amber96.ff/watermodels.dat">amber96.ff/watermodels.dat</option>
+            <option value="amber96.ff/tip4p.itp">amber96.ff/tip4p.itp</option>
+            <option value="amber96.ff/ions.itp">amber96.ff/ions.itp</option>
+            <option value="amber96.ff/spc.itp">amber96.ff/spc.itp</option>
+            <option value="amber96.ff/aminoacids.vsd">amber96.ff/aminoacids.vsd</option>
+            <option value="amber96.ff/spce.itp">amber96.ff/spce.itp</option>
+            <option value="amber96.ff/tip5p.itp">amber96.ff/tip5p.itp</option>
+            <option value="amber96.ff/rna.arn">amber96.ff/rna.arn</option>
+            <option value="amber96.ff/aminoacids.n.tdb">amber96.ff/aminoacids.n.tdb</option>
+            <option value="amber96.ff/rna.rtp">amber96.ff/rna.rtp</option>
+            <option value="amber96.ff/ffbonded.itp">amber96.ff/ffbonded.itp</option>
+            <option value="amber96.ff/rna.hdb">amber96.ff/rna.hdb</option>
+            <option value="amber96.ff/aminoacids.arn">amber96.ff/aminoacids.arn</option>
+            <option value="amber96.ff/ffnonbonded.itp">amber96.ff/ffnonbonded.itp</option>
+            <option value="amber96.ff/urea.itp">amber96.ff/urea.itp</option>
+            <option value="amber96.ff/tip3p.itp">amber96.ff/tip3p.itp</option>
+            <option value="amber96.ff/dna.hdb">amber96.ff/dna.hdb</option>
+            <option value="amber96.ff/dna.rtp">amber96.ff/dna.rtp</option>
+            <option value="amber96.ff/aminoacids.hdb">amber96.ff/aminoacids.hdb</option>
+            <option value="amber96.ff/aminoacids.c.tdb">amber96.ff/aminoacids.c.tdb</option>
+            <option value="amber96.ff/tip4pew.itp">amber96.ff/tip4pew.itp</option>
+            <option value="amber96.ff/aminoacids.rtp">amber96.ff/aminoacids.rtp</option>
+            <option value="amber96.ff/dna.r2b">amber96.ff/dna.r2b</option>
+            <option value="amber96.ff/dna.arn">amber96.ff/dna.arn</option>
+            <option value="amber96.ff/rna.r2b">amber96.ff/rna.r2b</option>
+            <option value="amber96.ff/aminoacids.r2b">amber96.ff/aminoacids.r2b</option>
+            <option value="amber96.ff/forcefield.itp">amber96.ff/forcefield.itp</option>
+            <option value="gromos53a6.ff/ff_dum.itp">gromos53a6.ff/ff_dum.itp</option>
+            <option value="gromos53a6.ff/forcefield.doc">gromos53a6.ff/forcefield.doc</option>
+            <option value="gromos53a6.ff/atomtypes.atp">gromos53a6.ff/atomtypes.atp</option>
+            <option value="gromos53a6.ff/watermodels.dat">gromos53a6.ff/watermodels.dat</option>
+            <option value="gromos53a6.ff/tip4p.itp">gromos53a6.ff/tip4p.itp</option>
+            <option value="gromos53a6.ff/ions.itp">gromos53a6.ff/ions.itp</option>
+            <option value="gromos53a6.ff/spc.itp">gromos53a6.ff/spc.itp</option>
+            <option value="gromos53a6.ff/aminoacids.vsd">gromos53a6.ff/aminoacids.vsd</option>
+            <option value="gromos53a6.ff/spce.itp">gromos53a6.ff/spce.itp</option>
+            <option value="gromos53a6.ff/aminoacids.n.tdb">gromos53a6.ff/aminoacids.n.tdb</option>
+            <option value="gromos53a6.ff/ffbonded.itp">gromos53a6.ff/ffbonded.itp</option>
+            <option value="gromos53a6.ff/ffnonbonded.itp">gromos53a6.ff/ffnonbonded.itp</option>
+            <option value="gromos53a6.ff/tip3p.itp">gromos53a6.ff/tip3p.itp</option>
+            <option value="gromos53a6.ff/aminoacids.hdb">gromos53a6.ff/aminoacids.hdb</option>
+            <option value="gromos53a6.ff/aminoacids.c.tdb">gromos53a6.ff/aminoacids.c.tdb</option>
+            <option value="gromos53a6.ff/aminoacids.rtp">gromos53a6.ff/aminoacids.rtp</option>
+            <option value="gromos53a6.ff/aminoacids.r2b">gromos53a6.ff/aminoacids.r2b</option>
+            <option value="gromos53a6.ff/forcefield.itp">gromos53a6.ff/forcefield.itp</option>
+            <option value="gromos43a1.ff/ff_dum.itp">gromos43a1.ff/ff_dum.itp</option>
+            <option value="gromos43a1.ff/forcefield.doc">gromos43a1.ff/forcefield.doc</option>
+            <option value="gromos43a1.ff/atomtypes.atp">gromos43a1.ff/atomtypes.atp</option>
+            <option value="gromos43a1.ff/watermodels.dat">gromos43a1.ff/watermodels.dat</option>
+            <option value="gromos43a1.ff/tip4p.itp">gromos43a1.ff/tip4p.itp</option>
+            <option value="gromos43a1.ff/ions.itp">gromos43a1.ff/ions.itp</option>
+            <option value="gromos43a1.ff/spc.itp">gromos43a1.ff/spc.itp</option>
+            <option value="gromos43a1.ff/aminoacids.vsd">gromos43a1.ff/aminoacids.vsd</option>
+            <option value="gromos43a1.ff/spce.itp">gromos43a1.ff/spce.itp</option>
+            <option value="gromos43a1.ff/aminoacids.n.tdb">gromos43a1.ff/aminoacids.n.tdb</option>
+            <option value="gromos43a1.ff/ffbonded.itp">gromos43a1.ff/ffbonded.itp</option>
+            <option value="gromos43a1.ff/ffnonbonded.itp">gromos43a1.ff/ffnonbonded.itp</option>
+            <option value="gromos43a1.ff/tip3p.itp">gromos43a1.ff/tip3p.itp</option>
+            <option value="gromos43a1.ff/aminoacids.hdb">gromos43a1.ff/aminoacids.hdb</option>
+            <option value="gromos43a1.ff/aminoacids.c.tdb">gromos43a1.ff/aminoacids.c.tdb</option>
+            <option value="gromos43a1.ff/methanol.itp">gromos43a1.ff/methanol.itp</option>
+            <option value="gromos43a1.ff/aminoacids.rtp">gromos43a1.ff/aminoacids.rtp</option>
+            <option value="gromos43a1.ff/aminoacids.r2b">gromos43a1.ff/aminoacids.r2b</option>
+            <option value="gromos43a1.ff/methanol216.gro">gromos43a1.ff/methanol216.gro</option>
+            <option value="gromos43a1.ff/forcefield.itp">gromos43a1.ff/forcefield.itp</option>
+            <option value="amber99.ff/forcefield.doc">amber99.ff/forcefield.doc</option>
+            <option value="amber99.ff/atomtypes.atp">amber99.ff/atomtypes.atp</option>
+            <option value="amber99.ff/watermodels.dat">amber99.ff/watermodels.dat</option>
+            <option value="amber99.ff/tip4p.itp">amber99.ff/tip4p.itp</option>
+            <option value="amber99.ff/ions.itp">amber99.ff/ions.itp</option>
+            <option value="amber99.ff/spc.itp">amber99.ff/spc.itp</option>
+            <option value="amber99.ff/aminoacids.vsd">amber99.ff/aminoacids.vsd</option>
+            <option value="amber99.ff/spce.itp">amber99.ff/spce.itp</option>
+            <option value="amber99.ff/tip5p.itp">amber99.ff/tip5p.itp</option>
+            <option value="amber99.ff/rna.arn">amber99.ff/rna.arn</option>
+            <option value="amber99.ff/aminoacids.n.tdb">amber99.ff/aminoacids.n.tdb</option>
+            <option value="amber99.ff/rna.rtp">amber99.ff/rna.rtp</option>
+            <option value="amber99.ff/ffbonded.itp">amber99.ff/ffbonded.itp</option>
+            <option value="amber99.ff/rna.hdb">amber99.ff/rna.hdb</option>
+            <option value="amber99.ff/aminoacids.arn">amber99.ff/aminoacids.arn</option>
+            <option value="amber99.ff/ffnonbonded.itp">amber99.ff/ffnonbonded.itp</option>
+            <option value="amber99.ff/urea.itp">amber99.ff/urea.itp</option>
+            <option value="amber99.ff/tip3p.itp">amber99.ff/tip3p.itp</option>
+            <option value="amber99.ff/dna.hdb">amber99.ff/dna.hdb</option>
+            <option value="amber99.ff/dna.rtp">amber99.ff/dna.rtp</option>
+            <option value="amber99.ff/aminoacids.hdb">amber99.ff/aminoacids.hdb</option>
+            <option value="amber99.ff/aminoacids.c.tdb">amber99.ff/aminoacids.c.tdb</option>
+            <option value="amber99.ff/tip4pew.itp">amber99.ff/tip4pew.itp</option>
+            <option value="amber99.ff/aminoacids.rtp">amber99.ff/aminoacids.rtp</option>
+            <option value="amber99.ff/dna.r2b">amber99.ff/dna.r2b</option>
+            <option value="amber99.ff/dna.arn">amber99.ff/dna.arn</option>
+            <option value="amber99.ff/rna.r2b">amber99.ff/rna.r2b</option>
+            <option value="amber99.ff/aminoacids.r2b">amber99.ff/aminoacids.r2b</option>
+            <option value="amber99.ff/forcefield.itp">amber99.ff/forcefield.itp</option>
+        </param>
+    </inputs>
+    <outputs>
+        <!-- formats ['xvg', 'dat', 'itp', 'gro', 'xml', 'tbl', 'dlg', 'm2p', 'tst', 'dtd', 'README', 'map', 'rtp', 'tdb', 'doc', 'atp', 'vsd', 'arn', 'hdb', 'r2b', 'n2t'] -->
+        <data name="output1" format="txt" label="GROMACS built-in: ${filename}">
+            <change_format>
+                <when input="${str($filename).split('.')[-1]}" value="xvg" format="xvg" />
+                <!-- <when input="${str($filename).split('.')[-1]}" value="dat" format="dat" /> -->
+                <when input="${str($filename).split('.')[-1]}" value="itp" format="itp" />
+                <when input="${str($filename).split('.')[-1]}" value="gro" format="gro" />
+                <when input="${str($filename).split('.')[-1]}" value="xml" format="xml" />
+                <!-- <when input="${str($filename).split('.')[-1]}" value="tbl" format="tbl" /> -->
+                <!-- <when input="${str($filename).split('.')[-1]}" value="dlg" format="dlg" /> -->
+                <!-- <when input="${str($filename).split('.')[-1]}" value="m2p" format="m2p" /> -->
+                <!-- <when input="${str($filename).split('.')[-1]}" value="tst" format="tst" /> -->
+                <!-- <when input="${str($filename).split('.')[-1]}" value="dtd" format="dtd" /> -->
+                <!-- <when input="${str($filename).split('.')[-1]}" value="README" format="README" /> -->
+                <!-- <when input="${str($filename).split('.')[-1]}" value="map" format="map" /> -->
+                <!-- <when input="${str($filename).split('.')[-1]}" value="rtp" format="rtp" /> -->
+                <!-- <when input="${str($filename).split('.')[-1]}" value="tdb" format="tdb" /> -->
+                <!-- <when input="${str($filename).split('.')[-1]}" value="doc" format="doc" /> -->
+                <!-- <when input="${str($filename).split('.')[-1]}" value="atp" format="atp" /> -->
+                <!-- <when input="${str($filename).split('.')[-1]}" value="vsd" format="vsd" /> -->
+                <!-- <when input="${str($filename).split('.')[-1]}" value="arn" format="arn" /> -->
+                <!-- <when input="${str($filename).split('.')[-1]}" value="hdb" format="hdb" /> -->
+                <!-- <when input="${str($filename).split('.')[-1]}" value="r2b" format="r2b" /> -->
+                <!-- <when input="${str($filename).split('.')[-1]}" value="n2t" format="n2t" /> -->
+            </change_format>
+        </data>
+    </outputs>
+    <tests>
+        <test>
+            <param name="filename" value="oplsaa.ff/tip4p.itp" />
+            <output name="output1" file="oplsaa.ff-tip4p.itp" ftype="itp" />
+        </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+Loads a built-in GROMACS file into your history.
+
+_____
+
+.. class:: infomark
+
+**Input**
+
+       - Filename.
+
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - GROMACS file.
+
+    ]]></help>
+
+    <expand macro="citations" />
+</tool>
