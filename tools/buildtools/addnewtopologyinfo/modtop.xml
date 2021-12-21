@@ -16,13 +16,13 @@
         #end if
 
         #if $str($functionality.what2add) == "restraints":
-            python3 $__tool_directory__/restraints.py --top_file '$functionality.inputtopology' --res_file '$functionality.posres' --molecule '$functionality.targetmolecule' --out '$output2'
+            python3 $__tool_directory__/restraints.py --top_file '$functionality.inputtopology' --res_file '$functionality.posres' --molecule '$functionality.targetmolecule' --out '$output1'
         #end if
 
         #if $str($functionality.what2add) == "both":
-            python3 $__tool_directory__/restraints.py --top_file '$functionality.inputtopology' --res_file '$functionality.posres' --molecule '$functionality.targetmolecule' --out '$output2'
+            python3 $__tool_directory__/restraints.py --top_file '$functionality.inputtopology' --res_file '$functionality.posres' --molecule '$functionality.targetmolecule' --out 'odoylerules'
             &&
-            python3 $__tool_directory__/newmolparameters.py --top_file '$output2' --atom_file '$functionality.nonbondparam' --mol_file '$functionality.bondparam' --out '$output3'
+            python3 $__tool_directory__/newmolparameters.py --top_file 'odoylerules' --atom_file '$functionality.nonbondparam' --mol_file '$functionality.bondparam' --out '$output1'
         #end if
 
     ]]></command>
@@ -55,14 +55,7 @@
         </conditional>  
     </inputs>
     <outputs>
-        <data name="output1" format="top" label="Modified file with new molecule's bonded and nonbonded parameters ${on_string}">
-            <filter>functionality['what2add'] == "mol"</filter>
-        </data>
-        <data name="output2" format="top" label="Modified file with restraints inserted ${on_string}">
-            <filter>functionality['what2add'] == "restraints"</filter>
-        </data>
-        <data name="output3" format="top" label="Modified file with both restraints inserted and new molecule's bonded and nonbonded parameters ${on_string}">
-            <filter>functionality['what2add'] == "both"</filter>
+        <data name="output1" format="top" label="Modified file with new topology information ${on_string}">
         </data>
     </outputs>
     <tests>
@@ -83,7 +76,7 @@
             <param name="functionality|inputtopology" value="cid1_GMX.top" />
             <param name="functionality|targetmolecule" value="cid1" />
             <param name="functionality|posres" value="posres_cid1.itp" />
-            <output name="output2">
+            <output name="output1">
                 <assert_contents>
                     <has_text text=";  i funct       fcx        fcy        fcz"/>
                     <has_text text="  42    1       1000       1000       1000"/>
@@ -97,7 +90,7 @@
             <param name="functionality|bondparam" value="tip4pew.itp" />
             <param name="functionality|targetmolecule" value="cid1" />
             <param name="functionality|posres" value="posres_cid1.itp" />
-            <output name="output3">
+            <output name="output1">
                 <assert_contents>
                     <has_text text="HW_tip4pew   1       1.008   0.0000  A   0.00000e+00  0.00000e+00"/>
                     <has_text text="  2   HW_tip4pew  1       SOL       HW1      1       0.52422   1.00800"/>
