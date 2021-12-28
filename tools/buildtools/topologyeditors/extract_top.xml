@@ -1,4 +1,4 @@
-<tool id="extract_topology" name="Extracting Topology Information" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+<tool id="extract_topology" name="Extracting Topology Information" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="20.09">
     <description>from a GROMACS topology file</description>
 
     <macros>
@@ -7,12 +7,11 @@
     </macros>
 
     <expand macro="requirements">
-       <requirement type="package" version="3.8">python</requirement>
     </expand>
 
     <command detect_errors="exit_code"><![CDATA[
 
-            python3 $__tool_directory__/extract_top.py --top_file '$inputtopology' --out_nonbondparam '$output1' --out_bondparam '$output2'
+            python3 '$__tool_directory__/extract_top.py' --top_file '$inputtopology' --out_nonbondparam '$atomtypes' --out_bondparam '$moltypes'
 
     ]]></command>
     <inputs>
@@ -20,15 +19,15 @@
     </inputs>
 
     <outputs>
-        <data name="output1" format="txt" label="Nonbonded parameters and atom types under [ atomtypes ] section ${on_string}">
+        <data name="atomtypes" format="txt" label="Nonbonded parameters and atom types under [ atomtypes ] section ${on_string}">
         </data>
-        <data name="output2" format="txt" label="Bonded parameters and relevant information under [ moleculetype ] section ${on_string}">
+        <data name="moltypes" format="txt" label="Bonded parameters and relevant information under [ moleculetype ] section ${on_string}">
         </data>
     </outputs>
     <tests>
         <test>
             <param name="inputtopology" value="cid1_GMX.top" />
-            <output name="output1">
+            <output name="atomtypes">
                 <assert_contents>
                     <has_text text=" ca       ca          0.00000  0.00000   A     3.39967e-01   3.59824e-01 ; 1.91  0.0860"/>
                     <has_text text=" hn       hn          0.00000  0.00000   A     1.06908e-01   6.56888e-02 ; 0.60  0.0157"/>
@@ -37,7 +36,7 @@
         </test>
         <test>
             <param name="inputtopology" value="cid1_GMX.top" />
-            <output name="output2">
+            <output name="moltypes">
                 <assert_contents>
                     <has_text text="     1   ca     1   cid1    C1    1    -0.236300     12.01000 ; qtot -0.236"/>
                     <has_text text="    23      1      4      2      4   180.00   4.60240   2 ;    H23-    C1-    C4-    C2"/>

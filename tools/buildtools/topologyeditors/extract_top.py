@@ -18,35 +18,31 @@ def __main__():
     args = parser.parse_args()
     # extracts the atom types with nonbonded terms from
     # the new molecules and puts them in a new file
-    inFile = open(args.top_file)
-    outFile = open(args.out_nonbondparam, "w")
-    buffer = []
-    for line in inFile:
-        if line.startswith(";name   bond_type"):
-            buffer = ['']
-        elif line.startswith("[ moleculetype ]"):
-            outFile.write("".join(buffer))
+    with open(args.top_file) as inFile:
+        with open(args.out_nonbondparam, "w") as outFile:
             buffer = []
-        elif buffer:
-            buffer.append(line)
-    inFile.close()
-    outFile.close()
+            for line in inFile:
+                if line.startswith(";name   bond_type"):
+                    buffer = ['']
+                elif line.startswith("[ moleculetype ]"):
+                    outFile.write("".join(buffer))
+                    buffer = []
+                elif buffer:
+                    buffer.append(line)
 
     # extracts the molecule types (rest of the force field parameters)
     # with bonded terms and puts them in a new file
-    inFile = open(args.top_file)
-    outFile = open(args.out_bondparam, "w")
-    buffer = []
-    for line in inFile:
-        if line.startswith("[ moleculetype ]"):
-            buffer = ["\n[ moleculetype ]\n"]
-        elif line.startswith("[ system ]"):
-            outFile.write("".join(buffer))
+    with open(args.top_file) as inFile:
+        with open(args.out_bondparam, "w") as outFile:
             buffer = []
-        elif buffer:
-            buffer.append(line)
-    inFile.close()
-    outFile.close()
+            for line in inFile:
+                if line.startswith("[ moleculetype ]"):
+                    buffer = ["\n[ moleculetype ]\n"]
+                elif line.startswith("[ system ]"):
+                    outFile.write("".join(buffer))
+                    buffer = []
+                elif buffer:
+                    buffer.append(line)
 
 
 if __name__ == "__main__":
