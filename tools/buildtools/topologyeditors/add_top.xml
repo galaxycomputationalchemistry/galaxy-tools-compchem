@@ -59,10 +59,12 @@
     </outputs>
     <tests>
         <test>
-            <param name="functionality|what2add" value="mol" />
-            <param name="functionality|inputtopology" value="cid1_GMX.top" />
-            <param name="functionality|nonbondparam" value="water_nonbondedparams.itp" />
-            <param name="functionality|bondparam" value="water_bondedparams.itp" />
+            <conditional name="functionality">
+                <param name="what2add" value="mol" />
+                <param name="inputtopology" value="cid1_GMX.top" />
+                <param name="nonbondparam" value="water_nonbondedparams.itp" />
+                <param name="bondparam" value="water_bondedparams.itp" />
+            </conditional>
             <output name="newtop">
                 <assert_contents>
                     <has_text text="HW_tip4pew   1       1.008   0.0000  A   0.00000e+00  0.00000e+00"/>
