@@ -61,8 +61,8 @@
         <test>
             <param name="functionality|what2add" value="mol" />
             <param name="functionality|inputtopology" value="cid1_GMX.top" />
-            <param name="functionality|nonbondparam" value="watatomtypes.txt" />
-            <param name="functionality|bondparam" value="tip4pew.itp" />
+            <param name="functionality|nonbondparam" value="water_nonbondedparams.itp" />
+            <param name="functionality|bondparam" value="water_bondedparams.itp" />
             <output name="newtop">
                 <assert_contents>
                     <has_text text="HW_tip4pew   1       1.008   0.0000  A   0.00000e+00  0.00000e+00"/>
@@ -85,8 +85,8 @@
         <test>
             <param name="functionality|what2add" value="both" />
             <param name="functionality|inputtopology" value="cid1_GMX.top" />
-            <param name="functionality|nonbondparam" value="watatomtypes.txt" />
-            <param name="functionality|bondparam" value="tip4pew.itp" />
+            <param name="functionality|nonbondparam" value="water_nonbondedparams.itp" />
+            <param name="functionality|bondparam" value="water_bondedparams.itp" />
             <param name="functionality|targetmolecule" value="cid1" />
             <param name="functionality|posres" value="posres_cid1.itp" />
             <output name="newtop">
