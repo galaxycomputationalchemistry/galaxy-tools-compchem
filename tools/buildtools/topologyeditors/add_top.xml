@@ -11,17 +11,17 @@
 
     <command detect_errors="exit_code"><![CDATA[
         #if $str($functionality.what2add) == "mol":
-            python3 '$__tool_directory__/newmolparameters.py' --top_file '$functionality.inputtopology' --atom_file '$functionality.nonbondparam' --mol_file '$functionality.bondparam' --out '$newtop'
+            python3 '$__tool_directory__/gmxtras_add_newmolparam.py' --top_file '$functionality.inputtopology' --atom_file '$functionality.nonbondparam' --mol_file '$functionality.bondparam' --out '$newtop'
         #end if
 
         #if $str($functionality.what2add) == "restraints":
-            python3 '$__tool_directory__/restraints.py' --top_file '$functionality.inputtopology' --res_file '$functionality.posres' --molecule '$functionality.targetmolecule' --out '$newtop'
+            python3 '$__tool_directory__/gmxtras_add_restraints.py' --top_file '$functionality.inputtopology' --res_file '$functionality.posres' --molecule '$functionality.targetmolecule' --out '$newtop'
         #end if
 
         #if $str($functionality.what2add) == "both":
-            python3 '$__tool_directory__/restraints.py' --top_file '$functionality.inputtopology' --res_file '$functionality.posres' --molecule '$functionality.targetmolecule' --out 'odoylerules'
+            python3 '$__tool_directory__/gmxtras_add_restraints.py' --top_file '$functionality.inputtopology' --res_file '$functionality.posres' --molecule '$functionality.targetmolecule' --out 'odoylerules'
             &&
-            python3 '$__tool_directory__/newmolparameters.py' --top_file 'odoylerules' --atom_file '$functionality.nonbondparam' --mol_file '$functionality.bondparam' --out '$newtop'
+            python3 '$__tool_directory__/gmxtras_add_newmolparam.py' --top_file 'odoylerules' --atom_file '$functionality.nonbondparam' --mol_file '$functionality.bondparam' --out '$newtop'
         #end if
 
     ]]></command>
@@ -73,11 +73,13 @@
             </output>
         </test>
         <test>
-            <param name="functionality|what2add" value="restraints" />
-            <param name="functionality|inputtopology" value="cid1_GMX.top" />
-            <param name="functionality|targetmolecule" value="cid1" />
-            <param name="functionality|posres" value="posres_cid1.itp" />
-            <output name="newtop">
+	    <conditional name="functionality">
+            	<param name="what2add" value="restraints" />
+            	<param name="inputtopology" value="cid1_GMX.top" />
+            	<param name="targetmolecule" value="cid1" />
+            	<param name="posres" value="posres_cid1.itp" />
+            </conditional>
+		<output name="newtop">
                 <assert_contents>
                     <has_text text=";  i funct       fcx        fcy        fcz"/>
                     <has_text text="  42    1       1000       1000       1000"/>
@@ -85,13 +87,15 @@
             </output>
         </test>
         <test>
-            <param name="functionality|what2add" value="both" />
-            <param name="functionality|inputtopology" value="cid1_GMX.top" />
-            <param name="functionality|nonbondparam" value="water_nonbondedparams.itp" />
-            <param name="functionality|bondparam" value="water_bondedparams.itp" />
-            <param name="functionality|targetmolecule" value="cid1" />
-            <param name="functionality|posres" value="posres_cid1.itp" />
-            <output name="newtop">
+ 	    <conditional name="functionality">
+            	<param name="what2add" value="both" />
+            	<param name="inputtopology" value="cid1_GMX.top" />
+            	<param name="nonbondparam" value="water_nonbondedparams.itp" />
+            	<param name="bondparam" value="water_bondedparams.itp" />
+            	<param name="targetmolecule" value="cid1" />
+            	<param name="posres" value="posres_cid1.itp" />
+            </conditional>
+		<output name="newtop">
                 <assert_contents>
                     <has_text text="HW_tip4pew   1       1.008   0.0000  A   0.00000e+00  0.00000e+00"/>
                     <has_text text="  2   HW_tip4pew  1       SOL       HW1      1       0.52422   1.00800"/>

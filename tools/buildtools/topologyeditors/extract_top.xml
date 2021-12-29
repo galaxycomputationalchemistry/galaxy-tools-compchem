@@ -11,7 +11,7 @@
 
     <command detect_errors="exit_code"><![CDATA[
 
-            python3 '$__tool_directory__/extract_top.py' --top_file '$inputtopology' --out_nonbondparam '$atomtypes' --out_bondparam '$moltypes'
+            python3 '$__tool_directory__/gmxtras_extract_top.py' --top_file '$inputtopology' --out_nonbondparam '$atomtypes' --out_bondparam '$moltypes'
 
     ]]></command>
     <inputs>
