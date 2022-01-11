@@ -384,7 +384,7 @@ quit
             <param name="arg_atom1" label="Bonding atom 1" type="text" value="" help="Each atom is defined as 'variable.residuenumber.atomtype', where the assigned variable is the same one used in loadPdb, saveAmberParm, savePdb, and other commands in your tleap script. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. "/>
             <param name="arg_atom2" label="Bonding atom 2" type="text" value="" help="Each atom is defined as 'variable.residuenumber.atomtype', where the assigned variable is the same one used in loadPdb, saveAmberParm, savePdb, and other commands in your tleap script. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. "/>
             <param name="arg_order" label="order value" type="select" value="" help="Choose 'S' for single bond, 'D' for double bond, 'T' for triple bond, or 'A' for aromatic bond. The default value is 'S' if left blank.">
-                <option value=""></option>
+                <option value="">default</option>
                 <option value="S">single bond</option>
                 <option value="D">double bond</option>
                 <option value="T">triple bond</option>
@@ -1576,7 +1576,7 @@ quit
   option = 1 for AMBER atom types
   
   More information:
-  http://q4md-forcefieldtools.org/Tutorial/leap.php
+  https://upjv.q4md-forcefieldtools.org/Tutorial/leap-mol2.php
   
   saveMol3 unit filename option
   
