@@ -481,6 +481,20 @@
 	     <option value="oldff/leaprc.ff03">oldff/leaprc.ff03</option>
 	</param>
   </xml>
+  <xml name="amberfiles_conditional">
+    <conditional name="file_source">
+       <param name="file_source_selector" type="select" label="Select file source">
+            <option value="history">From history</option>
+            <option value="builtin">From Built-in AmberTools data</option>
+       </param>
+       <when value="history">
+            <param name="arg_filename" label="File name" value="" type="data" format="txt"/>
+       </when>
+       <when value="builtin">
+            <expand macro="builtin_amberfiles" />
+       </when>
+    </conditional>
+  </xml>
   <xml name="citations">
     <citations>
       <citation type="doi">10.1002/jcc.20290</citation>

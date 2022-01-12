@@ -1,19 +1,14 @@
-<tool id="tleap" name="Build tLEaP" version="0.0.1" >
+<tool id="tleap" name="Build tLEaP" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" >
     <description>interactively build and run tLEaP files to set up systems with AmberTools</description>
      <macros>
         <import>macros.xml</import>
         <token name="@GALAXY_VERSION@">0</token>
      </macros>
      <expand macro="requirements" />
-     <stdio>
-        <exit_code range="1:" />
-     </stdio>
-     <version_command>tleap --version</version_command>
-
-     <command><![CDATA[
+     <version_command>tleap -h</version_command>
+     <command detect_errors="exit_code"><![CDATA[
         cp '${tleap_in}' '${output_tleap_in}' && mkdir out && tleap -f '${tleap_in}' > '${output_tleap}'
     ]]></command>
-
      <configfiles>
         <configfile name="tleap_in"><![CDATA[#for $i, $cmd in $enumerate($tleap_cmds):
 #if $cmd.tleap_cond.tleap_cmd == "add":
@@ -508,32 +503,10 @@ quit
        </when>
        <when value="loadAmberParams">
             <param name="loadAmberParams_assign" label="Assign to variable named" type="text" value=""/>
-            <conditional name="file_source">
-               <param name="file_source_selector" type="select" label="Select file source">
-                    <option value="history">From history</option>
-                    <option value="builtin">From Built-in AmberTools data</option>
-               </param>
-               <when value="history">
-                    <param name="arg_filename" label="File name" value="" type="data" format="txt"/>
-               </when>
-               <when value="builtin">
-                    <expand macro="builtin_amberfiles" />
-               </when>
-            </conditional>
+            <expand macro="amberfiles_conditional" />
        </when>
        <when value="loadAmberPrep">
-            <conditional name="file_source">
-               <param name="file_source_selector" type="select" label="Select file source">
-                    <option value="history">From history</option>
-                    <option value="builtin">From Built-in AmberTools data</option>
-               </param>
-               <when value="history">
-                    <param name="arg_filename" label="File name" value="" type="data" format="txt"/>
-               </when>
-               <when value="builtin">
-                    <expand macro="builtin_amberfiles" />
-               </when>
-            </conditional>
+            <expand macro="amberfiles_conditional" />
             <param name="arg_loadAmberPrep_arg_1" label="loadAmberPrep_arg_1 value" type="text" value="" help=""/>
             <param name="arg_prefix" label="prefix value" type="text" value="" help="STRING"/>
             <param name="arg_loadAmberPrep_arg_3" label="loadAmberPrep_arg_3 value" type="text" value="" help=""/>
