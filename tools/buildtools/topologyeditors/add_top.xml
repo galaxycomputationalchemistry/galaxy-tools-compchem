@@ -1,27 +1,39 @@
 <tool id="modify_topology" name="Adding New Topology Information" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="20.09">
     <description>to a GROMACS topology file</description>
-
     <macros>
         <import>macros.xml</import>
         <token name="@GALAXY_VERSION@">0</token>
     </macros>
-
-    <expand macro="requirements">
-    </expand>
-
+    <expand macro="requirements"/>
     <command detect_errors="exit_code"><![CDATA[
         #if $str($functionality.what2add) == "mol":
-            python3 '$__tool_directory__/gmxtras_add_newmolparam.py' --top_file '$functionality.inputtopology' --atom_file '$functionality.nonbondparam' --mol_file '$functionality.bondparam' --out '$newtop'
+            python3 '$__tool_directory__/gmxtras_add_newmolparam.py'
+                --top_file '$functionality.inputtopology'
+                --atom_file '$functionality.nonbondparam'
+                --mol_file '$functionality.bondparam'
+                --out '$newtop'
         #end if
 
         #if $str($functionality.what2add) == "restraints":
-            python3 '$__tool_directory__/gmxtras_add_restraints.py' --top_file '$functionality.inputtopology' --res_file '$functionality.posres' --molecule '$functionality.targetmolecule' --out '$newtop'
+            python3 '$__tool_directory__/gmxtras_add_restraints.py'
+                --top_file '$functionality.inputtopology'
+                --res_file '$functionality.posres'
+                --molecule '$functionality.targetmolecule'
+                --out '$newtop'
         #end if
 
         #if $str($functionality.what2add) == "both":
-            python3 '$__tool_directory__/gmxtras_add_restraints.py' --top_file '$functionality.inputtopology' --res_file '$functionality.posres' --molecule '$functionality.targetmolecule' --out 'odoylerules'
+            python3 '$__tool_directory__/gmxtras_add_restraints.py'
+                --top_file '$functionality.inputtopology'
+                --res_file '$functionality.posres'
+                --molecule '$functionality.targetmolecule'
+                --out 'odoylerules'
             &&
-            python3 '$__tool_directory__/gmxtras_add_newmolparam.py' --top_file 'odoylerules' --atom_file '$functionality.nonbondparam' --mol_file '$functionality.bondparam' --out '$newtop'
+            python3 '$__tool_directory__/gmxtras_add_newmolparam.py'
+                --top_file 'odoylerules'
+                --atom_file '$functionality.nonbondparam'
+                --mol_file '$functionality.bondparam'
+                --out '$newtop'
         #end if
 
     ]]></command>
@@ -34,28 +46,27 @@
                  <option value="both">Both a molecule's topology information and position restrain information</option>
              </param>
              <when value="mol">
-                 <param name="inputtopology" type="data" format="top" label="GROMACS Topology file to be modified." help="Topology file with missing information"/>
+                 <param name="inputtopology" type="data" format="top" label="GROMACS Topology file to be modified" help="Topology file with missing information"/>
                  <param name="nonbondparam" type="data" format="txt" label="Atom Types with Nonbonded Parameters" help="Atom types information from grep"/>
                  <param name="bondparam" type="data" format="txt,itp" label="Molecule type information with bonded parameters" help="molecule type information"/>
              </when>
              <when value="restraints">
                  <param name="inputtopology" type="data" format="top" label="GROMACS Topology file to be modified" help="Topology file with missing information"/>
-                 <param name="posres" type="data" format="itp" label="position restraint file" help="Position restraint file created previously"/>
+                 <param name="posres" type="data" format="itp" label="Position restraint file" help="Position restraint file created previously"/>
 		 <param name="targetmolecule" type="text" label="Target molecule type" help="The molecule type name to which the restraints were applied"/>
              </when>
              <when value="both">
                  <param name="inputtopology" type="data" format="top" label="GROMACS Topology file to be modified" help="Topology file with missing information"/>
                  <param name="nonbondparam" type="data" format="txt" label="Atom Types with Nonbonded Parameters" help="Atom types information from grep"/>
                  <param name="bondparam" type="data" format="txt,itp" label="Molecule type information with bonded parameters" help="molecule type information"/>
-                 <param name="posres" type="data" format="itp" label="position restraint file" help="Position restraint file created previously"/>
+                 <param name="posres" type="data" format="itp" label="Position restraint file" help="Position restraint file created previously"/>
                  <param name="targetmolecule" type="text" label="Target molecule type" help="The molecule type name to which the restraints were applied"/>
              </when>
 
         </conditional>  
     </inputs>
     <outputs>
-        <data name="newtop" format="top" label="Modified file with new topology information ${on_string}">
-        </data>
+        <data name="newtop" format="top" label="Modified file with new topology information ${on_string}"/>
     </outputs>
     <tests>
         <test>
@@ -106,7 +117,11 @@
         </test>
     </tests>
     <help><![CDATA[
-Tool to modify and add new information to GROMACS topology files. This is particularly useful when working with systems that were created outside of GROMACS (for example, files created in AMBER or CHARMM and then converted over via acpype). This tool can also be used to complement the "gmx insert-molecules" tool, which currently only modifies the GROMACS structure files (gro) and requires further modification of the topology file for the newly populated system to be simulation ready.   
+
+Tool to modify and add new information to GROMACS topology files. This is particularly useful when working with systems
+that were created outside of GROMACS (for example, files created in AMBER or CHARMM and then converted over via acpype).
+This tool can also be used to complement the "gmx insert-molecules" tool, which currently only modifies the GROMACS
+structure files (gro) and requires further modification of the topology file for the newly populated system to be simulation ready.   
 
 .. class:: infomark
 
