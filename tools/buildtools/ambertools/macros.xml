@@ -7,7 +7,7 @@
     </requirements>
   </xml>
     <xml name="builtin_amberfiles">
-	<param name="arg_filename" type="select" label="File name">
+	<param name="arg_filename" type="select" label="File">
 	     <option value="epASN.prepin">epASN.prepin</option>
 	     <option value="epACE.prepin">epACE.prepin</option>
 	     <option value="GLYCAM_06j-1.prep">GLYCAM_06j-1.prep</option>
@@ -488,7 +488,7 @@
             <option value="builtin">From Built-in AmberTools data</option>
        </param>
        <when value="history">
-            <param name="arg_filename" label="File name" value="" type="data" format="txt"/>
+            <param name="arg_filename" label="File" value="" type="data" format="txt"/>
        </when>
        <when value="builtin">
             <expand macro="builtin_amberfiles" />

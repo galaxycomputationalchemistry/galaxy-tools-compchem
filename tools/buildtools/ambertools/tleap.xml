@@ -524,7 +524,7 @@ quit
        </when>
        <when value="loadPdb">
             <param name="loadPdb_assign" label="Assign to variable named" type="text" value="" help="The variable name that your system's components are assigned to. This should generally be the same variable used when saving the output files (when using savePdb, saveAmberParm, etc.)."/>
-            <param name="arg_filename" label="filename value" type="data" format="txt"/>
+            <param name="arg_filename" label="File" type="data" format="pdb"/>
        </when>
        <when value="loadPdbUsingSeq">
             <param name="arg_filename" label="filename value" type="data" format="txt"/>
@@ -748,7 +748,7 @@ quit
           <repeat name="tleap_cmds">
             <conditional name="tleap_cond">
                  <param name="tleap_cmd" value="source"/>
-                   <param name="arg_filename" value="oldff/leaprc.ff14SB"/>
+                 <param name="arg_filename" value="oldff/leaprc.ff14SB"/>
             </conditional>
           </repeat>
           <repeat name="tleap_cmds">
