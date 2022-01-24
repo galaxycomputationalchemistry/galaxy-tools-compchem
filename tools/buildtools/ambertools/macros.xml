@@ -6,7 +6,7 @@
       <yield/>
     </requirements>
   </xml>
-    <xml name="builtin_amberfiles">
+  <xml name="builtin_amberfiles">
 	<param name="arg_filename" type="select" label="File">
 	     <option value="epASN.prepin">epASN.prepin</option>
 	     <option value="epACE.prepin">epACE.prepin</option>
@@ -481,6 +481,38 @@
 	     <option value="oldff/leaprc.ff03">oldff/leaprc.ff03</option>
 	</param>
   </xml>
+  <xml name="addingions">
+       <param name="arg_variable" label="Variable name of UNIT:" type="text" value="" help="The variable name that your system's components are assigned to."/>
+       <param name="arg_ion1" label="ion1 type" type="text" value="" help="Atom type for ion, as written in your chosen forcefield file. For example, choose Cl- for chloride."/>
+       <param name="arg__ion1" label="# of ion1 atoms to add" type="text" value="" help="Type 0 if you want to add enough ions to neutralize (if using the conventional 'addIons' command)."/>
+       <param name="arg_ion2" label="ion2 type" type="text" value="" help="Atom type for ion, as written in your chosen forcefield file. For example, choose Na+ for sodium."/>
+       <param name="arg__ion2" label="# of ion1 atoms to add" type="text" value="" help="Type 0 if you want to add enough ions to neutralize (if using the conventional 'addIons' command)."/>
+  </xml>
+  <xml name="unitvariable">
+	   <param name="arg_unit" label="Variable name of UNIT:" type="text" value="" help="This is the variable name for the target UNIT, which can be a protein, ligand, or any other unique molecular component of the system, that is loaded into LEaP. "/>
+  </xml>
+  <xml name="container" >
+	   <param name="arg_container" label="container value" type="text" value="" help="UNIT/RESIDUE/ATOM to apply this to"/>
+  </xml>
+  <xml name="create">
+	   <param name="createVar_assign" label="Assign to variable named" type="text" value=""/>
+       <param name="arg_name" label="name" type="text" value="" help="STRING"/>
+  </xml>
+  <xml name="object">
+	   <param name="arg_obj" label="obj value" type="text" value="" help="The object can be an entire UNIT, or use periods to choose specific RESIDUES (UNIT.RESIDUE#) and/or ATOMS (UNIT.RESIDUE#.ATOMname) within it." />
+  </xml>
+  <xml name="newfile" >
+  	   <param name="newfile" label="new file to save data into" type="text" />
+  </xml>
+  <xml name="loadfile" token_data_format="txt">
+	   <param name="arg_filename" label="File" type="data" format="@DATA_FORMAT@" />
+  </xml>
+  <xml name="solvateparams" >
+	   <param name="arg_solute" label="solute UNIT" type="text" value="" help="This is the variable name for the target UNIT, which can be a protein, ligand, or any other unique molecular component of the system that is loaded into LEaP and you are now trying to solvate. "/>
+       <param name="arg_solvent" label="solvent UNIT" type="text" value="" help="The UNIT name for the water model you would like to use. Options include TIP3PBOX, TIP4PBOX, TIP4PEWBOX, and TIP5PBOX. "/>
+       <param name="arg_buffer" label="buffer value" type="text" value="" help="object"/>
+	   <param name="arg_closeness" label="closeness value" type="text" value="" help="This is used to control the extent to which solvent atoms overlap solute atoms. The default value is 1.0, which allows no overlap. "/>
+  </xml>
   <xml name="amberfiles_conditional">
     <conditional name="file_source">
        <param name="file_source_selector" type="select" label="Select file source">
@@ -488,7 +520,7 @@
             <option value="builtin">From Built-in AmberTools data</option>
        </param>
        <when value="history">
-            <param name="arg_filename" label="File" value="" type="data" format="txt"/>
+            <expand macro="loadfile" />
        </when>
        <when value="builtin">
             <expand macro="builtin_amberfiles" />
