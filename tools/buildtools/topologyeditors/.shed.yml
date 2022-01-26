@@ -1,0 +1,16 @@
+name: topologyeditors
+owner: chemteam
+description: "Set of python scripts and associated tool files that can be used to modify topology files.
+long_description: |
+    This is a set of python scripts and associated tool files that can be used to modify topology files, specially those generated outside of GROMACS, so that they are ready for molecular dynamics (MD) simulations and analyzing trajectories.
+remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/tree/master/tools/buildtools/topologyeditors
+homepage_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/tree/master/tools/buildtools/topologyeditors
+type: unrestricted
+categories:
+  - Molecular Dynamics
+  - Computational chemistry
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrappers for the topology editors: {{ tool_name }}"
+maintainers:
+  - thepineapplepirate
