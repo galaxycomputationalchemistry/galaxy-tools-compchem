@@ -1,16 +1,16 @@
-<tool id="tleap" name="Build tLEaP" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" >
-    <description>interactively build and run tLEaP files to set up systems with AmberTools</description>
+<tool id="tleap" name="Build tLEaP" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+     <description>interactively build and run tLEaP files to set up systems with AmberTools</description>
      <macros>
-        <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+          <import>macros.xml</import>
+          <token name="@GALAXY_VERSION@">0</token>
      </macros>
      <expand macro="requirements" />
      <version_command>tleap -h</version_command>
      <command detect_errors="exit_code"><![CDATA[
         cp '${tleap_in}' '${output_tleap_in}' && mkdir out && tleap -f '${tleap_in}' > '${output_tleap}'
-    ]]></command>
+    ]]>     </command>
      <configfiles>
-        <configfile name="tleap_in"><![CDATA[#for $i, $cmd in $enumerate($tleap_cmds):
+          <configfile name="tleap_in"><![CDATA[#for $i, $cmd in $enumerate($tleap_cmds):
 #if $cmd.tleap_cond.tleap_cmd == "add":
 add ${cmd.tleap_cond.arg_a} ${cmd.tleap_cond.arg_b}
 #elif $cmd.tleap_cond.tleap_cmd == "addAtomTypes":
@@ -215,11 +215,13 @@ sequence { ${cmd.tleap_cond.arg_list} }
 #elif $cmd.tleap_cond.tleap_cmd == "set":
 set ${cmd.tleap_cond.arg_variable} ${cmd.tleap_cond.arg_container} ${cmd.tleap_cond.arg_dim}
 #elif $cmd.tleap_cond.tleap_cmd == "set_default":
-set_default ${cmd.tleap_cond.arg_arguments} ${cmd.tleap_cond.arg_to} ${cmd.tleap_cond.arg_set} ${cmd.tleap_cond.arg_default} ${cmd.tleap_cond.arg_variable} ${cmd.tleap_cond.arg_value} ${cmd.tleap_cond.arg_are} ${cmd.tleap_cond.arg_these_}
+#for $setdefaultsvar in $cmd.tleap_cond.defaults:
+set default ${setdefaultsvar.settingsvariable} ${setdefaultsvar.usersetting}
+#end for 
 #elif $cmd.tleap_cond.tleap_cmd == "setBox":
 setBox ${cmd.tleap_cond.arg_unit} ${cmd.tleap_cond.arg_enclosure} ${cmd.tleap_cond.arg_buffer} 
 #elif $cmd.tleap_cond.tleap_cmd == "showdefault":
-showdefault ${cmd.tleap_cond.arg_showdefault_arg_0} ${cmd.tleap_cond.arg_variable} ${cmd.tleap_cond.arg_OR} ${cmd.tleap_cond.arg_all} ${cmd.tleap_cond.arg_OR} ${cmd.tleap_cond.arg__} ${cmd.tleap_cond.arg_showdefault_arg_6}
+showdefault
 #elif $cmd.tleap_cond.tleap_cmd == "solvateBox":
 solvateBox ${cmd.tleap_cond.arg_solute} ${cmd.tleap_cond.arg_solvent} ${cmd.tleap_cond.arg_buffer} ${cmd.tleap_cond.arg_iso} ${cmd.tleap_cond.arg_closeness}
 #elif $cmd.tleap_cond.tleap_cmd == "solvateCap":
@@ -248,594 +250,586 @@ zMatrix ${cmd.tleap_cond.arg_obj} ${cmd.tleap_cond.arg_zmatrix}
 #end if
 #end for]]>
 quit
-        </configfile>
-    </configfiles>
-   
-    <inputs>
-        
-<repeat name="tleap_cmds" title="Add tLEaP command" min="1">
-    <conditional name="tleap_cond">
-        <param type="select" name="tleap_cmd" label="Choose tLEaP command">
-            <option value="add">add</option>
-            <option value="addAtomTypes">addAtomTypes</option>
-            <option value="addH">addH</option>
-            <option value="addIons">addIons</option>
-            <option value="addIons2">addIons2</option>
-            <option value="addIonsRand">addIonsRand</option>
-            <option value="addPath">addPath</option>
-            <option value="addPdbAtomMap">addPdbAtomMap</option>
-            <option value="addPdbResMap">addPdbResMap</option>
-            <option value="alignAxes">alignAxes</option>
-            <option value="bond">bond</option>
-            <option value="bondByDistance">bondByDistance</option>
-            <option value="center">center</option>
-            <option value="charge">charge</option>
-            <option value="check">check</option>
-            <option value="clearPdbAtomMap">clearPdbAtomMap</option>
-            <option value="clearPdbResMap">clearPdbResMap</option>
-            <option value="clearVariables">clearVariables</option>
-            <option value="combine">combine</option>
-            <option value="copy">copy</option>
-            <option value="createAtom">createAtom</option>
-            <option value="createParmset">createParmset</option>
-            <option value="createResidue">createResidue</option>
-            <option value="createUnit">createUnit</option>
-            <option value="crossLink">crossLink</option>
-            <option value="debugOff">debugOff</option>
-            <option value="debugOn">debugOn</option>
-            <option value="debugStatus">debugStatus</option>
-            <option value="deleteBond">deleteBond</option>
-            <option value="deleteOffLibEntry">deleteOffLibEntry</option>
-            <option value="deleteRestraint">deleteRestraint</option>
-            <option value="desc">desc</option>
-            <option value="deSelect">deSelect</option>
-            <option value="displayPdbAtomMap">displayPdbAtomMap</option>
-            <option value="displayPdbResMap">displayPdbResMap</option>
-            <option value="edit">edit</option>
-            <option value="flip">flip</option>
-            <option value="groupSelectedAtoms">groupSelectedAtoms</option>
-            <option value="help">help</option>
-            <option value="impose">impose</option>
-            <option value="list">list</option>
-            <option value="listOff">listOff</option>
-            <option value="loadAmberParams">loadAmberParams</option>
-            <option value="loadAmberPrep">loadAmberPrep</option>
-            <option value="loadMol2">loadMol2</option>
-            <option value="loadMol3">loadMol3</option>
-            <option value="loadOff">loadOff</option>
-            <option value="loadPdb">loadPdb</option>
-            <option value="loadPdbUsingSeq">loadPdbUsingSeq</option>
-            <option value="logFile">logFile</option>
-            <option value="matchVariables">matchVariables</option>
-            <option value="measureGeom">measureGeom</option>
-            <option value="relax">relax</option>
-            <option value="remove">remove</option>
-            <option value="restrainAngle">restrainAngle</option>
-            <option value="restrainBond">restrainBond</option>
-            <option value="restrainTorsion">restrainTorsion</option>
-            <option value="saveAmberParm">saveAmberParm</option>
-            <option value="saveAmberParmNetcdf">saveAmberParmNetcdf</option>
-            <option value="saveAmberParmPert">saveAmberParmPert</option>
-            <option value="saveAmberParmPol">saveAmberParmPol</option>
-            <option value="saveAmberParmPolPert">saveAmberParmPolPert</option>
-            <option value="saveAmberPrep">saveAmberPrep</option>
-            <option value="saveMol2">saveMol2</option>
-            <option value="saveMol3">saveMol3</option>
-            <option value="saveOff">saveOff</option>
-            <option value="savePdb">savePdb</option>
-            <option value="scaleCharges">scaleCharges</option>
-            <option value="select">select</option>
-            <option value="sequence">sequence</option>
-            <option value="set">set</option>
-            <option value="set_default">set_default</option>
-            <option value="setBox">setBox</option>
-            <option value="showdefault">showdefault</option>
-            <option value="solvateBox">solvateBox</option>
-            <option value="solvateCap">solvateCap</option>
-            <option value="solvateDontClip">solvateDontClip</option>
-            <option value="solvateOct">solvateOct</option>
-            <option value="solvateShell">solvateShell</option>
-            <option value="source">source</option>
-            <option value="transform">transform</option>
-            <option value="translate">translate</option>
-            <option value="verbosity">verbosity</option>
-            <option value="zMatrix">zMatrix</option>
-        </param>
-       <when value="add">
-            <param name="arg_a" label="a value" type="text" value="" help="UNIT/RESIDUE/ATOM"/>
-            <param name="arg_b" label="b value" type="text" value="" help="UNIT/RESIDUE/ATOM"/>
-       </when>
-       <when value="addAtomTypes">
-          <repeat name="atomtypevars" title="new atom type parameters" min="1">
-            <param name="arg_addAtomTypes_var1" label="name" type="text" value="" help="designated name in the force field"/>
-            <param name="arg_addAtomTypes_var2" label="element" type="text" value="" help="atom name as it appear in the periodic table"/>
-            <param name="arg_addAtomTypes_var3" label="hybridization state" type="text" value="" help="sp2, sp3, etc."/>
+          </configfile>
+     </configfiles>
+
+     <inputs>
+
+          <repeat name="tleap_cmds" title="Add tLEaP command" min="1">
+               <conditional name="tleap_cond">
+                    <param type="select" name="tleap_cmd" label="Choose tLEaP command">
+                         <option value="add">add</option>
+                         <option value="addAtomTypes">addAtomTypes</option>
+                         <option value="addH">addH</option>
+                         <option value="addIons">addIons</option>
+                         <option value="addIons2">addIons2</option>
+                         <option value="addIonsRand">addIonsRand</option>
+                         <option value="addPath">addPath</option>
+                         <option value="addPdbAtomMap">addPdbAtomMap</option>
+                         <option value="addPdbResMap">addPdbResMap</option>
+                         <option value="alignAxes">alignAxes</option>
+                         <option value="bond">bond</option>
+                         <option value="bondByDistance">bondByDistance</option>
+                         <option value="center">center</option>
+                         <option value="charge">charge</option>
+                         <option value="check">check</option>
+                         <option value="clearPdbAtomMap">clearPdbAtomMap</option>
+                         <option value="clearPdbResMap">clearPdbResMap</option>
+                         <option value="clearVariables">clearVariables</option>
+                         <option value="combine">combine</option>
+                         <option value="copy">copy</option>
+                         <option value="createAtom">createAtom</option>
+                         <option value="createParmset">createParmset</option>
+                         <option value="createResidue">createResidue</option>
+                         <option value="createUnit">createUnit</option>
+                         <option value="crossLink">crossLink</option>
+                         <option value="debugOff">debugOff</option>
+                         <option value="debugOn">debugOn</option>
+                         <option value="debugStatus">debugStatus</option>
+                         <option value="deleteBond">deleteBond</option>
+                         <option value="deleteOffLibEntry">deleteOffLibEntry</option>
+                         <option value="deleteRestraint">deleteRestraint</option>
+                         <option value="desc">desc</option>
+                         <option value="deSelect">deSelect</option>
+                         <option value="displayPdbAtomMap">displayPdbAtomMap</option>
+                         <option value="displayPdbResMap">displayPdbResMap</option>
+                         <option value="edit">edit</option>
+                         <option value="flip">flip</option>
+                         <option value="groupSelectedAtoms">groupSelectedAtoms</option>
+                         <option value="help">help</option>
+                         <option value="impose">impose</option>
+                         <option value="list">list</option>
+                         <option value="listOff">listOff</option>
+                         <option value="loadAmberParams">loadAmberParams</option>
+                         <option value="loadAmberPrep">loadAmberPrep</option>
+                         <option value="loadMol2">loadMol2</option>
+                         <option value="loadMol3">loadMol3</option>
+                         <option value="loadOff">loadOff</option>
+                         <option value="loadPdb">loadPdb</option>
+                         <option value="loadPdbUsingSeq">loadPdbUsingSeq</option>
+                         <option value="logFile">logFile</option>
+                         <option value="matchVariables">matchVariables</option>
+                         <option value="measureGeom">measureGeom</option>
+                         <option value="relax">relax</option>
+                         <option value="remove">remove</option>
+                         <option value="restrainAngle">restrainAngle</option>
+                         <option value="restrainBond">restrainBond</option>
+                         <option value="restrainTorsion">restrainTorsion</option>
+                         <option value="saveAmberParm">saveAmberParm</option>
+                         <option value="saveAmberParmNetcdf">saveAmberParmNetcdf</option>
+                         <option value="saveAmberParmPert">saveAmberParmPert</option>
+                         <option value="saveAmberParmPol">saveAmberParmPol</option>
+                         <option value="saveAmberParmPolPert">saveAmberParmPolPert</option>
+                         <option value="saveAmberPrep">saveAmberPrep</option>
+                         <option value="saveMol2">saveMol2</option>
+                         <option value="saveMol3">saveMol3</option>
+                         <option value="saveOff">saveOff</option>
+                         <option value="savePdb">savePdb</option>
+                         <option value="scaleCharges">scaleCharges</option>
+                         <option value="select">select</option>
+                         <option value="sequence">sequence</option>
+                         <option value="set">set</option>
+                         <option value="set_default">set_default</option>
+                         <option value="setBox">setBox</option>
+                         <option value="showdefault">showdefault</option>
+                         <option value="solvateBox">solvateBox</option>
+                         <option value="solvateCap">solvateCap</option>
+                         <option value="solvateDontClip">solvateDontClip</option>
+                         <option value="solvateOct">solvateOct</option>
+                         <option value="solvateShell">solvateShell</option>
+                         <option value="source">source</option>
+                         <option value="transform">transform</option>
+                         <option value="translate">translate</option>
+                         <option value="verbosity">verbosity</option>
+                         <option value="zMatrix">zMatrix</option>
+                    </param>
+                    <when value="add">
+                         <param name="arg_a" label="a value" type="text" value="" help="UNIT/RESIDUE/ATOM"/>
+                         <param name="arg_b" label="b value" type="text" value="" help="UNIT/RESIDUE/ATOM"/>
+                    </when>
+                    <when value="addAtomTypes">
+                         <repeat name="atomtypevars" title="new atom type parameters" min="1">
+                              <param name="arg_addAtomTypes_var1" label="name" type="text" value="" help="designated name in the force field"/>
+                              <param name="arg_addAtomTypes_var2" label="element" type="text" value="" help="atom name as it appear in the periodic table"/>
+                              <param name="arg_addAtomTypes_var3" label="hybridization state" type="text" value="" help="sp2, sp3, etc."/>
+                         </repeat>
+                    </when>
+                    <when value="addH">
+                         <param name="arg_obj" label="Assign to UNIT with variable name:" type="text" value="" help="this should be the same variable given to a previously loaded target structure"/>
+                    </when>
+                    <when value="addIons">
+                         <expand macro="addingions" />
+                    </when>
+                    <when value="addIons2">
+                         <expand macro="addingions" />
+                    </when>
+                    <when value="addIonsRand">
+                         <expand macro="addingions" />
+                         <param name="arg_separation" label="separation value" type="text" value="" help="This value guarantees a minimum distance between inserted ions, in angstsroms."/>
+                    </when>
+                    <when value="addPath">
+                         <param name="arg_path" label="path to directory" type="text" value="" help="Specify additional paths for leap to search for files when executing commands."/>
+                    </when>
+                    <when value="addPdbAtomMap">
+                         <repeat name="AtomMapList" title="Add atom name from a pdb file to a list" min="1">
+                              <param name="oddpdbname" label="Odd atom type from pdb file" type="text" value="" help=""/>
+                              <param name="libpdbname" label="Atom type to reference in the library" type="text" value="" help=""/>
+                         </repeat>
+                    </when>
+                    <when value="addPdbResMap">
+                         <repeat name="resmap" title="Add atom name from a pdb file to a residue map in LEaP" min="1">
+                              <param name="terminalflag" label="If terminal atom, select type:" type="text" value="" help="select 0 for beginning residues (N-terminal for proteins, 5' for nucleic acids) and 1 for ending residues (C-terminal for proteins, 3' for nucleic acids). Leave blank if neither. "/>
+                              <param name="pdbname" label="atom name in pdb file" type="text" value="" help=""/>
+                              <param name="leapvar" label="variable name within leap to map onto" type="text" value="" help=""/>
+                         </repeat>
+                    </when>
+                    <when value="alignAxes">
+                         <expand macro="unitvariable" />
+                    </when>
+                    <when value="bond">
+                         <param name="arg_atom1" label="Bonding atom 1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype', where the assigned UNITvariable is the same one used to define your structure in loadPdb, saveAmberParm, savePdb, and other commands in your tleap script. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. "/>
+                         <param name="arg_atom2" label="Bonding atom 2" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype', where the assigned UNITvariable is the same one used to define your structure in loadPdb, saveAmberParm, savePdb, and other commands in your tleap script. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. "/>
+                         <param name="arg_order" label="order value" type="select" value="" help="Choose 'S' for single bond, 'D' for double bond, 'T' for triple bond, or 'A' for aromatic bond. The default value is 'S' if left blank.">
+                              <option value="">default</option>
+                              <option value="S">single bond</option>
+                              <option value="D">double bond</option>
+                              <option value="T">triple bond</option>
+                              <option value="A">aromatic bond</option>
+                         </param>
+                    </when>
+                    <when value="bondByDistance">
+                         <expand macro="container" />
+                         <param name="arg_maxBond" label="maxBond value" type="text" value="" help="maximum distance, in angstroms"/>
+                    </when>
+                    <when value="center">
+                         <expand macro="container"/>
+                    </when>
+                    <when value="charge">
+                         <expand macro="container"/>
+                    </when>
+                    <when value="check">
+                         <expand macro="unitvariable" />
+                         <param name="arg_parmset" label="parmset value" type="text" value="" help="PARMSET/STRING where all mising parameters are placed. This is optional."/>
+                    </when>
+                    <when value="clearPdbAtomMap">
+                    </when>
+                    <when value="clearPdbResMap">
+                    </when>
+                    <when value="clearVariables">
+                         <param name="arg_list" label="list of variables to clear" type="text" value="" help="This is optional. Use only if a specific set of variables need to be cleared. If left empty, all variables will be cleared by default."/>
+                    </when>
+                    <when value="combine">
+                         <param name="combine_assign" label="Name of the new combined list of variables" type="text" value=""/>
+                         <param name="arg_list" label="list of variables" type="text" value="" help="Write the name of previously defined variables that you'd like to combine into this new list. "/>
+                    </when>
+                    <when value="copy">
+                         <param name="copy_assign" label="Name of the newly copied variable:" type="text" value=""/>
+                         <param name="arg_variable" label="Variable you are making a copy of:" type="text" value="" help=""/>
+                    </when>
+                    <when value="createAtom">
+                         <expand macro="create" />
+                         <param name="arg_type" label="new atom type" type="text" value="" help="STRING"/>
+                         <param name="arg_charge" label="atomic charge" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="createParmset">
+                         <expand macro="create" />
+                    </when>
+                    <when value="createResidue">
+                         <expand macro="create" />
+                    </when>
+                    <when value="createUnit">
+                         <expand macro="create" />
+                    </when>
+                    <when value="crossLink">
+                         <param name="arg_res1" label="res1 value" type="text" value="" help="Residue 1"/>
+                         <param name="arg_conn1" label="conn1 value" type="text" value="" help="connecting atom on residue 1"/>
+                         <param name="arg_res2" label="res2 value" type="text" value="" help="Residue 2"/>
+                         <param name="arg_conn2" label="conn2 value" type="text" value="" help="connecting atom on residue 2"/>
+                    </when>
+                    <when value="debugOff">
+                         <expand macro="builtin_amberfiles" />
+                    </when>
+                    <when value="debugOn">
+                         <expand macro="builtin_amberfiles" />
+                    </when>
+                    <when value="debugStatus">
+                    </when>
+                    <when value="deleteBond">
+                         <param name="arg_atom1" label="Bonding atom 1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype', where the assigned UNITvariable is the same one used to define your structure in loadPdb, saveAmberParm, savePdb, and other commands in your tleap script. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. "/>
+                         <param name="arg_atom2" label="Bonding atom 2" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype', where the assigned UNITvariable is the same one used to define your structure in loadPdb, saveAmberParm, savePdb, and other commands in your tleap script. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. "/>
+                    </when>
+                    <when value="deleteOffLibEntry">
+                         <param name="arg_library" label="library value" type="text" format="txt" value="" help="STRING"/>
+                         <param name="arg_entry" label="entry value" type="text" value="" help="STRING"/>
+                    </when>
+                    <when value="deleteRestraint">
+                         <expand macro="unitvariable" />
+                         <param name="arg_a" label="a value" type="text" value="" help="ATOM"/>
+                         <param name="arg_b" label="b value" type="text" value="" help="ATOM"/>
+                         <param name="arg_c" label="c value" type="text" value="" help="ATOM"/>
+                         <param name="arg_d" label="d value" type="text" value="" help="ATOM"/>
+                    </when>
+                    <when value="desc">
+                         <expand macro="unitvariable" />
+                    </when>
+                    <when value="deSelect">
+                         <expand macro="object" />
+                    </when>
+                    <when value="displayPdbAtomMap">
+                    </when>
+                    <when value="displayPdbResMap">
+                    </when>
+                    <when value="edit">
+                         <param name="arg_unit_parmset" label="unit-parmset value" type="text" value="" help="UNIT/PARMSET"/>
+                    </when>
+                    <when value="flip">
+                         <expand macro="object" />
+                    </when>
+                    <when value="groupSelectedAtoms">
+                         <expand macro="unitvariable" />
+                         <param name="arg_name" label="name value" type="text" value="" help="STRING"/>
+                    </when>
+                    <when value="help">
+                         <param name="arg_string" label="string value" type="text" value="" help="STRING"/>
+                    </when>
+                    <when value="impose">
+                         <expand macro="unitvariable" />
+                         <param name="arg_seqlist" label="seqlist value" type="text" value="" help="LIST"/>
+                         <param name="arg_internals_atom1" label="internals atom1" type="text" value="" help=""/>
+                         <param name="arg_internals_atom2" label="internals atom2" type="text" value="" help=""/>
+                         <param name="arg_internals_displacement" label="displacement" type="text" value="" help="can be positive or negative, in angstroms"/>
+                    </when>
+                    <when value="list">
+                    </when>
+                    <when value="listOff">
+                         <param name="arg_library" label="library value" type="data" value="" format="txt" help="STRING"/>
+                    </when>
+                    <when value="loadAmberParams">
+                         <param name="loadAmberParams_assign" label="Assign to variable named" type="text" value=""/>
+                         <expand macro="amberfiles_conditional" />
+                    </when>
+                    <when value="loadAmberPrep">
+                         <expand macro="amberfiles_conditional" />
+                         <param name="arg_prefix" label="prefix value" type="text" value="" help="STRING"/>
+                    </when>
+                    <when value="loadMol2">
+                         <param name="loadMol2_assign" label="Assign to variable named" type="text" value="" help="This is the molecule's residue name as it appears in the mol2 file."/>
+                         <expand macro="loadfile" data_format="mol2"/>
+                    </when>
+                    <when value="loadMol3">
+                         <param name="loadMol3_assign" label="Assign to variable named" type="text" value="" help="This is the molecule's residue name as it appears in the mol2 file."/>
+                         <expand macro="loadfile" data_format="mol3"/>
+                    </when>
+                    <when value="loadOff">
+                         <expand macro="loadfile" />
+                    </when>
+                    <when value="loadPdb">
+                         <param name="loadPdb_assign" label="Assign to variable named" type="text" value="" help="The variable name that your system's components are assigned to. This should generally be the same variable used when saving the output files (when using savePdb, saveAmberParm, etc.)."/>
+                         <expand macro="loadfile" data_format="pdb"/>
+                    </when>
+                    <when value="loadPdbUsingSeq">
+                         <expand macro="loadfile" data_format="pdb"/>
+                         <param name="arg_unitlist" label="unitlist value" type="text" value="" help="LIST"/>
+                    </when>
+                    <when value="logFile">
+                         <expand macro="loadfile" />
+>
+                    </when>
+                    <when value="matchVariables">
+                         <param name="matchVariables_assign" label="Assign to variable named" type="text" value=""/>
+                         <param name="arg_string" label="string value" type="text" value="" help="STRING"/>
+                    </when>
+                    <when value="measureGeom">
+                         <param name="arg_atom1" label="atom1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_atom2" label="atom2" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_atom3" label="atom3" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_atom4" label="atom4" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                    </when>
+                    <when value="relax">
+                         <expand macro="object" />
+                    </when>
+                    <when value="remove">
+                         <param name="arg_a" label="a value --> Object you are removing contents FROM" type="text" value="" help="UNIT/RESIDUE/ATOM. The object can be a specific residue [ type 'UNITvariable.residuenumber(or name)' ], or an entire UNIT [ only type 'UNITvariable' ]. "/>
+                         <param name="arg_b" label="b value --> The specific content you are removing" type="text" value="" help="UNIT/RESIDUE/ATOM. The contents can be a single atom [type 'UNITvariable.residuenumber(or name).atomtype(or number)' ], or an entire residue [type 'UNITvariable.residuenumber(or name)' ]. "/>
+                    </when>
+                    <when value="restrainAngle">
+                         <expand macro="unitvariable" />
+                         <param name="arg_a" label="atom1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_b" label="atom2 or the middle atom" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_c" label="atom3" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_force" label="Force constant K_theta" type="text" value="" help="This is the force constant value you are setting to restrain this angle, in kcal/mol/radian^2."/>
+                         <param name="arg_angle" label="Equilibrium angle theta" type="text" value="" help="This is the equilibrium angle, in degrees, between these 3 interacting atoms."/>
+                    </when>
+                    <when value="restrainBond">
+                         <expand macro="unitvariable" />
+                         <param name="arg_a" label="atom1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_b" label="atom2" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_force" label="Force constant K_b" type="text" value="" help="This is the force constant value you are setting to restrain this length, in kcal/mol/angstrom^2. "/>
+                         <param name="arg_length" label="Equilibrium length" type="text" value="" help="This is the equilibrium bond length between these two atoms."/>
+                    </when>
+                    <when value="restrainTorsion">
+                         <expand macro="unitvariable" />
+                         <param name="arg_a" label="atom1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_b" label="atom2" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_c" label="atom3" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_d" label="atom4" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_force" label="Force constant K_phi" type="text" value="" help="This is the force constant you are setting to restrain this dihedral."/>
+                         <param name="arg_phi" label="Equilibrium torsion angle phi" type="text" value="" help="This is the equilibrium torsion angle for this dihedral."/>
+                         <param name="arg_multiplicity" label="multiplicity value" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="saveAmberParm">
+                         <param name="arg_unit" label="Assign to variable named" type="text" value="" help="The variable name that your system's components are assigned to. This should generally be the same variable used previously with input commands like 'loadPdb'."/>
+                    </when>
+                    <when value="saveAmberParmNetcdf">
+                         <expand macro="unitvariable" />
+                    </when>
+                    <when value="saveAmberParmPert">
+                         <expand macro="unitvariable" />
+                    </when>
+                    <when value="saveAmberParmPol">
+                         <expand macro="unitvariable" />
+                    </when>
+                    <when value="saveAmberParmPolPert">
+                         <expand macro="unitvariable" />
+                    </when>
+                    <when value="saveAmberPrep">
+                         <expand macro="unitvariable" />
+                         <expand macro="newfile" />
+                    </when>
+                    <when value="saveMol2">
+                         <expand macro="unitvariable" />
+
+                         <param name="arg_option" label="option value" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="saveMol3">
+                         <expand macro="unitvariable" />
+                         <param name="arg_option" label="option value" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="saveOff">
+                         <expand macro="object" />
+                    </when>
+                    <when value="savePdb">
+                         <param name="arg_unit" label="Assign to variable named" type="text" value="" help="The variable name that your system's components are assigned to. This should generally be the same variable used previously with input commands like 'loadPdb'."/>
+                    </when>
+                    <when value="scaleCharges">
+                         <expand macro="container" />
+                         <param name="arg_scale_factor" label="scale_factor value" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="select">
+                         <expand macro="object" />
+                    </when>
+                    <when value="sequence">
+                         <param name="sequence_assign" label="Assign to variable named" type="text" value=""/>
+                         <param name="arg_list" label="list value" type="text" value="" help="LIST"/>
+                    </when>
+                    <when value="set">
+                         <param name="arg_variable" label="variable value" type="text" value="" help="the variable name that your components are assigned to"/>
+                         <param name="arg_container" label="container value" type="text" value="" help="type'box' if you are using this command to set box dimensions"/>
+                         <param name="arg_dim" label="dimensions value" type="text" value="" help="dimension magnitude for X, Y, and Z"/>
+                    </when>
+                    <when value="set_default">
+                         <repeat name="defaults" title="Default setting to adjust:">
+                              <expand macro="defaultsettings" />
+                              <expand macro="settingoptions" />
+                         </repeat>
+                    </when>
+                    <when value="setBox">
+                         <expand macro="unitvariable" />
+                         <param name="arg_enclosure" label="enclosure value" type="text" value="" help="type 'vdw' or 'centers'"/>
+                         <param name="arg_buffer" label="buffer value" type="text" value="" help="object"/>
+                    </when>
+                    <when value="showdefault">
+                    </when>
+                    <when value="solvateBox">
+                         <expand macro="solvateparams" />
+                         <param name="arg_iso" label="iso value" type="text" value="" help="type 'iso' if using this option"/>
+                    </when>
+                    <when value="solvateCap">
+                         <expand macro="solvateparams" />
+                         <param name="arg_position" label="position value" type="text" value="" help="Defines the center of the solvent cap. Can be listed directly using coordinates for { X Y Z }, or you can specify a UNIT, RESIDUE, ATOM, or LIST of any of these 3 as a reference for position."/>
+                         <param name="arg_radius" label="radius value" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="solvateDontClip">
+                         <expand macro="solvateparams" />
+                         <param name="arg_closeness" label="closeness value" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="solvateOct">
+                         <expand macro="solvateparams" />
+                         <param name="arg_iso" label="iso value" type="text" value="" help="type 'iso' if choosing this option"/>
+                    </when>
+                    <when value="solvateShell">
+                         <expand macro="solvateparams" />
+                         <param name="arg_thickness" label="thickness value" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="source">
+                         <expand macro="builtin_amberfiles" />
+                    </when>
+                    <when value="transform">
+                         <param name="arg_atoms" label="atoms value" type="text" value="" help="UNIT/RESIDUE/ATOM. You can transform an entire UNIT, an entire RESIDUE, or a specific atom. Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. Multiple selections can be typed into this list so a transformation is performed on several components of your system at once, just separate each choice of UNIT/RESIDUE/ATOM with a single space in between. " />
+                         <param name="arg_matrix_row1" label="Row 1 of matrix" type="text" value="" help="type the following: ' r11  r12  r13  -tx ', where r11-r13 are matrix elements for the X dimension. If you would like to translate along this dimension, assign a value to -tx, in angstroms. For a simple reflection along this axis, set this row to r11=-1, r12=0, r13=0. "/>
+                         <param name="arg_matrix_row2" label="Row 2 of matrix" type="text" value="" help="type the following: ' r21  r22  r23  -tx ', where r21-r23 are matrix elements for the Y dimension. If you would like to translate along this dimension, assign a value to -ty, in angstroms. For a simple reflection along this axis, set this row to r21=0, r22=-1, r23=0. "/>
+                         <param name="arg_matrix_row3" label="Row 3 of matrix" type="text" value="" help="type the following: ' r31  r32  r33  -tz ', where r31-r33 are matrix elements for the Z dimension. If you would like to translate along this dimension, assign a value to -tz, in angstroms. For a simple reflection along this axis, set this row to r31=0, r32=0, r33=-1. "/>
+                    </when>
+                    <when value="translate">
+                         <param name="arg_atoms" label="list of atoms" type="text" value="" help="UNIT/RESIDUE/ATOM. You can translate an entire UNIT, an entire RESIDUE, or a specific atom. Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. Multiple selections can be typed into this list so a transformation is performed on several components of your system at once, just separate each choice of UNIT/RESIDUE/ATOM with a single space in between. " />
+                         <param name="arg_direction" label="direction value in each dimension" type="text" value="" help="Displace by this amount { X Y Z }. The direction is based on whether each vector is positive or negative. "/>
+                    </when>
+                    <when value="verbosity">
+                         <param name="arg_level" label="level value" type="text" value="" help="This command sets the level of output that LEaP provides the user. A value of 0 is the default, providing the minimum of messages. A value of 1 will produce more output, and a value of 2 will produce all of the output of level 1 and display the text of the script lines executed with the source command."/>
+                    </when>
+                    <when value="zMatrix">
+                         <param name="arg_obj" label="obj value" type="text" value="" help="UNIT/RESIDUE/ATOM"/>
+                         <param name="arg_zmatrix" label="zmatrix value" type="text" value="" help="LIST"/>
+                    </when>
+               </conditional>
           </repeat>
-       </when>
-       <when value="addH">
-            <param name="arg_obj" label="Assign to UNIT with variable name:" type="text" value="" help="this should be the same variable given to a previously loaded target structure"/>
-       </when>
-       <when value="addIons">
-            <expand macro="addingions" />
-       </when>
-       <when value="addIons2">
-            <expand macro="addingions" />
-       </when>
-       <when value="addIonsRand">
-            <expand macro="addingions" />
-            <param name="arg_separation" label="separation value" type="text" value="" help="This value guarantees a minimum distance between inserted ions, in angstsroms."/>
-       </when>
-       <when value="addPath">
-            <param name="arg_path" label="path to directory" type="text" value="" help="Specify additional paths for leap to search for files when executing commands."/>
-       </when>
-       <when value="addPdbAtomMap">
-          <repeat name="AtomMapList" title="Add atom name from a pdb file to a list" min="1"> 
-            <param name="oddpdbname" label="Odd atom type from pdb file" type="text" value="" help=""/>
-            <param name="libpdbname" label="Atom type to reference in the library" type="text" value="" help=""/>
-          </repeat>
-       </when>
-       <when value="addPdbResMap">
-          <repeat name="resmap" title="Add atom name from a pdb file to a residue map in LEaP" min="1"> 
-            <param name="terminalflag" label="If terminal atom, select type:" type="text" value="" help="select 0 for beginning residues (N-terminal for proteins, 5' for nucleic acids) and 1 for ending residues (C-terminal for proteins, 3' for nucleic acids). Leave blank if neither. "/>
-            <param name="pdbname" label="atom name in pdb file" type="text" value="" help=""/>
-            <param name="leapvar" label="variable name within leap to map onto" type="text" value="" help=""/>
-          </repeat>
-       </when>
-       <when value="alignAxes">
-            <expand macro="unitvariable" />
-       </when>
-       <when value="bond">
-            <param name="arg_atom1" label="Bonding atom 1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype', where the assigned UNITvariable is the same one used to define your structure in loadPdb, saveAmberParm, savePdb, and other commands in your tleap script. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. "/>
-            <param name="arg_atom2" label="Bonding atom 2" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype', where the assigned UNITvariable is the same one used to define your structure in loadPdb, saveAmberParm, savePdb, and other commands in your tleap script. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. "/>
-            <param name="arg_order" label="order value" type="select" value="" help="Choose 'S' for single bond, 'D' for double bond, 'T' for triple bond, or 'A' for aromatic bond. The default value is 'S' if left blank.">
-                <option value="">default</option>
-                <option value="S">single bond</option>
-                <option value="D">double bond</option>
-                <option value="T">triple bond</option>
-                <option value="A">aromatic bond</option>
-            </param>       
-       </when>
-       <when value="bondByDistance">
-            <expand macro="container" />
-            <param name="arg_maxBond" label="maxBond value" type="text" value="" help="maximum distance, in angstroms"/>
-       </when>
-       <when value="center">
-            <expand macro="container"/>
-       </when>
-       <when value="charge">
-            <expand macro="container"/>
-       </when>
-       <when value="check">
-            <expand macro="unitvariable" />
-            <param name="arg_parmset" label="parmset value" type="text" value="" help="PARMSET/STRING where all mising parameters are placed. This is optional."/>
-       </when>
-       <when value="clearPdbAtomMap">
-       </when>
-       <when value="clearPdbResMap">
-       </when>
-       <when value="clearVariables">
-            <param name="arg_list" label="list of variables to clear" type="text" value="" help="This is optional. Use only if a specific set of variables need to be cleared. If left empty, all variables will be cleared by default."/>
-       </when>
-       <when value="combine">
-            <param name="combine_assign" label="Name of the new combined list of variables" type="text" value=""/>
-            <param name="arg_list" label="list of variables" type="text" value="" help="Write the name of previously defined variables that you'd like to combine into this new list. "/>
-       </when>
-       <when value="copy">
-            <param name="copy_assign" label="Name of the newly copied variable:" type="text" value=""/>
-            <param name="arg_variable" label="Variable you are making a copy of:" type="text" value="" help=""/>
-       </when>
-       <when value="createAtom">
-            <expand macro="create" />
-            <param name="arg_type" label="new atom type" type="text" value="" help="STRING"/>
-            <param name="arg_charge" label="atomic charge" type="text" value="" help="NUMBER"/>
-       </when>
-       <when value="createParmset">
-            <expand macro="create" />
-       </when>
-       <when value="createResidue">
-            <expand macro="create" />
-       </when>
-       <when value="createUnit">
-            <expand macro="create" />
-       </when>
-       <when value="crossLink">
-            <param name="arg_res1" label="res1 value" type="text" value="" help="Residue 1"/>
-            <param name="arg_conn1" label="conn1 value" type="text" value="" help="connecting atom on residue 1"/>
-            <param name="arg_res2" label="res2 value" type="text" value="" help="Residue 2"/>
-            <param name="arg_conn2" label="conn2 value" type="text" value="" help="connecting atom on residue 2"/>
-       </when>
-       <when value="debugOff">
-            <expand macro="builtin_amberfiles" />
-       </when>
-       <when value="debugOn">
-            <expand macro="builtin_amberfiles" />
-       </when>
-       <when value="debugStatus">
-       </when>
-       <when value="deleteBond">
-            <param name="arg_atom1" label="Bonding atom 1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype', where the assigned UNITvariable is the same one used to define your structure in loadPdb, saveAmberParm, savePdb, and other commands in your tleap script. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. "/>
-            <param name="arg_atom2" label="Bonding atom 2" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype', where the assigned UNITvariable is the same one used to define your structure in loadPdb, saveAmberParm, savePdb, and other commands in your tleap script. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. "/>
-       </when>
-       <when value="deleteOffLibEntry">
-            <param name="arg_library" label="library value" type="text" format="txt" value="" help="STRING"/>
-            <param name="arg_entry" label="entry value" type="text" value="" help="STRING"/>
-       </when>
-       <when value="deleteRestraint">
-            <expand macro="unitvariable" />
-            <param name="arg_a" label="a value" type="text" value="" help="ATOM"/>
-            <param name="arg_b" label="b value" type="text" value="" help="ATOM"/>
-            <param name="arg_c" label="c value" type="text" value="" help="ATOM"/>
-            <param name="arg_d" label="d value" type="text" value="" help="ATOM"/>
-       </when>
-       <when value="desc">
-            <expand macro="unitvariable" />
-       </when>
-       <when value="deSelect">
-            <expand macro="object" />
-       </when>
-       <when value="displayPdbAtomMap">
-       </when>
-       <when value="displayPdbResMap">
-       </when>
-       <when value="edit">
-            <param name="arg_unit_parmset" label="unit-parmset value" type="text" value="" help="UNIT/PARMSET"/>
-       </when>
-       <when value="flip">
-            <expand macro="object" />
-       </when>
-       <when value="groupSelectedAtoms">
-            <expand macro="unitvariable" />
-            <param name="arg_name" label="name value" type="text" value="" help="STRING"/>
-       </when>
-       <when value="help">
-            <param name="arg_string" label="string value" type="text" value="" help="STRING"/>
-       </when>
-       <when value="impose">
-            <expand macro="unitvariable" />
-            <param name="arg_seqlist" label="seqlist value" type="text" value="" help="LIST"/>
-            <param name="arg_internals_atom1" label="internals atom1" type="text" value="" help=""/>
-            <param name="arg_internals_atom2" label="internals atom2" type="text" value="" help=""/>
-            <param name="arg_internals_displacement" label="displacement" type="text" value="" help="can be positive or negative, in angstroms"/>
-       </when>
-       <when value="list">
-       </when>
-       <when value="listOff">
-            <param name="arg_library" label="library value" type="data" value="" format="txt" help="STRING"/>
-       </when>
-       <when value="loadAmberParams">
-            <param name="loadAmberParams_assign" label="Assign to variable named" type="text" value=""/>
-            <expand macro="amberfiles_conditional" />
-       </when>
-       <when value="loadAmberPrep">
-            <expand macro="amberfiles_conditional" />
-            <param name="arg_prefix" label="prefix value" type="text" value="" help="STRING"/>
-       </when>
-       <when value="loadMol2">
-            <param name="loadMol2_assign" label="Assign to variable named" type="text" value="" help="This is the molecule's residue name as it appears in the mol2 file."/>
-            <expand macro="loadfile" data_format="mol2"/>
-       </when>
-       <when value="loadMol3">
-            <param name="loadMol3_assign" label="Assign to variable named" type="text" value="" help="This is the molecule's residue name as it appears in the mol2 file."/>
-            <expand macro="loadfile" data_format="mol3"/>
-       </when>
-       <when value="loadOff">
-            <expand macro="loadfile" />
-       </when>
-       <when value="loadPdb">
-            <param name="loadPdb_assign" label="Assign to variable named" type="text" value="" help="The variable name that your system's components are assigned to. This should generally be the same variable used when saving the output files (when using savePdb, saveAmberParm, etc.)."/>
-            <expand macro="loadfile" data_format="pdb"/>
-       </when>
-       <when value="loadPdbUsingSeq">
-            <expand macro="loadfile" data_format="pdb"/>
-            <param name="arg_unitlist" label="unitlist value" type="text" value="" help="LIST"/>
-       </when>
-       <when value="logFile">
-            <expand macro="loadfile" />>
-       </when>
-       <when value="matchVariables">
-            <param name="matchVariables_assign" label="Assign to variable named" type="text" value=""/>
-            <param name="arg_string" label="string value" type="text" value="" help="STRING"/>
-       </when>
-       <when value="measureGeom">
-            <param name="arg_atom1" label="atom1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
-            <param name="arg_atom2" label="atom2" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
-            <param name="arg_atom3" label="atom3" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
-            <param name="arg_atom4" label="atom4" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
-       </when>
-       <when value="relax">
-            <expand macro="object" />
-       </when>
-       <when value="remove">
-            <param name="arg_a" label="a value --> Object you are removing contents FROM" type="text" value="" help="UNIT/RESIDUE/ATOM. The object can be a specific residue [ type 'UNITvariable.residuenumber(or name)' ], or an entire UNIT [ only type 'UNITvariable' ]. "/>
-            <param name="arg_b" label="b value --> The specific content you are removing" type="text" value="" help="UNIT/RESIDUE/ATOM. The contents can be a single atom [type 'UNITvariable.residuenumber(or name).atomtype(or number)' ], or an entire residue [type 'UNITvariable.residuenumber(or name)' ]. "/>
-       </when>
-       <when value="restrainAngle">
-            <expand macro="unitvariable" />
-            <param name="arg_a" label="atom1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
-            <param name="arg_b" label="atom2 or the middle atom" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
-            <param name="arg_c" label="atom3" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
-            <param name="arg_force" label="Force constant K_theta" type="text" value="" help="This is the force constant value you are setting to restrain this angle, in kcal/mol/radian^2."/>
-            <param name="arg_angle" label="Equilibrium angle theta" type="text" value="" help="This is the equilibrium angle, in degrees, between these 3 interacting atoms."/>
-       </when>
-       <when value="restrainBond">
-            <expand macro="unitvariable" />
-            <param name="arg_a" label="atom1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
-            <param name="arg_b" label="atom2" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
-            <param name="arg_force" label="Force constant K_b" type="text" value="" help="This is the force constant value you are setting to restrain this length, in kcal/mol/angstrom^2. "/>
-            <param name="arg_length" label="Equilibrium length" type="text" value="" help="This is the equilibrium bond length between these two atoms."/>
-       </when>
-       <when value="restrainTorsion">
-            <expand macro="unitvariable" />
-            <param name="arg_a" label="atom1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
-            <param name="arg_b" label="atom2" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
-            <param name="arg_c" label="atom3" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
-            <param name="arg_d" label="atom4" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
-            <param name="arg_force" label="Force constant K_phi" type="text" value="" help="This is the force constant you are setting to restrain this dihedral."/>
-            <param name="arg_phi" label="Equilibrium torsion angle phi" type="text" value="" help="This is the equilibrium torsion angle for this dihedral."/>
-            <param name="arg_multiplicity" label="multiplicity value" type="text" value="" help="NUMBER"/>
-       </when>
-       <when value="saveAmberParm">
-            <param name="arg_unit" label="Assign to variable named" type="text" value="" help="The variable name that your system's components are assigned to. This should generally be the same variable used previously with input commands like 'loadPdb'."/>
-       </when>
-       <when value="saveAmberParmNetcdf">
-            <expand macro="unitvariable" />
-       </when>
-       <when value="saveAmberParmPert">
-            <expand macro="unitvariable" />
-       </when>
-       <when value="saveAmberParmPol">
-            <expand macro="unitvariable" />
-       </when>
-       <when value="saveAmberParmPolPert">
-            <expand macro="unitvariable" />
-       </when>
-       <when value="saveAmberPrep">
-            <expand macro="unitvariable" />
-            <expand macro="newfile" />
-       </when>
-       <when value="saveMol2">
-            <expand macro="unitvariable" />
-  
-            <param name="arg_option" label="option value" type="text" value="" help="NUMBER"/>
-       </when>
-       <when value="saveMol3">
-            <expand macro="unitvariable" />
-            <param name="arg_option" label="option value" type="text" value="" help="NUMBER"/>
-       </when>
-       <when value="saveOff">
-            <expand macro="object" />
-       </when>
-       <when value="savePdb">
-            <param name="arg_unit" label="Assign to variable named" type="text" value="" help="The variable name that your system's components are assigned to. This should generally be the same variable used previously with input commands like 'loadPdb'."/>
-       </when>
-       <when value="scaleCharges">
-            <expand macro="container" />
-            <param name="arg_scale_factor" label="scale_factor value" type="text" value="" help="NUMBER"/>
-       </when>
-       <when value="select">
-            <expand macro="object" />
-       </when>
-       <when value="sequence">
-            <param name="sequence_assign" label="Assign to variable named" type="text" value=""/>
-            <param name="arg_list" label="list value" type="text" value="" help="LIST"/>
-       </when>
-       <when value="set">
-            <param name="arg_variable" label="variable value" type="text" value="" help="the variable name that your components are assigned to"/>
-            <param name="arg_container" label="container value" type="text" value="" help="type'box' if you are using this command to set box dimensions"/>
-            <param name="arg_dim" label="dimensions value" type="text" value="" help="dimension magnitude for X, Y, and Z"/>
-       </when>
-       <when value="set_default">
-            <param name="arg_arguments" label="arguments value" type="text" value="" help=""/>
-            <param name="arg_to" label="to value" type="text" value="" help=""/>
-            <param name="arg_set" label="set value" type="text" value="" help=""/>
-            <param name="arg_default" label="default value" type="text" value="" help=""/>
-            <param name="arg_variable" label="variable value" type="text" value="" help=""/>
-            <param name="arg_value" label="value value" type="text" value="" help=""/>
-            <param name="arg_are" label="are value" type="text" value="" help=""/>
-            <param name="arg_these_" label="these: value" type="text" value="" help=""/>
-       </when>
-       <when value="setBox">
-            <expand macro="unitvariable" />
-            <param name="arg_enclosure" label="enclosure value" type="text" value="" help="type 'vdw' or 'centers'"/>
-            <param name="arg_buffer" label="buffer value" type="text" value="" help="object"/>
-       </when>
-       <when value="showdefault">
-            <param name="arg_showdefault_arg_0" label="showdefault_arg_0 value" type="text" value="" help=""/>
-            <param name="arg_variable" label="variable value" type="text" value="" help="STRING"/>
-            <param name="arg_OR" label="OR value" type="text" value="" help=""/>
-            <param name="arg_all" label="all value" type="text" value="" help=""/>
-            <param name="arg_OR" label="OR value" type="text" value="" help=""/>
-            <param name="arg__" label="* value" type="text" value="" help=""/>
-            <param name="arg_showdefault_arg_6" label="showdefault_arg_6 value" type="text" value="" help=""/>
-       </when>
-       <when value="solvateBox">
-            <expand macro="solvateparams" />
-            <param name="arg_iso" label="iso value" type="text" value="" help="type 'iso' if using this option"/>
-       </when>
-       <when value="solvateCap">
-            <expand macro="solvateparams" />
-            <param name="arg_position" label="position value" type="text" value="" help="Defines the center of the solvent cap. Can be listed directly using coordinates for { X Y Z }, or you can specify a UNIT, RESIDUE, ATOM, or LIST of any of these 3 as a reference for position."/>
-            <param name="arg_radius" label="radius value" type="text" value="" help="NUMBER"/>
-       </when>
-       <when value="solvateDontClip">
-            <expand macro="solvateparams" />
-            <param name="arg_closeness" label="closeness value" type="text" value="" help="NUMBER"/>
-       </when>
-       <when value="solvateOct">
-            <expand macro="solvateparams" />
-            <param name="arg_iso" label="iso value" type="text" value="" help="type 'iso' if choosing this option"/>
-       </when>
-       <when value="solvateShell">
-            <expand macro="solvateparams" />
-            <param name="arg_thickness" label="thickness value" type="text" value="" help="NUMBER"/>
-       </when>
-       <when value="source">
-               <expand macro="builtin_amberfiles" />  
-       </when>
-       <when value="transform">
-            <param name="arg_atoms" label="atoms value" type="text" value="" help="UNIT/RESIDUE/ATOM. You can transform an entire UNIT, an entire RESIDUE, or a specific atom. Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. Multiple selections can be typed into this list so a transformation is performed on several components of your system at once, just separate each choice of UNIT/RESIDUE/ATOM with a single space in between. " />
-            <param name="arg_matrix_row1" label="Row 1 of matrix" type="text" value="" help="type the following: ' r11  r12  r13  -tx ', where r11-r13 are matrix elements for the X dimension. If you would like to translate along this dimension, assign a value to -tx, in angstroms. For a simple reflection along this axis, set this row to r11=-1, r12=0, r13=0. "/>
-            <param name="arg_matrix_row2" label="Row 2 of matrix" type="text" value="" help="type the following: ' r21  r22  r23  -tx ', where r21-r23 are matrix elements for the Y dimension. If you would like to translate along this dimension, assign a value to -ty, in angstroms. For a simple reflection along this axis, set this row to r21=0, r22=-1, r23=0. "/>
-            <param name="arg_matrix_row3" label="Row 3 of matrix" type="text" value="" help="type the following: ' r31  r32  r33  -tz ', where r31-r33 are matrix elements for the Z dimension. If you would like to translate along this dimension, assign a value to -tz, in angstroms. For a simple reflection along this axis, set this row to r31=0, r32=0, r33=-1. "/>
-       </when>
-       <when value="translate">
-            <param name="arg_atoms" label="list of atoms" type="text" value="" help="UNIT/RESIDUE/ATOM. You can translate an entire UNIT, an entire RESIDUE, or a specific atom. Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. Multiple selections can be typed into this list so a transformation is performed on several components of your system at once, just separate each choice of UNIT/RESIDUE/ATOM with a single space in between. " /> 
-            <param name="arg_direction" label="direction value in each dimension" type="text" value="" help="Displace by this amount { X Y Z }. The direction is based on whether each vector is positive or negative. "/>
-       </when>
-       <when value="verbosity">
-            <param name="arg_level" label="level value" type="text" value="" help="This command sets the level of output that LEaP provides the user. A value of 0 is the default, providing the minimum of messages. A value of 1 will produce more output, and a value of 2 will produce all of the output of level 1 and display the text of the script lines executed with the source command."/>
-       </when>
-       <when value="zMatrix">
-            <param name="arg_obj" label="obj value" type="text" value="" help="UNIT/RESIDUE/ATOM"/>
-            <param name="arg_zmatrix" label="zmatrix value" type="text" value="" help="LIST"/>
-       </when>
-    </conditional>
-</repeat>
-    </inputs>
-    <outputs>
-        <data format="txt" name="output_tleap_in" label="Build tLEaP: tleap.in"/>
-        <data format="txt" name="output_tleap" label="Build tLEaP: tleap.log"/>
-        <collection name="output_pdb" type="list" label="Collection of pdb" format="pdb">
+     </inputs>
+     <outputs>
+          <data format="txt" name="output_tleap_in" label="Build tLEaP: tleap.in"/>
+          <data format="txt" name="output_tleap" label="Build tLEaP: tleap.log"/>
+          <collection name="output_pdb" type="list" label="Collection of pdb" format="pdb">
                <discover_datasets pattern="(?P&lt;designation&gt;.+)\.pdb" directory="out" format="pdb"/>
-        </collection>
-        <collection name="output_top" type="list" label="Collection of topology files" format="prmtop">
+          </collection>
+          <collection name="output_top" type="list" label="Collection of topology files" format="prmtop">
                <discover_datasets pattern="(?P&lt;designation&gt;.+)\.prmtop" directory="out" format="prmtop"/>
-        </collection>
-        <collection name="output_txt" type="list" label="Collection of txt" format="txt">
+          </collection>
+          <collection name="output_txt" type="list" label="Collection of txt" format="txt">
                <discover_datasets pattern="(?P&lt;designation&gt;.+)\.txt" directory="out" format="txt"/>
-        </collection>
-        <collection name="output_coord" type="list" label="Collection of coordinate files" format="inpcrd">
+          </collection>
+          <collection name="output_coord" type="list" label="Collection of coordinate files" format="inpcrd">
                <discover_datasets pattern="(?P&lt;designation&gt;.+)\.inpcrd" directory="out" format="inpcrd"/>
-        </collection>
-        <collection name="output_mol2" type="list" label="Collection of mol2" format="mol2">
+          </collection>
+          <collection name="output_mol2" type="list" label="Collection of mol2" format="mol2">
                <discover_datasets pattern="(?P&lt;designation&gt;.+)\.mol2" directory="out" format="mol2"/>
-        </collection>
-        <collection name="output_mol3" type="list" label="Collection of mol3" format="mol3">
+          </collection>
+          <collection name="output_mol3" type="list" label="Collection of mol3" format="mol3">
                <discover_datasets pattern="(?P&lt;designation&gt;.+)\.mol3" directory="out" format="mol3"/>
-        </collection>
-    </outputs>
-    <tests>
-        <test>
-          <repeat name="tleap_cmds">
-            <conditional name="tleap_cond">
-                 <param name="tleap_cmd" value="source"/>
-                 <param name="arg_filename" value="oldff/leaprc.ff14SB"/>
-            </conditional>
-          </repeat>
-          <repeat name="tleap_cmds">
-            <conditional name="tleap_cond">
-                 <param name="tleap_cmd" value="loadAmberParams" />
-                 <conditional name="file_source" >
-                   <param name="file_source_selector" value="builtin"/>
-                   <param name="arg_filename" value="frcmod.ff14SB"/>
-                 </conditional>
-            </conditional>
-          </repeat>
-          <repeat name="tleap_cmds">
-            <conditional name="tleap_cond">
-                 <param name="tleap_cmd" value="loadAmberParams" />
-                 <conditional name="file_source" >
-                   <param name="file_source_selector" value="builtin"/>
-                   <param name="arg_filename" value="frcmod.ionsjc_tip4pew"/>
-                 </conditional>
-            </conditional>
-          </repeat>
-          <repeat name="tleap_cmds">
-            <conditional name="tleap_cond">
-                 <param name="tleap_cmd" value="loadAmberPrep" />
-                 <conditional name="file_source" >
-                   <param name="file_source_selector" value="history"/>
-                   <param name="arg_filename" value="ZAFF.prep"/>
-                 </conditional>
-            </conditional>
-          </repeat>
-          <repeat name="tleap_cmds">
-            <conditional name="tleap_cond">
-                 <param name="tleap_cmd" value="loadAmberParams" />
-                 <conditional name="file_source" >
-                   <param name="file_source_selector" value="history"/>
-                   <param name="arg_filename" value="ZAFF.frcmod"/>
-                 </conditional>
-            </conditional>
-          </repeat>
-          <repeat name="tleap_cmds">
-            <conditional name="tleap_cond">
-                 <param name="tleap_cmd" value="loadPdb" />
-                   <param name="loadPdb_assign" value="mol" />
-                   <param name="arg_filename" value="sarscov2_helicase_ZincBindingDomain.pdb"/>
-            </conditional>
-          </repeat>
-          <repeat name="tleap_cmds">
-            <conditional name="tleap_cond">
-                 <param name="tleap_cmd" value="bond" />
-                   <param name="arg_atom1" value="mol.114.ZN" />
-                   <param name="arg_atom2" value="mol.5.SG" /> 
-            </conditional>
-          </repeat>
-          <repeat name="tleap_cmds">
-            <conditional name="tleap_cond">
-                 <param name="tleap_cmd" value="set" />    
-                   <param name="arg_variable" value="mol" />
-                   <param name="arg_container" value="box" />
-                   <param name="arg_dim" value="12" />
-            </conditional>
-          </repeat>
-          <repeat name="tleap_cmds">
-            <conditional name="tleap_cond">
-                 <param name="tleap_cmd" value="addIons" />
-                   <param name="arg_variable" value="mol" />
-                   <param name="arg_ion1" value="Cl-" />
-                   <param name="arg__ion1" value="0" />
-                   <param name="arg_ion2" value="Na+" />
-                   <param name="arg__ion2" value="0" />
-            </conditional>
-          </repeat>
-          <repeat name="tleap_cmds">
-            <conditional name="tleap_cond">
-                 <param name="tleap_cmd" value="saveAmberParm" />
-                   <param name="arg_unit" value="mol" />
-            </conditional>
-          </repeat>
-          <repeat name="tleap_cmds">
-            <conditional name="tleap_cond">
-                 <param name="tleap_cmd" value="savePdb" />
-                   <param name="arg_unit" value="mol" />
-            </conditional>
-          </repeat>
-               <output name="output_tleap_in" >
+          </collection>
+     </outputs>
+     <tests>
+          <test expect_num_outputs="8">
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="source"/>
+                         <param name="arg_filename" value="oldff/leaprc.ff14SB"/>
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="loadAmberParams" />
+                         <conditional name="file_source">
+                              <param name="file_source_selector" value="builtin"/>
+                              <param name="arg_filename" value="frcmod.ff14SB"/>
+                         </conditional>
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="loadAmberParams" />
+                         <conditional name="file_source">
+                              <param name="file_source_selector" value="builtin"/>
+                              <param name="arg_filename" value="frcmod.ionsjc_tip4pew"/>
+                         </conditional>
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="loadAmberPrep" />
+                         <conditional name="file_source">
+                              <param name="file_source_selector" value="history"/>
+                              <param name="arg_filename" value="ZAFF.prep"/>
+                         </conditional>
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="loadAmberParams" />
+                         <conditional name="file_source">
+                              <param name="file_source_selector" value="history"/>
+                              <param name="arg_filename" value="ZAFF.frcmod"/>
+                         </conditional>
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="loadPdb" />
+                         <param name="loadPdb_assign" value="mol" />
+                         <param name="arg_filename" value="sarscov2_helicase_ZincBindingDomain.pdb"/>
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="bond" />
+                         <param name="arg_atom1" value="mol.114.ZN" />
+                         <param name="arg_atom2" value="mol.5.SG" />
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="set" />
+                         <param name="arg_variable" value="mol" />
+                         <param name="arg_container" value="box" />
+                         <param name="arg_dim" value="12" />
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="addIons" />
+                         <param name="arg_variable" value="mol" />
+                         <param name="arg_ion1" value="Cl-" />
+                         <param name="arg__ion1" value="0" />
+                         <param name="arg_ion2" value="Na+" />
+                         <param name="arg__ion2" value="0" />
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="saveAmberParm" />
+                         <param name="arg_unit" value="mol" />
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="savePdb" />
+                         <param name="arg_unit" value="mol" />
+                    </conditional>
+               </repeat>
+               <output name="output_tleap_in" value="leap_testfile.txt" lines_diff="6">
                     <assert_contents>
+                         <has_text text="loadAmberParams frcmod.ff14SB" />
                          <has_text text="bond mol.114.ZN mol.5.SG" />
+                         <has_text text="quit" />
                     </assert_contents>
                </output>
-               <output name="output_tleap" >
+               <output name="output_tleap">
                     <assert_contents>
                          <has_text text="Welcome to LEaP!" />
                     </assert_contents>
                </output>
-               <output_collection name="output_top" type="list">
-                            <element name="saveAmberParm_topologyfilename_9_1" >
-                                   <assert_contents>
-                                        <has_text text="N   H1  H2  H3  CA  HA  CB  HB1 HB2 HB3 C   O   N   H   CA  HA  CB  HB  CG1" />
-                                   </assert_contents>
-                            </element>
+               <output_collection name="output_top" type="list" count="1">
+                    <element name="saveAmberParm_topologyfilename_9_1">
+                         <assert_contents>
+                              <has_text text="N   H1  H2  H3  CA  HA  CB  HB1 HB2 HB3 C   O   N   H   CA  HA  CB  HB  CG1" />
+                         </assert_contents>
+                    </element>
                </output_collection>
-               <output_collection name="output_coord" type="list">
-                            <element name="saveAmberParm_coordinatefilename_9_2" >
-                                   <assert_contents>
-                                        <has_text text="12.0000000  12.0000000  12.0000000  90.0000000  90.0000000  90.0000000" />
-                                   </assert_contents>
-                            </element>
+               <output_collection name="output_coord" type="list" count="1">
+                    <element name="saveAmberParm_coordinatefilename_9_2">
+                         <assert_contents>
+                              <has_text text="12.0000000  12.0000000  12.0000000  90.0000000  90.0000000  90.0000000" />
+                         </assert_contents>
+                    </element>
                </output_collection>
-               <output_collection name="output_pdb" type="list">
-                            <element name="savePdb_filename_10_1" >
-                                   <assert_contents>
-                                        <has_text text="CRYST1   12.000   12.000   12.000  90.00  90.00  90.00 P 1           1" />
-                                   </assert_contents>
-                            </element>
+               <output_collection name="output_pdb" type="list" count="1">
+                    <element name="savePdb_filename_10_1">
+                         <assert_contents>
+                              <has_text text="CRYST1   12.000   12.000   12.000  90.00  90.00  90.00 P 1           1" />
+                         </assert_contents>
+                    </element>
                </output_collection>
-        </test>
-    </tests>
-    <help><![CDATA[
+          </test>
+     </tests>
+     <help><![CDATA[
 ::
 
   add a b
@@ -1982,6 +1976,6 @@ quit
   a bond length.
 
 
-    ]]></help>
-    <expand macro="citations" />
+    ]]>     </help>
+     <expand macro="citations" />
 </tool>

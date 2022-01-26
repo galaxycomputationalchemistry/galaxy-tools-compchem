@@ -1,0 +1,14 @@
+source oldff/leaprc.ff14SB
+loadAmberParams frcmod.ff14SB
+loadAmberParams frcmod.ionsjc_tip4pew
+loadAmberPrep sample.dat 
+loadAmberParams sample.dat
+mol = loadPdb sample.dat
+bond mol.114.ZN mol.5.SG 
+set mol box 12
+addIons mol Cl- 0
+addIons mol Na+ 0
+saveAmberParm mol out/saveAmberParm_topologyfilename_9_1.prmtop out/saveAmberParm_coordinatefilename_9_2.inpcrd
+savePdb mol out/savePdb_filename_10_1.pdb
+quit
+          
