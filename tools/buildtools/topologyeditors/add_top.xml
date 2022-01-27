@@ -1,4 +1,4 @@
-<tool id="modify_topology" name="Adding New Topology Information" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="20.09">
+<tool id="gromacs_modify_topology" name="Adding New Topology Information" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="20.09">
     <description>to a GROMACS topology file</description>
     <macros>
         <import>macros.xml</import>

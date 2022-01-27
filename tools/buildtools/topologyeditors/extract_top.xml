@@ -1,4 +1,4 @@
-<tool id="extract_topology" name="Extracting Topology Information" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="20.09">
+<tool id="gromacs_extract_topology" name="Extracting Topology Information" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="20.09">
     <description>from a GROMACS topology file</description>
 
     <macros>
