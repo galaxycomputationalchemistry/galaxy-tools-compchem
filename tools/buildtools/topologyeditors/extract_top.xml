@@ -1,0 +1,68 @@
+<tool id="gromacs_extract_topology" name="Extracting Topology Information" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="20.09">
+    <description>from a GROMACS topology file</description>
+
+    <macros>
+        <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
+    </macros>
+
+    <expand macro="requirements">
+    </expand>
+
+    <command detect_errors="exit_code"><![CDATA[
+
+            python3 '$__tool_directory__/gmxtras_extract_top.py' --top_file '$inputtopology' --out_nonbondparam '$atomtypes' --out_bondparam '$moltypes'
+
+    ]]></command>
+    <inputs>
+        <param name="inputtopology" type="data" format="top" label="Topology file we are extracting from" help="We are extracting the information under [ atomtypes ] and [ moleculetype ]."/>
+    </inputs>
+
+    <outputs>
+        <data name="atomtypes" format="txt" label="Nonbonded parameters and atom types under [ atomtypes ] section ${on_string}">
+        </data>
+        <data name="moltypes" format="txt" label="Bonded parameters and relevant information under [ moleculetype ] section ${on_string}">
+        </data>
+    </outputs>
+    <tests>
+        <test>
+            <param name="inputtopology" value="cid1_GMX.top" />
+            <output name="atomtypes">
+                <assert_contents>
+                    <has_text text=" ca       ca          0.00000  0.00000   A     3.39967e-01   3.59824e-01 ; 1.91  0.0860"/>
+                    <has_text text=" hn       hn          0.00000  0.00000   A     1.06908e-01   6.56888e-02 ; 0.60  0.0157"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+            <param name="inputtopology" value="cid1_GMX.top" />
+            <output name="moltypes">
+                <assert_contents>
+                    <has_text text="     1   ca     1   cid1    C1    1    -0.236300     12.01000 ; qtot -0.236"/>
+                    <has_text text="    23      1      4      2      4   180.00   4.60240   2 ;    H23-    C1-    C4-    C2"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+Tool to extract the [ atomtypes ] and [ moleculetype ] sections from a topology file. Both of these outputs can then be used as inputs in the Add Topologies tool. This tool can be used for a number of purposes, including but not limited to extracting the topology information required to complement the output of "gmx insert-molecules".   
+
+.. class:: infomark
+
+**Input**
+
+The system topology file you are extracting parameters from.
+
+.. class:: infomark
+
+**Outputs**
+
+1) Text file containing the atom types and nonbonded parameters.
+2) Text file containing the molecule type information with bonded parameters.
+
+
+    ]]></help>
+    <expand macro="citations">
+        <citation type="doi">doi:10.1186/1756-0500-5-367</citation>
+    </expand>
+</tool>

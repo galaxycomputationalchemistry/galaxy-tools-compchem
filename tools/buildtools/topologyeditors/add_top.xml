@@ -1,0 +1,149 @@
+<tool id="gromacs_modify_topology" name="Adding New Topology Information" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="20.09">
+    <description>to a GROMACS topology file</description>
+    <macros>
+        <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
+    </macros>
+    <expand macro="requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+        #if $str($functionality.what2add) == "mol":
+            python3 '$__tool_directory__/gmxtras_add_newmolparam.py'
+                --top_file '$functionality.inputtopology'
+                --atom_file '$functionality.nonbondparam'
+                --mol_file '$functionality.bondparam'
+                --out '$newtop'
+        #end if
+
+        #if $str($functionality.what2add) == "restraints":
+            python3 '$__tool_directory__/gmxtras_add_restraints.py'
+                --top_file '$functionality.inputtopology'
+                --res_file '$functionality.posres'
+                --molecule '$functionality.targetmolecule'
+                --out '$newtop'
+        #end if
+
+        #if $str($functionality.what2add) == "both":
+            python3 '$__tool_directory__/gmxtras_add_restraints.py'
+                --top_file '$functionality.inputtopology'
+                --res_file '$functionality.posres'
+                --molecule '$functionality.targetmolecule'
+                --out 'odoylerules'
+            &&
+            python3 '$__tool_directory__/gmxtras_add_newmolparam.py'
+                --top_file 'odoylerules'
+                --atom_file '$functionality.nonbondparam'
+                --mol_file '$functionality.bondparam'
+                --out '$newtop'
+        #end if
+
+    ]]></command>
+    <inputs>
+        
+        <conditional name="functionality">
+             <param name="what2add" type="select" label="What new information are you adding to your topology file?">
+                 <option value="mol">A molecule's parameters</option>
+                 <option value="restraints">Position restraint information</option>
+                 <option value="both">Both a molecule's topology information and position restrain information</option>
+             </param>
+             <when value="mol">
+                 <param name="inputtopology" type="data" format="top" label="GROMACS Topology file to be modified" help="Topology file with missing information"/>
+                 <param name="nonbondparam" type="data" format="txt" label="Atom Types with Nonbonded Parameters" help="Atom types information from grep"/>
+                 <param name="bondparam" type="data" format="txt,itp" label="Molecule type information with bonded parameters" help="molecule type information"/>
+             </when>
+             <when value="restraints">
+                 <param name="inputtopology" type="data" format="top" label="GROMACS Topology file to be modified" help="Topology file with missing information"/>
+                 <param name="posres" type="data" format="itp" label="Position restraint file" help="Position restraint file created previously"/>
+		 <param name="targetmolecule" type="text" label="Target molecule type" help="The molecule type name to which the restraints were applied"/>
+             </when>
+             <when value="both">
+                 <param name="inputtopology" type="data" format="top" label="GROMACS Topology file to be modified" help="Topology file with missing information"/>
+                 <param name="nonbondparam" type="data" format="txt" label="Atom Types with Nonbonded Parameters" help="Atom types information from grep"/>
+                 <param name="bondparam" type="data" format="txt,itp" label="Molecule type information with bonded parameters" help="molecule type information"/>
+                 <param name="posres" type="data" format="itp" label="Position restraint file" help="Position restraint file created previously"/>
+                 <param name="targetmolecule" type="text" label="Target molecule type" help="The molecule type name to which the restraints were applied"/>
+             </when>
+
+        </conditional>  
+    </inputs>
+    <outputs>
+        <data name="newtop" format="top" label="Modified file with new topology information ${on_string}"/>
+    </outputs>
+    <tests>
+        <test>
+            <conditional name="functionality">
+                <param name="what2add" value="mol" />
+                <param name="inputtopology" value="cid1_GMX.top" />
+                <param name="nonbondparam" value="water_nonbondedparams.itp" />
+                <param name="bondparam" value="water_bondedparams.itp" />
+            </conditional>
+            <output name="newtop">
+                <assert_contents>
+                    <has_text text="HW_tip4pew   1       1.008   0.0000  A   0.00000e+00  0.00000e+00"/>
+                    <has_text text="  2   HW_tip4pew  1       SOL       HW1      1       0.52422   1.00800"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+	    <conditional name="functionality">
+            	<param name="what2add" value="restraints" />
+            	<param name="inputtopology" value="cid1_GMX.top" />
+            	<param name="targetmolecule" value="cid1" />
+            	<param name="posres" value="posres_cid1.itp" />
+            </conditional>
+		<output name="newtop">
+                <assert_contents>
+                    <has_text text=";  i funct       fcx        fcy        fcz"/>
+                    <has_text text="  42    1       1000       1000       1000"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+ 	    <conditional name="functionality">
+            	<param name="what2add" value="both" />
+            	<param name="inputtopology" value="cid1_GMX.top" />
+            	<param name="nonbondparam" value="water_nonbondedparams.itp" />
+            	<param name="bondparam" value="water_bondedparams.itp" />
+            	<param name="targetmolecule" value="cid1" />
+            	<param name="posres" value="posres_cid1.itp" />
+            </conditional>
+		<output name="newtop">
+                <assert_contents>
+                    <has_text text="HW_tip4pew   1       1.008   0.0000  A   0.00000e+00  0.00000e+00"/>
+                    <has_text text="  2   HW_tip4pew  1       SOL       HW1      1       0.52422   1.00800"/>
+                    <has_text text=";  i funct       fcx        fcy        fcz"/>
+                    <has_text text="  42    1       1000       1000       1000"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+Tool to modify and add new information to GROMACS topology files. This is particularly useful when working with systems
+that were created outside of GROMACS (for example, files created in AMBER or CHARMM and then converted over via acpype).
+This tool can also be used to complement the "gmx insert-molecules" tool, which currently only modifies the GROMACS
+structure files (gro) and requires further modification of the topology file for the newly populated system to be simulation ready.   
+
+.. class:: infomark
+
+**Input**
+
+1) The system topology file you are modifying, 
+
+2) a position restraint file (posres.itp) and specifying the name of the target molecule type you are restraining, 
+
+3) a molecule's atom types/nonbonded parameters to be inserted under the system's global [ atomtypes ], as well as
+
+4) the corresponding bonded parameters of that particular molecule found under [ moleculetype ].
+
+.. class:: infomark
+
+**Outputs**
+
+The new modified GROMACS topology file.
+
+
+    ]]></help>
+    <expand macro="citations">
+        <citation type="doi">doi:10.1186/1756-0500-5-367</citation>
+    </expand>
+</tool>
