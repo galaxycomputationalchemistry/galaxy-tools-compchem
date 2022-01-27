@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import argparse
-END_OF_MOLECULE = ('[ moleculetype ]', '[ system ]')
+END_OF_MOL = ('[ moleculetype ]', '[ system ]')
 
 
 def __main__():
@@ -42,7 +42,8 @@ def __main__():
                             break
                         # always write this line
                         fh_out.write(line)
-                        if not line.strip().startswith(';') or (line.strip() and not line.strip().startswith(';')):
+                        if not line.strip().startswith(';') or (line.strip()
+                           and not line.strip().startswith(';')):
                             # this line should be the name line,
                             fields = line.strip().split()
                             if fields[0] == args.molecule:
@@ -52,10 +53,10 @@ def __main__():
                                     if not line:
                                         # eof
                                         break
-                                    if line.strip().startswith(END_OF_MOLECULE):
+                                    if line.strip().startswith(END_OF_MOL):
                                         fh_out.write("\n#ifdef POSRES\n")
-                                        with open(args.res_file, 'r') as fh_res:
-                                            for line2 in fh_res:
+                                        with open(args.res_file, 'r') as fh_re:
+                                            for line2 in fh_re:
                                                 fh_out.write(line2)
                                         fh_out.write("#endif\n\n")
                                         fh_out.write(line)
