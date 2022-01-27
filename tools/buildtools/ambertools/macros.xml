@@ -1,23 +1,582 @@
 <macros>
-  <token name="@TOOL_VERSION@">21.10</token>
-  <xml name="requirements">
-    <requirements>
-      <requirement type="package" version="@TOOL_VERSION@">ambertools</requirement>
-      <yield/>
-    </requirements>
-  </xml>
-  <xml name="citations">
-    <citations>
-      <citation type="doi">10.1002/jcc.20290</citation>
-      <citation type="bibtex">
+	<token name="@TOOL_VERSION@">21.10</token>
+	<xml name="requirements">
+		<requirements>
+			<requirement type="package" version="@TOOL_VERSION@">ambertools</requirement>
+			<yield/>
+		</requirements>
+	</xml>
+	<xml name="builtin_amberfiles">
+		<param name="arg_filename" type="select" label="File">
+			<option value="epASN.prepin">epASN.prepin</option>
+			<option value="epACE.prepin">epACE.prepin</option>
+			<option value="GLYCAM_06j-1.prep">GLYCAM_06j-1.prep</option>
+			<option value="toyrna.in">toyrna.in</option>
+			<option value="epTRP.prepin">epTRP.prepin</option>
+			<option value="epSER.prepin">epSER.prepin</option>
+			<option value="epALA.prepin">epALA.prepin</option>
+			<option value="epASP.prepin">epASP.prepin</option>
+			<option value="amino12.in">amino12.in</option>
+			<option value="amino10.in">amino10.in</option>
+			<option value="epPHE.prepin">epPHE.prepin</option>
+			<option value="uni_amino03.in">uni_amino03.in</option>
+			<option value="aminoct12.in">aminoct12.in</option>
+			<option value="epTHR.prepin">epTHR.prepin</option>
+			<option value="uni_aminoct03.in">uni_aminoct03.in</option>
+			<option value="epNME.prepin">epNME.prepin</option>
+			<option value="chcl3.in">chcl3.in</option>
+			<option value="all_aminont03.in">all_aminont03.in</option>
+			<option value="epTYR.prepin">epTYR.prepin</option>
+			<option value="epVAL.prepin">epVAL.prepin</option>
+			<option value="epGLU.prepin">epGLU.prepin</option>
+			<option value="meoh.in">meoh.in</option>
+			<option value="all_aminoct03.in">all_aminoct03.in</option>
+			<option value="epHID.prepin">epHID.prepin</option>
+			<option value="all_amino03.in">all_amino03.in</option>
+			<option value="aminont10.in">aminont10.in</option>
+			<option value="epLEU.prepin">epLEU.prepin</option>
+			<option value="GLYCAM_lipids_06h.prep">GLYCAM_lipids_06h.prep</option>
+			<option value="GLYCAM_06EPb.prep">GLYCAM_06EPb.prep</option>
+			<option value="epILE.prepin">epILE.prepin</option>
+			<option value="epHIE.prepin">epHIE.prepin</option>
+			<option value="aminoct10.in">aminoct10.in</option>
+			<option value="epCYS.prepin">epCYS.prepin</option>
+			<option value="epGLN.prepin">epGLN.prepin</option>
+			<option value="epLYS.prepin">epLYS.prepin</option>
+			<option value="epARG.prepin">epARG.prepin</option>
+			<option value="epGLY.prepin">epGLY.prepin</option>
+			<option value="nma.in">nma.in</option>
+			<option value="uni_aminont03.in">uni_aminont03.in</option>
+			<option value="nucleic10.in">nucleic10.in</option>
+			<option value="epMET.prepin">epMET.prepin</option>
+			<option value="dna_nuc94-bsc0_chiOl4-ezOL1.in">dna_nuc94-bsc0_chiOl4-ezOL1.in</option>
+			<option value="aminont12.in">aminont12.in</option>
+			<option value="protonated_nucleic/RGE_noP.pdb">protonated_nucleic/RGE_noP.pdb</option>
+			<option value="protonated_nucleic/DA+_noP.pdb">protonated_nucleic/DA+_noP.pdb</option>
+			<option value="protonated_nucleic/DC+.pdb">protonated_nucleic/DC+.pdb</option>
+			<option value="protonated_nucleic/RC+_noP.pdb">protonated_nucleic/RC+_noP.pdb</option>
+			<option value="protonated_nucleic/DC+_noP.pdb">protonated_nucleic/DC+_noP.pdb</option>
+			<option value="protonated_nucleic/RC+.pdb">protonated_nucleic/RC+.pdb</option>
+			<option value="protonated_nucleic/RGE.pdb">protonated_nucleic/RGE.pdb</option>
+			<option value="protonated_nucleic/DTE_noP.pdb">protonated_nucleic/DTE_noP.pdb</option>
+			<option value="protonated_nucleic/DGE_noP.pdb">protonated_nucleic/DGE_noP.pdb</option>
+			<option value="protonated_nucleic/RG-.pdb">protonated_nucleic/RG-.pdb</option>
+			<option value="protonated_nucleic/RU-_noP.pdb">protonated_nucleic/RU-_noP.pdb</option>
+			<option value="protonated_nucleic/DT-_noP.pdb">protonated_nucleic/DT-_noP.pdb</option>
+			<option value="protonated_nucleic/RA+_noP.pdb">protonated_nucleic/RA+_noP.pdb</option>
+			<option value="protonated_nucleic/DA+.pdb">protonated_nucleic/DA+.pdb</option>
+			<option value="protonated_nucleic/RUE_noP.pdb">protonated_nucleic/RUE_noP.pdb</option>
+			<option value="protonated_nucleic/DTE.pdb">protonated_nucleic/DTE.pdb</option>
+			<option value="protonated_nucleic/DT-.pdb">protonated_nucleic/DT-.pdb</option>
+			<option value="protonated_nucleic/DG-.pdb">protonated_nucleic/DG-.pdb</option>
+			<option value="protonated_nucleic/RG-_noP.pdb">protonated_nucleic/RG-_noP.pdb</option>
+			<option value="protonated_nucleic/DG-_noP.pdb">protonated_nucleic/DG-_noP.pdb</option>
+			<option value="protonated_nucleic/DGE.pdb">protonated_nucleic/DGE.pdb</option>
+			<option value="protonated_nucleic/RU-.pdb">protonated_nucleic/RU-.pdb</option>
+			<option value="protonated_nucleic/RA+.pdb">protonated_nucleic/RA+.pdb</option>
+			<option value="protonated_nucleic/RUE.pdb">protonated_nucleic/RUE.pdb</option>
+			<option value="oldff/all_amino02.r1.in">oldff/all_amino02.r1.in</option>
+			<option value="oldff/all.in">oldff/all.in</option>
+			<option value="oldff/all_amino02.in">oldff/all_amino02.in</option>
+			<option value="oldff/opls_unict.in">oldff/opls_unict.in</option>
+			<option value="oldff/unint.in">oldff/unint.in</option>
+			<option value="oldff/all_aminoct94.in">oldff/all_aminoct94.in</option>
+			<option value="oldff/protein.amberua.in">oldff/protein.amberua.in</option>
+			<option value="oldff/protein.amberua.N.in">oldff/protein.amberua.N.in</option>
+			<option value="oldff/all_amino02EP.in">oldff/all_amino02EP.in</option>
+			<option value="oldff/all_aminont02EP.in">oldff/all_aminont02EP.in</option>
+			<option value="oldff/GLYCAM_06j.prep">oldff/GLYCAM_06j.prep</option>
+			<option value="oldff/opls_uni.in">oldff/opls_uni.in</option>
+			<option value="oldff/protein.amberua.C.in">oldff/protein.amberua.C.in</option>
+			<option value="oldff/all_nuc02.in">oldff/all_nuc02.in</option>
+			<option value="oldff/all_nuc94.in">oldff/all_nuc94.in</option>
+			<option value="oldff/all_amino94.in">oldff/all_amino94.in</option>
+			<option value="oldff/GLYCAM_06h.prep">oldff/GLYCAM_06h.prep</option>
+			<option value="oldff/opls_nacl.in">oldff/opls_nacl.in</option>
+			<option value="oldff/all_aminont94.in">oldff/all_aminont94.in</option>
+			<option value="oldff/allnt.in">oldff/allnt.in</option>
+			<option value="oldff/all_aminoct02EP.in">oldff/all_aminoct02EP.in</option>
+			<option value="oldff/all_aminoct02.in">oldff/all_aminoct02.in</option>
+			<option value="oldff/unict.in">oldff/unict.in</option>
+			<option value="oldff/allct.in">oldff/allct.in</option>
+			<option value="oldff/all_nuc02EP.in">oldff/all_nuc02EP.in</option>
+			<option value="oldff/opls_unint.in">oldff/opls_unint.in</option>
+			<option value="oldff/all_aminont02.in">oldff/all_aminont02.in</option>
+			<option value="oldff/na.amberua.in">oldff/na.amberua.in</option>
+			<option value="oldff/uni.in">oldff/uni.in</option>
+			<option value="nucleic12.redq.lib">nucleic12.redq.lib</option>
+			<option value="all_aminontfb15.lib">all_aminontfb15.lib</option>
+			<option value="ff03ua.cmd">ff03ua.cmd</option>
+			<option value="ff94.log">ff94.log</option>
+			<option value="amino19ipq_0.9_vac.lib">amino19ipq_0.9_vac.lib</option>
+			<option value="fb4box.off">fb4box.off</option>
+			<option value="aminont10.lib">aminont10.lib</option>
+			<option value="all_aminont03.lib">all_aminont03.lib</option>
+			<option value="tip4pbox.off">tip4pbox.off</option>
+			<option value="atomic_ions.cmd">atomic_ions.cmd</option>
+			<option value="8Mureabox.off">8Mureabox.off</option>
+			<option value="parmBSC1.lib">parmBSC1.lib</option>
+			<option value="GLYCAM_amino_06j_12SB.lib">GLYCAM_amino_06j_12SB.lib</option>
+			<option value="all_aminofb15.lib">all_aminofb15.lib</option>
+			<option value="amino14ipq.lib">amino14ipq.lib</option>
+			<option value="ff03.log">ff03.log</option>
+			<option value="aminoct19ipq_0.9.lib">aminoct19ipq_0.9.lib</option>
+			<option value="aminont19ipq_0.9_pol.lib">aminont19ipq_0.9_pol.lib</option>
+			<option value="all_aminont94.lib">all_aminont94.lib</option>
+			<option value="DNA_CI.lib">DNA_CI.lib</option>
+			<option value="all_nucleic94.lib">all_nucleic94.lib</option>
+			<option value="GLYCAM_aminont_06j_12SB.lib">GLYCAM_aminont_06j_12SB.lib</option>
+			<option value="atomic_ions.log">atomic_ions.log</option>
+			<option value="amino19ipq_0.9_pol.lib">amino19ipq_0.9_pol.lib</option>
+			<option value="amino19ipq_0.9.lib">amino19ipq_0.9.lib</option>
+			<option value="phos_amino94.lib">phos_amino94.lib</option>
+			<option value="tip4pewbox.off">tip4pewbox.off</option>
+			<option value="tip4pd.off">tip4pd.off</option>
+			<option value="mod_amino.lib">mod_amino.lib</option>
+			<option value="conste.lib">conste.lib</option>
+			<option value="nucleic10.lib">nucleic10.lib</option>
+			<option value="chcl3box.off">chcl3box.off</option>
+			<option value="aminont12.redq.lib">aminont12.redq.lib</option>
+			<option value="all_aminoct94.lib">all_aminoct94.lib</option>
+			<option value="amino15ipq-vac_10.0.lib">amino15ipq-vac_10.0.lib</option>
+			<option value="residues.RNA.parmCHI_YIL.bsc.lib">residues.RNA.parmCHI_YIL.bsc.lib</option>
+			<option value="tip3pbox.off">tip3pbox.off</option>
+			<option value="solvents.lib">solvents.lib</option>
+			<option value="aminoct12.redq.lib">aminoct12.redq.lib</option>
+			<option value="tip3pfbox.off">tip3pfbox.off</option>
+			<option value="DNA.OL15.lib">DNA.OL15.lib</option>
+			<option value="ff10.cmd">ff10.cmd</option>
+			<option value="aminoct12.lib">aminoct12.lib</option>
+			<option value="aminoct19ipq_0.9_pol.lib">aminoct19ipq_0.9_pol.lib</option>
+			<option value="tip5pbox.off">tip5pbox.off</option>
+			<option value="all_amino03.lib">all_amino03.lib</option>
+			<option value="atomic_ions.lib">atomic_ions.lib</option>
+			<option value="8Murea.readme">8Murea.readme</option>
+			<option value="ff03ua.log">ff03ua.log</option>
+			<option value="all_amino94.lib">all_amino94.lib</option>
+			<option value="uni_aminont03.lib">uni_aminont03.lib</option>
+			<option value="nucleic12.LJbb-RNA.lib">nucleic12.LJbb-RNA.lib</option>
+			<option value="nmabox.off">nmabox.off</option>
+			<option value="RNA.YIL.lib">RNA.YIL.lib</option>
+			<option value="xFPchromophores.lib">xFPchromophores.lib</option>
+			<option value="ff94.cmd">ff94.cmd</option>
+			<option value="nab.lib">nab.lib</option>
+			<option value="terminalphos.LJbb-RNA.lib">terminalphos.LJbb-RNA.lib</option>
+			<option value="opcbox.off">opcbox.off</option>
+			<option value="ff03.cmd">ff03.cmd</option>
+			<option value="music.lib">music.lib</option>
+			<option value="all_prot_nucleic10.lib">all_prot_nucleic10.lib</option>
+			<option value="aminoct19ipq_0.9_vac.lib">aminoct19ipq_0.9_vac.lib</option>
+			<option value="all_aminoAM1.lib">all_aminoAM1.lib</option>
+			<option value="all_amino94ildn.lib">all_amino94ildn.lib</option>
+			<option value="ions94.lib">ions94.lib</option>
+			<option value="all_aminoct03.lib">all_aminoct03.lib</option>
+			<option value="RNA.lib">RNA.lib</option>
+			<option value="spcebox.off">spcebox.off</option>
+			<option value="aminont19ipq_0.9_vac.lib">aminont19ipq_0.9_vac.lib</option>
+			<option value="nucleic12.lib">nucleic12.lib</option>
+			<option value="lipid17.lib">lipid17.lib</option>
+			<option value="terminal_monophosphate.lib">terminal_monophosphate.lib</option>
+			<option value="all_prot_nucleic10.log">all_prot_nucleic10.log</option>
+			<option value="ions94.cmd">ions94.cmd</option>
+			<option value="aminont15ipq_10.0.lib">aminont15ipq_10.0.lib</option>
+			<option value="aminocn15ipq_10.0.lib">aminocn15ipq_10.0.lib</option>
+			<option value="mk_nablib.cmd">mk_nablib.cmd</option>
+			<option value="all_modrna08.lib">all_modrna08.lib</option>
+			<option value="aminont12.lib">aminont12.lib</option>
+			<option value="pol3box.off">pol3box.off</option>
+			<option value="ff15ipq-m.lib">ff15ipq-m.lib</option>
+			<option value="phmd.lib">phmd.lib</option>
+			<option value="RNA_CI.lib">RNA_CI.lib</option>
+			<option value="solvents.log">solvents.log</option>
+			<option value="GLYCAM_aminoct_06j_12SB.lib">GLYCAM_aminoct_06j_12SB.lib</option>
+			<option value="amberdyes.lib">amberdyes.lib</option>
+			<option value="uni_aminoct03.lib">uni_aminoct03.lib</option>
+			<option value="phosaa14SB.lib">phosaa14SB.lib</option>
+			<option value="all_aminoPM3.lib">all_aminoPM3.lib</option>
+			<option value="meohbox.off">meohbox.off</option>
+			<option value="amino19.lib">amino19.lib</option>
+			<option value="fb3box.off">fb3box.off</option>
+			<option value="ff12SB.log">ff12SB.log</option>
+			<option value="Makefile">Makefile</option>
+			<option value="aminont14ipq.lib">aminont14ipq.lib</option>
+			<option value="aminoct10.lib">aminoct10.lib</option>
+			<option value="RNA_Shaw.lib">RNA_Shaw.lib</option>
+			<option value="mk_nablib.log">mk_nablib.log</option>
+			<option value="ff10.log">ff10.log</option>
+			<option value="constph.lib">constph.lib</option>
+			<option value="all_nucleic94.nmr.lib">all_nucleic94.nmr.lib</option>
+			<option value="mod_amino19.lib">mod_amino19.lib</option>
+			<option value="ions94.log">ions94.log</option>
+			<option value="aminoct15ipq_10.0.lib">aminoct15ipq_10.0.lib</option>
+			<option value="ff12SB.cmd">ff12SB.cmd</option>
+			<option value="nucleic12.ROC-RNA.lib">nucleic12.ROC-RNA.lib</option>
+			<option value="lipid14.lib">lipid14.lib</option>
+			<option value="amino10.lib">amino10.lib</option>
+			<option value="amino15ipq_10.0.lib">amino15ipq_10.0.lib</option>
+			<option value="all_aminont94ildn.lib">all_aminont94ildn.lib</option>
+			<option value="all_aminoctfb15.lib">all_aminoctfb15.lib</option>
+			<option value="parmBSC0.lib">parmBSC0.lib</option>
+			<option value="solvents.cmd">solvents.cmd</option>
+			<option value="spcfwbox.off">spcfwbox.off</option>
+			<option value="cph_nucleic_caps.lib">cph_nucleic_caps.lib</option>
+			<option value="opc3box.off">opc3box.off</option>
+			<option value="amino12.redq.lib">amino12.redq.lib</option>
+			<option value="aminont15ipq-vac_10.0.lib">aminont15ipq-vac_10.0.lib</option>
+			<option value="all_prot_nucleic10.cmd">all_prot_nucleic10.cmd</option>
+			<option value="phosaa19SB.lib">phosaa19SB.lib</option>
+			<option value="qspcfwbox.off">qspcfwbox.off</option>
+			<option value="uni_amino03.lib">uni_amino03.lib</option>
+			<option value="all_amino94.nmr.lib">all_amino94.nmr.lib</option>
+			<option value="aminoct14ipq.lib">aminoct14ipq.lib</option>
+			<option value="aminont19ipq_0.9.lib">aminont19ipq_0.9.lib</option>
+			<option value="aminoct15ipq-vac_10.0.lib">aminoct15ipq-vac_10.0.lib</option>
+			<option value="all_aminoct94ildn.lib">all_aminoct94ildn.lib</option>
+			<option value="amino12.lib">amino12.lib</option>
+			<option value="oldff/ff02.log">oldff/ff02.log</option>
+			<option value="oldff/phosphoaa10.lib">oldff/phosphoaa10.lib</option>
+			<option value="oldff/all_nucleic91.lib">oldff/all_nucleic91.lib</option>
+			<option value="oldff/all_aminoct02.lib">oldff/all_aminoct02.lib</option>
+			<option value="oldff/ff02.cmd">oldff/ff02.cmd</option>
+			<option value="oldff/all_nucleic02EP.lib">oldff/all_nucleic02EP.lib</option>
+			<option value="oldff/ions91.lib">oldff/ions91.lib</option>
+			<option value="oldff/dna.amberua.lib">oldff/dna.amberua.lib</option>
+			<option value="oldff/all_aminoct91.lib">oldff/all_aminoct91.lib</option>
+			<option value="oldff/all_aminoct02EP.lib">oldff/all_aminoct02EP.lib</option>
+			<option value="oldff/all_aminont91.lib">oldff/all_aminont91.lib</option>
+			<option value="oldff/all_nucleic02.lib">oldff/all_nucleic02.lib</option>
+			<option value="oldff/protein.amberua.lib">oldff/protein.amberua.lib</option>
+			<option value="oldff/ions91.cmd">oldff/ions91.cmd</option>
+			<option value="oldff/GLYCAM_aminoct_06j_10.lib">oldff/GLYCAM_aminoct_06j_10.lib</option>
+			<option value="oldff/rna.amberua.lib">oldff/rna.amberua.lib</option>
+			<option value="oldff/all_amino02.r1.lib">oldff/all_amino02.r1.lib</option>
+			<option value="oldff/ff02EP.log">oldff/ff02EP.log</option>
+			<option value="oldff/pro-dna91.nmr.off">oldff/pro-dna91.nmr.off</option>
+			<option value="oldff/phosphoaa10.readme">oldff/phosphoaa10.readme</option>
+			<option value="oldff/ff91.log">oldff/ff91.log</option>
+			<option value="oldff/all_aminont2011pol.lib">oldff/all_aminont2011pol.lib</option>
+			<option value="oldff/ff02EP.cmd">oldff/ff02EP.cmd</option>
+			<option value="oldff/all_aminont02.lib">oldff/all_aminont02.lib</option>
+			<option value="oldff/all_amino2011pol.lib">oldff/all_amino2011pol.lib</option>
+			<option value="oldff/ff91.cmd">oldff/ff91.cmd</option>
+			<option value="oldff/all_amino91.lib">oldff/all_amino91.lib</option>
+			<option value="oldff/GLYCAM_aminont_06j_10.lib">oldff/GLYCAM_aminont_06j_10.lib</option>
+			<option value="oldff/lipid11.lib">oldff/lipid11.lib</option>
+			<option value="oldff/all_amino02.lib">oldff/all_amino02.lib</option>
+			<option value="oldff/all_aminoct2011pol.lib">oldff/all_aminoct2011pol.lib</option>
+			<option value="oldff/all_aminont02EP.lib">oldff/all_aminont02EP.lib</option>
+			<option value="oldff/GLYCAM_amino_06j_10.lib">oldff/GLYCAM_amino_06j_10.lib</option>
+			<option value="oldff/all_amino02EP.lib">oldff/all_amino02EP.lib</option>
+			<option value="validate_torsions.py">validate_torsions.py</option>
+			<option value="frcmod.spcfw">frcmod.spcfw</option>
+			<option value="frcmod.ff99SP">frcmod.ff99SP</option>
+			<option value="frcmod.tip4pfb">frcmod.tip4pfb</option>
+			<option value="frcmod.ROC-RNA">frcmod.ROC-RNA</option>
+			<option value="frcmod.constph">frcmod.constph</option>
+			<option value="frcmod.ionsjc_spce">frcmod.ionsjc_spce</option>
+			<option value="frcmod.ions234lm_hfe_tip4pew">frcmod.ions234lm_hfe_tip4pew</option>
+			<option value="frcmod.shaw">frcmod.shaw</option>
+			<option value="frcmod.nma">frcmod.nma</option>
+			<option value="frcmod.ions1lm_iod">frcmod.ions1lm_iod</option>
+			<option value="parm91X.ua.dat">parm91X.ua.dat</option>
+			<option value="frcmod.ionsjc_tip3p">frcmod.ionsjc_tip3p</option>
+			<option value="frcmod.ions234lm_iod_tip3p">frcmod.ions234lm_iod_tip3p</option>
+			<option value="frcmod.ff12SB">frcmod.ff12SB</option>
+			<option value="frcmod.conste">frcmod.conste</option>
+			<option value="lj_1264_pol.dat">lj_1264_pol.dat</option>
+			<option value="frcmod.ions234lm_126_tip4pew">frcmod.ions234lm_126_tip4pew</option>
+			<option value="frcmod.fb15">frcmod.fb15</option>
+			<option value="frcmod.ionslm_126_fb3">frcmod.ionslm_126_fb3</option>
+			<option value="frcmod.phosaa19SB">frcmod.phosaa19SB</option>
+			<option value="frcmod.ff02pol.r1">frcmod.ff02pol.r1</option>
+			<option value="frcmod.ions1lm_1264_tip4pew">frcmod.ions1lm_1264_tip4pew</option>
+			<option value="frcmod.ff99SB">frcmod.ff99SB</option>
+			<option value="frcmod.tip3pfb">frcmod.tip3pfb</option>
+			<option value="frcmod.tip3p">frcmod.tip3p</option>
+			<option value="frcmod.meoh">frcmod.meoh</option>
+			<option value="GLYCAM_06EPb.dat">GLYCAM_06EPb.dat</option>
+			<option value="nucgen.dat">nucgen.dat</option>
+			<option value="frcmod.tip3pf">frcmod.tip3pf</option>
+			<option value="frcmod.opc">frcmod.opc</option>
+			<option value="frcmod.ff19SB_XXX">frcmod.ff19SB_XXX</option>
+			<option value="frcmod.tip4pew">frcmod.tip4pew</option>
+			<option value="frcmod.ff99SB14">frcmod.ff99SB14</option>
+			<option value="frcmod.pol3">frcmod.pol3</option>
+			<option value="frcmod.ff19SB">frcmod.ff19SB</option>
+			<option value="frcmod.ions234lm_hfe_spce">frcmod.ions234lm_hfe_spce</option>
+			<option value="frcmod.ionslm_iod_fb3">frcmod.ionslm_iod_fb3</option>
+			<option value="toyrna.dat">toyrna.dat</option>
+			<option value="frcmod.parmbsc0">frcmod.parmbsc0</option>
+			<option value="frcmod.ff14SB">frcmod.ff14SB</option>
+			<option value="frcmod.tip4pd">frcmod.tip4pd</option>
+			<option value="frcmod.ff03ua">frcmod.ff03ua</option>
+			<option value="frcmod.ionslm_hfe_opc3">frcmod.ionslm_hfe_opc3</option>
+			<option value="opls_parm.dat">opls_parm.dat</option>
+			<option value="frcmod.ionslm_hfe_fb3">frcmod.ionslm_hfe_fb3</option>
+			<option value="frcmod.ff99SBnmr">frcmod.ff99SBnmr</option>
+			<option value="frcmod.ions1lm_1264_tip3p">frcmod.ions1lm_1264_tip3p</option>
+			<option value="frcmod.opc3">frcmod.opc3</option>
+			<option value="frcmod.urea">frcmod.urea</option>
+			<option value="frcmod.phosaa10">frcmod.phosaa10</option>
+			<option value="parmAM1.dat">parmAM1.dat</option>
+			<option value="frcmod.ROC-RNA_const">frcmod.ROC-RNA_const</option>
+			<option value="frcmod.ionslm_hfe_opc">frcmod.ionslm_hfe_opc</option>
+			<option value="frcmod.parmbsc1">frcmod.parmbsc1</option>
+			<option value="parm91.dat">parm91.dat</option>
+			<option value="frcmod.tip5p">frcmod.tip5p</option>
+			<option value="frcmod.ionslm_126_opc">frcmod.ionslm_126_opc</option>
+			<option value="parm10.dat">parm10.dat</option>
+			<option value="parm19ipq.dat">parm19ipq.dat</option>
+			<option value="amberdyes.dat">amberdyes.dat</option>
+			<option value="lipid17.dat">lipid17.dat</option>
+			<option value="frcmod.ionslm_iod_opc3">frcmod.ionslm_iod_opc3</option>
+			<option value="frcmod.ions234lm_1264_tip4pew">frcmod.ions234lm_1264_tip4pew</option>
+			<option value="frcmod.chcl3">frcmod.chcl3</option>
+			<option value="frcmod.parmCHI_YIL">frcmod.parmCHI_YIL</option>
+			<option value="frcmod.ionslm_1264_fb3">frcmod.ionslm_1264_fb3</option>
+			<option value="frcmod.ions1lm_126_spce">frcmod.ions1lm_126_spce</option>
+			<option value="GLYCAM_06j.dat">GLYCAM_06j.dat</option>
+			<option value="frcmod.ff15ipq-m">frcmod.ff15ipq-m</option>
+			<option value="parm99EP.dat">parm99EP.dat</option>
+			<option value="parm94.dat">parm94.dat</option>
+			<option value="parm98.dat">parm98.dat</option>
+			<option value="frcmod.dc4">frcmod.dc4</option>
+			<option value="frcmod.spce">frcmod.spce</option>
+			<option value="frcmod.phosaa14SB">frcmod.phosaa14SB</option>
+			<option value="music.dat">music.dat</option>
+			<option value="parm15ipq_10.3.dat">parm15ipq_10.3.dat</option>
+			<option value="frcmod.ions234lm_126_spce">frcmod.ions234lm_126_spce</option>
+			<option value="frcmod.ions_charmm22">frcmod.ions_charmm22</option>
+			<option value="frcmod.spceb">frcmod.spceb</option>
+			<option value="frcmod.ionslm_iod_fb4">frcmod.ionslm_iod_fb4</option>
+			<option value="frcmod.ionslm_126_fb4">frcmod.ionslm_126_fb4</option>
+			<option value="frcmod.chiOL4">frcmod.chiOL4</option>
+			<option value="gaff.dat">gaff.dat</option>
+			<option value="lipid11.dat">lipid11.dat</option>
+			<option value="all_modrna08.frcmod">all_modrna08.frcmod</option>
+			<option value="frcmod.ions1lm_1264_spce">frcmod.ions1lm_1264_spce</option>
+			<option value="frcmod.ions234lm_1264_tip3p">frcmod.ions234lm_1264_tip3p</option>
+			<option value="frcmod.ff99SBildn">frcmod.ff99SBildn</option>
+			<option value="frcmod.ions1lm_126_tip3p">frcmod.ions1lm_126_tip3p</option>
+			<option value="frcmod.ff14SBmodAA">frcmod.ff14SBmodAA</option>
+			<option value="parm14ipq.dat">parm14ipq.dat</option>
+			<option value="gaff2.dat">gaff2.dat</option>
+			<option value="frcmod.ions234lm_1264_spce">frcmod.ions234lm_1264_spce</option>
+			<option value="frcmod.ionslm_1264_fb4">frcmod.ionslm_1264_fb4</option>
+			<option value="frcmod.ions234lm_iod_tip4pew">frcmod.ions234lm_iod_tip4pew</option>
+			<option value="frcmod.ionsff99_tip3p">frcmod.ionsff99_tip3p</option>
+			<option value="frcmod.vdWall">frcmod.vdWall</option>
+			<option value="frcmod.ions234lm_126_tip3p">frcmod.ions234lm_126_tip3p</option>
+			<option value="frcmod.parmbsc0_ezOL1">frcmod.parmbsc0_ezOL1</option>
+			<option value="frcmod.ionslm_126_opc3">frcmod.ionslm_126_opc3</option>
+			<option value="parm99.dat">parm99.dat</option>
+			<option value="frcmod.ff03">frcmod.ff03</option>
+			<option value="parmPM3.dat">parmPM3.dat</option>
+			<option value="parm96.dat">parm96.dat</option>
+			<option value="lipid14.dat">lipid14.dat</option>
+			<option value="frcmod.ionslm_1264_opc">frcmod.ionslm_1264_opc</option>
+			<option value="parm91X.dat">parm91X.dat</option>
+			<option value="frcmod.DNA.OL15">frcmod.DNA.OL15</option>
+			<option value="frcmod.ions1lm_126_tip4pew">frcmod.ions1lm_126_tip4pew</option>
+			<option value="parm19.dat">parm19.dat</option>
+			<option value="frcmod.ionsjc_tip4pew">frcmod.ionsjc_tip4pew</option>
+			<option value="frcmod.ionslm_hfe_fb4">frcmod.ionslm_hfe_fb4</option>
+			<option value="frcmod.ff99bsc0CG">frcmod.ff99bsc0CG</option>
+			<option value="frcmod.tip4p">frcmod.tip4p</option>
+			<option value="GLYCAM_06h.dat">GLYCAM_06h.dat</option>
+			<option value="frcmod.ions234lm_iod_spce">frcmod.ions234lm_iod_spce</option>
+			<option value="frcmod.ff19SBmodAA">frcmod.ff19SBmodAA</option>
+			<option value="frcmod.protonated_nucleic">frcmod.protonated_nucleic</option>
+			<option value="frcmod.RNA.LJbb">frcmod.RNA.LJbb</option>
+			<option value="opls.info">opls.info</option>
+			<option value="frcmod.phmd">frcmod.phmd</option>
+			<option value="frcmod.ionslm_1264_opc3">frcmod.ionslm_1264_opc3</option>
+			<option value="frcmod.ions234lm_hfe_tip3p">frcmod.ions234lm_hfe_tip3p</option>
+			<option value="frcmod.ionslm_iod_opc">frcmod.ionslm_iod_opc</option>
+			<option value="frcmod.qspcfw">frcmod.qspcfw</option>
+			<option value="frcmod.xFPchromophores">frcmod.xFPchromophores</option>
+			<option value="__pycache__/validate_torsions.cpython-39.pyc">__pycache__/validate_torsions.cpython-39.pyc</option>
+			<option value="leaprc.phosaa10">leaprc.phosaa10</option>
+			<option value="leaprc.protein.ff15ipq">leaprc.protein.ff15ipq</option>
+			<option value="leaprc.phosaa19SB">leaprc.phosaa19SB</option>
+			<option value="leaprc.protein.ff14SB">leaprc.protein.ff14SB</option>
+			<option value="leaprc.water.fb4">leaprc.water.fb4</option>
+			<option value="leaprc.protein.ff19SB_modAA">leaprc.protein.ff19SB_modAA</option>
+			<option value="leaprc.DNA.bsc1">leaprc.DNA.bsc1</option>
+			<option value="leaprc.GLYCAM_06EPb">leaprc.GLYCAM_06EPb</option>
+			<option value="leaprc.amberdyes">leaprc.amberdyes</option>
+			<option value="leaprc.protein.ff15ipq-vac">leaprc.protein.ff15ipq-vac</option>
+			<option value="leaprc.mimetic.ff15ipq">leaprc.mimetic.ff15ipq</option>
+			<option value="leaprc.protein.ff03ua">leaprc.protein.ff03ua</option>
+			<option value="leaprc.gaff2">leaprc.gaff2</option>
+			<option value="leaprc.gaff">leaprc.gaff</option>
+			<option value="leaprc.water.tip3p">leaprc.water.tip3p</option>
+			<option value="leaprc.protein.fb15">leaprc.protein.fb15</option>
+			<option value="leaprc.RNA.YIL">leaprc.RNA.YIL</option>
+			<option value="leaprc.water.tip4pd">leaprc.water.tip4pd</option>
+			<option value="leaprc.lipid17">leaprc.lipid17</option>
+			<option value="leaprc.water.tip4pew">leaprc.water.tip4pew</option>
+			<option value="leaprc.phosaa14SB">leaprc.phosaa14SB</option>
+			<option value="leaprc.lipid14">leaprc.lipid14</option>
+			<option value="leaprc.DNA.OL15">leaprc.DNA.OL15</option>
+			<option value="leaprc.constph">leaprc.constph</option>
+			<option value="leaprc.water.fb3">leaprc.water.fb3</option>
+			<option value="leaprc.water.spce">leaprc.water.spce</option>
+			<option value="leaprc.protein.ff19ipq">leaprc.protein.ff19ipq</option>
+			<option value="leaprc.protein.ff14SB_modAA">leaprc.protein.ff14SB_modAA</option>
+			<option value="leaprc.water.spceb">leaprc.water.spceb</option>
+			<option value="leaprc.ffAM1">leaprc.ffAM1</option>
+			<option value="leaprc.ffPM3">leaprc.ffPM3</option>
+			<option value="leaprc.music">leaprc.music</option>
+			<option value="leaprc.RNA.OL3">leaprc.RNA.OL3</option>
+			<option value="leaprc.conste">leaprc.conste</option>
+			<option value="leaprc.RNA.Shaw">leaprc.RNA.Shaw</option>
+			<option value="leaprc.RNA.LJbb">leaprc.RNA.LJbb</option>
+			<option value="leaprc.modrna08">leaprc.modrna08</option>
+			<option value="leaprc.GLYCAM_06j-1">leaprc.GLYCAM_06j-1</option>
+			<option value="leaprc.protein.ff14SBonlysc">leaprc.protein.ff14SBonlysc</option>
+			<option value="leaprc.water.opc">leaprc.water.opc</option>
+			<option value="leaprc.xFPchromophores">leaprc.xFPchromophores</option>
+			<option value="leaprc.water.opc3">leaprc.water.opc3</option>
+			<option value="leaprc.protein.ff19SB">leaprc.protein.ff19SB</option>
+			<option value="leaprc.protein.ff03.r1">leaprc.protein.ff03.r1</option>
+			<option value="leaprc.RNA.ROC">leaprc.RNA.ROC</option>
+			<option value="oldff/leaprc.ff94.nmr">oldff/leaprc.ff94.nmr</option>
+			<option value="oldff/leaprc.ff84">oldff/leaprc.ff84</option>
+			<option value="oldff/leaprc.ff99SBildn">oldff/leaprc.ff99SBildn</option>
+			<option value="oldff/leaprc.ff99SB">oldff/leaprc.ff99SB</option>
+			<option value="oldff/leaprc.ff98">oldff/leaprc.ff98</option>
+			<option value="oldff/leaprc.ff14SB.redq">oldff/leaprc.ff14SB.redq</option>
+			<option value="oldff/leaprc.rna.ff84">oldff/leaprc.rna.ff84</option>
+			<option value="oldff/leaprc.toyrna">oldff/leaprc.toyrna</option>
+			<option value="oldff/leaprc.rna.ff98">oldff/leaprc.rna.ff98</option>
+			<option value="oldff/leaprc.ff10">oldff/leaprc.ff10</option>
+			<option value="oldff/leaprc.lipid11">oldff/leaprc.lipid11</option>
+			<option value="oldff/leaprc.ff02">oldff/leaprc.ff02</option>
+			<option value="oldff/leaprc.ff02polEP.r0">oldff/leaprc.ff02polEP.r0</option>
+			<option value="oldff/leaprc.ff99">oldff/leaprc.ff99</option>
+			<option value="oldff/leaprc.ff99bsc0">oldff/leaprc.ff99bsc0</option>
+			<option value="oldff/leaprc.GLYCAM_06h-1">oldff/leaprc.GLYCAM_06h-1</option>
+			<option value="oldff/leaprc.rna.ff02EP">oldff/leaprc.rna.ff02EP</option>
+			<option value="oldff/leaprc.rna.ff94">oldff/leaprc.rna.ff94</option>
+			<option value="oldff/leaprc.GLYCAM_06j_10">oldff/leaprc.GLYCAM_06j_10</option>
+			<option value="oldff/leaprc.rna.ff99">oldff/leaprc.rna.ff99</option>
+			<option value="oldff/leaprc.ff86">oldff/leaprc.ff86</option>
+			<option value="oldff/leaprc.ff02polEP.r1">oldff/leaprc.ff02polEP.r1</option>
+			<option value="oldff/leaprc.DNA.bsc0">oldff/leaprc.DNA.bsc0</option>
+			<option value="oldff/leaprc.ff94">oldff/leaprc.ff94</option>
+			<option value="oldff/leaprc.parmbsc0_chiOL4_ezOL1">oldff/leaprc.parmbsc0_chiOL4_ezOL1</option>
+			<option value="oldff/leaprc.ff14SB">oldff/leaprc.ff14SB</option>
+			<option value="oldff/leaprc.GLYCAM_06EP">oldff/leaprc.GLYCAM_06EP</option>
+			<option value="oldff/leaprc.GLYCAM_04">oldff/leaprc.GLYCAM_04</option>
+			<option value="oldff/leaprc.ff02pol.r0">oldff/leaprc.ff02pol.r0</option>
+			<option value="oldff/leaprc.GLYCAM_06h-12SB">oldff/leaprc.GLYCAM_06h-12SB</option>
+			<option value="oldff/leaprc.rna.ff02">oldff/leaprc.rna.ff02</option>
+			<option value="oldff/leaprc.ff14ipq">oldff/leaprc.ff14ipq</option>
+			<option value="oldff/leaprc.GLYCAM_06h">oldff/leaprc.GLYCAM_06h</option>
+			<option value="oldff/leaprc.ff96">oldff/leaprc.ff96</option>
+			<option value="oldff/leaprc.GLYCAM_06">oldff/leaprc.GLYCAM_06</option>
+			<option value="oldff/leaprc.ff99SBnmr">oldff/leaprc.ff99SBnmr</option>
+			<option value="oldff/leaprc.ff02pol.r1">oldff/leaprc.ff02pol.r1</option>
+			<option value="oldff/leaprc.ff03">oldff/leaprc.ff03</option>
+		</param>
+	</xml>
+	<xml name="addingions">
+		<param name="arg_variable" label="Variable name of UNIT:" type="text" value="" help="The variable name that your system's components are assigned to."/>
+		<param name="arg_ion1" label="ion1 type" type="text" value="" help="Atom type for ion, as written in your chosen forcefield file. For example, choose Cl- for chloride."/>
+		<param name="arg__ion1" label="# of ion1 atoms to add" type="text" value="" help="Type 0 if you want to add enough ions to neutralize (if using the conventional 'addIons' command)."/>
+		<param name="arg_ion2" label="ion2 type" type="text" value="" help="Atom type for ion, as written in your chosen forcefield file. For example, choose Na+ for sodium."/>
+		<param name="arg__ion2" label="# of ion1 atoms to add" type="text" value="" help="Type 0 if you want to add enough ions to neutralize (if using the conventional 'addIons' command)."/>
+	</xml>
+	<xml name="unitvariable">
+		<param name="arg_unit" label="Variable name of UNIT:" type="text" value="" help="This is the variable name for the target UNIT, which can be a protein, ligand, or any other unique molecular component of the system, that is loaded into LEaP. "/>
+	</xml>
+	<xml name="container">
+		<param name="arg_container" label="container value" type="text" value="" help="UNIT/RESIDUE/ATOM to apply this to"/>
+	</xml>
+	<xml name="create">
+		<param name="createVar_assign" label="Assign to variable named" type="text" value=""/>
+		<param name="arg_name" label="name" type="text" value="" help="STRING"/>
+	</xml>
+	<xml name="object">
+		<param name="arg_obj" label="obj value" type="text" value="" help="The object can be an entire UNIT, or use periods to choose specific RESIDUES (UNIT.RESIDUE#) and/or ATOMS (UNIT.RESIDUE#.ATOMname) within it." />
+	</xml>
+	<xml name="newfile">
+		<param name="newfile" label="new file to save data into" type="text" />
+	</xml>
+	<xml name="loadfile" token_data_format="txt">
+		<param name="arg_filename" label="File" type="data" format="@DATA_FORMAT@" />
+	</xml>
+	<xml name="defaultsettings">
+		<param name="settingsvariable" label="Parameter to adjust" type="select" value="" help="">
+			<option value="PdbWriteCharges">PdbWriteCharges</option>
+			<option value="OldPrmtopFormat">OldPrmtopFormat</option>
+			<option value="Gibbs">Gibbs</option>
+			<option value="UseResIds">UseResIds</option>
+			<option value="Charmm">Charmm</option>
+			<option value="DeleteExtraPointAngles">DeleteExtraPointAngles</option>
+			<option value="FlexibleWater">FlexibleWater</option>
+			<option value="PBRadii">PBRadii</option>
+			<option value="Dielectric">Dielectric</option>
+			<option value="dipole_damp_factor">dipole_damp_factor</option>
+			<option value="sceescalefactor">sceescalefactor</option>
+			<option value="scnbscalefactor">scnbscalefactor</option>
+			<option value="CMAP">CMAP</option>
+			<option value="PHIPSIMAP">PHIPSIMAP</option>
+			<option value="ipol">ipol</option>
+			<option value="nocenter">nocenter</option>
+			<option value="reorder_residues">reorder_residues</option>
+		</param>
+	</xml>
+	<xml name="settingoptions">
+		<param name="usersetting" label="setting" type="select" help="If unsure of what to choose, please refer to the 'help' message for this command by scrolling down this page, to see which settings apply to each command.">
+			<option value="on">ON</option>
+			<option value="off">OFF</option>
+			<option value="bondi">bondi</option>
+			<option value="mbondi">mbondi</option>
+			<option value="mbondi2">mbondi2</option>
+			<option value="mbondi3">mbondi3</option>
+			<option value="parse">parse</option>
+			<option value="pbamber">pbamber</option>
+			<option value="amber6">amber6</option>
+			<option value="distance">distance</option>
+			<option value="constant">constant</option>
+			<option value="real">real</option>
+			<option value="integer">integer</option>
+		</param>
+	</xml>
+	<xml name="solvateparams">
+		<param name="arg_solute" label="solute UNIT" type="text" value="" help="This is the variable name for the target UNIT, which can be a protein, ligand, or any other unique molecular component of the system that is loaded into LEaP and you are now trying to solvate. "/>
+		<param name="arg_solvent" label="solvent UNIT" type="text" value="" help="The UNIT name for the water model you would like to use. Options include TIP3PBOX, TIP4PBOX, TIP4PEWBOX, and TIP5PBOX. "/>
+		<param name="arg_buffer" label="buffer value" type="text" value="" help="object"/>
+		<param name="arg_closeness" label="closeness value" type="text" value="" help="This is used to control the extent to which solvent atoms overlap solute atoms. The default value is 1.0, which allows no overlap. "/>
+	</xml>
+	<xml name="amberfiles_conditional">
+		<conditional name="file_source">
+			<param name="file_source_selector" type="select" label="Select file source">
+				<option value="history">From history</option>
+				<option value="builtin">From Built-in AmberTools data</option>
+			</param>
+			<when value="history">
+				<expand macro="loadfile" />
+			</when>
+			<when value="builtin">
+				<expand macro="builtin_amberfiles" />
+			</when>
+		</conditional>
+	</xml>
+	<xml name="citations">
+		<citations>
+			<citation type="doi">10.1002/jcc.20290</citation>
+			<citation type="bibtex">
         @misc{ambertools, author = {D.A. Case, I.Y. Ben-Shalom, S.R. Brozell, D.S. Cerutti, T.E. Cheatham, III, V.W.D. Cruzeiro, T.A. Darden, R.E. Duke, D. Ghoreishi, M.K. Gilson, H. Gohlke, A.W. Goetz, D. Greene, R Harris, N. Homeyer, S. Izadi, A.
         Kovalenko, T. Kurtzman, T.S. Lee, S. LeGrand, P. Li, C. Lin, J. Liu, T. Luchko, R. Luo, D.J. Mermelstein, K.M. Merz, Y. Miao, G. Monard, C. Nguyen, H. Nguyen, I. Omelyan, A. Onufriev, F. Pan, R. Qi, D.R. Roe, A. Roitberg, C. Sagui, S. Schott-Verdugo,
         J. Shen, C.L. Simmerling, J. Smith, R. Salomon-Ferrer, J. Swails, R.C. Walker, J. Wang, H. Wei, R.M. Wolf, X. Wu, L. Xiao, D.M. York and P.A. Kollman }, year = {2018}, title = {AMBER 2018}, publisher = {University of California, San Francisco}, url =
         {http://ambermd.org/CiteAmber.php}, }</citation>
-      <yield/>
-    </citations>
-  </xml>
-  <xml name="mmpbsa_citation">
-     <citation type="doi">10.1021/ct300418h</citation>
-  </xml>
+			<yield/>
+		</citations>
+	</xml>
+	<xml name="mmpbsa_citation">
+		<citation type="doi">10.1021/ct300418h</citation>
+	</xml>
 </macros>

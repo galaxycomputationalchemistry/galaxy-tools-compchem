@@ -1,0 +1,1981 @@
+<tool id="tleap" name="Build tLEaP" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+     <description>interactively build and run tLEaP files to set up systems with AmberTools</description>
+     <macros>
+          <import>macros.xml</import>
+          <token name="@GALAXY_VERSION@">0</token>
+     </macros>
+     <expand macro="requirements" />
+     <version_command>tleap -h</version_command>
+     <command detect_errors="exit_code"><![CDATA[
+        cp '${tleap_in}' '${output_tleap_in}' && mkdir out && tleap -f '${tleap_in}' > '${output_tleap}'
+    ]]>     </command>
+     <configfiles>
+          <configfile name="tleap_in"><![CDATA[#for $i, $cmd in $enumerate($tleap_cmds):
+#if $cmd.tleap_cond.tleap_cmd == "add":
+add ${cmd.tleap_cond.arg_a} ${cmd.tleap_cond.arg_b}
+#elif $cmd.tleap_cond.tleap_cmd == "addAtomTypes":
+addAtomTypes {
+#for $atmvars in $cmd.tleap_cond.atomtypevars:
+             { "${atmvars.arg_addAtomTypes_var1}" "${atmvars.arg_addAtomTypes_var2}" "${atmvars.arg_addAtomTypes_var3}" }
+#end for
+             }
+#elif $cmd.tleap_cond.tleap_cmd == "addH":
+addH ${cmd.tleap_cond.arg_obj}
+#elif $cmd.tleap_cond.tleap_cmd == "addIons":
+addIons ${cmd.tleap_cond.arg_variable} ${cmd.tleap_cond.arg_ion1} ${cmd.tleap_cond.arg__ion1}
+addIons ${cmd.tleap_cond.arg_variable} ${cmd.tleap_cond.arg_ion2} ${cmd.tleap_cond.arg__ion2}
+#elif $cmd.tleap_cond.tleap_cmd == "addIons2":
+addIons2 ${cmd.tleap_cond.arg_variable} ${cmd.tleap_cond.arg_ion1} ${cmd.tleap_cond.arg__ion1} ${cmd.tleap_cond.arg_ion2} ${cmd.tleap_cond.arg__ion2}
+#elif $cmd.tleap_cond.tleap_cmd == "addIonsRand":
+addIonsRand ${cmd.tleap_cond.arg_variable} ${cmd.tleap_cond.arg_ion1} ${cmd.tleap_cond.arg__ion1} ${cmd.tleap_cond.arg_ion2} ${cmd.tleap_cond.arg__ion2} ${cmd.tleap_cond.arg_separation}
+#elif $cmd.tleap_cond.tleap_cmd == "addPath":
+addPath ${cmd.tleap_cond.arg_path}
+#elif $cmd.tleap_cond.tleap_cmd == "addPdbAtomMap":
+addPdbAtomMap {
+#for $atmmapvars in $cmd.tleap_cond.AtomMapList:
+             {$atmmapvars.oddpdbname $atmmapvars.libpdbname}
+#end for
+             }
+#elif $cmd.tleap_cond.tleap_cmd == "addPdbResMap":
+addPdbResMap {
+#for $atmresmapvars in $cmd.tleap_cond.resmap:
+             {$atmresmapvars.terminalflag "$atmresmapvars.pdbname" "$atmresmapvars.leapvar"}
+#end for
+             }
+#elif $cmd.tleap_cond.tleap_cmd == "alignAxes":
+alignAxes ${cmd.tleap_cond.arg_unit}
+#elif $cmd.tleap_cond.tleap_cmd == "bond":
+bond ${cmd.tleap_cond.arg_atom1} ${cmd.tleap_cond.arg_atom2} ${cmd.tleap_cond.arg_order}
+#elif $cmd.tleap_cond.tleap_cmd == "bondByDistance":
+bondByDistance ${cmd.tleap_cond.arg_container} ${cmd.tleap_cond.arg_maxBond}
+#elif $cmd.tleap_cond.tleap_cmd == "center":
+center ${cmd.tleap_cond.arg_container}
+#elif $cmd.tleap_cond.tleap_cmd == "charge":
+charge ${cmd.tleap_cond.arg_container}
+#elif $cmd.tleap_cond.tleap_cmd == "check":
+check ${cmd.tleap_cond.arg_unit} ${cmd.tleap_cond.arg_parmset} 
+#elif $cmd.tleap_cond.tleap_cmd == "clearPdbAtomMap":
+clearPdbAtomMap
+#elif $cmd.tleap_cond.tleap_cmd == "clearPdbResMap":
+clearPdbResMap
+#elif $cmd.tleap_cond.tleap_cmd == "clearVariables":
+clearVariables { ${cmd.tleap_cond.arg_list} }
+#elif $cmd.tleap_cond.tleap_cmd == "combine":
+#if $cmd.tleap_cond.combine_assign:
+${cmd.tleap_cond.combine_assign} = combine { ${cmd.tleap_cond.arg_list} }h
+#else:
+combine ${cmd.tleap_cond.arg_list}
+#end if
+#elif $cmd.tleap_cond.tleap_cmd == "copy":
+#if $cmd.tleap_cond.copy_assign:
+${cmd.tleap_cond.copy_assign} = copy ${cmd.tleap_cond.arg_variable}
+#else:
+copy ${cmd.tleap_cond.arg_variable}
+#end if
+#elif $cmd.tleap_cond.tleap_cmd == "createAtom":
+#if $cmd.tleap_cond.createVar_assign:
+${cmd.tleap_cond.createVar_assign} = createAtom ${cmd.tleap_cond.arg_name} ${cmd.tleap_cond.arg_type} ${cmd.tleap_cond.arg_charge}
+#else:
+createAtom ${cmd.tleap_cond.arg_name} ${cmd.tleap_cond.arg_type} ${cmd.tleap_cond.arg_charge}
+#end if
+#elif $cmd.tleap_cond.tleap_cmd == "createParmset":
+#if $cmd.tleap_cond.createVar_assign:
+${cmd.tleap_cond.createVar_assign} = createParmset ${cmd.tleap_cond.arg_name}
+#else:
+createParmset ${cmd.tleap_cond.arg_name}
+#end if
+#elif $cmd.tleap_cond.tleap_cmd == "createResidue":
+#if $cmd.tleap_cond.createVar_assign:
+${cmd.tleap_cond.createVar_assign} = createResidue ${cmd.tleap_cond.arg_name}
+#else:
+createResidue ${cmd.tleap_cond.arg_name}
+#end if
+#elif $cmd.tleap_cond.tleap_cmd == "createUnit":
+#if $cmd.tleap_cond.createVar_assign:
+${cmd.tleap_cond.createVar_assign} = createUnit ${cmd.tleap_cond.arg_name}
+#else:
+createUnit ${cmd.tleap_cond.arg_name}
+#end if
+#elif $cmd.tleap_cond.tleap_cmd == "crossLink":
+crossLink ${cmd.tleap_cond.arg_res1} ${cmd.tleap_cond.arg_conn1} ${cmd.tleap_cond.arg_res2} ${cmd.tleap_cond.arg_conn2}
+#elif $cmd.tleap_cond.tleap_cmd == "debugOff":
+debugOff ${cmd.tleap_cond.arg_filename}
+#elif $cmd.tleap_cond.tleap_cmd == "debugOn":
+debugOn ${cmd.tleap_cond.arg_filename}
+#elif $cmd.tleap_cond.tleap_cmd == "debugStatus":
+debugStatus
+#elif $cmd.tleap_cond.tleap_cmd == "deleteBond":
+deleteBond ${cmd.tleap_cond.arg_atom1} ${cmd.tleap_cond.arg_atom2}
+#elif $cmd.tleap_cond.tleap_cmd == "deleteOffLibEntry":
+deleteOffLibEntry ${cmd.tleap_cond.arg_library} ${cmd.tleap_cond.arg_entry}
+#elif $cmd.tleap_cond.tleap_cmd == "deleteRestraint":
+deleteRestraint ${cmd.tleap_cond.arg_unit} ${cmd.tleap_cond.arg_a} ${cmd.tleap_cond.arg_b} ${cmd.tleap_cond.arg_c} ${cmd.tleap_cond.arg_d}
+#elif $cmd.tleap_cond.tleap_cmd == "desc":
+desc ${cmd.tleap_cond.arg_unit}
+#elif $cmd.tleap_cond.tleap_cmd == "deSelect":
+deSelect ${cmd.tleap_cond.arg_obj}
+#elif $cmd.tleap_cond.tleap_cmd == "displayPdbAtomMap":
+displayPdbAtomMap
+#elif $cmd.tleap_cond.tleap_cmd == "displayPdbResMap":
+displayPdbResMap
+#elif $cmd.tleap_cond.tleap_cmd == "edit":
+edit ${cmd.tleap_cond.arg_unit_parmset}
+#elif $cmd.tleap_cond.tleap_cmd == "flip":
+flip ${cmd.tleap_cond.arg_obj}
+#elif $cmd.tleap_cond.tleap_cmd == "groupSelectedAtoms":
+groupSelectedAtoms ${cmd.tleap_cond.arg_unit} ${cmd.tleap_cond.arg_name}
+#elif $cmd.tleap_cond.tleap_cmd == "help":
+help ${cmd.tleap_cond.arg_string}
+#elif $cmd.tleap_cond.tleap_cmd == "impose":
+impose ${cmd.tleap_cond.arg_unit} { ${cmd.tleap_cond.arg_seqlist} } { { "$cmd.tleap_cond.arg_internals_atom1" "$cmd.tleap_cond.arg_internals_atom2" $cmd.tleap_cond.arg_internals_displacement} }
+#elif $cmd.tleap_cond.tleap_cmd == "list":
+list
+#elif $cmd.tleap_cond.tleap_cmd == "listOff":
+listOff ${cmd.tleap_cond.arg_library}
+#elif $cmd.tleap_cond.tleap_cmd == "loadAmberParams":
+#if $cmd.tleap_cond.loadAmberParams_assign:
+${cmd.tleap_cond.loadAmberParams_assign} = loadAmberParams ${cmd.tleap_cond.file_source.arg_filename}
+#else:
+loadAmberParams ${cmd.tleap_cond.file_source.arg_filename}
+#end if
+#elif $cmd.tleap_cond.tleap_cmd == "loadAmberPrep":
+loadAmberPrep ${cmd.tleap_cond.file_source.arg_filename} ${cmd.tleap_cond.arg_prefix}
+#elif $cmd.tleap_cond.tleap_cmd == "loadMol2":
+#if $cmd.tleap_cond.loadMol2_assign:
+${cmd.tleap_cond.loadMol2_assign} = loadMol2 ${cmd.tleap_cond.arg_filename}
+#else:
+loadMol2 ${cmd.tleap_cond.arg_filename}
+#end if
+#elif $cmd.tleap_cond.tleap_cmd == "loadMol3":
+#if $cmd.tleap_cond.loadMol3_assign:
+${cmd.tleap_cond.loadMol3_assign} = loadMol3 ${cmd.tleap_cond.arg_filename}
+#else:
+loadMol3 ${cmd.tleap_cond.arg_filename}
+#end if
+#elif $cmd.tleap_cond.tleap_cmd == "loadOff":
+loadOff ${cmd.tleap_cond.arg_filename}
+#elif $cmd.tleap_cond.tleap_cmd == "loadPdb":
+#if $cmd.tleap_cond.loadPdb_assign:
+${cmd.tleap_cond.loadPdb_assign} = loadPdb ${cmd.tleap_cond.arg_filename}
+#else:
+loadPdb ${cmd.tleap_cond.arg_filename}
+#end if
+#elif $cmd.tleap_cond.tleap_cmd == "loadPdbUsingSeq":
+loadPdbUsingSeq ${cmd.tleap_cond.arg_filename} { ${cmd.tleap_cond.arg_unitlist} }
+#elif $cmd.tleap_cond.tleap_cmd == "logFile":
+logFile ${cmd.tleap_cond.arg_filename}
+#elif $cmd.tleap_cond.tleap_cmd == "matchVariables":
+#if $cmd.tleap_cond.matchVariables_assign:
+${cmd.tleap_cond.matchVariables_assign} = matchVariables ${cmd.tleap_cond.arg_string}
+#else:
+matchVariables ${cmd.tleap_cond.arg_string}
+#end if
+#elif $cmd.tleap_cond.tleap_cmd == "measureGeom":
+measureGeom ${cmd.tleap_cond.arg_atom1} ${cmd.tleap_cond.arg_atom2} ${cmd.tleap_cond.arg_atom3} ${cmd.tleap_cond.arg_atom4} 
+#elif $cmd.tleap_cond.tleap_cmd == "relax":
+relax ${cmd.tleap_cond.arg_obj}
+#elif $cmd.tleap_cond.tleap_cmd == "remove":
+remove ${cmd.tleap_cond.arg_a} ${cmd.tleap_cond.arg_b}
+#elif $cmd.tleap_cond.tleap_cmd == "restrainAngle":
+restrainAngle ${cmd.tleap_cond.arg_unit} ${cmd.tleap_cond.arg_a} ${cmd.tleap_cond.arg_b} ${cmd.tleap_cond.arg_c} ${cmd.tleap_cond.arg_force} ${cmd.tleap_cond.arg_angle}
+#elif $cmd.tleap_cond.tleap_cmd == "restrainBond":
+restrainBond ${cmd.tleap_cond.arg_unit} ${cmd.tleap_cond.arg_a} ${cmd.tleap_cond.arg_b} ${cmd.tleap_cond.arg_force} ${cmd.tleap_cond.arg_length}
+#elif $cmd.tleap_cond.tleap_cmd == "restrainTorsion":
+restrainTorsion ${cmd.tleap_cond.arg_unit} ${cmd.tleap_cond.arg_a} ${cmd.tleap_cond.arg_b} ${cmd.tleap_cond.arg_c} ${cmd.tleap_cond.arg_d} ${cmd.tleap_cond.arg_force} ${cmd.tleap_cond.arg_phi} ${cmd.tleap_cond.arg_multiplicity}
+#elif $cmd.tleap_cond.tleap_cmd == "saveAmberParm":
+saveAmberParm ${cmd.tleap_cond.arg_unit} out/saveAmberParm_topologyfilename_${i}_1.prmtop out/saveAmberParm_coordinatefilename_${i}_2.inpcrd
+#elif $cmd.tleap_cond.tleap_cmd == "saveAmberParmNetcdf":
+saveAmberParmNetcdf ${cmd.tleap_cond.arg_unit} out/saveAmberParmNetcdf_topologyfilename_${i}_1.top out/saveAmberParmNetcdf_coordinatefilename_${i}_2.coord
+#elif $cmd.tleap_cond.tleap_cmd == "saveAmberParmPert":
+saveAmberParmPert ${cmd.tleap_cond.arg_unit} out/saveAmberParmPert_topologyfilename_${i}_1.top out/saveAmberParmPert_coordinatefilename_${i}_2.coord
+#elif $cmd.tleap_cond.tleap_cmd == "saveAmberParmPol":
+saveAmberParmPol ${cmd.tleap_cond.arg_unit} out/saveAmberParmPol_topologyfilename_${i}_1.top out/saveAmberParmPol_coordinatefilename_${i}_2.coord
+#elif $cmd.tleap_cond.tleap_cmd == "saveAmberParmPolPert":
+saveAmberParmPolPert ${cmd.tleap_cond.arg_unit} out/saveAmberParmPolPert_topologyfilename_${i}_1.top out/saveAmberParmPolPert_coordinatefilename_${i}_2.coord
+#elif $cmd.tleap_cond.tleap_cmd == "saveAmberPrep":
+saveAmberPrep ${cmd.tleap_cond.arg_unit} out/saveAmberPrep_filename_${i}_1.txt
+#elif $cmd.tleap_cond.tleap_cmd == "saveMol2":
+saveMol2 ${cmd.tleap_cond.arg_unit} out/saveMol2_filename_${i}_1.mol2 ${cmd.tleap_cond.arg_option}
+#elif $cmd.tleap_cond.tleap_cmd == "saveMol3":
+saveMol3 ${cmd.tleap_cond.arg_unit} out/saveMol3_filename_${i}_1.mol3 ${cmd.tleap_cond.arg_option}
+#elif $cmd.tleap_cond.tleap_cmd == "saveOff":
+saveOff ${cmd.tleap_cond.arg_obj} out/saveOff_filename_${i}_1.txt
+#elif $cmd.tleap_cond.tleap_cmd == "savePdb":
+savePdb ${cmd.tleap_cond.arg_unit} out/savePdb_filename_${i}_1.pdb
+#elif $cmd.tleap_cond.tleap_cmd == "scaleCharges":
+scaleCharges ${cmd.tleap_cond.arg_container} ${cmd.tleap_cond.arg_scale_factor}
+#elif $cmd.tleap_cond.tleap_cmd == "select":
+select ${cmd.tleap_cond.arg_obj}
+#elif $cmd.tleap_cond.tleap_cmd == "sequence":
+#if $cmd.tleap_cond.sequence_assign:
+${cmd.tleap_cond.sequence_assign} = sequence { ${cmd.tleap_cond.arg_list} }
+#else:
+sequence { ${cmd.tleap_cond.arg_list} }
+#end if
+#elif $cmd.tleap_cond.tleap_cmd == "set":
+set ${cmd.tleap_cond.arg_variable} ${cmd.tleap_cond.arg_container} ${cmd.tleap_cond.arg_dim}
+#elif $cmd.tleap_cond.tleap_cmd == "set_default":
+#for $setdefaultsvar in $cmd.tleap_cond.defaults:
+set default ${setdefaultsvar.settingsvariable} ${setdefaultsvar.usersetting}
+#end for 
+#elif $cmd.tleap_cond.tleap_cmd == "setBox":
+setBox ${cmd.tleap_cond.arg_unit} ${cmd.tleap_cond.arg_enclosure} ${cmd.tleap_cond.arg_buffer} 
+#elif $cmd.tleap_cond.tleap_cmd == "showdefault":
+showdefault
+#elif $cmd.tleap_cond.tleap_cmd == "solvateBox":
+solvateBox ${cmd.tleap_cond.arg_solute} ${cmd.tleap_cond.arg_solvent} ${cmd.tleap_cond.arg_buffer} ${cmd.tleap_cond.arg_iso} ${cmd.tleap_cond.arg_closeness}
+#elif $cmd.tleap_cond.tleap_cmd == "solvateCap":
+solvateCap ${cmd.tleap_cond.arg_solute} ${cmd.tleap_cond.arg_solvent} ${cmd.tleap_cond.arg_position} ${cmd.tleap_cond.arg_radius} ${cmd.tleap_cond.arg_closeness} 
+#elif $cmd.tleap_cond.tleap_cmd == "solvateDontClip":
+solvateDontClip ${cmd.tleap_cond.arg_solute} ${cmd.tleap_cond.arg_solvent} ${cmd.tleap_cond.arg_buffer} ${cmd.tleap_cond.arg_closeness}
+#elif $cmd.tleap_cond.tleap_cmd == "solvateOct":
+solvateOct ${cmd.tleap_cond.arg_solute} ${cmd.tleap_cond.arg_solvent} ${cmd.tleap_cond.arg_buffer} ${cmd.tleap_cond.arg_iso} ${cmd.tleap_cond.arg_closeness}
+#elif $cmd.tleap_cond.tleap_cmd == "solvateShell":
+solvateShell ${cmd.tleap_cond.arg_solute} ${cmd.tleap_cond.arg_solvent} ${cmd.tleap_cond.arg_thickness} ${cmd.tleap_cond.arg_closeness}
+#elif $cmd.tleap_cond.tleap_cmd == "source":
+source ${cmd.tleap_cond.arg_filename}
+#elif $cmd.tleap_cond.tleap_cmd == "transform":
+transform ${cmd.tleap_cond.arg_atoms} {
+     { ${cmd.tleap_cond.arg_matrix_row1} }
+     { ${cmd.tleap_cond.arg_matrix_row2} }
+     { ${cmd.tleap_cond.arg_matrix_row3} }
+     { 0 0 0 1 } 
+     }
+#elif $cmd.tleap_cond.tleap_cmd == "translate":
+translate ${cmd.tleap_cond.arg_atoms} { ${cmd.tleap_cond.arg_direction} }
+#elif $cmd.tleap_cond.tleap_cmd == "verbosity":
+verbosity ${cmd.tleap_cond.arg_level}
+#elif $cmd.tleap_cond.tleap_cmd == "zMatrix":
+zMatrix ${cmd.tleap_cond.arg_obj} ${cmd.tleap_cond.arg_zmatrix}
+#end if
+#end for]]>
+quit
+          </configfile>
+     </configfiles>
+
+     <inputs>
+
+          <repeat name="tleap_cmds" title="Add tLEaP command" min="1">
+               <conditional name="tleap_cond">
+                    <param type="select" name="tleap_cmd" label="Choose tLEaP command">
+                         <option value="add">add</option>
+                         <option value="addAtomTypes">addAtomTypes</option>
+                         <option value="addH">addH</option>
+                         <option value="addIons">addIons</option>
+                         <option value="addIons2">addIons2</option>
+                         <option value="addIonsRand">addIonsRand</option>
+                         <option value="addPath">addPath</option>
+                         <option value="addPdbAtomMap">addPdbAtomMap</option>
+                         <option value="addPdbResMap">addPdbResMap</option>
+                         <option value="alignAxes">alignAxes</option>
+                         <option value="bond">bond</option>
+                         <option value="bondByDistance">bondByDistance</option>
+                         <option value="center">center</option>
+                         <option value="charge">charge</option>
+                         <option value="check">check</option>
+                         <option value="clearPdbAtomMap">clearPdbAtomMap</option>
+                         <option value="clearPdbResMap">clearPdbResMap</option>
+                         <option value="clearVariables">clearVariables</option>
+                         <option value="combine">combine</option>
+                         <option value="copy">copy</option>
+                         <option value="createAtom">createAtom</option>
+                         <option value="createParmset">createParmset</option>
+                         <option value="createResidue">createResidue</option>
+                         <option value="createUnit">createUnit</option>
+                         <option value="crossLink">crossLink</option>
+                         <option value="debugOff">debugOff</option>
+                         <option value="debugOn">debugOn</option>
+                         <option value="debugStatus">debugStatus</option>
+                         <option value="deleteBond">deleteBond</option>
+                         <option value="deleteOffLibEntry">deleteOffLibEntry</option>
+                         <option value="deleteRestraint">deleteRestraint</option>
+                         <option value="desc">desc</option>
+                         <option value="deSelect">deSelect</option>
+                         <option value="displayPdbAtomMap">displayPdbAtomMap</option>
+                         <option value="displayPdbResMap">displayPdbResMap</option>
+                         <option value="edit">edit</option>
+                         <option value="flip">flip</option>
+                         <option value="groupSelectedAtoms">groupSelectedAtoms</option>
+                         <option value="help">help</option>
+                         <option value="impose">impose</option>
+                         <option value="list">list</option>
+                         <option value="listOff">listOff</option>
+                         <option value="loadAmberParams">loadAmberParams</option>
+                         <option value="loadAmberPrep">loadAmberPrep</option>
+                         <option value="loadMol2">loadMol2</option>
+                         <option value="loadMol3">loadMol3</option>
+                         <option value="loadOff">loadOff</option>
+                         <option value="loadPdb">loadPdb</option>
+                         <option value="loadPdbUsingSeq">loadPdbUsingSeq</option>
+                         <option value="logFile">logFile</option>
+                         <option value="matchVariables">matchVariables</option>
+                         <option value="measureGeom">measureGeom</option>
+                         <option value="relax">relax</option>
+                         <option value="remove">remove</option>
+                         <option value="restrainAngle">restrainAngle</option>
+                         <option value="restrainBond">restrainBond</option>
+                         <option value="restrainTorsion">restrainTorsion</option>
+                         <option value="saveAmberParm">saveAmberParm</option>
+                         <option value="saveAmberParmNetcdf">saveAmberParmNetcdf</option>
+                         <option value="saveAmberParmPert">saveAmberParmPert</option>
+                         <option value="saveAmberParmPol">saveAmberParmPol</option>
+                         <option value="saveAmberParmPolPert">saveAmberParmPolPert</option>
+                         <option value="saveAmberPrep">saveAmberPrep</option>
+                         <option value="saveMol2">saveMol2</option>
+                         <option value="saveMol3">saveMol3</option>
+                         <option value="saveOff">saveOff</option>
+                         <option value="savePdb">savePdb</option>
+                         <option value="scaleCharges">scaleCharges</option>
+                         <option value="select">select</option>
+                         <option value="sequence">sequence</option>
+                         <option value="set">set</option>
+                         <option value="set_default">set_default</option>
+                         <option value="setBox">setBox</option>
+                         <option value="showdefault">showdefault</option>
+                         <option value="solvateBox">solvateBox</option>
+                         <option value="solvateCap">solvateCap</option>
+                         <option value="solvateDontClip">solvateDontClip</option>
+                         <option value="solvateOct">solvateOct</option>
+                         <option value="solvateShell">solvateShell</option>
+                         <option value="source">source</option>
+                         <option value="transform">transform</option>
+                         <option value="translate">translate</option>
+                         <option value="verbosity">verbosity</option>
+                         <option value="zMatrix">zMatrix</option>
+                    </param>
+                    <when value="add">
+                         <param name="arg_a" label="a value" type="text" value="" help="UNIT/RESIDUE/ATOM"/>
+                         <param name="arg_b" label="b value" type="text" value="" help="UNIT/RESIDUE/ATOM"/>
+                    </when>
+                    <when value="addAtomTypes">
+                         <repeat name="atomtypevars" title="new atom type parameters" min="1">
+                              <param name="arg_addAtomTypes_var1" label="name" type="text" value="" help="designated name in the force field"/>
+                              <param name="arg_addAtomTypes_var2" label="element" type="text" value="" help="atom name as it appear in the periodic table"/>
+                              <param name="arg_addAtomTypes_var3" label="hybridization state" type="text" value="" help="sp2, sp3, etc."/>
+                         </repeat>
+                    </when>
+                    <when value="addH">
+                         <param name="arg_obj" label="Assign to UNIT with variable name:" type="text" value="" help="this should be the same variable given to a previously loaded target structure"/>
+                    </when>
+                    <when value="addIons">
+                         <expand macro="addingions" />
+                    </when>
+                    <when value="addIons2">
+                         <expand macro="addingions" />
+                    </when>
+                    <when value="addIonsRand">
+                         <expand macro="addingions" />
+                         <param name="arg_separation" label="separation value" type="text" value="" help="This value guarantees a minimum distance between inserted ions, in angstsroms."/>
+                    </when>
+                    <when value="addPath">
+                         <param name="arg_path" label="path to directory" type="text" value="" help="Specify additional paths for leap to search for files when executing commands."/>
+                    </when>
+                    <when value="addPdbAtomMap">
+                         <repeat name="AtomMapList" title="Add atom name from a pdb file to a list" min="1">
+                              <param name="oddpdbname" label="Odd atom type from pdb file" type="text" value="" help=""/>
+                              <param name="libpdbname" label="Atom type to reference in the library" type="text" value="" help=""/>
+                         </repeat>
+                    </when>
+                    <when value="addPdbResMap">
+                         <repeat name="resmap" title="Add atom name from a pdb file to a residue map in LEaP" min="1">
+                              <param name="terminalflag" label="If terminal atom, select type:" type="text" value="" help="select 0 for beginning residues (N-terminal for proteins, 5' for nucleic acids) and 1 for ending residues (C-terminal for proteins, 3' for nucleic acids). Leave blank if neither. "/>
+                              <param name="pdbname" label="atom name in pdb file" type="text" value="" help=""/>
+                              <param name="leapvar" label="variable name within leap to map onto" type="text" value="" help=""/>
+                         </repeat>
+                    </when>
+                    <when value="alignAxes">
+                         <expand macro="unitvariable" />
+                    </when>
+                    <when value="bond">
+                         <param name="arg_atom1" label="Bonding atom 1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype', where the assigned UNITvariable is the same one used to define your structure in loadPdb, saveAmberParm, savePdb, and other commands in your tleap script. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. "/>
+                         <param name="arg_atom2" label="Bonding atom 2" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype', where the assigned UNITvariable is the same one used to define your structure in loadPdb, saveAmberParm, savePdb, and other commands in your tleap script. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. "/>
+                         <param name="arg_order" label="order value" type="select" value="" help="Choose 'S' for single bond, 'D' for double bond, 'T' for triple bond, or 'A' for aromatic bond. The default value is 'S' if left blank.">
+                              <option value="">default</option>
+                              <option value="S">single bond</option>
+                              <option value="D">double bond</option>
+                              <option value="T">triple bond</option>
+                              <option value="A">aromatic bond</option>
+                         </param>
+                    </when>
+                    <when value="bondByDistance">
+                         <expand macro="container" />
+                         <param name="arg_maxBond" label="maxBond value" type="text" value="" help="maximum distance, in angstroms"/>
+                    </when>
+                    <when value="center">
+                         <expand macro="container"/>
+                    </when>
+                    <when value="charge">
+                         <expand macro="container"/>
+                    </when>
+                    <when value="check">
+                         <expand macro="unitvariable" />
+                         <param name="arg_parmset" label="parmset value" type="text" value="" help="PARMSET/STRING where all mising parameters are placed. This is optional."/>
+                    </when>
+                    <when value="clearPdbAtomMap">
+                    </when>
+                    <when value="clearPdbResMap">
+                    </when>
+                    <when value="clearVariables">
+                         <param name="arg_list" label="list of variables to clear" type="text" value="" help="This is optional. Use only if a specific set of variables need to be cleared. If left empty, all variables will be cleared by default."/>
+                    </when>
+                    <when value="combine">
+                         <param name="combine_assign" label="Name of the new combined list of variables" type="text" value=""/>
+                         <param name="arg_list" label="list of variables" type="text" value="" help="Write the name of previously defined variables that you'd like to combine into this new list. "/>
+                    </when>
+                    <when value="copy">
+                         <param name="copy_assign" label="Name of the newly copied variable:" type="text" value=""/>
+                         <param name="arg_variable" label="Variable you are making a copy of:" type="text" value="" help=""/>
+                    </when>
+                    <when value="createAtom">
+                         <expand macro="create" />
+                         <param name="arg_type" label="new atom type" type="text" value="" help="STRING"/>
+                         <param name="arg_charge" label="atomic charge" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="createParmset">
+                         <expand macro="create" />
+                    </when>
+                    <when value="createResidue">
+                         <expand macro="create" />
+                    </when>
+                    <when value="createUnit">
+                         <expand macro="create" />
+                    </when>
+                    <when value="crossLink">
+                         <param name="arg_res1" label="res1 value" type="text" value="" help="Residue 1"/>
+                         <param name="arg_conn1" label="conn1 value" type="text" value="" help="connecting atom on residue 1"/>
+                         <param name="arg_res2" label="res2 value" type="text" value="" help="Residue 2"/>
+                         <param name="arg_conn2" label="conn2 value" type="text" value="" help="connecting atom on residue 2"/>
+                    </when>
+                    <when value="debugOff">
+                         <expand macro="builtin_amberfiles" />
+                    </when>
+                    <when value="debugOn">
+                         <expand macro="builtin_amberfiles" />
+                    </when>
+                    <when value="debugStatus">
+                    </when>
+                    <when value="deleteBond">
+                         <param name="arg_atom1" label="Bonding atom 1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype', where the assigned UNITvariable is the same one used to define your structure in loadPdb, saveAmberParm, savePdb, and other commands in your tleap script. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. "/>
+                         <param name="arg_atom2" label="Bonding atom 2" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype', where the assigned UNITvariable is the same one used to define your structure in loadPdb, saveAmberParm, savePdb, and other commands in your tleap script. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. "/>
+                    </when>
+                    <when value="deleteOffLibEntry">
+                         <param name="arg_library" label="library value" type="text" format="txt" value="" help="STRING"/>
+                         <param name="arg_entry" label="entry value" type="text" value="" help="STRING"/>
+                    </when>
+                    <when value="deleteRestraint">
+                         <expand macro="unitvariable" />
+                         <param name="arg_a" label="a value" type="text" value="" help="ATOM"/>
+                         <param name="arg_b" label="b value" type="text" value="" help="ATOM"/>
+                         <param name="arg_c" label="c value" type="text" value="" help="ATOM"/>
+                         <param name="arg_d" label="d value" type="text" value="" help="ATOM"/>
+                    </when>
+                    <when value="desc">
+                         <expand macro="unitvariable" />
+                    </when>
+                    <when value="deSelect">
+                         <expand macro="object" />
+                    </when>
+                    <when value="displayPdbAtomMap">
+                    </when>
+                    <when value="displayPdbResMap">
+                    </when>
+                    <when value="edit">
+                         <param name="arg_unit_parmset" label="unit-parmset value" type="text" value="" help="UNIT/PARMSET"/>
+                    </when>
+                    <when value="flip">
+                         <expand macro="object" />
+                    </when>
+                    <when value="groupSelectedAtoms">
+                         <expand macro="unitvariable" />
+                         <param name="arg_name" label="name value" type="text" value="" help="STRING"/>
+                    </when>
+                    <when value="help">
+                         <param name="arg_string" label="string value" type="text" value="" help="STRING"/>
+                    </when>
+                    <when value="impose">
+                         <expand macro="unitvariable" />
+                         <param name="arg_seqlist" label="seqlist value" type="text" value="" help="LIST"/>
+                         <param name="arg_internals_atom1" label="internals atom1" type="text" value="" help=""/>
+                         <param name="arg_internals_atom2" label="internals atom2" type="text" value="" help=""/>
+                         <param name="arg_internals_displacement" label="displacement" type="text" value="" help="can be positive or negative, in angstroms"/>
+                    </when>
+                    <when value="list">
+                    </when>
+                    <when value="listOff">
+                         <param name="arg_library" label="library value" type="data" value="" format="txt" help="STRING"/>
+                    </when>
+                    <when value="loadAmberParams">
+                         <param name="loadAmberParams_assign" label="Assign to variable named" type="text" value=""/>
+                         <expand macro="amberfiles_conditional" />
+                    </when>
+                    <when value="loadAmberPrep">
+                         <expand macro="amberfiles_conditional" />
+                         <param name="arg_prefix" label="prefix value" type="text" value="" help="STRING"/>
+                    </when>
+                    <when value="loadMol2">
+                         <param name="loadMol2_assign" label="Assign to variable named" type="text" value="" help="This is the molecule's residue name as it appears in the mol2 file."/>
+                         <expand macro="loadfile" data_format="mol2"/>
+                    </when>
+                    <when value="loadMol3">
+                         <param name="loadMol3_assign" label="Assign to variable named" type="text" value="" help="This is the molecule's residue name as it appears in the mol2 file."/>
+                         <expand macro="loadfile" data_format="mol3"/>
+                    </when>
+                    <when value="loadOff">
+                         <expand macro="loadfile" />
+                    </when>
+                    <when value="loadPdb">
+                         <param name="loadPdb_assign" label="Assign to variable named" type="text" value="" help="The variable name that your system's components are assigned to. This should generally be the same variable used when saving the output files (when using savePdb, saveAmberParm, etc.)."/>
+                         <expand macro="loadfile" data_format="pdb"/>
+                    </when>
+                    <when value="loadPdbUsingSeq">
+                         <expand macro="loadfile" data_format="pdb"/>
+                         <param name="arg_unitlist" label="unitlist value" type="text" value="" help="LIST"/>
+                    </when>
+                    <when value="logFile">
+                         <expand macro="loadfile" />
+>
+                    </when>
+                    <when value="matchVariables">
+                         <param name="matchVariables_assign" label="Assign to variable named" type="text" value=""/>
+                         <param name="arg_string" label="string value" type="text" value="" help="STRING"/>
+                    </when>
+                    <when value="measureGeom">
+                         <param name="arg_atom1" label="atom1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_atom2" label="atom2" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_atom3" label="atom3" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_atom4" label="atom4" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber.atomtype'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                    </when>
+                    <when value="relax">
+                         <expand macro="object" />
+                    </when>
+                    <when value="remove">
+                         <param name="arg_a" label="a value --> Object you are removing contents FROM" type="text" value="" help="UNIT/RESIDUE/ATOM. The object can be a specific residue [ type 'UNITvariable.residuenumber(or name)' ], or an entire UNIT [ only type 'UNITvariable' ]. "/>
+                         <param name="arg_b" label="b value --> The specific content you are removing" type="text" value="" help="UNIT/RESIDUE/ATOM. The contents can be a single atom [type 'UNITvariable.residuenumber(or name).atomtype(or number)' ], or an entire residue [type 'UNITvariable.residuenumber(or name)' ]. "/>
+                    </when>
+                    <when value="restrainAngle">
+                         <expand macro="unitvariable" />
+                         <param name="arg_a" label="atom1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_b" label="atom2 or the middle atom" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_c" label="atom3" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_force" label="Force constant K_theta" type="text" value="" help="This is the force constant value you are setting to restrain this angle, in kcal/mol/radian^2."/>
+                         <param name="arg_angle" label="Equilibrium angle theta" type="text" value="" help="This is the equilibrium angle, in degrees, between these 3 interacting atoms."/>
+                    </when>
+                    <when value="restrainBond">
+                         <expand macro="unitvariable" />
+                         <param name="arg_a" label="atom1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_b" label="atom2" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_force" label="Force constant K_b" type="text" value="" help="This is the force constant value you are setting to restrain this length, in kcal/mol/angstrom^2. "/>
+                         <param name="arg_length" label="Equilibrium length" type="text" value="" help="This is the equilibrium bond length between these two atoms."/>
+                    </when>
+                    <when value="restrainTorsion">
+                         <expand macro="unitvariable" />
+                         <param name="arg_a" label="atom1" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_b" label="atom2" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_c" label="atom3" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_d" label="atom4" type="text" value="" help="Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'." />
+                         <param name="arg_force" label="Force constant K_phi" type="text" value="" help="This is the force constant you are setting to restrain this dihedral."/>
+                         <param name="arg_phi" label="Equilibrium torsion angle phi" type="text" value="" help="This is the equilibrium torsion angle for this dihedral."/>
+                         <param name="arg_multiplicity" label="multiplicity value" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="saveAmberParm">
+                         <param name="arg_unit" label="Assign to variable named" type="text" value="" help="The variable name that your system's components are assigned to. This should generally be the same variable used previously with input commands like 'loadPdb'."/>
+                    </when>
+                    <when value="saveAmberParmNetcdf">
+                         <expand macro="unitvariable" />
+                    </when>
+                    <when value="saveAmberParmPert">
+                         <expand macro="unitvariable" />
+                    </when>
+                    <when value="saveAmberParmPol">
+                         <expand macro="unitvariable" />
+                    </when>
+                    <when value="saveAmberParmPolPert">
+                         <expand macro="unitvariable" />
+                    </when>
+                    <when value="saveAmberPrep">
+                         <expand macro="unitvariable" />
+                         <expand macro="newfile" />
+                    </when>
+                    <when value="saveMol2">
+                         <expand macro="unitvariable" />
+
+                         <param name="arg_option" label="option value" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="saveMol3">
+                         <expand macro="unitvariable" />
+                         <param name="arg_option" label="option value" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="saveOff">
+                         <expand macro="object" />
+                    </when>
+                    <when value="savePdb">
+                         <param name="arg_unit" label="Assign to variable named" type="text" value="" help="The variable name that your system's components are assigned to. This should generally be the same variable used previously with input commands like 'loadPdb'."/>
+                    </when>
+                    <when value="scaleCharges">
+                         <expand macro="container" />
+                         <param name="arg_scale_factor" label="scale_factor value" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="select">
+                         <expand macro="object" />
+                    </when>
+                    <when value="sequence">
+                         <param name="sequence_assign" label="Assign to variable named" type="text" value=""/>
+                         <param name="arg_list" label="list value" type="text" value="" help="LIST"/>
+                    </when>
+                    <when value="set">
+                         <param name="arg_variable" label="variable value" type="text" value="" help="the variable name that your components are assigned to"/>
+                         <param name="arg_container" label="container value" type="text" value="" help="type'box' if you are using this command to set box dimensions"/>
+                         <param name="arg_dim" label="dimensions value" type="text" value="" help="dimension magnitude for X, Y, and Z"/>
+                    </when>
+                    <when value="set_default">
+                         <repeat name="defaults" title="Default setting to adjust:">
+                              <expand macro="defaultsettings" />
+                              <expand macro="settingoptions" />
+                         </repeat>
+                    </when>
+                    <when value="setBox">
+                         <expand macro="unitvariable" />
+                         <param name="arg_enclosure" label="enclosure value" type="text" value="" help="type 'vdw' or 'centers'"/>
+                         <param name="arg_buffer" label="buffer value" type="text" value="" help="object"/>
+                    </when>
+                    <when value="showdefault">
+                    </when>
+                    <when value="solvateBox">
+                         <expand macro="solvateparams" />
+                         <param name="arg_iso" label="iso value" type="text" value="" help="type 'iso' if using this option"/>
+                    </when>
+                    <when value="solvateCap">
+                         <expand macro="solvateparams" />
+                         <param name="arg_position" label="position value" type="text" value="" help="Defines the center of the solvent cap. Can be listed directly using coordinates for { X Y Z }, or you can specify a UNIT, RESIDUE, ATOM, or LIST of any of these 3 as a reference for position."/>
+                         <param name="arg_radius" label="radius value" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="solvateDontClip">
+                         <expand macro="solvateparams" />
+                         <param name="arg_closeness" label="closeness value" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="solvateOct">
+                         <expand macro="solvateparams" />
+                         <param name="arg_iso" label="iso value" type="text" value="" help="type 'iso' if choosing this option"/>
+                    </when>
+                    <when value="solvateShell">
+                         <expand macro="solvateparams" />
+                         <param name="arg_thickness" label="thickness value" type="text" value="" help="NUMBER"/>
+                    </when>
+                    <when value="source">
+                         <expand macro="builtin_amberfiles" />
+                    </when>
+                    <when value="transform">
+                         <param name="arg_atoms" label="atoms value" type="text" value="" help="UNIT/RESIDUE/ATOM. You can transform an entire UNIT, an entire RESIDUE, or a specific atom. Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. Multiple selections can be typed into this list so a transformation is performed on several components of your system at once, just separate each choice of UNIT/RESIDUE/ATOM with a single space in between. " />
+                         <param name="arg_matrix_row1" label="Row 1 of matrix" type="text" value="" help="type the following: ' r11  r12  r13  -tx ', where r11-r13 are matrix elements for the X dimension. If you would like to translate along this dimension, assign a value to -tx, in angstroms. For a simple reflection along this axis, set this row to r11=-1, r12=0, r13=0. "/>
+                         <param name="arg_matrix_row2" label="Row 2 of matrix" type="text" value="" help="type the following: ' r21  r22  r23  -tx ', where r21-r23 are matrix elements for the Y dimension. If you would like to translate along this dimension, assign a value to -ty, in angstroms. For a simple reflection along this axis, set this row to r21=0, r22=-1, r23=0. "/>
+                         <param name="arg_matrix_row3" label="Row 3 of matrix" type="text" value="" help="type the following: ' r31  r32  r33  -tz ', where r31-r33 are matrix elements for the Z dimension. If you would like to translate along this dimension, assign a value to -tz, in angstroms. For a simple reflection along this axis, set this row to r31=0, r32=0, r33=-1. "/>
+                    </when>
+                    <when value="translate">
+                         <param name="arg_atoms" label="list of atoms" type="text" value="" help="UNIT/RESIDUE/ATOM. You can translate an entire UNIT, an entire RESIDUE, or a specific atom. Each atom is defined as 'UNITvariable.residuenumber(or name).atomtype(or number)'. For example, typing 'mol.5.SG' tells tleap that the bonding atom is assigned to the variable 'mol', in residue number 5, and is the atom type 'SG'. Multiple selections can be typed into this list so a transformation is performed on several components of your system at once, just separate each choice of UNIT/RESIDUE/ATOM with a single space in between. " />
+                         <param name="arg_direction" label="direction value in each dimension" type="text" value="" help="Displace by this amount { X Y Z }. The direction is based on whether each vector is positive or negative. "/>
+                    </when>
+                    <when value="verbosity">
+                         <param name="arg_level" label="level value" type="text" value="" help="This command sets the level of output that LEaP provides the user. A value of 0 is the default, providing the minimum of messages. A value of 1 will produce more output, and a value of 2 will produce all of the output of level 1 and display the text of the script lines executed with the source command."/>
+                    </when>
+                    <when value="zMatrix">
+                         <param name="arg_obj" label="obj value" type="text" value="" help="UNIT/RESIDUE/ATOM"/>
+                         <param name="arg_zmatrix" label="zmatrix value" type="text" value="" help="LIST"/>
+                    </when>
+               </conditional>
+          </repeat>
+     </inputs>
+     <outputs>
+          <data format="txt" name="output_tleap_in" label="Build tLEaP: tleap.in"/>
+          <data format="txt" name="output_tleap" label="Build tLEaP: tleap.log"/>
+          <collection name="output_pdb" type="list" label="Collection of pdb" format="pdb">
+               <discover_datasets pattern="(?P&lt;designation&gt;.+)\.pdb" directory="out" format="pdb"/>
+          </collection>
+          <collection name="output_top" type="list" label="Collection of topology files" format="prmtop">
+               <discover_datasets pattern="(?P&lt;designation&gt;.+)\.prmtop" directory="out" format="prmtop"/>
+          </collection>
+          <collection name="output_txt" type="list" label="Collection of txt" format="txt">
+               <discover_datasets pattern="(?P&lt;designation&gt;.+)\.txt" directory="out" format="txt"/>
+          </collection>
+          <collection name="output_coord" type="list" label="Collection of coordinate files" format="inpcrd">
+               <discover_datasets pattern="(?P&lt;designation&gt;.+)\.inpcrd" directory="out" format="inpcrd"/>
+          </collection>
+          <collection name="output_mol2" type="list" label="Collection of mol2" format="mol2">
+               <discover_datasets pattern="(?P&lt;designation&gt;.+)\.mol2" directory="out" format="mol2"/>
+          </collection>
+          <collection name="output_mol3" type="list" label="Collection of mol3" format="mol3">
+               <discover_datasets pattern="(?P&lt;designation&gt;.+)\.mol3" directory="out" format="mol3"/>
+          </collection>
+     </outputs>
+     <tests>
+          <test expect_num_outputs="8">
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="source"/>
+                         <param name="arg_filename" value="oldff/leaprc.ff14SB"/>
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="loadAmberParams" />
+                         <conditional name="file_source">
+                              <param name="file_source_selector" value="builtin"/>
+                              <param name="arg_filename" value="frcmod.ff14SB"/>
+                         </conditional>
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="loadAmberParams" />
+                         <conditional name="file_source">
+                              <param name="file_source_selector" value="builtin"/>
+                              <param name="arg_filename" value="frcmod.ionsjc_tip4pew"/>
+                         </conditional>
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="loadAmberPrep" />
+                         <conditional name="file_source">
+                              <param name="file_source_selector" value="history"/>
+                              <param name="arg_filename" value="ZAFF.prep"/>
+                         </conditional>
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="loadAmberParams" />
+                         <conditional name="file_source">
+                              <param name="file_source_selector" value="history"/>
+                              <param name="arg_filename" value="ZAFF.frcmod"/>
+                         </conditional>
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="loadPdb" />
+                         <param name="loadPdb_assign" value="mol" />
+                         <param name="arg_filename" value="sarscov2_helicase_ZincBindingDomain.pdb"/>
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="bond" />
+                         <param name="arg_atom1" value="mol.114.ZN" />
+                         <param name="arg_atom2" value="mol.5.SG" />
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="set" />
+                         <param name="arg_variable" value="mol" />
+                         <param name="arg_container" value="box" />
+                         <param name="arg_dim" value="12" />
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="addIons" />
+                         <param name="arg_variable" value="mol" />
+                         <param name="arg_ion1" value="Cl-" />
+                         <param name="arg__ion1" value="0" />
+                         <param name="arg_ion2" value="Na+" />
+                         <param name="arg__ion2" value="0" />
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="saveAmberParm" />
+                         <param name="arg_unit" value="mol" />
+                    </conditional>
+               </repeat>
+               <repeat name="tleap_cmds">
+                    <conditional name="tleap_cond">
+                         <param name="tleap_cmd" value="savePdb" />
+                         <param name="arg_unit" value="mol" />
+                    </conditional>
+               </repeat>
+               <output name="output_tleap_in" value="leap_testfile.txt" lines_diff="6">
+                    <assert_contents>
+                         <has_text text="loadAmberParams frcmod.ff14SB" />
+                         <has_text text="bond mol.114.ZN mol.5.SG" />
+                         <has_text text="quit" />
+                    </assert_contents>
+               </output>
+               <output name="output_tleap">
+                    <assert_contents>
+                         <has_text text="Welcome to LEaP!" />
+                    </assert_contents>
+               </output>
+               <output_collection name="output_top" type="list" count="1">
+                    <element name="saveAmberParm_topologyfilename_9_1">
+                         <assert_contents>
+                              <has_text text="N   H1  H2  H3  CA  HA  CB  HB1 HB2 HB3 C   O   N   H   CA  HA  CB  HB  CG1" />
+                         </assert_contents>
+                    </element>
+               </output_collection>
+               <output_collection name="output_coord" type="list" count="1">
+                    <element name="saveAmberParm_coordinatefilename_9_2">
+                         <assert_contents>
+                              <has_text text="12.0000000  12.0000000  12.0000000  90.0000000  90.0000000  90.0000000" />
+                         </assert_contents>
+                    </element>
+               </output_collection>
+               <output_collection name="output_pdb" type="list" count="1">
+                    <element name="savePdb_filename_10_1">
+                         <assert_contents>
+                              <has_text text="CRYST1   12.000   12.000   12.000  90.00  90.00  90.00 P 1           1" />
+                         </assert_contents>
+                    </element>
+               </output_collection>
+          </test>
+     </tests>
+     <help><![CDATA[
+::
+
+  add a b
+  
+        UNIT/RESIDUE/ATOM          _a_
+        UNIT/RESIDUE/ATOM          _b_
+  
+  Add the object _b_ to the object _a_.   This command is used to place
+  ATOMs within RESIDUEs, and RESIDUEs within UNITs.
+  
+  addAtomTypes {
+          { "H"   "H" "sp3" }
+          { "HO"  "H" "sp3" }
+          ...
+      }
+  Add mapping of AMBER atom type to element and hybridization. Typically in
+  leaprc.
+  
+  addH obj
+  
+        UNIT                       _obj_
+  
+  Add missing hydrogens and build external coordinates for _obj_.
+  
+  addIons unit ion1 #ion1 [ion2 #ion2]
+        UNIT                      _unit_
+        UNIT                      _ion1_
+        NUMBER                    _#ion1_
+        UNIT                      _ion2_
+        NUMBER                    _#ion2_
+  Adds counterions in a shell around _unit_ using a Coulombic potential
+  on a grid. If _#ion1_ is 0, the _unit_ is neutralized (_ion1_ must be
+  opposite in charge to _unit_, and _ion2_ cannot be specified). Otherwise,
+  the specified numbers of _ion1_ [_ion2_] are added [in alternating order].
+  If solvent is present, it is ignored in the charge and steric calculations,
+  and if an ion has a steric conflict with a solvent molecule, the ion is
+  moved to the center of said molecule, and the latter is deleted. (To
+  avoid this behavior, either solvate _after_ addIons, or use addIons2.)
+  Ions must be monoatomic. Note that the one-at-a-time procedure is not
+  guaranteed to globally minimize the electrostatic energy. When neutralizing
+  regular-backbone nucleic acids, the first cations will generally be added
+  between phosphates, leaving the final two ions to be placed somewhere around
+  the middle of the molecule.
+  The default grid resolution is 1 Angstrom, extending from an inner radius
+  of (max ion size + max solute atom size) to an outer radius 4 Angstroms
+  beyond. A distance-dependent dielectric is used for speed.
+  
+  addIons2 unit ion1 #ion1 [ion2 #ion2]
+          UNIT                    _unit_
+          UNIT                    _ion1_
+          NUMBER                  _#ion1_
+          UNIT                    _ion2_
+          NUMBER                  _#ion2_
+  Same as addIons, except solvent and solute are treated the same.
+  
+  addIonsRand unit ion1 #ion1 [ion2 #ion2] [separation]
+  
+          UNIT      _unit_
+          UNIT      _ion1_
+          NUMBER    _#ion1_
+          UNIT      _ion2_
+          NUMBER    _#ion2_
+          NUMBER    _separation_
+  
+  Adds counterions in a shell around _unit_ by replacing random solvent
+  molecules. If _#ion1_ is 0, the _unit_ is neutralized (_ion1_ must be
+  opposite in charge to _unit_, and _ion2_ cannot be specified). Otherwise,
+  the specified numbers of _ion1_ [_ion2_] are added [in alternating order].
+  If _separation_ is specified, ions will be guaranteed to be more than that
+  distance apart in Angstroms.
+  
+  Ions must be monoatomic. This procedure is much faster than addIons, as
+  it does not calculate charges. Solvent must be present. It must be possible
+  to position the requested number of ions with the given separation in the
+  solvent.
+  
+  addPath path
+  
+        STRING                       _path_
+  
+  Add the directory in _path_ to the list of directories that are searched
+  for files specified by other commands.
+  
+  addPdbAtomMap list
+        LIST                         _list_
+  
+  The atom Name Map is used to try to map atom names read from PDB files
+  to atoms within residue UNITs when the atom name in the PDB file does
+  not match an atom in the residue.  This enables PDB files to be read
+  in without extensive editing of atom names.  The LIST is a LIST of LISTs:
+        { {sublist} {sublist} ... }
+  where each sublist is of the form
+        { "OddAtomName" "LibAtomName" }
+  Many `odd' atom names can map to one `standard' atom name, but any single
+  odd atom name maps only to the last standard atom name it was mapped to.
+  
+  addPdbResMap list
+        LIST                         _list_
+  
+  The Name Map is used to map residue names read from PDB files to variable
+  names within LEaP.  The LIST is a LIST of LISTs:
+        { {sublist} {sublist} ... }
+  Each sublist contains two or three entries to add to the Name Map:
+        { [terminalflag] PDBName LEaPVar }
+  where the PDBName will be mapped to the LEaPVar. The terminalflag indicates
+  the special cases of terminal residues: allowable values are 0 for beginning
+  residues (N-terminal for proteins, 5' for nucleic acids) and 1 for ending
+  residues (C-terminal for proteins, 3' for nucleic acids).  If the
+  terminalflag is given, the PDBName->LEaPVar name map will only be applied
+  for the appropriate terminal residue.  The `leaprc' file included with
+  the distribution contains default mappings.
+  
+  alias [alias[ string]]
+        STRING                    _alias_
+        STRING                    _string_
+  
+  alias string1 command - equivalence string1 to command.
+  alias string1         - delete the alias for string1.
+  alias                 - report all current aliases.
+  
+  alignAxes unit
+  
+        UNIT                         _unit_
+  
+  Translate the geometric center of _unit_ to the origin and align
+  the principle axes of the ATOMs within _unit_ along the coordinate
+  axes.  This is done by calculating the moment of inertia of the UNIT
+  using unit mass for each ATOM, and then diagonalizing the resulting
+  matrix and aligning the eigenvectors along the coordinate axes.
+  This command modifies the coordinates of the UNIT. It may be
+  especially useful for preparing long solutes such as nucleic acids
+  for solvation.
+  
+  bond atom1 atom2 [ order ]
+  
+        ATOM                         _atom1_
+        ATOM                         _atom2_
+        STRING                       _order_
+  
+  Create a bond between _atom1_ and _atom2_.  Both of these ATOMs must
+  be contained by the same UNIT. By default, the bond will be a single
+  bond.  By specifying "S", "D", "T", or "A" as the optional argument
+  _order_ the user can specify a single, double, triple, or aromatic
+  bond.
+  
+  bondByDistance container [ maxBond ]
+  
+        UNIT/RESIDUE/ATOM         _container_
+        NUMBER                    _maxBond_
+  
+  Create single bonds between all ATOMs in _container_ that are within
+  _maxBond_ angstroms of each other.   If _maxBond_ is not specified,
+  a default distance of 2 angstroms used.
+  
+  center container
+        UNIT/RESIDUE/ATOM          _container_
+  
+  Display the coordinates of the geometric center of the ATOMs within
+  _container_.
+  
+  charge container
+  
+        UNIT/RESIDUE/ATOM          _container_
+  
+  This command calculates the total charge of the ATOMs within _container_.
+  The unperturbed and perturbed total charge are displayed.
+  
+  check unit [ parmset ]
+        UNIT                      _unit_
+        PARMSET/STRING            _parmset_
+  
+  This command can be used to check the UNIT for internal inconsistencies
+  that could cause problems when performing calculations.  This is
+  a very useful command that should be used before a UNIT is saved
+  with saveAmberParm or its variations.
+  With the optional parmset, all missing parameters are placed in the
+  PARMSET to allow for easy editing of those parameters.  If a string is
+  passed, a PARMSET will be created with that name.
+  Currently it checks for the following possible problems:
+  
+     - Long bonds.  A long bond is greater than 3.0 angstroms.
+  
+     - Short bonds.  A short bond is less than 0.5 angstroms.
+  
+     - Non-integral total charge of the UNIT.
+  
+     - Missing types.
+  
+     - Close contacts between non-bonded ATOMs.  A close contact is
+       less than 1.5 angstroms.
+  
+  clearPdbAtomMap
+  
+  Clear the Name Map used for ``second-chance'' mapping of atom names in
+  PDB files to atoms within residue UNITs.  See addPdbAtomMap.
+  
+  clearPdbResMap
+  
+  Clear the Name Map used to map residue names in PDB files to variable
+  names within LEaP.  See addPdbResMap.
+  
+  clearVariables [ list ]
+  
+        LIST                         _list_
+  
+  This command removes variables from LEaP. If the _list_ argument
+  is provided, then only the variables in the LIST will be removed.
+  If no argument is provided then ALL variables will be removed.
+  
+  variable = combine list
+        object                       _variable_
+        LIST                         _list_
+  
+  Combine the contents of the UNITs within _list_ into a single UNIT.
+  The new UNIT is placed in _variable_.   This command is similar to
+  the sequence command except it does not link the ATOMs of the UNITs
+  together.
+  
+  newvariable = copy variable
+  
+        object                       _newvariable_
+        object                       _variable_
+  
+  Create an exact duplicate of the object _variable_. Changing the object
+  _variable_ will not affect the object _newvariable_.
+  This is in contrast to the situation created by "newvariable = variable"
+  in which both names reference the same object.
+  
+  variable = createAtom name type charge
+  
+        ATOM                         _variable_
+        STRING                       _name_
+        STRING                       _type_
+        NUMBER                       _charge_
+  
+  Return a new ATOM with _name_, _type_, and _charge_.
+  
+  variable = createParmset name
+        PARMSET                   _variable_
+        STRING                    _name_
+  
+  Return a new and empty PARMSET with the name _name_.
+  
+  variable = createResidue name
+        RESIDUE                      _variable_
+        STRING                       _name_
+  
+  Return a new and empty RESIDUE with the name _name_.
+  
+  variable = createUnit name
+        UNIT                         _variable_
+        STRING                       _name_
+  
+  Return a new and empty UNIT with the name _name_.
+  
+  crossLink res1 conn1 res2 conn2
+  
+        RESIDUE                      _res1_
+        STRING                       _connect1_
+        RESIDUE                      _res2_
+        STRING                       _connect2_
+  
+  Create a bond between ATOMs at the connection point specified by
+  _conn1_ and _conn2_.   The argument _conn1_ and _conn2_ can have the
+  following values:
+  
+  Name_           Alternatives__
+  $connect0      $nend, $firstend
+  $connect1      $cend, $lastend
+  $connect2      $send, $disulphide
+  $connect3
+  $connect4
+  $connect5
+  
+  debugOff filename
+  
+        STRING                       _filename_
+  
+  This command is a system debugging function.  It turns off debugging
+  messages from the source (.c) file _filename_.   The symbol *
+  matches all files.  The default for all filenames is `off'.
+  Note that system debugging is in effect only if LEaP was compiled
+  with the preprocessor macro DEBUG defined.
+  
+  debugOn filename
+  
+        STRING                       _filename_
+  
+  This command is a system debugging function.  It turns on debugging
+  messages from the source (.c) file _filename_.   The symbol *
+  matches all files.  The default for all filenames is `off'.
+  Note that system debugging is in effect only if LEaP was compiled
+  with the preprocessor macro DEBUG defined.
+  
+  debugStatus
+  This command is a memory debugging function.  It displays various
+  messages that describe LEaP's usage of system resources.
+  Note that memory debugging is in effect only if LEaP was compiled
+  with the preprocessor macro MEMORY_DEBUG defined; MEMORY_DEBUG values
+  range from 1 through 4 with the greatest being the most aggressive.
+  
+  deleteBond atom1 atom2
+  
+        ATOM                         _atom1_
+        ATOM                         _atom2_
+  
+  Remove the bond between the ATOMs _atom1_ and _atom2_.   If no bond
+  exists, an error will be displayed.
+  
+  deleteOffLibEntry library entry
+        STRING                       _library_
+        STRING                       _entry_
+  
+  Delete _entry_ from the Object File Format file named _library_.
+  
+  deleteRestraint unit a b [c [d]]
+  
+        UNIT                         _unit_
+        ATOM                         _a_
+        ATOM                         _b_
+        ATOM                         _c_
+        ATOM                         _d_
+  
+  Remove a bond, angle, or torsion restraint from _unit_, depending
+  on the number of ATOMs specified.
+  
+  desc variable
+        object                       _variable_
+  
+  Print a description of the object.
+  
+  deSelect obj
+  
+        UNIT/RESIDUE/ATOM          _obj_
+  
+  Clears the SELECT flag on all ATOMs within _obj_.  See the select command.
+  
+  displayPdbAtomMap
+  
+  Display the Name Map used for ``second chance'' mapping of atom names
+  in PDB files to atoms within residue UNITs.  See addPdbAtomMap.
+  
+  displayPdbResMap
+  
+  Display the Name Map used to map residue names in PDB files to variable
+  names within LEaP.  See addPdbResMap.
+  
+  edit unit-parmset
+        UNIT/PARMSET              _unit-parmset_
+  
+  In xLEaP this command creates a unit editor or parameter set editor
+  that contains the UNIT or PARMSET _unit-parmset_.   The user can view
+  and edit the contents of the UNIT or PARMSET by using the mouse.
+  If _unit-parmset_ is a PARMSET, then the user may select the Atom, Bond,
+  Angle, Torsion, Improper Torsion, or Hydrogen Bond Parameters to
+  edit by selecting the appropriate button.
+  In tLEaP this command prints an error message.
+  
+  flip obj
+  
+        UNIT                       _obj_
+  
+  Flips the chirality of the selected atoms within _obj_.
+  
+  groupSelectedAtoms unit name
+  
+        UNIT                         _unit_
+        STRING                       _name_
+  
+  Create a group within _unit_ with the name _name_ using all of the
+  ATOMs within the UNIT that are selected.  If the group has already
+  been defined then overwrite the old group.
+  
+  help [string]
+  
+        STRING                       _string_
+  
+  This command prints a description of the command in _string_.  If
+  the STRING is not given then a list of legal STRINGs is provided.
+  
+  impose unit seqlist internals
+  
+        UNIT                         _unit_
+        LIST                         _seqlist_
+        LIST                         _internals_
+  
+  The impose command allows the user to impose internal coordinates
+  on the UNIT. The list of RESIDUEs to impose the internal coordinates
+  upon is in _seqlist_.  The internal coordinates to impose are in
+  the LIST _internals_.
+  The command works by looking into each RESIDUE within the UNIT that
+  is listed in the _seqlist_ argument and attempts to apply each of
+  the internal coordinates within _internals_.  The _seqlist_ argument
+  is a LIST of NUMBERs that represent sequence numbers or ranges of
+  sequence numbers.  Ranges of sequence numbers are represented by
+  two-element LISTs that contain the first and last sequence number
+  in the range.  The user can specify sequence number ranges that are
+  larger than what is found in the UNIT. For example the range { 1 999 }
+  represents all RESIDUEs in a 200 RESIDUE UNIT.
+  The _internals_ argument is a LIST of LISTs.  Each sublist contains
+  a sequence of ATOM names which are of type STRING followed by the
+  value of the internal coordinate.  See the output of help _types_ for
+  details on specifying STRINGs.  Examples of the impose command are:
+  
+  impose peptide { 1 2 3 } { { $N $CA  $C $N -40.0 } { $C $N  $CA $C
+  -60.0 } }
+  
+  The RESIDUEs with sequence numbers 1, 2, and 5 within the UNIT peptide
+  will assume an alpha helix conformation.
+  
+  impose peptide { 1 2  { 5 10 } 12 }  { { "CA" "CB" 5.0 } }
+  
+  This will impose on the residues with sequence numbers 1, 2, 5, 6,
+  7, 8, 9, 10, and 12 within the UNIT peptide a bond length of 5.0
+  angstroms between the alpha and beta carbons.  RESIDUEs without an
+  ATOM named $CB (like glycine)  will be unaffected.
+  Three types of conformational change are supported; bond length changes,
+  bond angle changes, and torsion angle changes.  If the conformational
+  change involves a torsion angle, then all dihedrals around the central
+  pair of atoms are rotated.   The entire list of internals are applied
+  to each RESIDUE.
+  
+  list
+  List all of the variables currently defined.
+  
+  listOff library
+        STRING                       _library_
+  
+  List the UNITs/PARMSETs stored within the Object File Format file
+  named _library_.
+  
+  variable = loadAmberParams filename
+        PARMSET                      _variable_
+        STRING                       _filename_
+  
+  Load an AMBER format parameter set file and place it in _variable_.
+  All interactions defined in the parameter set will be contained within
+  _variable_.   This command causes the loaded parameter set to be included
+  in LEaP's list of parameter sets that are searched when parameters are
+  required.  General proper and improper torsion parameters are modified,
+  the AMBER general type "X" is replaced with the LEaP general type "?".
+  
+  loadAmberPrep filename [ prefix ]
+  
+        STRING                       _filename_
+        STRING                       _prefix_
+  
+  This command loads an AMBER PREP input file.  For each residue that
+  is loaded, a new UNIT is constructed that contains a single RESIDUE
+  and a variable is created with the same name as the name of the residue
+  within the PREP file.   If the optional argument _prefix_ is provided
+  it will be prefixed to each variable name; this feature is used to
+  prefix united atom residues, which have the same names as all-atom
+  residues, with the string $U to distinguish them.
+  
+  variable = loadMol2 filename
+        STRING                       _filename_
+  
+  Load a Sybyl Mol2-format file with the file name _filename_.  The UNIT
+  loaded will have the name specified for the MOLECULE in the input file.
+  
+  variable = loadMol3 filename
+        STRING                       _filename_
+  
+  Load a Sybyl-derived Mol3-format file with the file name _filename_.
+  The UNIT loaded will have the name specified for the MOLECULE in the
+  input file.
+  
+  More information:
+  http://q4md-forcefieldtools.org/Tutorial/leap-mol3.php
+  
+  loadOff filename
+        STRING                       _filename_
+  
+  This command loads the Object File Format library within the file named
+  _filename_.  All UNITs and PARMSETs within the library will be loaded.
+  The objects are loaded into LEaP under the variable names the objects
+  had when they were saved.  Variables already in existence that have the
+  same names as the objects being loaded will be overwritten.  PARMSETs
+  loaded using this command are included in LEaP's library of PARMSETs
+  that is searched whenever parameters are required.
+  
+  variable = loadPdb filename
+        STRING                       _filename_
+  
+  Load a Protein Data Bank format file with the file name _filename_.
+  The sequence numbers of the RESIDUEs will be determined from the order
+  of residues within the PDB file ATOM records.  For each residue in the
+  PDB file, LEaP searches the variables currently defined for variable
+  names that match the residue name.  If a match is found then the
+  contents of the variable are copied into the UNIT created for the PDB
+  structure.  If no PDB `TER' card separates the current residue from the
+  previous one, a bond is created between the connect1 ATOM of the
+  previous residue and the connect0 atom of the new one.  (A PDB TER
+  record is also used to detect a new residue in the case of contiguous
+  residues with identical residue sequence numbers.)  As atoms are read
+  from the ATOM records, their coordinates are written into the
+  correspondingly named ATOMs within the residue being built.  If the
+  entire residue is read and it is found that ATOM coordinates are missing
+  then external coordinates are built from the internal coordinates that
+  were defined in the matching UNIT (residue) variable.  This allows LEaP
+  to build coordinates for hydrogens and lone pairs which are not
+  specified in PDB files.
+  
+  loadPdbUsingSeq filename unitlist
+  
+        STRING                       _filename_
+        LIST                         _unitlist_
+  
+  This command reads a Protein Data Bank format file from the file
+  named _filename_.  This command is identical to loadPdb except it
+  does not use the residue names within the PDB file.   Instead, the
+  sequence is defined by the user in _unitlist_.  For more details
+  see loadPdb.
+  
+  logFile filename
+  
+        STRING                       _filename_
+  
+  This command opens the file with the file name _filename_ as a log
+  file.  User input and ALL output is written to the log file.  Output
+  is written to the log file as if the verbosity level were set to 2.
+  
+  variable = matchVariables string
+  
+        LIST                         _variable_
+        STRING                       _string_
+  
+  Create a LIST of variables with names that match _string_. The _string_
+  argument can contain the wildcard characters "?" and "*" to match any
+  single character or substring of characters, respectively.
+  
+  measureGeom atom1 atom2 [ atom3 [ atom4 ] ]
+        ATOM                _atom1_ _atom2_ _atom3_ _atom4_
+  
+  Measure the distance, angle, or torsion between two, three, or four ATOMs,
+  respectively.
+  
+  quit
+  
+  relax obj
+  
+        UNIT                       _obj_
+  
+  Relaxes the selected atoms within _obj_.
+  
+  remove a b
+  
+        UNIT/RESIDUE/ATOM          _a_
+        UNIT/RESIDUE/ATOM          _b_
+  
+  Remove the object _b_ from the object _a_.   If _a_ is not contained
+  by _b_ then an error message will be displayed.  This command is
+  used to remove ATOMs from RESIDUEs, and RESIDUEs from UNITs.   If
+  the object represented by _b_ is not referenced by some variable
+  name then it will be destroyed.
+  
+  restrainAngle unit a b c force angle
+  
+        UNIT                         _unit_
+        ATOM                         _a_
+        ATOM                         _b_
+        ATOM                         _c_
+        NUMBER                       _force_
+        NUMBER                       _angle_
+  
+  Add an angle restraint to _unit_ between atoms _a_, _b_, and _c_,
+  having force constant of _force_, and equilibrium angle _angle_.
+  
+  restrainBond unit a b force length
+  
+        UNIT                         _unit_
+        ATOM                         _a_
+        ATOM                         _b_
+        NUMBER                       _force_
+        NUMBER                       _length_
+  
+  Add a bond (distance) restraint to _unit_ between atoms _a_ and _b_
+  with a force constant of _force_ and an equilibrium distance of _length_.
+  
+  restrainTorsion unit a b c d force phi multiplicity
+  
+        UNIT                         _unit_
+        ATOM                         _a_
+        ATOM                         _b_
+        ATOM                         _c_
+        ATOM                         _d_
+        NUMBER                       _force_
+        NUMBER                       _phi_
+        NUMBER                       _multiplicity_
+  
+  Add a torsion restraint to _unit_ between atoms _a_, _b_, _c_, and
+  _d_, with a force constant of _force_, an equilibrium torsion angle
+  of _phi_, and a multiplicity of _multiplicity_.
+  
+  saveAmberParm     unit topologyfilename coordinatefilename
+  
+        UNIT                         _unit_
+        STRING                       _topologyfilename_
+        STRING                       _coordinatefilename_
+  
+  Save the AMBER topology and coordinate files for the UNIT into the
+  files named _topologyfilename_ and _coordinatefilename_ respectively.
+  This command will cause LEaP to search its list of PARMSETs for
+  parameters defining all of the interactions between the ATOMs within
+  the UNIT.  This command produces a topology file and a coordinate file
+  which are identical in format to those produced by the AMBER program
+  PARM, and which can be read into AMBER and SPASMS for energy minimization,
+  dynamics, or nmode calculations.
+  See also: saveAmberParmPol, saveAmberParmPert, and saveAmberParmPolPert
+  for including atomic polarizabilities and preparing free energy
+  perturbation calculations and saveAmberParmNetcdf for saving in a
+  binary format.
+  
+  saveAmberParmNetcdf     unit topologyfilename coordinatefilename
+  
+  UNIT                         _unit_
+  STRING                       _topologyfilename_
+  STRING                       _coordinatefilename_
+  
+  Save the AMBER topology and coordinate files for the UNIT into the
+  files named _topologyfilename_ and _coordinatefilename_ respectively.
+  This command will cause LEaP to search its list of PARMSETs for
+  parameters defining all of the interactions between the ATOMs within
+  the UNIT.  This command produces a topology file and a coordinate file
+  which can be read into AMBER and SPASMS for energy minimization, dynamics,
+  or nmode calculations.
+  The coordinate file written will be in the binary NetCDF AMBER restart
+  format, which enables the writing of larger input files and quicker I/O.
+  Use saveAmberParm for the regular ASCII coordinate format.
+  
+  saveAmberParmPert unit topologyfilename coordinatefilename
+  
+        UNIT                         _unit_
+        STRING                       _topologyfilename_
+        STRING                       _coordinatefilename_
+  
+  Save the AMBER topology and coordinate files for the UNIT into the
+  files named _topologyfilename_ and _coordinatefilename_ respectively.
+  This command will cause LEaP to search its list of PARMSETs for
+  parameters defining all of the interactions between the ATOMs within
+  the UNIT - including the perturbed ATOMs (which are ignored by the
+  vanilla saveAmberParm command).  This command produces a topology file
+  and a coordinate file that are identical in format to those produced by
+  the AMBER PARM program using the PERT option, and which can be read into
+  AMBER and SPASMS for free energy calculations.
+  
+  saveAmberParmPol unit topologyfilename coordinatefilename
+  
+  Like saveAmberParm, but includes atomic polarizabilities in the topology
+  file for use with IPOL=1 in Sander. The polarizabilities are according
+  to atom type, and are defined in the 'mass' section of the parm.dat or
+  frcmod file. Note: charges are normally scaled when polarizabilities are
+  used - see scaleCharges for an easy way of doing this.
+  
+  saveAmberParmPolPert unit topologyfilename coordinatefilename
+  
+  Like saveAmberParmPert, but includes atomic polarizabilities in the topology
+  file for use with IPOL=1 in Gibbs. The polarizabilities are according to
+  atom type, and are defined in the 'mass' section of the parm.dat or frcmod
+  file. Note: charges are normally scaled when polarizabilities are used -
+  see scaleCharges for an easy way of doing this.
+  
+  saveAmberPrep unit filename
+  
+        UNIT                         _unit_
+        STRING                       _filename_
+  
+  Save all residues in the UNIT to a prep.in file. All possible improper
+  dihedrals are given for each residue, so unwanted ones need to be
+  deleted from the file. 'Connect0' and 'connect1' atoms must be defined
+  for each residue.
+  
+  saveMol2 unit filename option
+  
+        UNIT                         _unit_
+        STRING                       _filename_
+        NUMBER                       _option_
+  
+  Write UNIT to the file _filename_ as a Mol2 format file.
+  option = 0 for Default atom types
+  option = 1 for AMBER atom types
+  
+  More information:
+  https://upjv.q4md-forcefieldtools.org/Tutorial/leap-mol2.php
+  
+  saveMol3 unit filename option
+  
+        UNIT                         _unit_
+        STRING                       _filename_
+        NUMBER                       _option_
+  
+  Write UNIT to the file _filename_ as a Mol3 format file.
+  option = 0 for Default atom types
+  option = 1 for AMBER atom types
+  
+  More information:
+  http://q4md-forcefieldtools.org/Tutorial/leap-mol3.php
+  
+  saveOff object filename
+  
+        object                       _object_
+        STRING                       _filename_
+  
+  The saveOff command allows the user to save UNITs, and PARMSETs to a
+  file named _filename_.  The file is written using the Object File
+  Format (OFF) and can accommodate an unlimited number of uniquely
+  named objects.  The names by which the objects are stored are the
+  variable names specified in the argument of this command.  If the
+  file _filename_ already exists then the new objects will be added
+  to the file.  If there are objects within the file with the same
+  names as objects being saved then the old objects will be overwritten.
+  The argument _object_ can be a single UNIT, a single PARMSET, or
+  a LIST of mixed UNITs and PARMSETs.
+  
+  savePdb unit filename
+  
+        UNIT                         _unit_
+        STRING                       _filename_
+  
+  Write UNIT to the file _filename_ as a PDB format file.
+  
+  scaleCharges container scale_factor
+  
+        UNIT/RESIDUE/ATOM   _container_
+        NUMBER              _scale_factor_
+  
+  This command scales the charges in the object by _scale_factor_,
+  which must be > 0.  It is useful for building systems for use
+  with polarizable atoms, e.g.
+  > x = copy solute
+  > scaleCharges x 0.8
+  > y = copy WATBOX216
+  > scalecharges y 0.875
+  > solvatebox x y 10
+  > saveamberparmpol x x.top x.crd
+  
+  select obj
+  
+        UNIT/RESIDUE/ATOM          _obj_
+  
+  Sets the SELECT flag on all ATOMs within _obj_.  See the deSelect command.
+  
+  variable = sequence list
+  
+        LIST                         _list_
+  
+  The sequence command is used to create a new UNIT by copying the
+  contents of a LIST of UNITs.  As each UNIT in the list is copied,
+  a bond is created between its head atom and the tail ATOM of the
+  previous UNIT, if both connect ATOMs are defined.  If only one of
+  the connect pair is defined, a warning is generated and no bond is
+  created.  If neither connection ATOM is defined then no bond is
+  created.  As each RESIDUE within a UNIT is copied, it is assigned a
+  sequence number reflecting the order added.  The order of RESIDUEs
+  in multi-RESIDUE UNITs is maintained.
+  This command builds reasonable starting coordinates for the new UNIT
+  by assigning internal coordinates to the linkages between the component
+  UNITs and building the Cartesian coordinates from these and the
+  internal coordinates of the component UNITs.
+  
+  set default variable value
+        STRING                       _variable_
+        STRING                       _value_
+  OR
+      set container parameter object
+        UNIT/RESIDUE/ATOM/STRING     _container_
+        STRING                       _parameter_
+        object                       _object/value_
+  
+  This command sets the values of some global parameters (when the first
+  argument is "default") or sets various parameters associated with _container_.
+  
+  To see the possible variables for "set default", type "help set_default".
+  
+  The box parameter of a UNIT defines the bounding box of the UNIT; this is
+  not a UNIT's periodic box.  The setBox and solvate family of commands add a
+  periodic box to a UNIT; for a description, type, e.g., "help setBox".
+  
+  The more useful parameters for each type of _container_ are the following:
+    container    parameters           values
+  
+    UNIT         name                 STRING
+                 head, tail           ATOM [e.g. unit.1.1]
+                 restype              "protein" "nucleic" "saccharide" "solvent"
+                                      "undefined" [sets all residues in UNIT]
+                 box                  LIST [side lengths: {A B C}]
+                                      or NUMBER [cube side length] or "null"
+                 cap                  LIST [center, radius: {X Y Z  R}]
+                                      or "null"
+  
+    RESIDUE      name                 STRING
+    [e.g.        restype              [see UNIT]
+     unit.1]     connect0, connect1   ATOM [e.g. unit.1.1]
+                 imagingAtom          ATOM [e.g. unit.1.1]
+  
+    ATOM         name, pertName       STRING [<= 4 chars]
+    [e.g.        type, pertType       STRING [<= 2 chars]
+     unit.1.1]   element              STRING
+                 pert                 "true" [or pert flag unset]
+                 charge, pertCharge   DOUBLE
+                 position             LIST [{X Y Z}]
+  
+  Allowed arguments to "set default variable value" are these:
+    variables        values       descriptions
+  
+    PdbWriteCharges  "on"         add charges to each ATOM record
+                     "off"        don't do this (default)
+  
+    OldPrmtopFormat  "on"         use prmtop format from Amber6 and earlier
+                     "off"        use the new prmtop format (default)
+  
+    Gibbs            "on"         require perturbed atoms to be set explicitly
+                                     (needed for gibbs)
+                     "off"        set perturbed if Type != PertType (default)
+                                     (OK for sander)
+  
+    UseResIds        "on"         put cols 22-27 of the input pdb file into
+                     "off"        a RESIDUE_ID table in prmtop files; default
+                                  is "off"; only works with new prmtop formats,
+                                  and when a single loadPdb command is used to
+                                  create a unit.
+  
+    Charmm           "on"         include terms for CHARMM22 force fields
+                     "off"        don't include these (default)
+  
+    DeleteExtraPointAngles
+                     "on"         delete angles and torsions relating to
+                                     extra points (default)
+                     "off"        don't delete these (for older codes only)
+  
+    FlexibleWater    "on"         allow for flexible 3-point water models
+                     "off"        assume 3-point water models are rigid (default)
+  
+    PBRadii          "bondi"      use Bondi radii for generalized Born
+                     "mbondi"     use H-modified Bondi radii (default)
+                     "mbondi2"    use H(N)-modified Bondi radii
+                     "mbondi3"    ArgH and AspGluO modified Bondi2 radii
+                     "parse"      Radii from the Sitkoff et al. parse parameters
+                     "pbamber"    Huo and Kollman optimized radii (old!)
+                     "amber6"     use radii that were the default in amber6
+                                     (only recommended for backwards compat.)
+  
+    Dielectric       "distance"   use distance-dependent dielectric (default)
+                     "constant"   use constant dielectric
+  
+    dipole_damp_factor    real    sets the default value for "DIPOLE_DAMP_FACTOR"
+                                  for dipole screening factors in Thole models.
+                                  Valid value > 0.0
+  
+    sceescalefactor  real         sets the default value for "SCEE_SCALE_FACTOR"
+                                  for 1-4 EEL scaling factors. Valid value > 0.0.
+                                  Default=1.2.
+  
+    scnbscalefactor  real         sets the default value for "SCNB_SCALE_FACTOR"
+                                  for 1-4 NB scaling factors. Valid value > 0.0.
+                                  Default=2.0.
+  
+    CMAP             "on"         include CMAP corrections for dihedrals
+                     "off"        don't include these (default)
+  
+    PHIPSIMAP        "on"         include residue-based PHIPSI parameters
+                     "off"        don't include these (default)
+  
+    ipol             integer      Sets the default value for IPOL.
+                                  Valid values are 0 - 4.
+                                  Default value is 0, meaning disabled.
+  
+    nocenter         "on"         coordinates will not be centered in the
+                                  periodic simulation box
+                     "off"        coordinates will be centered (default)
+  
+    reorder_residues "on"         solvent will be moved to the end (default)
+                     "off"        residue order will be maintained as input.
+                                  Beta feature: use at your own risk!
+  
+  setBox solute enclosure [ buffer ]
+        UNIT                         _solute_
+        "vdw" OR "centers"           _enclosure_
+        object                       _buffer_
+  
+  The setBox command creates a periodic box around the _solute_ UNIT, turning
+  it into a periodic system for the simulation programs.  It does not add
+  any solvent to the system. The choice of "vdw" or "centers" determines
+  whether the box encloses all entire atoms or just all atom centers -
+  use "centers" if the system has been previously equilibrated as a
+  periodic box. See the solvateBox command for a description of the
+  buffer object, which extends either type of box by an arbitrary amount.
+  
+  showDefault [ variable OR all OR * ]
+        STRING                       _variable_
+  
+  The showdefault command shows the values assigned to the variables by
+  the "set default" command. Without variable, with "all", or with "*",
+  all default variables are shown.
+  
+  solvateBox solute solvent buffer [ "iso" ] [ closeness ]
+  
+        UNIT                         _solute_
+        UNIT                         _solvent_
+        object                       _buffer_
+        NUMBER                       _closeness_
+  
+  The solvateBox command creates a solvent box around the _solute_ UNIT.
+  The _solute_ UNIT is modified by the addition of _solvent_ RESIDUEs.
+  
+  The user may want to first align long solutes that are not expected
+  to tumble using alignAxes, in order to minimize box volume.
+  
+  The normal choice for a TIP3 _solvent_ UNIT is WATBOX216. Note that
+  constant pressure equilibration is required to bring the artificial box
+  to reasonable density, since Van der Waals voids remain due to the
+  impossibility of natural packing of solvent around the solute and at
+  the edges of the box.
+  
+  The solvent box UNIT is copied and repeated in all three spatial directions
+  to create a box containing the entire solute and a buffer zone defined
+  by the _buffer_ argument. The _buffer_ argument defines the distance,
+  in angstroms, between the wall of the box and the closest ATOM in the
+  solute.
+  
+  If the buffer argument is a single NUMBER, then the buffer distance is
+  the same for the x, y, and z directions, unless the "iso" option is used
+  to make the box isometric, with the shortest box clearance = buffer. If
+  "iso" is used, the solute is rotated to orient the principal axes,
+  otherwise it is just centered on the origin.
+  
+  If the buffer argument is a LIST of three NUMBERS, then the NUMBERs are
+  applied to the x, y, and z axes respectively. As the larger box is created
+  and superimposed on the solute, solvent molecules overlapping the solute
+  are removed.
+  
+  The optional _closeness_ parameter can be used to control the extent to
+  which _solvent_ ATOMs overlap _solute_ ATOMs.  The default value of
+  the _closeness_ argument is 1.0, which allows no overlap.  Smaller
+  values allow solvent ATOMs to overlap _solute_ ATOMs by (1 - closeness) *
+  R*ij, where R*ij is the sum of the Van der Waals radii of solute and
+  solvent atoms.  Values greater than 1 enforce a minimum gap between
+  solvent and solute of (closeness - 1) * R*ij.
+  
+  This command modifies the _solute_ UNIT in several ways.  First, the
+  coordinates of the ATOMs are modified to move the center of a box
+  enclosing the Van der Waals radii of the atoms to the origin.  Secondly,
+  the UNIT is modified by the addition of _solvent_ RESIDUEs copied from
+  the _solvent_ UNIT. Finally, the box parameter of the new system (still
+  named for the _solute_) is modified to reflect the fact that a periodic,
+  rectilinear solvent box has been created around it.
+  
+  solvateCap solute solvent position radius [ closeness ]
+  
+        UNIT                         _solute_
+        UNIT                         _solvent_
+        object                       _position_
+        NUMBER                       _radius_
+        NUMBER                       _closeness_
+  
+  The solvateCap command creates a solvent cap around the _solute_ UNIT
+  or a part thereof.  The _solute_ UNIT is modified by the addition of
+  _solvent_ RESIDUEs.
+  The normal choice for a TIP3 _solvent_ UNIT is WATBOX216. The _solvent_
+  box is repeated in all three spatial directions and _solvent_ RESIDUEs
+  selected to create a solvent sphere with a radius of _radius_ Angstroms.
+  
+  The _position_ argument defines where the center of the solvent cap
+  is to be placed.   If _position_ is a UNIT, RESIDUE, ATOM, or a LIST
+  of UNITs, RESIDUEs, or ATOMs, then the geometric center of the ATOMs
+  within the object will be used as the center of the solvent cap sphere.
+  If _position_ is a LIST containing three NUMBERs then the _position_
+  argument will be treated as a vector that defines the position of
+  the solvent cap sphere center.
+  
+  The optional _closeness_ parameter can be used to control the extent to
+  which _solvent_ ATOMs overlap _solute_ ATOMs.  The default value of
+  the _closeness_ argument is 1.0, which allows no overlap.  Smaller
+  values allow solvent ATOMs to overlap _solute_ ATOMs by (1 - closeness) *
+  R*ij, where R*ij is the sum of the Van der Waals radii of solute and
+  solvent atoms.  Values greater than 1 enforce a minimum gap between
+  solvent and solute of (closeness - 1) * R*ij.
+  
+  This command modifies the _solute_ UNIT in several ways.  First,
+  the UNIT is modified by the addition of _solvent_ RESIDUEs copied
+  from the _solvent_ UNIT. Secondly, the cap parameter of the UNIT
+  _solute_ is modified to reflect the fact that a solvent cap has been
+  created around the solute.
+  
+  solvateDontClip solute solvent buffer [ closeness ]
+  
+        UNIT                         _solute_
+        UNIT                         _solvent_
+        object                       _buffer_
+        NUMBER                       _closeness_
+  
+  This command is identical to the solvateBox command except that the
+  solvent box that is created is not clipped to the boundary of the
+  _buffer_ region.  This command forms larger solvent boxes than does
+  solvateBox because it does not cause solvent that is outside the buffer
+  region to be discarded.   This helps to preserve the periodic structure
+  of properly constructed solvent boxes, preventing hot-spots from
+  forming.
+  
+  solvateOct solute solvent buffer [ "iso" ] [ closeness ]
+  
+        UNIT                         _solute_
+        UNIT                         _solvent_
+        object                       _buffer_
+        NUMBER                       _closeness_
+  
+  The solvateOct command is the same as solvateBox, except the corners
+  of the box are sliced off, resulting in a truncated octahedron, which
+  typically gives a more uniform distribution of solvent around the
+  solute.
+  
+  In solvateOct, when a LIST is given for the buffer argument, four
+  numbers are given instead of three, where the fourth is the diagonal
+  clearance. If 0.0 is given as the fourth number, the diagonal clearance
+  resulting from the application of the x,y,z clearances is reported. If
+  a non-0 value is given, this may require scaling up the other clearances,
+  which is also reported. Similarly, if a single number is given, any
+  scaleup of the x,y,z buffer to accommodate the diagonal clip is reported.
+  
+  If the "iso" option is used, the isometric truncated octahedron is
+  rotated to an orientation used by the PME code, and the box and angle
+  dimensions output by the saveAmberParm* commands are adjusted for PME
+  code imaging.
+  
+  solvateShell solute solvent thickness [ closeness ]
+  
+        UNIT                         _solute_
+        UNIT                         _solvent_
+        NUMBER                       _thickness_
+        NUMBER                       _closeness_
+  
+  The solvateShell command creates a solvent shell around the _solute_ UNIT.
+  The _solute_ UNIT is modified by the addition of _solvent_ RESIDUEs.
+  
+  The normal choice for a TIP3 _solvent_ UNIT is WATBOX216. The _solvent_ box
+  is repeated in all three spatial directions and _solvent_ RESIDUEs selected
+  to create a solvent shell with a radius of _thickness_ Angstroms around the
+  _solute_.
+  
+  The _thickness_ argument defines the maximum distance a _solvent_ ATOM may
+  be from the closest _solute_ ATOM.
+  
+  The optional _closeness_ parameter can be used to control overlap of _solvent_
+  with _solute_ ATOMs.   The default value of the _closeness_ argument is
+  1.0, which allows contact but no overlap.  Please see the solvateBox
+  command for more details on the _closeness_ parameter.
+  
+  source filename
+        STRING                       _filename_
+  
+  This command executes LEaP commands within a text file.  To display the
+  commands as they are read, see the verbosity command.  The text within
+  the source file must be formatted exactly like the text the user types
+  into LEaP.
+  
+  transform atoms matrix
+  
+        CONTAINER/LIST               _atoms_
+        LIST                         _matrix_
+  
+  Translate all of the ATOMs within _atoms_ by the (3X3) or (4X4) matrix
+  defined by the 9 or 16 NUMBERs in the LIST of LISTs _matrix_.
+      { { r11  r12  r13  -tx }
+        { r21  r22  r23  -ty }
+        { r31  r32  r33  -tz }
+        { 0    0    0     1  } }
+  The diagonal upper left elements, rII can be used for symmetry operations,
+  e.g. a reflection in the XY plane can be produced with r11=1, r22=1, r33=-1
+  where the other rIJ elements are 0. The -t column is used to specify
+  translations along the appropriate axes (0 for no translation).
+  
+  translate atoms direction
+  
+        UNIT/RESIDUE/ATOM            _atoms_
+        LIST                         _direction_
+  
+  Translate all of the ATOMs within _atoms_ by the vector defined by
+  the three NUMBERs in the LIST _ direction_.
+  
+  verbosity level
+  
+        NUMBER                       _level_
+  
+  This command sets the level of output that LEaP provides the user.
+  A value of 0 is the default, providing the minimum of messages.  A
+  value of 1 will produce more output, and a value of 2 will produce
+  all of the output of level 1 and display the text of the script lines
+  executed with the source command.
+  
+  zMatrix obj zmatrix
+  
+        UNIT/RESIDUE/ATOM            _obj_
+        LIST                         _zmatrix_
+  
+  The zMatrix command is quite complicated.  It is used to define the
+  external coordinates of ATOMs within _obj_ using internal coordinates.
+  The second parameter of the zMatrix command is a LIST of LISTs; each
+  sub-list has several arguments:
+  
+  { a1 a2 bond12 }
+  
+  This entry defines the coordinate of _a1_ by placing it _bond12_ angstroms
+  along the x-axis from ATOM _a2_.   If ATOM _a2_ does not have coordinates
+  defined then ATOM _a2_ is placed at the origin.
+  
+  { a1 a2 a3 bond12 angle123 }
+  
+  This entry defines the coordinate of _a1_ by placing it _bond12_ angstroms
+  away from ATOM _a2_ making an angle of _angle123_ degrees between
+  _a1_, _a2_ and _a3_.  The angle is measured in a right hand sense
+  and in the x-y plane.   ATOMs _a2_ and _a3_ must have coordinates defined.
+  
+  { a1 a2 a3 a4 bond12 angle123 torsion1234 }
+  
+  This entry defines the coordinate of _a1_ by placing it _bond12_ angstroms
+  away from ATOM _a2_, creating an angle of _angle123_ degrees between
+  _a1_, _a2_, and _a3_, and making a torsion angle of _torsion1234_ between
+  _a1_, _a2_, _a3_, and _a4_.
+  
+  { a1 a2 a3 a4 bond12 angle123 angle124 orientation }
+  
+  This entry defines the coordinate of _a1_ by placing it _bond12_ angstroms
+  away from ATOM _a2_, making angles _angle123_ between ATOMs _a1_,
+  _a2_, and _a3_, and _angle124_ between ATOMs _a1_, _a2_, and _a4_.  The
+  argument _orientation_ defines whether the ATOM _a1_ is above or below
+  a plane defined by the ATOMs _a2_, _a3_, and _a4_.  If _orientation_
+  is positive then _a1_ will be placed in such a way so that the inner
+  product of (_a3_-_a2_)  cross (_a4_-_a2_) with (_a1_-_a2_) is positive.
+  Otherwise _a1_ will be placed on the other side of the plane.  This
+  allows the coordinates of a molecule like fluoro-chloro-bromo-methane
+  to be defined without having to resort to dummy atoms.
+  The first arguments within the zMatrix entries ( _a1_, _a2_, _a3_,
+  _a4_ ) are either ATOMs or STRINGs containing names of ATOMs within
+  _obj_.   The subsequent arguments are all NUMBERs.   Any ATOM can be
+  placed at the _a1_ position, even those that have coordinates defined.
+  This feature can be used to provide an endless supply of dummy atoms,
+  if they are required.   A predefined dummy atom with the name "*"
+  (a single asterisk, no quotes)  can also be used.
+  No order is imposed in the sub-lists.  The user can place sub-lists
+  in arbitrary order, as long as they maintain the requirement that
+  all atoms _a2_, _a3_, and _a4_ must have external coordinates defined,
+  except for entries that define the coordinate of an ATOM using only
+  a bond length.
+
+
+    ]]>     </help>
+     <expand macro="citations" />
+</tool>
