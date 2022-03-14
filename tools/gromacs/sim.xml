@@ -318,7 +318,7 @@
             </output>
             <output name="output8" ftype="tpr">
                 <assert_contents>
-                    <has_size value="44212" />
+                    <has_size value="44400" />
                 </assert_contents>
             </output>
         </test>
