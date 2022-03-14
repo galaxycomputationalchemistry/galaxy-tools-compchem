@@ -5,8 +5,8 @@
         <token name="@GALAXY_VERSION@">0</token>
     </macros>   
     <expand macro="requirements">
-        <requirement type="package" version="1.3.2">pandas</requirement>
-        <requirement type="package" version="2021.03.5">rdkit</requirement>
+        <requirement type="package" version="1.4.1">pandas</requirement>
+        <requirement type="package" version="2021.09.5">rdkit</requirement>
     </expand>
     <command detect_errors="exit_code">
 <![CDATA[

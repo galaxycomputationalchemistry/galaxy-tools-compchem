@@ -6,8 +6,8 @@
     </macros>
     <expand macro="requirements">
         <requirement type="package" version="0.11.2">seaborn</requirement>
-        <requirement type="package" version="3.3.0">h5py</requirement>
-        <requirement type="package" version="3.0.1">jinja2</requirement>
+        <requirement type="package" version="3.6.0">h5py</requirement>
+        <requirement type="package" version="3.0.3">jinja2</requirement>
     </expand>
     <command detect_errors="exit_code"><![CDATA[
         python '$__tool_directory__/ramachandran_auto_protein.py'
