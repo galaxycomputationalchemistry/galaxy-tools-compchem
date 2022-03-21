@@ -22,56 +22,56 @@
     <inputs>
         <param argument="edr_input" type="data" format="edr" label="EDR file" help="GROMACS energy binary file"/>
         <param argument="terms" type='select' label="Terms to calculate" multiple="true" help="Select terms for which values should be calculated.">
-	        <option value="1">Bond</option>
-            <option value="2">Angle</option>
-            <option value="3">Proper dihedrals</option>
-            <option value="4">Ryckaert-Bellemans dihedrals</option>
-            <option value="5">Lennard-Jones (1-4 interactions)</option>
-            <option value="6">Coulomb (1-4 interactions)</option>
-            <option value="7">Lennard-Jones energies (short range)</option>
-            <option value="8">Dispersion correction</option>
-            <option value="9">Coulomb (short range)</option>
-            <option value="10">Reciprocal Coulomb energy</option>
-            <option value="11" selected="True">Potential</option>
-            <option value="12">Kinetic energy</option>
-            <option value="13">Total energy</option>
-            <option value="14">Temperature</option>
-            <option value="15">Pressure DC</option>
-            <option value="16">Pressure</option>
-            <option value="17">Constr. RMSD</option>
-            <option value="18">Box-X</option>
-            <option value="19">Box-Y</option>
-            <option value="20">Box-Z</option>
-            <option value="21">Volume</option>
-            <option value="22">Density</option>
-            <option value="23">pV</option>
-            <option value="24">Enthalpy</option>
-            <option value="25">Virial(XX)</option>
-            <option value="26">Virial(XY)</option>
-            <option value="27">Virial(XZ)</option>
-            <option value="28">Virial(YX)</option>
-            <option value="29">Virial(YY)</option>
-            <option value="30">Virial(YZ)</option>
-            <option value="31">Virial(ZX)</option>
-            <option value="32">Virial(ZY)</option>
-            <option value="33">Virial(ZZ)</option>
-            <option value="34">Pressure(XX)</option>
-            <option value="35">Pressure(XY)</option>
-            <option value="36">Pressure(XZ)</option>
-            <option value="37">Pressure(YX)</option>
-            <option value="38">Pressure(YY)</option>
-            <option value="39">Pressure(YZ)</option>
-            <option value="40">Pressure(ZX)</option>
-            <option value="41">Pressure(ZY)</option>
-            <option value="42">Pressure(ZZ)</option>
-            <option value="43">Surface tension</option>
-            <option value="44">Box-Vel-XX</option>
-            <option value="45">Box-Vel-YY</option>
-            <option value="46">Box-Vel-ZZ</option>
-            <option value="47">Protein temperature</option>
-            <option value="48">Non-protein temperature</option>
-            <option value="49">Protein lambda values</option>
-            <option value="50">Non-protein lambda values</option>
+	        <option value="Bond">Bond</option>
+            <option value="Angle">Angle</option>
+            <option value="Proper-Dih.">Proper dihedrals</option>
+            <option value="Improper-Dih.">Ryckaert-Bellemans dihedrals</option>
+            <option value="LJ-14">Lennard-Jones (1-4 interactions)</option>
+            <option value="Coulomb-14">Coulomb (1-4 interactions)</option>
+            <option value="LJ-(SR)">Lennard-Jones energies (short range)</option>
+            <option value="Disper.-corr.">Dispersion correction</option>
+            <option value="Coulomb-(SR)">Coulomb (short range)</option>
+            <option value="Coul.-recip.">Reciprocal Coulomb energy</option>
+            <option value="Potential" selected="True">Potential energy</option>
+            <option value="Kinetic-En.">Kinetic energy</option>
+            <option value="Total-Energy">Total energy</option>
+            <option value="Temperature">Temperature</option>
+            <option value="Pres.-DC">Pressure DC</option>
+            <option value="Pressure">Pressure</option>
+            <option value="Constr.-rmsd">Constr. RMSD</option>
+            <option value="Box-X">Box-X</option>
+            <option value="Box-Y">Box-Y</option>
+            <option value="Box-Z">Box-Z</option>
+            <option value="Volume">Volume</option>
+            <option value="Density">Density</option>
+            <option value="pV">pV</option>
+            <option value="Enthalpy">Enthalpy</option>
+            <option value="Vir-XX">Virial(XX)</option>
+            <option value="Vir-XY">Virial(XY)</option>
+            <option value="Vir-XZ">Virial(XZ)</option>
+            <option value="Vir-YX">Virial(YX)</option>
+            <option value="Vir-YY">Virial(YY)</option>
+            <option value="Vir-YZ">Virial(YZ)</option>
+            <option value="Vir-ZX">Virial(ZX)</option>
+            <option value="Vir-ZY">Virial(ZY)</option>
+            <option value="Vir-ZZ">Virial(ZZ)</option>
+            <option value="Pres-XX">Pressure(XX)</option>
+            <option value="Pres-XY">Pressure(XY)</option>
+            <option value="Pres-XZ">Pressure(XZ)</option>
+            <option value="Pres-YX">Pressure(YX)</option>
+            <option value="Pres-YY">Pressure(YY)</option>
+            <option value="Pres-YZ">Pressure(YZ)</option>
+            <option value="Pres-ZX">Pressure(ZX)</option>
+            <option value="Pres-ZY">Pressure(ZY)</option>
+            <option value="Pres-ZZ">Pressure(ZZ)</option>
+            <option value="#Surf*SurfTen">Surface tension</option>
+            <option value="Box-Vel-XX">Box-Vel-XX</option>
+            <option value="Box-Vel-YY">Box-Vel-YY</option>
+            <option value="Box-Vel-ZZ">Box-Vel-ZZ</option>
+            <option value="T-Protein">Protein temperature</option>
+            <option value="T-non-Protein">Non-protein temperature</option>
+            <option value="Lamb-Protein">Protein lambda values</option>
+            <option value="Lamb-non-Protein">Non-protein lambda values</option>
         </param>
         <param argument="fmt" type='select' label="Output format" help="Format for output; either standard GROMACS XVG, or Galaxy tabular file.">
             <option value="xvg">GROMACS XVG format</option>
@@ -88,13 +88,13 @@
     <tests>
         <test>
             <param name="edr_input" value="outp.edr" />
-            <param name="terms" value="10,12,13" />
+            <param name="terms" value="Potential,Total-Energy,Temperature" />
             <param name="fmt" value="xvg" />
             <output name="output1" file="outp.xvg" ftype="xvg" lines_diff="12"/>
         </test>
         <test>
             <param name="edr_input" value="outp.edr" />
-            <param name="terms" value="10,12,13" />
+            <param name="terms" value="Coul.-recip.,Kinetic-En.,Total-Energy" />
             <param name="fmt" value="tabular" />
             <output name="output1" file="outp.tabular" ftype="tabular"/>
         </test>
