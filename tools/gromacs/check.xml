@@ -1,0 +1,30 @@
+<tool id="gmx_check" name="gmx check" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+    <description>using check</description>
+    <macros>
+        <token name="@GALAXY_VERSION@">0</token>
+        <import>macros.xml</import>
+    </macros>
+
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+        gmx check
+            -f '$input_file'
+            > '$output_file'
+    ]]></command>
+    <inputs>
+        <param argument="input_file" type="data" format="gro"/>
+    </inputs>
+    <outputs>
+        <data name="output_file" format="txt"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input_file" value="complex.gro" />
+            <output name="output_file" file="check.txt" ftype="txt"/>      
+        </test>
+    </tests>
+    <help><![CDATA[
+        Hello world!
+    ]]></help>
+    <expand macro="citations" />
+</tool>
