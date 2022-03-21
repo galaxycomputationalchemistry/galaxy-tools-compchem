@@ -9,8 +9,8 @@
     <command detect_errors="exit_code"><![CDATA[
 
         ln -s '$edr_input' ./edr_input.edr &&
-        echo #echo str($terms).replace(',', ' ')# | gmx energy -f ./edr_input.edr -o ./energy.xvg
-        ## echo #echo ' '.join(str($terms).split(','))# | gmx energy -f ./edr_input.edr -o ./energy.xvg
+	echo -e '#echo str($terms).replace(',', '\\n')#'
+	| gmx energy -f ./edr_input.edr -o ./energy.xvg
         #if $fmt == 'tabular':
             &&
             grep '@\|#' energy.xvg &&
@@ -34,6 +34,7 @@
             <option value="Coul.-recip.">Reciprocal Coulomb energy</option>
             <option value="Potential" selected="True">Potential energy</option>
             <option value="Kinetic-En.">Kinetic energy</option>
+            <option value="Conserved-En.">Conserved energy</option>
             <option value="Total-Energy">Total energy</option>
             <option value="Temperature">Temperature</option>
             <option value="Pres.-DC">Pressure DC</option>
@@ -88,7 +89,7 @@
     <tests>
         <test>
             <param name="edr_input" value="outp.edr" />
-            <param name="terms" value="Potential,Total-Energy,Temperature" />
+            <param name="terms" value="Potential,Total-Energy,Conserved-En." />
             <param name="fmt" value="xvg" />
             <output name="output1" file="outp.xvg" ftype="xvg" lines_diff="12"/>
         </test>
