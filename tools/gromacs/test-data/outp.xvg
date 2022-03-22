@@ -1,15 +1,15 @@
-# This file was created Mon Jun  7 09:13:14 2021
+# This file was created Mon Mar 21 18:17:18 2022
 # Created by:
-#                 :-) GROMACS - gmx energy, 2021.1-MODIFIED (-:
+#                 :-) GROMACS - gmx energy, 2022-conda_forge (-:
 # 
-# Executable:   /home/runner/miniconda3/envs/__gromacs@2021.1/bin.AVX2_256/gmx
-# Data prefix:  /home/runner/miniconda3/envs/__gromacs@2021.1
-# Working dir:  /tmp/tmpc3_9dc8m/job_working_directory/000/13/working
+# Executable:   /home/simon/miniconda3/envs/__gromacs@2022/bin.AVX2_256/gmx
+# Data prefix:  /home/simon/miniconda3/envs/__gromacs@2022
+# Working dir:  /tmp/tmpt1cctsw0/job_working_directory/000/2/working
 # Command line:
 #   gmx energy -f ./edr_input.edr -o ./energy.xvg
 # gmx energy is part of G R O M A C S:
 #
-# Glycine aRginine prOline Methionine Alanine Cystine Serine
+# Green Red Orange Magenta Azure Cyan Skyblue
 #
 @    title "GROMACS Energies"
 @    xaxis  label "Time (ps)"
