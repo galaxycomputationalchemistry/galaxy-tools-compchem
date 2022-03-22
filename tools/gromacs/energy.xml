@@ -9,14 +9,14 @@
     <command detect_errors="exit_code"><![CDATA[
 
         ln -s '$edr_input' ./edr_input.edr &&
-	echo -e '#echo str($terms).replace(',', '\\n')#'
-	| gmx energy -f ./edr_input.edr -o ./energy.xvg >> verbose.txt 2>&1
+        echo -e '#echo str($terms).replace(',', '\\n')#'
+        | gmx energy -f ./edr_input.edr -o ./energy.xvg >> verbose.txt 2>&1
         #if $fmt == 'tabular':
             &&
             grep '@\|#' energy.xvg &&
             grep -v '@\|#' energy.xvg | sed 's/[[:space:]]*//' | sed  's/  /\t/g' > energy.tabular
         #end if
-    
+
     ]]></command>
 
     <inputs>
