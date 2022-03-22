@@ -25,7 +25,7 @@
 	        <option value="Bond">Bond</option>
             <option value="Angle">Angle</option>
             <option value="Proper-Dih.">Proper dihedrals</option>
-            <option value="Improper-Dih.">Ryckaert-Bellemans dihedrals</option>
+            <option value="Ryckaert-Bell.">Ryckaert-Bellemans dihedrals</option>
             <option value="LJ-14">Lennard-Jones (1-4 interactions)</option>
             <option value="Coulomb-14">Coulomb (1-4 interactions)</option>
             <option value="LJ-(SR)">Lennard-Jones energies (short range)</option>
