@@ -31,23 +31,23 @@ Executable:   /usr/bin/gmx
 Data prefix:  /usr
 Working dir:  /home/aepetit/Documents/scripts/galaxy-tools-compchem/tools/gromacs/test-data
 Command line:
-  gmx check -f complex.gro
+  gmx check -f nvt.xtc
 
-Reading frames from gro file 'GROningen MAchine for Chemical Simulation', 113 atoms.
 Reading frame       0 time    0.000   
-# Atoms  113
+# Atoms  94
 Precision 0.001 (nm)
-Last frame          0 time    0.000   
+Reading frame       1 time    0.100   Reading frame       2 time    0.200   Reading frame       3 time    0.300   Reading frame       4 time    0.400   Reading frame       5 time    0.500   Reading frame       6 time    0.600   Reading frame       7 time    0.700   Reading frame       8 time    0.800   Reading frame       9 time    0.900   Reading frame      10 time    1.000   Last frame         10 time    1.000   
 
 
 Item        #frames Timestep (ps)
-Step             0
-Time             0
+Step            11    0.1
+Time            11    0.1
 Lambda           0
-Coords           1
+Coords          11    0.1
 Velocities       0
 Forces           0
-Box              1
+Box             11    0.1
 
-GROMACS reminds you: "A Pretty Village Burning Makes a Pretty Fire" (David Sandstrom)
+GROMACS reminds you: "First off, I'd suggest printing out a copy of the GNU coding standards, and NOT read it. Burn them, it's a great symbolic gesture." (Linus Torvalds)
 
+Checking file nvt.xtc

@@ -7,20 +7,53 @@
 
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        gmx check
-            -f '$input_file'
-            > '$output_file'
+        #if $input_file.calculate_select == "info":
+            ln -s '$traj_file' ./input1.$traj_file.ext &&
+            gmx check
+                -f ./input1.$traj_file.ext
+                &> '$output_file'
+        #else:
+            ln -s '$traj_file' ./input1.$traj_file.ext &&
+            ln -s '$traj_file2' ./input2.$traj_file2.ext &&
+            gmx check
+                -f ./input1.$traj_file.ext
+                -f2 ./input2.$traj_file2.ext
+                 &> '$output_file'
+        #end if
     ]]></command>
     <inputs>
-        <param argument="input_file" type="data" format="gro"/>
+        <conditional name="input_file">
+            <param name="calculate_select" type="select" label="What do you want to achieve?">
+    	        <option value="info">Information on a trajectory or structure file</option>
+    	        <option value="compare">Compare two trajectory or structure files</option>
+    	    </param>
+    	    <when value="info">
+    	        <param name="traj_file" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory/structure 1"/>
+    	    </when>
+    	    <when value="compare">
+    	        <param name="traj_file" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory/structure 1"/>
+                <param name="traj_file2" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory/structure 2"/>
+    	    </when>
+        </conditional>
     </inputs>
     <outputs>
         <data name="output_file" format="txt"/>
     </outputs>
     <tests>
         <test>
-            <param name="input_file" value="complex.gro" />
-            <output name="output_file" file="check.txt" ftype="txt"/>      
+            <conditional name="input_file">
+                <param name="calculate_select" value="info"/>
+                <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
+            </conditional>
+            <output name="output_file" file="check.txt" ftype="txt" lines_diff="41"/>
+        </test>
+        <test>
+            <conditional name="input_file">
+                <param name="calculate_select" value="compare"/>
+                <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
+                <param name="traj_file2" value="npt.xtc" ftype="xtc"/>
+            </conditional>
+            <output name="output_file" file="check_compare_f.txt" ftype="txt" lines_diff="45"/>
         </test>
     </tests>
     <help><![CDATA[
