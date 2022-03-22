@@ -22,7 +22,6 @@
     <inputs>
         <param argument="edr_input" type="data" format="edr" label="EDR file" help="GROMACS energy binary file"/>
         <param argument="terms" type='select' label="Terms to calculate" multiple="true" help="Select terms for which values should be calculated.">
-	        <option value="Bond">Bond</option>
             <option value="Angle">Angle</option>
             <option value="Proper-Dih.">Proper dihedrals</option>
             <option value="Ryckaert-Bell.">Ryckaert-Bellemans dihedrals</option>
