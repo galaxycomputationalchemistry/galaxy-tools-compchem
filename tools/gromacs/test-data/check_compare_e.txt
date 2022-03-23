@@ -1,0 +1,278 @@
+              :-) GROMACS - gmx check, 2020.1-Ubuntu-2020.1-1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf      Artem Zhmurov   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2019, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx check, version 2020.1-Ubuntu-2020.1-1
+Executable:   /usr/bin/gmx
+Data prefix:  /usr
+Working dir:  /home/aepetit/Documents/scripts/galaxy-tools-compchem/tools/gromacs/test-data
+Command line:
+  gmx check -e minim.edr -e2 outp.edr
+
+Opened minim.edr as single precision energy file
+Opened outp.edr as single precision energy file
+Reading energy frame      0 time    0.000         Reading energy frame      0 time    0.000         Reading energy frame      1 time    1.000         Reading energy frame      1 time    0.100         Reading energy frame      2 time    2.000         Reading energy frame      2 time    0.200         comparing energy file minim.edr and outp.edr
+
+There are 31 and 50 terms in the energy files
+
+enm[0] (Bond - -)
+enm[30] (T-rest - -)
+enm[6] (- - Disper. corr.)
+enm[10] (- - Kinetic En.)
+enm[11] (- - Total Energy)
+enm[12] (- - Conserved En.)
+enm[13] (- - Temperature)
+enm[14] (- - Pres. DC)
+enm[16] (- - Constr. rmsd)
+enm[17] (- - Box-X)
+enm[18] (- - Box-Y)
+enm[19] (- - Box-Z)
+enm[20] (- - Volume)
+enm[21] (- - Density)
+enm[22] (- - pV)
+enm[23] (- - Enthalpy)
+enm[43] (- - Box-Vel-XX)
+enm[44] (- - Box-Vel-YY)
+enm[45] (- - Box-Vel-ZZ)
+enm[46] (- - T-Protein)
+enm[47] (- - T-non-Protein)
+enm[48] (- - Lamb-Protein)
+enm[49] (- - Lamb-non-Protein)
+There are 29 terms to compare in the energy files
+
+Angle            step   0:       659.741,  step   0:       174.95
+Proper Dih.      step   0:       93.8665,  step   0:      8.40722
+Ryckaert-Bell.   step   0:        69.404,  step   0:      91.4765
+LJ-14            step   0:       139.289,  step   0:      145.225
+Coulomb-14       step   0:       52.8221,  step   0:      135.375
+LJ (SR)          step   0:      -13.3421,  step   0:     -8.41078
+Coulomb (SR)     step   0:      -1790.86,  step   0:      -2038.4
+Coul. recip.     step   0:       959.265,  step   0:      615.944
+Potential        step   0:       618.021,  step   0:     -875.856
+Pressure         step   0:       901.187,  step   0:      149.004
+Vir-XX           step   0:      -2075.14,  step   0:     -98.9118
+Vir-YY           step   0:      -2227.81,  step   0:     -305.734
+Vir-ZZ           step   0:      -1271.72,  step   0:     -206.832
+Pres-XX          step   0:       1006.39,  step   0:       102.09
+Pres-YY          step   0:       1080.43,  step   0:      183.712
+Pres-ZZ          step   0:       616.748,  step   0:      161.211
+#Surf*SurfTen    step   0:            -0,  step   0:       74.911
+t (1.000000e+00 - 1.000000e-01)
+step (1 - 50)
+Angle            step   1:       536.268,  step   1:      188.647
+Proper Dih.      step   1:          88.2,  step   1:       17.982
+Ryckaert-Bell.   step   1:       67.8373,  step   1:      95.8567
+LJ-14            step   1:       136.725,  step   1:      129.079
+Coulomb-14       step   1:       49.6531,  step   1:      108.883
+LJ (SR)          step   1:      -11.6246,  step   1:      9.77759
+Coulomb (SR)     step   1:      -1784.23,  step   1:     -2034.55
+Coul. recip.     step   1:        951.94,  step   1:      546.933
+Potential        step   1:       230.009,  step   1:     -937.817
+Pressure         step   1:       893.094,  step   1:      60.2446
+Vir-XX           step   1:      -1778.72,  step   1:      128.956
+Vir-YY           step   1:       -2210.9,  step   1:     -133.116
+Vir-ZZ           step   1:      -1534.98,  step   1:     -82.8722
+Pres-XX          step   1:       862.632,  step   1:     -15.5896
+Pres-YY          step   1:       1072.23,  step   1:      114.639
+Pres-ZZ          step   1:       744.424,  step   1:      81.6839
+#Surf*SurfTen    step   1:            -0,  step   1:       131.58
+t (2.000000e+00 - 2.000000e-01)
+step (2 - 100)
+Angle            step   2:       424.105,  step   2:      176.128
+Proper Dih.      step   2:       81.0497,  step   2:      13.4277
+Ryckaert-Bell.   step   2:       66.1758,  step   2:      112.768
+LJ-14            step   2:       134.558,  step   2:      134.983
+Coulomb-14       step   2:       47.7305,  step   2:      126.537
+LJ (SR)          step   2:     -0.367874,  step   2:     -9.48936
+Coulomb (SR)     step   2:      -1780.95,  step   2:     -2085.56
+Coul. recip.     step   2:       946.125,  step   2:       455.54
+Potential        step   2:      -14.5562,  step   2:     -1076.08
+Pressure         step   2:       675.983,  step   2:       -57.99
+Vir-XX           step   2:      -1371.69,  step   2:      247.454
+Vir-YY           step   2:      -1715.29,  step   2:      356.785
+Vir-ZZ           step   2:      -1094.59,  step   2:      66.6538
+Pres-XX          step   2:       665.232,  step   2:      -59.919
+Pres-YY          step   2:       831.871,  step   2:     -135.773
+Pres-ZZ          step   2:       530.846,  step   2:      21.7224
+#Surf*SuReading energy frame      3 time    3.000         Reading energy frame      3 time    0.300         Reading energy frame      4 time    4.000         Reading energy frame      4 time    0.400         Reading energy frame      5 time    5.000         Reading energy frame      5 time    0.500         Reading energy frame      6 time    7.000         Reading energy frame      6 time    0.600         rfTen    step   2:            -0,  step   2:       489.26
+t (3.000000e+00 - 3.000000e-01)
+step (3 - 150)
+Angle            step   3:       237.376,  step   3:      205.981
+Proper Dih.      step   3:       68.1909,  step   3:      18.2245
+Ryckaert-Bell.   step   3:        59.979,  step   3:      147.317
+LJ-14            step   3:       125.218,  step   3:      122.469
+Coulomb-14       step   3:       46.4965,  step   3:      109.053
+LJ (SR)          step   3:      -1.62034,  step   3:      38.8948
+Coulomb (SR)     step   3:         -1772,  step   3:     -2168.63
+Coul. recip.     step   3:       935.019,  step   3:      399.011
+Potential        step   3:       -223.77,  step   3:      -1128.1
+Pressure         step   3:       525.266,  step   3:      37.3865
+Vir-XX           step   3:       -964.61,  step   3:      59.3395
+Vir-YY           step   3:       -1425.3,  step   3:      73.4518
+Vir-ZZ           step   3:      -859.344,  step   3:     -105.661
+Pres-XX          step   3:        467.81,  step   3:      20.9269
+Pres-YY          step   3:       691.231,  step   3:    -0.629098
+Pres-ZZ          step   3:       416.758,  step   3:      91.8618
+#Surf*SurfTen    step   3:            -0,  step   3:      334.379
+t (4.000000e+00 - 4.000000e-01)
+step (4 - 200)
+Angle            step   4:        209.15,  step   4:      204.135
+Proper Dih.      step   4:       59.4324,  step   4:      17.8104
+Ryckaert-Bell.   step   4:       58.0578,  step   4:      110.021
+LJ-14            step   4:       123.686,  step   4:      125.437
+Coulomb-14       step   4:       48.4256,  step   4:      105.922
+LJ (SR)          step   4:      -5.24827,  step   4:      17.1558
+Coulomb (SR)     step   4:      -1769.41,  step   4:     -2150.06
+Coul. recip.     step   4:       932.888,  step   4:      375.412
+Potential        step   4:      -294.892,  step   4:     -1194.59
+Pressure         step   4:       242.456,  step   4:        62.96
+Vir-XX           step   4:      -736.257,  step   4:     -3.54811
+Vir-YY           step   4:      -563.227,  step   4:      -217.99
+Vir-ZZ           step   4:      -200.325,  step   4:      85.2655
+Pres-XX          step   4:       357.065,  step   4:      41.4917
+Pres-YY          step   4:        273.15,  step   4:      147.981
+Pres-ZZ          step   4:       97.1523,  step   4:    -0.592683
+#Surf*SurfTen    step   4:            -0,  step   4:     -390.111
+t (5.000000e+00 - 5.000000e-01)
+step (5 - 250)
+Angle            step   5:       92.7917,  step   5:      228.041
+Proper Dih.      step   5:       46.4461,  step   5:      11.5992
+Ryckaert-Bell.   step   5:        53.249,  step   5:      93.8753
+LJ-14            step   5:       116.849,  step   5:      121.638
+Coulomb-14       step   5:       48.2479,  step   5:      114.191
+LJ (SR)          step   5:      -18.7401,  step   5:        69.11
+Coulomb (SR)     step   5:      -1763.71,  step   5:     -2209.02
+Coul. recip.     step   5:       923.209,  step   5:       341.94
+Potential        step   5:      -341.667,  step   5:     -1229.05
+Pressure         step   5:       356.299,  step   5:      17.7417
+Vir-XX           step   5:       -534.09,  step   5:     -113.967
+Vir-YY           step   5:      -1128.42,  step   5:      180.511
+Vir-ZZ           step   5:       -541.53,  step   5:      110.017
+Pres-XX          step   5:       259.019,  step   5:      90.3193
+Pres-YY          step   5:       547.252,  step   5:     -32.1334
+Pres-ZZ          step   5:       262.627,  step   5:     -4.96087
+#Surf*SurfTen    step   5:            -0,  step   5:     -139.352
+t (7.000000e+00 - 6.000000e-01)
+step (7 - 300)
+Angle            step   7:        130.86,  step   7:      193.185
+Proper Dih.      step   7:       42.6816,  step   7:       7.0615
+Ryckaert-Bell.   step   7:       53.3748,  step   7:      106.945
+LJ-14            step   7:       118.493,  step   7:      109.696
+Coulomb-14       step   7:       49.9217,  step   7:      100.896
+LJ (SR)          step   7:      -15.5538,  step   7:      10.2121
+Coulomb (SR)     step   7:       -1764.3,  step   7:     -2143.78
+Coul. recip.     step Reading energy frame      7 time    8.000         Reading energy frame      7 time    0.700         Reading energy frame      8 time   10.000         Reading energy frame      8 time    0.800         Reading energy frame      9 time   12.000         Reading energy frame      9 time    0.900           7:       924.347,  step   7:      311.339
+Potential        step   7:      -444.809,  step   7:     -1304.87
+Pressure         step   7:       215.786,  step   7:     -61.3894
+Vir-XX           step   7:      -589.888,  step   7:      192.034
+Vir-YY           step   7:      -527.634,  step   7:      178.781
+Vir-ZZ           step   7:      -217.309,  step   7:      271.375
+Pres-XX          step   7:        286.08,  step   7:     -57.5845
+Pres-YY          step   7:       255.888,  step   7:     -35.9703
+Pres-ZZ          step   7:       105.389,  step   7:     -90.6133
+#Surf*SurfTen    step   7:            -0,  step   7:     -179.371
+t (8.000000e+00 - 7.000000e-01)
+step (8 - 350)
+Angle            step   8:        68.783,  step   8:      187.181
+Proper Dih.      step   8:       30.5271,  step   8:      10.9997
+Ryckaert-Bell.   step   8:        49.841,  step   8:       123.72
+LJ-14            step   8:       113.984,  step   8:      110.838
+Coulomb-14       step   8:       51.1761,  step   8:      123.582
+LJ (SR)          step   8:      -24.7767,  step   8:      48.0457
+Coulomb (SR)     step   8:      -1761.91,  step   8:     -2227.32
+Coul. recip.     step   8:       918.219,  step   8:      267.376
+Potential        step   8:      -447.838,  step   8:        -1356
+Pressure         step   8:       255.303,  step   8:     -36.2835
+Vir-XX           step   8:      -410.784,  step   8:      5.87002
+Vir-YY           step   8:      -830.464,  step   8:      322.837
+Vir-ZZ           step   8:      -338.034,  step   8:      141.719
+Pres-XX          step   8:       199.219,  step   8:      53.6338
+Pres-YY          step   8:       402.753,  step   8:     -124.119
+Pres-ZZ          step   8:       163.937,  step   8:     -38.3649
+#Surf*SurfTen    step   8:            -0,  step   8:     -12.7735
+t (1.000000e+01 - 8.000000e-01)
+step (10 - 400)
+Angle            step  10:        90.876,  step  10:      150.124
+Proper Dih.      step  10:        26.773,  step  10:      15.4228
+Ryckaert-Bell.   step  10:       49.7648,  step  10:      116.734
+LJ-14            step  10:       114.958,  step  10:      123.699
+Coulomb-14       step  10:       52.0739,  step  10:      120.921
+LJ (SR)          step  10:      -24.2058,  step  10:      61.3815
+Coulomb (SR)     step  10:      -1762.32,  step  10:     -2208.19
+Coul. recip.     step  10:       918.133,  step  10:      281.327
+Potential        step  10:      -522.879,  step  10:        -1339
+Pressure         step  10:       177.827,  step  10:      95.8529
+Vir-XX           step  10:      -466.151,  step  10:      18.0131
+Vir-YY           step  10:      -455.936,  step  10:     -417.631
+Vir-ZZ           step  10:      -177.936,  step  10:      30.5814
+Pres-XX          step  10:       226.071,  step  10:      23.9118
+Pres-YY          step  10:       221.117,  step  10:      235.888
+Pres-ZZ          step  10:       86.2943,  step  10:      27.7592
+#Surf*SurfTen    step  10:            -0,  step  10:     -417.853
+t (1.200000e+01 - 9.000000e-01)
+step (12 - 450)
+Angle            step  12:       71.9619,  step  12:      218.415
+Proper Dih.      step  12:       20.7858,  step  12:      6.46661
+Ryckaert-Bell.   step  12:       48.0374,  step  12:      118.772
+LJ-14            step  12:       113.003,  step  12:      125.421
+Coulomb-14       step  12:        53.485,  step  12:      111.128
+LJ (SR)          step  12:       -27.637,  step  12:      39.4093
+Coulomb (SR)     step  12:      -1762.36,  step  12:     -2201.92
+Coul. recip.     step  12:       915.934,  step  12:      272.022
+Potential        step  12:       -542.18,  step  12:     -1310.71
+Pressure         step  12:       180.996,  step  12:     -77.3705
+Vir-XX           step  12:      -403.068,  step  12:     -3.89205
+Vir-YY           step  12:      -515.153,  step  12:       282.56
+Vir-ZZ           step  12:      -201.407,  step  12:      437.058
+Pres-XX          step  12:       195.477,  step  12:      35.0752
+Pres-YY          step  12:       249.835,  step  12:     -105.864
+Pres-ZZ          step  12:       97.6769,  step  12:     -161.323
+#Surf*SurfTen  Reading energy frame     10 time   14.000         Reading energy frame     10 time    1.000         Reading energy frame     11 time   15.000         Last energy frame read 10 time    1.000         
+GROMACS reminds you: "Jesus Can't Save You, Though It's Nice to Think He Tried" (Black Crowes)
+
+  step  12:            -0,  step  12:     -515.149
+t (1.400000e+01 - 1.000000e+00)
+step (14 - 500)
+Angle            step  14:        77.708,  step  14:      188.913
+Proper Dih.      step  14:        16.917,  step  14:      13.1638
+Ryckaert-Bell.   step  14:       47.5084,  step  14:      116.045
+LJ-14            step  14:       112.831,  step  14:      128.155
+Coulomb-14       step  14:       54.3835,  step  14:      112.113
+LJ (SR)          step  14:      -29.3721,  step  14:      18.6406
+Coulomb (SR)     step  14:      -1762.94,  step  14:     -2187.48
+Coul. recip.     step  14:       914.559,  step  14:      304.201
+Potential        step  14:      -557.441,  step  14:     -1306.67
+Pressure         step  14:       144.996,  step  14:     -10.3104
+Vir-XX           step  14:      -396.739,  step  14:      362.156
+Vir-YY           step  14:      -366.802,  step  14:      37.2518
+Vir-ZZ           step  14:      -133.389,  step  14:     -118.713
+Pres-XX          step  14:       192.408,  step  14:     -130.624
+Pres-YY          step  14:       177.889,  step  14:      11.9031
+Pres-ZZ          step  14:       64.6899,  step  14:      87.7894
+#Surf*SurfTen    step  14:            -0,  step  14:      601.942
+
+End of file on outp.edr but not on minim.edr

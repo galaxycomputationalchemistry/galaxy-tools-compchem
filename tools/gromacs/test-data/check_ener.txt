@@ -1,0 +1,71 @@
+              :-) GROMACS - gmx check, 2020.1-Ubuntu-2020.1-1 (-:
+
+                            GROMACS is written by:
+     Emile Apol      Rossen Apostolov      Paul Bauer     Herman J.C. Berendsen
+    Par Bjelkmar      Christian Blau   Viacheslav Bolnykh     Kevin Boyd    
+ Aldert van Buuren   Rudi van Drunen     Anton Feenstra       Alan Gray     
+  Gerrit Groenhof     Anca Hamuraru    Vincent Hindriksen  M. Eric Irrgang  
+  Aleksei Iupinov   Christoph Junghans     Joe Jordan     Dimitrios Karkoulis
+    Peter Kasson        Jiri Kraus      Carsten Kutzner      Per Larsson    
+  Justin A. Lemkul    Viveca Lindahl    Magnus Lundborg     Erik Marklund   
+    Pascal Merz     Pieter Meulenhoff    Teemu Murtola       Szilard Pall   
+    Sander Pronk      Roland Schulz      Michael Shirts    Alexey Shvetsov  
+   Alfons Sijbers     Peter Tieleman      Jon Vincent      Teemu Virolainen 
+ Christian Wennberg    Maarten Wolf      Artem Zhmurov   
+                           and the project leaders:
+        Mark Abraham, Berk Hess, Erik Lindahl, and David van der Spoel
+
+Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+Copyright (c) 2001-2019, The GROMACS development team at
+Uppsala University, Stockholm University and
+the Royal Institute of Technology, Sweden.
+check out http://www.gromacs.org for more information.
+
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+GROMACS:      gmx check, version 2020.1-Ubuntu-2020.1-1
+Executable:   /usr/bin/gmx
+Data prefix:  /usr
+Working dir:  /home/aepetit/Documents/scripts/galaxy-tools-compchem/tools/gromacs/test-data
+Command line:
+  gmx check -e minim.edr
+
+Checking energy file minim.edr
+
+Opened minim.edr as single precision energy file
+31 groups in energy fileReading energy frame      0 time    0.000         frame:      0 (index      0), t:      0.000
+Reading energy frame      1 time    1.000         Reading energy frame      2 time    2.000         Reading energy frame      3 time    3.000         Reading energy frame      4 time    4.000         Reading energy frame      5 time    5.000         Reading energy frame      6 time    7.000         
+Timesteps at t=5 don't match (1, 2)
+Reading energy frame      7 time    8.000         
+Timesteps at t=7 don't match (2, 1)
+Reading energy frame      8 time   10.000         
+Timesteps at t=8 don't match (1, 2)
+Reading energy frame      9 time   12.000         Reading energy frame     10 time   14.000         Reading energy frame     11 time   15.000         
+Timesteps at t=14 don't match (2, 1)
+Reading energy frame     12 time   17.000         
+Timesteps at t=15 don't match (1, 2)
+Reading energy frame     13 time   18.000         
+Timesteps at t=17 don't match (2, 1)
+Reading energy frame     14 time   20.000         
+Timesteps at t=18 don't match (1, 2)
+Reading energy frame     15 time   21.000         
+Timesteps at t=20 don't match (2, 1)
+Reading energy frame     16 time   22.000         Reading energy frame     17 time   23.000         Reading energy frame     18 time   25.000         
+Timesteps at t=23 don't match (1, 2)
+Reading energy frame     19 time   26.000         
+Timesteps at t=25 don't match (2, 1)
+Reading energy frame     20 time   27.000         
+Timesteps at t=28 don't match (1, 2)
+
+Timesteps at t=30 don't match (2, 1)
+
+Timesteps at t=31 don't match (1, 2)
+Last energy frame read 24 time   33.000         
+
+Found 25 frames.
+
+GROMACS reminds you: "A program that has not been tested does not work." (Bjarne Stroustrup)
+
