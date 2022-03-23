@@ -4,56 +4,161 @@
         <token name="@GALAXY_VERSION@">0</token>
         <import>macros.xml</import>
     </macros>
-
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-        #if $input_file.calculate_select == "info":
-            ln -s '$traj_file' ./input1.$traj_file.ext &&
-            gmx check
-                -f ./input1.$traj_file.ext
-                &> '$output_file'
-        #else:
-            ln -s '$traj_file' ./input1.$traj_file.ext &&
-            ln -s '$traj_file2' ./input2.$traj_file2.ext &&
-            gmx check
-                -f ./input1.$traj_file.ext
-                -f2 ./input2.$traj_file2.ext
-                 &> '$output_file'
-        #end if
+        #for $choice in $analysis
+            #if $choice.input_file.calculate_select == "info_traj":
+                ln -s '$choice.input_file.traj_file' ./input1.$choice.input_file.traj_file.ext &&
+                gmx check
+                    -f ./input1.$choice.input_file.traj_file.ext
+                    &> '$output_file'
+            #elif $choice.input_file.calculate_select == "compare_traj":
+                ln -s '$choice.input_file.traj_file' ./input1.$choice.input_file.traj_file.ext &&
+                ln -s '$choice.input_file.traj_file2' ./input2.$choice.input_file.traj_file2.ext &&
+                gmx check
+                    -f ./input1.$choice.input_file.traj_file.ext
+                    -f2 ./input2.$choice.input_file.traj_file2.ext
+                    &> '$output_file'
+            #elif $choice.input_file.calculate_select == "info_struc":
+                ln -s '$choice.input_file.struc_file' ./input1.$choice.input_file.struc_file.ext &&
+                gmx check
+                    -c ./input1.$choice.input_file.struc_file.ext
+                    &> '$output_file'
+            #elif $choice.input_file.calculate_select == "info_ener":
+                ln -s '$choice.input_file.ener_file' ./input1.$choice.input_file.ener_file.ext &&
+                gmx check
+                    -e ./input1.$choice.input_file.ener_file.ext
+                    &> '$output_file'
+            #elif $choice.input_file.calculate_select == "info_ind":
+                ln -s '$choice.input_file.ind_file' ./input1.$choice.input_file.ind_file.ext &&
+                gmx check
+                    -n ./input1.$choice.input_file.ind_file.ext
+                    &> '$output_file'
+            #elif $choice.input_file.calculate_select == "compare_ener":
+                ln -s '$choice.input_file.ener_file' ./input1.$choice.input_file.ener_file.ext &&
+                ln -s '$choice.input_file.ener_file2' ./input2.$choice.input_file.ener_file2.ext &&
+                gmx check
+                    -e ./input1.$choice.input_file.ener_file.ext
+                    -e2 ./input2.$choice.input_file.ener_file2.ext
+                    &> '$output_file'
+            #else:
+                ln -s '$choice.input_file.top_file' ./input1.$choice.input_file.top_file.ext &&
+                ln -s '$choice.input_file.top_file2' ./input2.$choice.input_file.top_file2.ext &&
+                gmx check
+                    -s1 ./input1.$choice.input_file.top_file.ext
+                    -s2 ./input2.$choice.input_file.top_file2.ext
+                    &> '$output_file'
+            #end if
+        #end for
     ]]></command>
     <inputs>
-        <conditional name="input_file">
-            <param name="calculate_select" type="select" label="What do you want to achieve?">
-    	        <option value="info">Information on a trajectory or structure file</option>
-    	        <option value="compare">Compare two trajectory or structure files</option>
-    	    </param>
-    	    <when value="info">
-    	        <param name="traj_file" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory/structure 1"/>
-    	    </when>
-    	    <when value="compare">
-    	        <param name="traj_file" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory/structure 1"/>
-                <param name="traj_file2" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory/structure 2"/>
-    	    </when>
-        </conditional>
+        <repeat name="analysis" title="Type of analysis">
+          <conditional name="input_file">
+              <param name="calculate_select" type="select" label="What do you want to achieve?">
+                  <option value="info_traj">Information on a trajectory file</option>
+                  <option value="compare_traj">Compare two trajectory files</option>
+                  <option value="info_struc">Information on a structure file</option>
+                  <option value="info_ener">Information on a energy file</option>
+                  <option value="info_ind">Information on a index file</option>
+                  <option value="compare_top">Compare two topology files</option>
+                  <option value="compare_ener">Compare two energy files</option>
+              </param>
+              <when value="info_traj">
+                  <param name="traj_file" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory file"/>
+              </when>
+              <when value="compare_traj">
+                  <param name="traj_file" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory file 1"/>
+                  <param name="traj_file2" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory file 2"/>
+              </when>
+              <when value="info_struc">
+                  <param name="struc_file" type="data" format="tpr, gro, g96, pdb, brk, ent" label="Structure file"/>
+              </when>
+              <when value="info_ener">
+                  <param name="ener_file" type="data" format="edr" label="Energy file"/>
+              </when>
+              <when value="info_ind">
+                  <param name="ind_file" type="data" format="ndx" label="Index file"/>
+              </when>
+              <when value="compare_top">
+                  <param name="top_file" type="data" format="tpr" label="Topology file 1"/>
+                  <param name="top_file2" type="data" format="tpr" label="Topology file 2"/>
+              </when>
+              <when value="compare_ener">
+                  <param name="ener_file" type="data" format="edr" label="Energy file 1"/>
+                  <param name="ener_file2" type="data" format="edr" label="Energy file 2"/>
+              </when>
+          </conditional>
+        </repeat>
     </inputs>
     <outputs>
         <data name="output_file" format="txt"/>
     </outputs>
     <tests>
         <test>
-            <conditional name="input_file">
-                <param name="calculate_select" value="info"/>
-                <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
-            </conditional>
-            <output name="output_file" file="check.txt" ftype="txt" lines_diff="41"/>
+              <repeat name="analysis">
+                  <conditional name="input_file">
+                      <param name="calculate_select" value="info_traj"/>
+                      <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
+                  </conditional>
+              </repeat>
+              <output name="output_file" file="check_traj.txt" ftype="txt" lines_diff="41"/>
         </test>
         <test>
-            <conditional name="input_file">
-                <param name="calculate_select" value="compare"/>
-                <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
-                <param name="traj_file2" value="npt.xtc" ftype="xtc"/>
-            </conditional>
-            <output name="output_file" file="check_compare_f.txt" ftype="txt" lines_diff="45"/>
+              <repeat name="analysis">
+                  <conditional name="input_file">
+                      <param name="calculate_select" value="compare_traj"/>
+                      <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
+                      <param name="traj_file2" value="npt.xtc" ftype="xtc"/>
+                  </conditional>
+              </repeat>
+              <output name="output_file" file="check_compare_f.txt" ftype="txt" lines_diff="45"/>
+        </test>
+        <test>
+              <repeat name="analysis">
+                  <conditional name="input_file">
+                      <param name="calculate_select" value="info_struc"/>
+                      <param name="struc_file" value="minim.gro" ftype="gro"/>
+                  </conditional>
+              </repeat>
+              <output name="output_file" file="check_struc.txt" ftype="txt" lines_diff="55"/>
+        </test>
+        <test>
+              <repeat name="analysis">
+                  <conditional name="input_file">
+                      <param name="calculate_select" value="info_ener"/>
+                      <param name="ener_file" value="minim.edr" ftype="edr"/>
+                  </conditional>
+              </repeat>
+              <output name="output_file" file="check_ener.txt" ftype="txt" lines_diff="45"/>
+        </test>
+        <test>
+              <repeat name="analysis">
+                  <conditional name="input_file">
+                      <param name="calculate_select" value="info_ind"/>
+                      <param name="ind_file" value="index.ndx" ftype="ndx"/>
+                  </conditional>
+              </repeat>
+              <output name="output_file" file="check_ind.txt" ftype="txt" lines_diff="41"/>
+        </test>
+        <test>
+              <repeat name="analysis">
+                  <conditional name="input_file">
+                      <param name="calculate_select" value="compare_ener"/>
+                      <param name="ener_file" value="minim.edr" ftype="edr"/>
+                      <param name="ener_file2" value="outp.edr" ftype="edr"/>
+                  </conditional>
+              </repeat>
+              <output name="output_file" file="check_compare_e.txt" ftype="txt" lines_diff="65"/>
+        </test>
+        <test>
+              <repeat name="analysis">
+                  <conditional name="input_file">
+                      <param name="calculate_select" value="compare_top"/>
+                      <param name="top_file" value="nvt.tpr" ftype="tpr"/>
+                      <param name="top_file2" value="npt.tpr" ftype="tpr"/>
+                  </conditional>
+              </repeat>
+              <output name="output_file" file="check_compare_t.txt" ftype="txt" lines_diff="16"/>
         </test>
     </tests>
     <help><![CDATA[
