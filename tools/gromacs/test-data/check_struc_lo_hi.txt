@@ -1,0 +1,53 @@
+                       :-) GROMACS - gmx check, 2022 (-:
+
+Executable:   /usr/local/gromacs/bin/gmx
+Data prefix:  /usr/local/gromacs
+Working dir:  /home/aepetit/Documents/scripts/galaxy-tools-compchem/tools/gromacs/test-data
+Command line:
+  gmx check -c minim.gro -bonlo 0.2 -bonhi 0.8
+
+Checking coordinate file minim.gro
+94 atoms in file
+coordinates found
+box         found
+velocities  absent
+
+Checking for atoms closer than 0.8 and not between 0.2 and 0.8,
+relative to sum of Van der Waals distance:
+
+WARNING: Masses and atomic (Van der Waals) radii will be guessed
+         based on residue and atom names, since they could not be
+         definitively assigned from the information in your input
+         files. These guessed numbers might deviate from the mass
+         and radius of the atom type. Please check the output
+         files if necessary. Note, that this functionality may
+         be removed in a future GROMACS version. Please, consider
+         using another file format for your input.
+
+
+WARNING: Masses and atomic (Van der Waals) radii will be guessed
+         based on residue and atom names, since they could not be
+         definitively assigned from the information in your input
+         files. These guessed numbers might deviate from the mass
+         and radius of the atom type. Please check the output
+         files if necessary. Note, that this functionality may
+         be removed in a future GROMACS version. Please, consider
+         using another file format for your input.
+
+NOTE: From version 5.0 gmx check uses the Van der Waals radii
+from the source below. This means the results may be different
+compared to previous GROMACS versions.
+
+++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
+A. Bondi
+van der Waals Volumes and Radii
+J. Phys. Chem. 68 (1964) pp. 441-451
+-------- -------- --- Thank You --- -------- --------
+
+   10   20   30   40   50   60   70   80   90no close atoms found
+      
+no atoms found outside box
+
+
+GROMACS reminds you: "If You See Me Getting High, Knock Me Down" (Red Hot Chili Peppers)
+

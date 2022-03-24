@@ -1,0 +1,41 @@
+                       :-) GROMACS - gmx check, 2022 (-:
+
+Executable:   /usr/local/gromacs/bin/gmx
+Data prefix:  /usr/local/gromacs
+Working dir:  /home/aepetit/Documents/test/Test
+Command line:
+  gmx check -f nvt.xtc -f2 npt.xtc -rmsd
+
+Comparing trajectory files nvt.xtc and npt.xtc
+Reading frame       0 time    0.000   Reading frame       0 time    0.000   Reading frame       1 time    0.100   Reading frame       1 time    0.100   Reading frame       2 time    0.200   Reading frame       2 time    0.200   Reading frame       3 time    0.300   Reading frame       3 time    0.300   Reading frame       4 time    0.400   Reading frame       4 time    0.400   Reading frame       5 time    0.500   Reading frame       5 time    0.500   Reading frame       6 time    0.600   Reading frame       6 time    0.600   Reading frame       7 time    0.700   Reading frame       7 time    0.700   Reading frame       8 time    0.800   Reading frame       8 time    0.800   Reading frame       9 time    0.900   Reading frame       9 time    0.900   Reading frame      10 time    1.000   Reading frame      10 time    1.000   Last frame         10 time    1.000   
+Last frame         10 time    1.000   
+
+GROMACS reminds you: "If it's all right with Dirac, it's all right with me." (Enrico Fermi, on being told that there was experimental evidence He-3 nuclei obey Fermi-Dirac statistics.)
+
+
+x RMSD 0.135353
+
+x RMSD 0.150079
+
+x RMSD 0.161998
+
+x RMSD 0.186695
+
+x RMSD 0.201164
+box[    0] ( 4.09226e+00  0.00000e+00  0.00000e+00) - ( 4.09123e+00  0.00000e+00  0.00000e+00)
+box[    1] ( 0.00000e+00  4.09226e+00  0.00000e+00) - ( 0.00000e+00  4.09123e+00  0.00000e+00)
+box[    2] ( 0.00000e+00  0.00000e+00  4.09226e+00) - ( 0.00000e+00  0.00000e+00  4.09123e+00)
+
+x RMSD 0.222255
+
+x RMSD 0.242077
+
+x RMSD 0.259343
+
+x RMSD 0.260618
+
+x RMSD 0.256508
+
+x RMSD 0.256135
+
+Both files read correctly

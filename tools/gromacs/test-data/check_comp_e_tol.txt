@@ -4,11 +4,11 @@ Executable:   /usr/local/gromacs/bin/gmx
 Data prefix:  /usr/local/gromacs
 Working dir:  /home/aepetit/Documents/scripts/galaxy-tools-compchem/tools/gromacs/test-data
 Command line:
-  gmx check -e minim.edr -e2 outp.edr
+  gmx check -e minim.edr -e2 outp.edr -tol 0.1
 
 Opened minim.edr as single precision energy file
 Opened outp.edr as single precision energy file
-Reading energy frame      0 time    0.000         Reading energy frame      0 time    0.000         Reading energy frame      1 time    1.000         Reading energy frame      1 time    0.100         Reading energy frame      2 time    2.000         Reading energy frame      2 time    0.200         comparing energy file minim.edr and outp.edr
+Reading energy frame      0 time    0.000         Reading energy frame      0 time    0.000         Reading energy frame      1 time    1.000         Reading energy frame      1 time    0.100         Reading energy frame      2 time    2.000         Reading energy frame      2 time    0.200         Reading energy frame      3 time    3.000         Reading energy frame      3 time    0.300         comparing energy file minim.edr and outp.edr
 
 There are 31 and 50 terms in the energy files
 
@@ -40,7 +40,6 @@ There are 29 terms to compare in the energy files
 Angle            step   0:       659.741,  step   0:       174.95
 Proper Dih.      step   0:       93.8665,  step   0:      8.40722
 Ryckaert-Bell.   step   0:        69.404,  step   0:      91.4765
-LJ-14            step   0:       139.289,  step   0:      145.225
 Coulomb-14       step   0:       52.8221,  step   0:      135.375
 LJ (SR)          step   0:      -13.3421,  step   0:     -8.41078
 Coulomb (SR)     step   0:      -1790.86,  step   0:      -2038.4
@@ -59,7 +58,6 @@ step (1 - 50)
 Angle            step   1:       536.268,  step   1:      188.647
 Proper Dih.      step   1:          88.2,  step   1:       17.982
 Ryckaert-Bell.   step   1:       67.8373,  step   1:      95.8567
-LJ-14            step   1:       136.725,  step   1:      129.079
 Coulomb-14       step   1:       49.6531,  step   1:      108.883
 LJ (SR)          step   1:      -11.6246,  step   1:      9.77759
 Coulomb (SR)     step   1:      -1784.23,  step   1:     -2034.55
@@ -78,7 +76,6 @@ step (2 - 100)
 Angle            step   2:       424.105,  step   2:      176.128
 Proper Dih.      step   2:       81.0497,  step   2:      13.4277
 Ryckaert-Bell.   step   2:       66.1758,  step   2:      112.768
-LJ-14            step   2:       134.558,  step   2:      134.983
 Coulomb-14       step   2:       47.7305,  step   2:      126.537
 LJ (SR)          step   2:     -0.367874,  step   2:     -9.48936
 Coulomb (SR)     step   2:      -1780.95,  step   2:     -2085.56
@@ -91,13 +88,12 @@ Vir-ZZ           step   2:      -1094.59,  step   2:      66.6538
 Pres-XX          step   2:       665.232,  step   2:      -59.919
 Pres-YY          step   2:       831.871,  step   2:     -135.773
 Pres-ZZ          step   2:       530.846,  step   2:      21.7224
-#Surf*SuReading energy frame      3 time    3.000         Reading energy frame      3 time    0.300         Reading energy frame      4 time    4.000         Reading energy frame      4 time    0.400         Reading energy frame      5 time    5.000         Reading energy frame      5 time    0.500         Reading energy frame      6 time    7.000         Reading energy frame      6 time    0.600         rfTen    step   2:            -0,  step   2:       489.26
+#Surf*SurfTen    step   2:            -0,  step   2:       489.26
 t (3.000000e+00 - 3.000000e-01)
 step (3 - 150)
 Angle            step   3:       237.376,  step   3:      205.981
-Proper Dih.      step   3:       68.1909,  step   3:      18.2245
+Proper Dih.      step   3: Reading energy frame      4 time    4.000         Reading energy frame      4 time    0.400         Reading energy frame      5 time    5.000         Reading energy frame      5 time    0.500         Reading energy frame      6 time    7.000         Reading energy frame      6 time    0.600               68.1909,  step   3:      18.2245
 Ryckaert-Bell.   step   3:        59.979,  step   3:      147.317
-LJ-14            step   3:       125.218,  step   3:      122.469
 Coulomb-14       step   3:       46.4965,  step   3:      109.053
 LJ (SR)          step   3:      -1.62034,  step   3:      38.8948
 Coulomb (SR)     step   3:         -1772,  step   3:     -2168.63
@@ -113,10 +109,8 @@ Pres-ZZ          step   3:       416.758,  step   3:      91.8618
 #Surf*SurfTen    step   3:            -0,  step   3:      334.379
 t (4.000000e+00 - 4.000000e-01)
 step (4 - 200)
-Angle            step   4:        209.15,  step   4:      204.135
 Proper Dih.      step   4:       59.4324,  step   4:      17.8104
 Ryckaert-Bell.   step   4:       58.0578,  step   4:      110.021
-LJ-14            step   4:       123.686,  step   4:      125.437
 Coulomb-14       step   4:       48.4256,  step   4:      105.922
 LJ (SR)          step   4:      -5.24827,  step   4:      17.1558
 Coulomb (SR)     step   4:      -1769.41,  step   4:     -2150.06
@@ -135,7 +129,6 @@ step (5 - 250)
 Angle            step   5:       92.7917,  step   5:      228.041
 Proper Dih.      step   5:       46.4461,  step   5:      11.5992
 Ryckaert-Bell.   step   5:        53.249,  step   5:      93.8753
-LJ-14            step   5:       116.849,  step   5:      121.638
 Coulomb-14       step   5:       48.2479,  step   5:      114.191
 LJ (SR)          step   5:      -18.7401,  step   5:        69.11
 Coulomb (SR)     step   5:      -1763.71,  step   5:     -2209.02
@@ -154,11 +147,10 @@ step (7 - 300)
 Angle            step   7:        130.86,  step   7:      193.185
 Proper Dih.      step   7:       42.6816,  step   7:       7.0615
 Ryckaert-Bell.   step   7:       53.3748,  step   7:      106.945
-LJ-14            step   7:       118.493,  step   7:      109.696
 Coulomb-14       step   7:       49.9217,  step   7:      100.896
 LJ (SR)          step   7:      -15.5538,  step   7:      10.2121
 Coulomb (SR)     step   7:       -1764.3,  step   7:     -2143.78
-Coul. recip.     step Reading energy frame      7 time    8.000         Reading energy frame      7 time    0.700         Reading energy frame      8 time   10.000         Reading energy frame      8 time    0.800         Reading energy frame      9 time   12.000         Reading energy frame      9 time    0.900           7:       924.347,  step   7:      311.339
+Coul. recip.     step   7:       924.347,  step   7:      311.339
 Potential        step   7:      -444.809,  step   7:     -1304.87
 Pressure         step   7:       215.786,  step   7:     -61.3894
 Vir-XX           step   7:      -589.888,  step   7:      192.034
@@ -166,14 +158,13 @@ Vir-YY           step   7:      -527.634,  step   7:      178.781
 Vir-ZZ           step   7:      -217.309,  step   7:      271.375
 Pres-XX          step   7:        286.08,  step   7:     -57.5845
 Pres-YY          step   7:       255.888,  step   7:     -35.9703
-Pres-ZZ          step   7:       105.389,  step   7:     -90.6133
+Pres-ZZ          step Reading energy frame      7 time    8.000         Reading energy frame      7 time    0.700         Reading energy frame      8 time   10.000         Reading energy frame      8 time    0.800         Reading energy frame      9 time   12.000         Reading energy frame      9 time    0.900         Reading energy frame     10 time   14.000         Reading energy frame     10 time    1.000           7:       105.389,  step   7:     -90.6133
 #Surf*SurfTen    step   7:            -0,  step   7:     -179.371
 t (8.000000e+00 - 7.000000e-01)
 step (8 - 350)
 Angle            step   8:        68.783,  step   8:      187.181
 Proper Dih.      step   8:       30.5271,  step   8:      10.9997
 Ryckaert-Bell.   step   8:        49.841,  step   8:       123.72
-LJ-14            step   8:       113.984,  step   8:      110.838
 Coulomb-14       step   8:       51.1761,  step   8:      123.582
 LJ (SR)          step   8:      -24.7767,  step   8:      48.0457
 Coulomb (SR)     step   8:      -1761.91,  step   8:     -2227.32
@@ -192,7 +183,6 @@ step (10 - 400)
 Angle            step  10:        90.876,  step  10:      150.124
 Proper Dih.      step  10:        26.773,  step  10:      15.4228
 Ryckaert-Bell.   step  10:       49.7648,  step  10:      116.734
-LJ-14            step  10:       114.958,  step  10:      123.699
 Coulomb-14       step  10:       52.0739,  step  10:      120.921
 LJ (SR)          step  10:      -24.2058,  step  10:      61.3815
 Coulomb (SR)     step  10:      -1762.32,  step  10:     -2208.19
@@ -200,10 +190,8 @@ Coul. recip.     step  10:       918.133,  step  10:      281.327
 Potential        step  10:      -522.879,  step  10:        -1339
 Pressure         step  10:       177.827,  step  10:      95.8529
 Vir-XX           step  10:      -466.151,  step  10:      18.0131
-Vir-YY           step  10:      -455.936,  step  10:     -417.631
 Vir-ZZ           step  10:      -177.936,  step  10:      30.5814
 Pres-XX          step  10:       226.071,  step  10:      23.9118
-Pres-YY          step  10:       221.117,  step  10:      235.888
 Pres-ZZ          step  10:       86.2943,  step  10:      27.7592
 #Surf*SurfTen    step  10:            -0,  step  10:     -417.853
 t (1.200000e+01 - 9.000000e-01)
@@ -224,10 +212,7 @@ Vir-ZZ           step  12:      -201.407,  step  12:      437.058
 Pres-XX          step  12:       195.477,  step  12:      35.0752
 Pres-YY          step  12:       249.835,  step  12:     -105.864
 Pres-ZZ          step  12:       97.6769,  step  12:     -161.323
-#Surf*SurfTen  Reading energy frame     10 time   14.000         Reading energy frame     10 time    1.000         Reading energy frame     11 time   15.000         Last energy frame read 10 time    1.000         
-GROMACS reminds you: "I Want to Know Right Now" (Meatloaf)
-
-  step  12:            -0,  step  12:     -515.149
+#Surf*SurfTen    step  12:            -0,  step  12:     -515.149
 t (1.400000e+01 - 1.000000e+00)
 step (14 - 500)
 Angle            step  14:        77.708,  step  14:      188.913
@@ -240,7 +225,10 @@ Coulomb (SR)     step  14:      -1762.94,  step  14:     -2187.48
 Coul. recip.     step  14:       914.559,  step  14:      304.201
 Potential        step  14:      -557.441,  step  14:     -1306.67
 Pressure         step  14:       144.996,  step  14:     -10.3104
-Vir-XX           step  14:      -396.739,  step  14:      362.156
+Vir-XX           step  14:      -Reading energy frame     11 time   15.000         Last energy frame read 10 time    1.000         
+GROMACS reminds you: "Humans are allergic to change. They love to say, 'We've always done it this way.' I try to fight that. That's why I have a clock on my wall that runs counter-clockwise." (Grace Hopper)
+
+396.739,  step  14:      362.156
 Vir-YY           step  14:      -366.802,  step  14:      37.2518
 Vir-ZZ           step  14:      -133.389,  step  14:     -118.713
 Pres-XX          step  14:       192.408,  step  14:     -130.624
