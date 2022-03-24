@@ -140,7 +140,7 @@
                 </conditional>
             </when>
             <when value="trjcat">
-                <param name="trj_input" type="data" format='xtc,trr' label="Input trajectories" help="In XTC or TRR format, but please do not mix the two. Please note this tool does not currently take order into account when concatenating." multiple="true"/>
+                <param name="trj_input" type="data" format='xtc,trr' label="Input trajectories" help="In XTC or TRR format, but please do not mix the two. Please note that if you want to take order into account when concatenating, you must use a collection as input." multiple="true"/>
                 <param name="cat" type="boolean" label="Do not discard double time frames" truevalue="-cat" falsevalue="-nocat"/>
                 <param name="sep" type="hidden" value="" />
             </when>
