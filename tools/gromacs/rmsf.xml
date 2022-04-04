@@ -1,0 +1,104 @@
+<tool id="gmx_rmsf" name="GROMACS RMSF calculation" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+    <description>of molecular structures</description>
+    <macros>
+        <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
+    </macros>
+    <expand macro="requirements"/>
+    <command detect_errors="exit_code"><![CDATA[
+
+    ln -s '$traj_input' ./traj_input.${traj_input.ext} &&
+    ln -s '$structure_input' ./structure_input.${structure_input.ext} &&
+    #if '$ndx_input':
+    ln -s '$ndx_input' ./ndx_input.${ndx_input.ext} &&
+    #end if
+	echo '$index' | gmx rmsf 
+	
+	##inputs
+	-f ./traj_input.${traj_input.ext}  -s ./structure_input.${structure_input.ext}
+	#if '$ndx_input':
+	-n ./ndx_input.${ndx_input.ext}
+	#end if
+
+	## other options
+ 	#if $resavg == 'true':
+	-res
+	#end if
+
+    >> verbose.txt 2>&1
+ 
+    ]]></command>
+    <inputs>
+        <param name="traj_input" type="data" format="trr,xtc" label="Trajectory file" help="In XTC or TRR format"/>
+        <param name="structure_input" type="data" format="tpr,pdb,gro" label="Structure file" help="In TPR, PDB, or GRO format. Use a tpr file if your system contains nonstandard atom types, as atomic masses may not be directly obtained from PDB or GRO files."/>
+        <param name="ndx_input" type="data" format="ndx" label="Index (NDX) file" help="Index file containing your system's different atomic and molecular groups."/>
+        <param name="index" type="text" label="Index of group" help="Index of group for calculating the Root Mean Square Fluctuation (RMSF) - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0)."/>
+        <param name="resavg" type="select" label="Calculate average RMSF for entire residues?" help="This option works best if the selected index group mainly includes peptides.">
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+        </param>
+        <expand macro="log"/>
+    </inputs>
+    <outputs>
+        <data name="output1" format="xvg" from_work_dir="rmsf.xvg" label="GROMACS calculation of RMSF on ${on_string}"/>
+        <expand macro="log_outputs"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="traj_input" value="npt.xtc"/>
+            <param name="structure_input" value="npt.tpr" ftype="tpr"/>
+            <param name="ndx_input" value="index.ndx" ftype="ndx"/>
+            <param name="index" value="3"/>
+            <output name="output1" ftype="xvg">
+                <assert_contents>
+                    <has_text text="5   0.0113"/>
+                    <has_text text="27   0.0136"/>
+                    <has_text text="43   0.0134"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+            <param name="traj_input" value="npt.xtc"/>
+            <param name="structure_input" value="npt.tpr" ftype="tpr"/>
+            <param name="ndx_input" value="index.ndx" ftype="ndx"/>
+            <param name="index" value="1"/>
+            <param name="resavg" value="true"/>
+            <output name="output1" ftype="xvg">
+                <assert_contents>
+                    <has_text text="1   0.0263"/>
+                    <has_text text="2   0.0230"/>
+                    <has_text text="3   0.0201"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+        .. class:: infomark
+        
+        **What it does**
+        
+        This tool calculates a structure's RMSF, using the built-in gromacs function gmx rmsf.
+        
+_____
+        
+        .. class:: infomark
+        
+        **Input**
+        
+               - GRO, PDB, or TPR structure file.
+               - TRR or XTC trajectory file.
+        
+        
+_____
+        
+        
+        .. class:: infomark
+        
+        **Output**
+        
+               - XVG file containing RMSF results.
+        
+            ]]></help>
+    <expand macro="citations"/>
+</tool>
