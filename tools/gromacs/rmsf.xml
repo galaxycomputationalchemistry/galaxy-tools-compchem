@@ -78,7 +78,7 @@
         
         **What it does**
         
-        This tool calculates a structure's RMSF, using the built-in gromacs function gmx rmsf.
+        This tool calculates a structure's Root Mean Square Fluctuation (RMSF), using the built-in gromacs function gmx rmsf.
         
 _____
         
