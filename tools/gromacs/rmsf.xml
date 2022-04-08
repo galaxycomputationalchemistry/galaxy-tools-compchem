@@ -54,6 +54,7 @@
             <param name="structure_input" value="npt.tpr" ftype="tpr"/>
             <param name="ndx_input" value="index.ndx" ftype="ndx"/>
             <param name="index" value="3"/>
+            <param name="outputformat" value="xmgrace"/>
             <output name="output1" ftype="xvg">
                 <assert_contents>
                     <has_text text="5   0.0113"/>
@@ -68,6 +69,7 @@
             <param name="ndx_input" value="index.ndx" ftype="ndx"/>
             <param name="index" value="1"/>
             <param name="resavg" value="true"/>
+            <param name="outputformat" value="none"/>
             <output name="output1" ftype="xvg">
                 <assert_contents>
                     <has_text text="1   0.0263"/>
