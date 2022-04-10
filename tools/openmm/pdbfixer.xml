@@ -12,11 +12,11 @@
             '$pdb_input'
             ## --pdbid and --url not implemented here, users can use the get_pdb tool
             --output '$output'
-            --add-atoms='$add_atoms' ##    which missing atoms to add: all, heavy, hydrogen, or none [default: all]
+            --add-atoms='$add_atoms'             ## which missing atoms to add: all, heavy, hydrogen, or none [default: all]
             --keep-heterogens='$keep_heterogens' ## which heterogens to keep: all, water, or none [default: all]
-            $replace_nonstandard ## replace nonstandard residues with standard equivalents
-            $add_residues        ## add missing residues
-            --ph='$ph' ## the pH to use for adding missing hydrogens [default: 7.0]
+            $replace_nonstandard                 ## replace nonstandard residues with standard equivalents
+            $add_residues                        ## add missing residues
+            --ph='$ph'                           ## the pH to use for adding missing hydrogens [default: 7.0]
 
             #if $solvent.box.water_box == "true":
                 --water-box=$solvent.box.x $solvent.box.y $solvent.box.z ## add a water box. The value is the box dimensions in nm [example: --water-box=2.5 2.4 3.0]
@@ -143,7 +143,6 @@
                 </assert_contents>
             </output>
         </test>
-
     </tests>  
     <help><![CDATA[   
 .. class:: infomark
