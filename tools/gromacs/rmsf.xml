@@ -7,26 +7,26 @@
     <expand macro="requirements"/>
     <command detect_errors="exit_code"><![CDATA[
 
-    ln -s '$traj_input' ./traj_input.${traj_input.ext} &&
-    ln -s '$structure_input' ./structure_input.${structure_input.ext} &&
-    #if '$ndx_input':
-    ln -s '$ndx_input' ./ndx_input.${ndx_input.ext} &&
-    #end if
-	echo '$index' | gmx rmsf 
+        ln -s '$traj_input' ./traj_input.${traj_input.ext} &&
+        ln -s '$structure_input' ./structure_input.${structure_input.ext} &&
+        #if '$ndx_input':
+        ln -s '$ndx_input' ./ndx_input.${ndx_input.ext} &&
+        #end if
+	    echo '$index' | gmx rmsf 
 	
-	##inputs
-	-f ./traj_input.${traj_input.ext}  -s ./structure_input.${structure_input.ext}
-	#if '$ndx_input':
-	-n ./ndx_input.${ndx_input.ext}
-	#end if
-    -xvg '$outputformat'
+	    ##inputs
+	    -f ./traj_input.${traj_input.ext}  -s ./structure_input.${structure_input.ext}
+	    #if '$ndx_input':
+	    -n ./ndx_input.${ndx_input.ext}
+	    #end if
+        -xvg '$outputformat'
 
-	## other options
- 	#if $resavg == 'true':
-	-res
-	#end if
+	    ## other options
+ 	    #if $resavg == 'true':
+	    -res
+	    #end if
 
-    >> verbose.txt 2>&1
+        >> verbose.txt 2>&1
  
     ]]></command>
     <inputs>
@@ -39,23 +39,23 @@
             <option value="true">Yes</option>
         </param>
         <param name="outputformat" type="select" label="Output format">
-            <option value="xmgrace">Xmgrace. This is the default way.</option>
-            <option value="none">Raw Data.</option>
+            <option value="xmgrace">Xmgrace (default)</option>
+            <option value="none">Raw Data</option>
         </param>
         <expand macro="log"/>
     </inputs>
     <outputs>
-        <data name="output1" format="xvg" from_work_dir="rmsf.xvg" label="GROMACS calculation of RMSF on ${on_string}"/>
+        <data name="rmsf_output" format="xvg" from_work_dir="rmsf.xvg" label="GROMACS calculation of RMSF on ${on_string}"/>
         <expand macro="log_outputs"/>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="1">
             <param name="traj_input" value="npt.xtc"/>
             <param name="structure_input" value="npt.tpr" ftype="tpr"/>
             <param name="ndx_input" value="index.ndx" ftype="ndx"/>
             <param name="index" value="3"/>
             <param name="outputformat" value="xmgrace"/>
-            <output name="output1" ftype="xvg">
+            <output name="rmsf_output" ftype="xvg">
                 <assert_contents>
                     <has_text text="5   0.0113"/>
                     <has_text text="27   0.0136"/>
@@ -63,14 +63,14 @@
                 </assert_contents>
             </output>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="traj_input" value="npt.xtc"/>
             <param name="structure_input" value="npt.tpr" ftype="tpr"/>
             <param name="ndx_input" value="index.ndx" ftype="ndx"/>
             <param name="index" value="1"/>
             <param name="resavg" value="true"/>
             <param name="outputformat" value="none"/>
-            <output name="output1" ftype="xvg">
+            <output name="rmsf_output" ftype="xvg">
                 <assert_contents>
                     <has_text text="1   0.0263"/>
                     <has_text text="2   0.0230"/>
