@@ -1,0 +1,189 @@
+<tool id="pdbfixer" name="PDBFixer"  version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+    <description>to automatically fix a PDB file before performing molecular dynamics simulation</description>
+    <macros>
+        <token name="@TOOL_VERSION@">1.8.1</token>
+        <token name="@GALAXY_VERSION@">0</token>
+    </macros>
+    <requirements>
+         <requirement type="package" version="@TOOL_VERSION@">pdbfixer</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        pdbfixer
+            '$pdb_input'
+            ## --pdbid and --url not implemented here, users can use the get_pdb tool
+            --output '$output'
+            --add-atoms='$add_atoms'             ## which missing atoms to add: all, heavy, hydrogen, or none [default: all]
+            --keep-heterogens='$keep_heterogens' ## which heterogens to keep: all, water, or none [default: all]
+            $replace_nonstandard                 ## replace nonstandard residues with standard equivalents
+            $add_residues                        ## add missing residues
+            --ph='$ph'                           ## the pH to use for adding missing hydrogens [default: 7.0]
+
+            #if $solvent.box.water_box == "true":
+                --water-box=$solvent.box.x $solvent.box.y $solvent.box.z ## add a water box. The value is the box dimensions in nm [example: --water-box=2.5 2.4 3.0]
+                --positive-ion='$solvent.positive_ion' ##   positive ion to include in the water box: Cs+, K+, Li+, Na+, or Rb+ [default: Na+]
+                --negative-ion='$solvent.negative_ion' ## negative ion to include in the water box: Cl-, Br-, F-, or I- [default: Cl-]
+                --ionic-strength='$solvent.ionic_strength' ## molar concentration of ions to add to the water box [default: 0.0]
+            #end if
+            --verbose
+
+    ]]></command>
+    <inputs>
+        <param format="pdb" name="pdb_input" type="data" label="PDB input file"/>
+        <param name="add_atoms" type="select" label="Missing atoms to be added">
+            <option value="all" selected="true">All</option>
+            <option value="heavy">Heavy atoms only</option>
+            <option value="hydrogen">Hydrogen atoms only</option>
+            <option value="none">None</option>
+        </param>
+        <param name="keep_heterogens" type="select" label="Which heterogens to keep">
+            <option value="all" selected="true">All</option>
+            <option value="water">Only water</option>
+            <option value="none">None</option>
+        </param>
+        <param name="replace_nonstandard" type="boolean" label="Replace nonstandard residues with standard equivalents?" truevalue="--replace-nonstandard" falsevalue="" value=""/>
+        <param name="add_residues" type="boolean" label="Add missing residues?" truevalue="--add-residues" falsevalue="" value=""/>
+        <param name="ph" type="float" min="0" max="14" value="7" label="pH" help="Ignored if not adding hydrogen atoms"/>
+        <section name="solvent" title="Solvent parameters" help="Note that you may prefer to modify solvent parameters using other tools.">
+            <conditional name="box">
+                <param name="water_box" type="select" label="Add a water box?" help="Dimensions in nanometers">
+                    <option value="true">Yes</option>
+                    <option value="false" selected="true">No</option>
+                </param>
+                <when value="true">
+                    <param name="x" type="float" min="0" value="0" label="Size in X dimension"/>
+                    <param name="y" type="float" min="0" value="0" label="Size in Y dimension"/>
+                    <param name="z" type="float" min="0" value="0" label="Size in Z dimension"/>
+                </when>
+                <when value="false" />
+            </conditional>
+            <param name="positive_ion" type="select" label="Type of positive ion to add">
+                <option value="Li+">Lithium (Li+)</option>
+                <option value="Na+" selected="true">Sodium (Na+)</option>
+                <option value="K+">Potassium (K+)</option>
+                <option value="Rb+">Rubidium (Rb+)</option>
+                <option value="Cs+">Cesium (Cs+)</option>
+            </param>
+            <param name="negative_ion" type="select" label="Type of negative ion to add">
+                <option value="Cl-" selected="true">Chloride (Cl-)</option>
+                <option value="Br-">Bromide (Br-)</option>
+                <option value="F-">Fluoride (F-)</option>
+                <option value="I-">Iodide (I-)</option>
+            </param>
+            <param name="ionic_strength" type="float" min="0" max="10" value="0" label="Ionic strength" help="Molar concentration of ions to add to the water box"/>
+        </section>
+    </inputs>
+    <outputs>
+        <data name="output" format="pdb"/>
+    </outputs>
+    <tests>
+        <!-- pdbfixer test-data/broken.pdb -add-atoms=all -keep-heterogens=all -replace-nonstandard -->
+        <test>
+            <param name="pdb_input" value="broken.pdb"/>
+            <param name="add_atoms" value="all"/>
+            <param name="keep_heterogens" value="all"/>
+            <param name="replace_nonstandard" value="true"/>
+            <param name="add_residues" value="false"/>
+            <param name="ph" value="7"/>
+            <output name="output">
+                <assert_contents>
+                    <has_n_lines n="162"/>
+                    <!-- check LYS8 is fixed  -->
+                    <has_text text="CD  LYS A   8"/>
+                    <has_text text="CE  LYS A   8"/>
+                    <!-- check hydration -->
+                    <has_text_matching expression="H  \n" n="81"/>
+                </assert_contents>
+            </output>
+        </test>
+        <!-- pdbfixer test-data/broken.pdb -add-atoms=heavy -keep-heterogens=all -replace-nonstandard -add-residues -->
+        <test>
+            <param name="pdb_input" value="broken.pdb"/>
+            <param name="add_atoms" value="heavy"/>
+            <param name="keep_heterogens" value="all"/>
+            <param name="replace_nonstandard" value="true"/>
+            <param name="add_residues" value="false"/>
+            <output name="output">
+                <assert_contents>
+                    <has_n_lines n="81"/>
+                    <!-- check LYS8 is fixed  -->
+                    <has_text text="CD  LYS A   8"/>
+                    <has_text text="CE  LYS A   8"/>
+                    <!-- check no hydration -->
+                    <has_text_matching expression="H  \n" negate="true"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+            <param name="pdb_input" value="broken.pdb"/>
+            <param name="add_atoms" value="all"/>
+            <param name="keep_heterogens" value="all"/>
+            <param name="replace_nonstandard" value="true"/>
+            <param name="add_residues" value="false"/>
+            <param name="ph" value="14"/>
+            <param name="water_box" value="true"/>
+            <param name="x" value="5"/>
+            <param name="y" value="5"/>
+            <param name="z" value="5"/>
+            <param name="positive_ion" value="Li+"/>
+            <param name="negative_ion" value="I-"/>
+            <param name="ionic_strength" value="2"/>
+            <output name="output">
+                <assert_contents>
+                    <!-- seems insertion of water is random and not fully reproducible  -->
+                    <has_n_lines n="11482" delta="100"/>
+                    <!-- check LYS8 is fixed  -->
+                    <has_text text="CD  LYS A   8"/>
+                    <has_text text="CE  LYS A   8"/>
+                    <!-- check hydration one less due to raised pH -->
+                    <has_text_matching expression="ATOM.* H  \n" n="80"/>
+                    <!-- check water and ions -->
+                    <has_text_matching expression="HOH" n="11041" delta="100"/>
+                    <has_text_matching expression=" I .*\n" n="144"/>
+                    <has_text_matching expression=" Li .*\n" n="144"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>  
+    <help><![CDATA[   
+.. class:: infomark
+ 
+**What it does**
+
+Fixes any issues in a PDB file (for example, adding missing residues, or missing atoms) prior to performing molecular dynamics simulations.
+
+PDBFixer can do any or all of the following:
+
+    - Add missing heavy atoms.
+    - Add missing hydrogen atoms.
+    - Build missing loops.
+    - Convert non-standard residues to their standard equivalents.
+    - Select a single position for atoms with multiple alternate positions listed.
+    - Delete unwanted chains from the model.
+    - Delete unwanted heterogens.
+    - Build a water box for explicit solvent simulations.
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - PDB file
+
+_____
+
+       
+.. class:: infomark
+
+**Output**
+
+       - PDB file
+
+    ]]></help>
+    <citations>
+      <citation type="doi">10.1371/journal.pcbi.1005659</citation>
+      <citation type="bibtex">@misc{pdbfixer, author = {{Peter Eastman et al.}}, title = {PDBFixer}, url={https://github.com/openmm/PDBFixer}, abstract = {PDBFixer is an easy to use application for fixing problems in Protein Data Bank files in preparation for simulating them.}, urldate = {2022-03-25}, publisher = {GitHub}, year = {2022}, month = mar, }</citation>
+    </citations>
+</tool>
+
