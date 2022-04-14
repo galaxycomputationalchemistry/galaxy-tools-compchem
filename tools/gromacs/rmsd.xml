@@ -7,59 +7,62 @@
     <expand macro="requirements"/>
     <command detect_errors="exit_code"><![CDATA[
 
-    ln -s '$traj_input' ./traj_input.${traj_input.ext} &&
-    ln -s '$structure_input' ./structure_input.${structure_input.ext} &&
-    #if '$traj2.traj2select' == 'Yes':
-    ln -s '$traj2.traj_input2' ./traj_input2.${traj_input2.ext} &&
-    #end if
-    #if '$ndx_input':
-    ln -s '$ndx_input' ./ndx_input.${ndx_input.ext} &&
-    #end if
-    #if '$fit.fit_type' == 'none':
-    echo '$index_rmsdgroup' | gmx rms
-    #else
-    echo '$fit.index_refgroup' '$index_rmsdgroup' | gmx rms
-    #end if
-    ##inputs
-    -f ./traj_input.${traj_input.ext}  -s ./structure_input.${structure_input.ext}
-    #if '$traj2.traj2select' == 'Yes':
-    -f2 ./traj_input2.${traj_input2.ext}
-    #end if
-    #if '$ndx_input':
-    -n ./ndx_input.${ndx_input.ext}
-    #end if
+        ln -s '$traj_input' ./traj_input.${traj_input.ext} &&
+        ln -s '$structure_input' ./structure_input.${structure_input.ext} &&
+        #if $traj2.traj2select == 'true':
+        ln -s '$traj2.traj_input2' ./traj_input2.${traj_input2.ext} &&
+        #end if
+        #if $ndx_input:
+        ln -s '$ndx_input' ./ndx_input.${ndx_input.ext} &&
+        #end if
+        #if $fit.fit_type == 'none':
+        echo '$index_rmsdgroup' | gmx rms
+        #else
+        echo '$fit.index_refgroup' '$index_rmsdgroup' | gmx rms
+        #end if
+        ##inputs
+        -f ./traj_input.${traj_input.ext}  -s ./structure_input.${structure_input.ext}
+        #if $traj2.traj2select == 'true':
+        -f2 ./traj_input2.${traj_input2.ext} -m -skip '$traj2.skip' -skip2 '$traj2.skip' -max '$traj2.maxlevel' -min '$traj2.minlevel'
+        #end if
+        #if '$ndx_input':
+        -n ./ndx_input.${ndx_input.ext}
+        #end if
 
-    -fit '$fit.fit_type'
-    -xvg '$outputformat'
-    ## other options
-    #if $mir == 'true':
-    -mir
-    #end if
-
-    >> verbose.txt 2>&1
+        -fit '$fit.fit_type'
+        -xvg '$outputformat'
+        ## other options
+        #if $mir == 'true':
+        -mir
+        #end if
+        >> verbose.txt 2>&1
+        
  
     ]]></command>
     <inputs>
         <param name="traj_input" type="data" format="trr,xtc" label="Trajectory file" help="In XTC or TRR format"/>
         <conditional name="traj2">
             <param name="traj2select" type="select" label="Add an additional trajectory file?" help="Can be useful when compraring two different simulations of the same system.">
-                <option value="No">No</option>
-                <option value="Yes">Yes</option>
+                <option value="false">No</option>
+                <option value="true">Yes</option>
             </param>
-            <when value="Yes">
-                <param name="traj_input2" type="data" format="trr,xtc" label="Additional trajectory file" help="In XTC or TRR format."/>
+            <when value="true">
+                <param name="traj_input2" type="data" format="trr,xtc" label="Additional trajectory file" help="In XTC or TRR format. This is used to generate a comparison matrix between the RMSDs of both trajectories."/>
+                <param name="skip" type="integer" value="1" min="1" label="Number of frames to skip in the trajectory file"/>
+                <param name="maxlevel" type="integer" value="-1" label="Maximum level in comparison matrix" help="Refers to the maximum magnitude of the RMSD to plot"/>
+                <param name="minlevel" type="integer" value="-1" label="Minimum level in comparison matrix" help="Refers to the minimum magnitude of the RMSD to plot"/>
             </when>
-            <when value="No">
+            <when value="false">
             </when>
         </conditional>
         <param name="structure_input" type="data" format="tpr,pdb,gro" label="Structure file" help="In TPR, PDB, or GRO format. Use a tpr file if your system contains nonstandard atom types, as atomic masses may not be directly obtained from PDB or GRO files."/>
         <param name="ndx_input" type="data" format="ndx" label="Index (NDX) file" help="Index file containing your system's different atomic and molecular groups."/>
         <param name="index_rmsdgroup" value="0" min="0" type="integer" label="Index - RMSD group" help="Index of RMSD group - for proteins, this can generally be the same as the least squares fitting group, but can be different depending on the application."/>
         <conditional name="fit">
-            <param name="fit_type" type="select" label="Fit Type" help="controls the least-squares fitting of the structures on top of each other: complete fit (rotation and translation), translation only, or no fitting at all.">
-                <option value="rot+trans">Rotation and translation. This is the default way.</option>
-                <option value="translation">Translation only.</option>
-                <option value="none">No fitting.</option>
+            <param name="fit_type" type="select" label="Fit Type" help="Controls the least-squares fitting of the structures on top of each other: complete fit (rotation and translation), translation only, or no fitting at all.">
+                <option value="rot+trans" selected="true">Rotation and translation</option>
+                <option value="translation">Translation only</option>
+                <option value="none">No fitting</option>
             </param>
             <when value="rot+trans">
                 <param name="index_refgroup" value="0" min="0" type="integer" label="Index - least squares fitting group" help="Index number of the group you are fitting against, i.e. the reference group. For proteins, this group is commonly Backbone or C-alpha."/>
@@ -70,50 +73,74 @@
             <when value="none">
             </when>
         </conditional>
-        <param name="outputformat" type="select" label="Output format">
-            <option value="xmgrace">Xmgrace. This is the default way.</option>
-            <option value="none">Raw Data.</option>
+        <param name="outputformat" type="select" label="Output format" help="The default XVG format is compatible with XMGRACE and includes all of the graph's parameters. The raw data just includes 2 columns, one for the frame number and second for the corresponding RMSD value">
+            <option value="xmgrace" selected="true">XVG</option>
+            <option value="none">Raw Data</option>
         </param>
-        <param name="mir" type="select" label="Compare results with mirror image of the reference structure?" help="This is useful as a reference for assesing ‘significant’ RMSD values.">
+        <param name="mir" type="select" label="Compare results with mirror image of the reference structure?" help="This is useful as a reference for assessing ‘significant’ RMSD values. This option produces an additional XVG file.">
             <option value="false">No</option>
             <option value="true">Yes</option>
         </param>
         <expand macro="log"/>
     </inputs>
     <outputs>
-        <data name="output1" format="xvg" from_work_dir="rmsd.xvg" label="GROMACS calculation of RMSD on ${on_string}"/>
-        <data name="output2" format="xvg" from_work_dir="rmsdmir.xvg" label="GROMACS calculation of mirror image RMSD on ${on_string}">    
+        <data name="rmsd_output" format="xvg" from_work_dir="rmsd.xvg" label="GROMACS calculation of RMSD on ${on_string}"/>
+        <data name="xpm_output" format="xpm" from_work_dir="rmsd.xpm" label="GROMACS comparison matrix of RMSDs ${on_string}">    
+            <filter>traj2['traj2select'] == 'true'</filter>
+        </data>
+        <data name="rmsdmirror_output" format="xvg" from_work_dir="rmsdmir.xvg" label="GROMACS calculation of mirror image RMSD on ${on_string}">    
             <filter>mir == 'true'</filter>
         </data>
         <expand macro="log_outputs"/>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="2">
             <param name="traj_input" value="npt.xtc"/>
             <param name="structure_input" value="npt.tpr" ftype="tpr"/>
             <param name="ndx_input" value="index.ndx" ftype="ndx"/>
-            <param name="index" value="3"/>
-            <param name="outputformat" value="xmgrace"/>
-            <output name="output1" ftype="xvg">
+            <param name="index_rmsdgroup" value="3"/>
+            <param name="index_refgroup" value="3"/>
+            <param name="fit_type" value="rot+trans"/>
+            <param name="mir" value="true"/>
+            <param name="outputformat" value="none"/>
+            <output name="rmsdmirror_output" ftype="xvg">
                 <assert_contents>
-                    <has_text text="0.1000000    0.0391476"/>
-                    <has_text text="0.2000000    0.0598719"/>
-                    <has_text text="0.3000000    0.0842008"/>
+                    <has_text text="0.1000000    0.1420089"/>
+                    <has_text text="0.2000000    0.1430562"/>
+                    <has_text text="0.3000000    0.1366720"/>
+                </assert_contents>
+            </output>
+            <output name="rmsd_output" ftype="xvg">
+                <assert_contents>
+                    <has_text text="0.1000000    0.0208356"/>
+                    <has_text text="0.2000000    0.0297601"/>
+                    <has_text text="0.3000000    0.0322985"/>
                 </assert_contents>
             </output>
         </test>
-        <test>
+        <test expect_num_outputs="2">
             <param name="traj_input" value="npt.xtc"/>
+            <param name="traj2select" value="true"/>
+            <param name="traj_input2" value="nvt.xtc"/>
             <param name="structure_input" value="npt.tpr" ftype="tpr"/>
             <param name="ndx_input" value="index.ndx" ftype="ndx"/>
-            <param name="index" value="1"/>
-            <param name="resavg" value="true"/>
+            <param name="index_rmsdgroup" value="3"/>
+            <param name="index_refgroup" value="3"/>
+            <param name="fit_type" value="rot+trans"/>
+            <param name="mir" value="false"/>
             <param name="outputformat" value="none"/>
-            <output name="output1" ftype="xvg">
+            <output name="xpm_output" ftype="xpm">
                 <assert_contents>
-                    <has_text text="0.1000000    0.0391476"/>
-                    <has_text text="0.2000000    0.0598719"/>
-                    <has_text text="0.3000000    0.0842008"/>
+                    <has_text text="A  c #FFFFFF "/>
+                    <has_text text="B  c #FCFCFC "/>
+                    <has_text text="C  c #F9F9F9 "/>
+                </assert_contents>
+            </output>
+            <output name="rmsd_output" ftype="xvg">
+                <assert_contents>
+                    <has_text text="0.1000000    0.0208356"/>
+                    <has_text text="0.2000000    0.0297601"/>
+                    <has_text text="0.3000000    0.0322985"/>
                 </assert_contents>
             </output>
         </test>
@@ -124,7 +151,7 @@
         
         **What it does**
         
-        This tool calculates a structure's Root Mean Square Deviation (RMSD), using the built-in gromacs function gmx rms.
+        This tool calculates a structure's Root Mean Square Deviation (RMSD), using GROMACS. A second trajectory can also be used when trying to compare the RMSDs of two simulations of the same system. In both the single and dual trajectory functionality, the same reference groups are used and taken from the structure file (tpr, pdb, or gro).
         
 _____
         
