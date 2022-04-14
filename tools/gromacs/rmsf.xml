@@ -9,22 +9,23 @@
 
         ln -s '$traj_input' ./traj_input.${traj_input.ext} &&
         ln -s '$structure_input' ./structure_input.${structure_input.ext} &&
-        #if '$ndx_input':
-        ln -s '$ndx_input' ./ndx_input.${ndx_input.ext} &&
+        #if $ndx_input:
+            ln -s '$ndx_input' ./ndx_input.${ndx_input.ext} &&
         #end if
-	    echo '$index' | gmx rmsf 
-	
-	    ##inputs
-	    -f ./traj_input.${traj_input.ext}  -s ./structure_input.${structure_input.ext}
-	    #if '$ndx_input':
-	    -n ./ndx_input.${ndx_input.ext}
-	    #end if
+        echo '$index' | gmx rmsf
+
+        ##inputs
+        -f ./traj_input.${traj_input.ext}
+        -s ./structure_input.${structure_input.ext}
+        #if $ndx_input:
+            -n ./ndx_input.${ndx_input.ext}
+        #end if
         -xvg '$outputformat'
 
-	    ## other options
- 	    #if $resavg == 'true':
-	    -res
-	    #end if
+        ## other options
+        #if $resavg == 'true':
+            -res
+        #end if
 
         >> verbose.txt 2>&1
  
@@ -32,13 +33,13 @@
     <inputs>
         <param name="traj_input" type="data" format="trr,xtc" label="Trajectory file" help="In XTC or TRR format"/>
         <param name="structure_input" type="data" format="tpr,pdb,gro" label="Structure file" help="In TPR, PDB, or GRO format. Use a tpr file if your system contains nonstandard atom types, as atomic masses may not be directly obtained from PDB or GRO files."/>
-        <param name="ndx_input" type="data" format="ndx" label="Index (NDX) file" help="Index file containing your system's different atomic and molecular groups."/>
+        <param name="ndx_input" type="data" format="ndx" optional="true" label="Index (NDX) file" help="Index file (optional) containing your system's different atomic and molecular groups. If not specified, GROMACS uses a default set of groups."/>
         <param name="index" value="0" min="0" type="integer" label="Index of group" help="Index of group for calculating the Root Mean Square Fluctuation (RMSF) - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0)."/>
         <param name="resavg" type="select" label="Calculate average RMSF for entire residues?" help="This option works best if the selected index group mainly includes whole residues.">
             <option value="false">No</option>
             <option value="true">Yes</option>
         </param>
-        <param name="outputformat" type="select" label="Output format" help="The default XVG format is compatible with XMGRACE and includes all of the graph's parameters. The raw data just includes 2 columns, one for the frame number and second for the corresponding RMSF value.">
+        <param name="outputformat" type="select" label="Output format" help="The default XVG format is compatible with XMGRACE and includes all of the graph's parameters. The raw data just includes 2 columns, one for the frame index and second for the corresponding RMSF value.">
             <option value="xmgrace" selected="true">XVG</option>
             <option value="none">Raw Data</option>
         </param>
@@ -54,7 +55,6 @@
             <param name="structure_input" value="npt.tpr" ftype="tpr"/>
             <param name="ndx_input" value="index.ndx" ftype="ndx"/>
             <param name="index" value="3"/>
-
             <param name="outputformat" value="xmgrace"/>
             <output name="rmsf_output" ftype="xvg">
                 <assert_contents>
@@ -68,6 +68,21 @@
             <param name="traj_input" value="npt.xtc"/>
             <param name="structure_input" value="npt.tpr" ftype="tpr"/>
             <param name="ndx_input" value="index.ndx" ftype="ndx"/>
+            <param name="index" value="1"/>
+            <param name="resavg" value="true"/>
+            <param name="outputformat" value="none"/>
+            <output name="rmsf_output" ftype="xvg">
+                <assert_contents>
+                    <has_text text="1   0.0263"/>
+                    <has_text text="2   0.0230"/>
+                    <has_text text="3   0.0201"/>
+                </assert_contents>
+            </output>
+        </test>
+        <!-- test without optional ndx -->
+        <test expect_num_outputs="1">
+            <param name="traj_input" value="npt.xtc"/>
+            <param name="structure_input" value="npt.tpr" ftype="tpr"/>
             <param name="index" value="1"/>
             <param name="resavg" value="true"/>
             <param name="outputformat" value="none"/>
