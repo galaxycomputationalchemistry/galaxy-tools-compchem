@@ -38,8 +38,8 @@
             <option value="false">No</option>
             <option value="true">Yes</option>
         </param>
-        <param name="outputformat" type="select" label="Output format">
-            <option value="xmgrace">Xmgrace (default)</option>
+        <param name="outputformat" type="select" label="Output format" help="The default XVG format is compatible with XMGRACE and includes all of the graph's parameters. The raw data just includes 2 columns, one for the frame number and second for the corresponding RMSF value.">
+            <option value="xmgrace" selected="true">XVG</option>
             <option value="none">Raw Data</option>
         </param>
         <expand macro="log"/>
@@ -54,6 +54,7 @@
             <param name="structure_input" value="npt.tpr" ftype="tpr"/>
             <param name="ndx_input" value="index.ndx" ftype="ndx"/>
             <param name="index" value="3"/>
+
             <param name="outputformat" value="xmgrace"/>
             <output name="rmsf_output" ftype="xvg">
                 <assert_contents>
@@ -85,7 +86,7 @@
         
         **What it does**
         
-        This tool calculates a structure's Root Mean Square Fluctuation (RMSF), using the built-in gromacs function gmx rmsf.
+        This tool calculates a structure's Root Mean Square Fluctuation (RMSF), using GROMACS.
         
 _____
         
