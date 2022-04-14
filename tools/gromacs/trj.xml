@@ -41,14 +41,14 @@
         ln -s '$str_input' ./str.${str_input.ext} &&
         ln -s '$trj_input' ./traj.${trj_input.ext} &&
 
-    echo ## optionally pipe in the following
-	#if $trj.fit.fit != 'none':
-	    '$trj.fit.index_fit'
-    #end if
-    #if $trj.pbc.pbc == 'cluster':
-	    '$trj.pbc.index_cluster'
-    #end if
-    '$trj.index_center'	'$trj.index_output' | gmx trjconv
+        echo ## optionally pipe in the following
+        #if $trj.fit.fit != 'none':
+            '$trj.fit.index_fit'
+        #end if
+        #if $trj.pbc.pbc == 'cluster':
+            '$trj.pbc.index_cluster'
+        #end if
+        '$trj.index_center'	'$trj.index_output' | gmx trjconv
       	-f ./traj.${trj_input.ext}
         -s ./str.${str_input.ext}
         #if $ndx_input:
