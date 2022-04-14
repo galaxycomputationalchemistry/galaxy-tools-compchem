@@ -2,7 +2,7 @@
     <description>using trjconv and trjcat</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">1</token>
+        <token name="@GALAXY_VERSION@">2</token>
         <xml name="fit_when" token_option="none">
             <when value="@OPTION@">
                 <param name="index_fit" type="text" label="Index of group to use for fitting" help="Index of group to use for fitting - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0).">
@@ -16,22 +16,27 @@
     #if $trj.trj_op == 'trjcat':
         mkdir trajs &&
         #set $file_count = 0  ## sets 1st input to 0
+        #set $file_list = []
         #for $file_count, $file in enumerate($trj_input):  ## enumerates each input file, starting from 0
-            ln -s '$file' trajs/traj_${file_count}.${file.ext} &&
+            #set $filename = "trajs/traj_%i.%s" % ($file_count, $file.ext)
+            #silent $file_list.append($filename)
+            ln -s '$file' '$filename' &&
         #end for
         
         ## runs inputs from a repeat block. By choosing each input, this allows the user to select individual input files at a time, as well as ensure the proper order.
         #for $traj_repeat in $trj.inputtrajs:
             #for $file in $traj_repeat.trj_input:
                 #set $file_count = $file_count + 1 ## inputs from this repeat block will be numbered at + 1 ahead of inputs from first multiple select above
-                ln -s '$file' trajs/traj_${file_count}.${file.ext} &&
+                #set $filename = "trajs/traj_%i.%s" % ($file_count, $file.ext)
+                #silent $file_list.append($filename)
+                ln -s '$file' '$filename' &&
             #end for
         #end for
 
         gmx trjcat
             -f 
-            #for $i in range($file_count + 1)
-                trajs/traj_${i}.* ## here we assume that they all have the same ext, probably reasonable
+            #for $filename in $file_list:
+                '$filename'
             #end for
             $trj.cat
             -e '$time.e'
@@ -204,6 +209,24 @@
             <param name="e" value="-1"/>
             <param name="dt" value="0"/>
             <param name="cat" value="true"/>
+            <output name="output" file="trjcat.xtc" ftype="xtc"/>
+        </test>
+        <test>
+            <!-- gmx trjcat -f npt.xtc nvt.xtc -cat -o test.xtc -->
+            <conditional name="trj">
+                <param name="trj_op" value="trjcat"/>
+                <param name="trj_input" value="npt.xtc"/>
+                <repeat name="inputtrajs">
+                    <param name="trj_input" value="nvt.xtc"/>
+                </repeat>
+                <param name="cat" value="true"/>
+            </conditional>
+            <param name="output_format" value="xtc"/>
+            <section name="time">
+                <param name="b" value="0"/>
+                <param name="e" value="-1"/>
+                <param name="dt" value="0"/>
+            </section>
             <output name="output" file="trjcat.xtc" ftype="xtc"/>
         </test>
         <test>
