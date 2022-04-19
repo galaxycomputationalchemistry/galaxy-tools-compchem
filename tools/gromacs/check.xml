@@ -1,312 +1,376 @@
-<tool id="gmx_check" name="gmx check" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
-    <description>using check</description>
+<tool id="gmx_check_repeat" name="GROMACS check" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+    <description>using gmx check</description>
     <macros>
         <token name="@GALAXY_VERSION@">0</token>
         <import>macros.xml</import>
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
-      #if $input_file.calculate_select == "info_traj":
-          ln -s '$input_file.traj_file' ./input1.$input_file.traj_file.ext &&
-          gmx check
-              -f ./input1.$input_file.traj_file.ext
-              &> '$output_file_traj'
-      #elif $input_file.calculate_select == "compare_traj":
-          ln -s '$input_file.traj_file' ./input1.$input_file.traj_file.ext &&
-          ln -s '$input_file.traj_file2' ./input2.$input_file.traj_file2.ext &&
-          gmx check
-              -f ./input1.$input_file.traj_file.ext
-              -f2 ./input2.$input_file.traj_file2.ext
-              -rmsd '$input_file.rmsd'
-              -abstol '$input_file.abs_tol'
-              &> '$output_file_ctraj'
-      #elif $input_file.calculate_select == "info_struc":
-          ln -s '$input_file.struc_file' ./input1.$input_file.struc_file.ext &&
-          gmx check
-              -c ./input1.$input_file.struc_file.ext
-              -vdwfac '$input_file.vdwfac'
-              -bonlo '$input_file.bonlo'
-              -bonhi '$input_file.bonhi'
-              &> '$output_file_struc'
-      #elif $input_file.calculate_select == "info_ener":
-          ln -s '$input_file.ener_file' ./input1.$input_file.ener_file.ext &&
-          gmx check
-              -e ./input1.$input_file.ener_file.ext
-              &> '$output_file_ener'
-      #elif $input_file.calculate_select == "info_ind":
-          ln -s '$input_file.ind_file' ./input1.$input_file.ind_file.ext &&
-          gmx check
-              -n ./input1.$input_file.ind_file.ext
-              &> '$output_file_ind'
-      #elif $input_file.calculate_select == "compare_ener":
-          ln -s '$input_file.ener_file' ./input1.$input_file.ener_file.ext &&
-          ln -s '$input_file.ener_file2' ./input2.$input_file.ener_file2.ext &&
-          gmx check
-              -e ./input1.$input_file.ener_file.ext
-              -e2 ./input2.$input_file.ener_file2.ext
-              -lastener '$input_file.lastener'
-              -tol '$input_file.rel_tol'
-              &> '$output_file_cener'
-      #else:
-          ln -s '$input_file.top_file' ./input1.$input_file.top_file.ext &&
-          ln -s '$input_file.top_file2' ./input2.$input_file.top_file2.ext &&
-          gmx check
-              -s1 ./input1.$input_file.top_file.ext
-              -s2 ./input2.$input_file.top_file2.ext
-              -abstol '$input_file.abs_tol'
-              &> '$output_file_top'
-      #end if
+        #for $i, $choice in enumerate($analysis)
+            #if $choice.input_file.calculate_select == "info_traj":
+                ln -s '$choice.input_file.traj_file' './$i.$choice.input_file.traj_file.element_identifier';
+                gmx check
+                    -f './$i.$choice.input_file.traj_file.element_identifier'
+                    &> '${i}.Trajectory_information_for_"${choice.input_file.traj_file.element_identifier}".txt';
+            #elif $choice.input_file.calculate_select == "compare_traj":
+                ln -s '$choice.input_file.traj_file' './$i.$choice.input_file.traj_file.element_identifier';
+                ln -s '$choice.input_file.traj_file2' './$i.$choice.input_file.traj_file2.element_identifier';
+                gmx check
+                    -f './$i.$choice.input_file.traj_file.element_identifier'
+                    -f2 './$i.$choice.input_file.traj_file2.element_identifier'
+                    $choice.input_file.rmsd
+                    -tol '$choice.input_file.rel_tol'
+                    -abstol '$choice.input_file.abs_tol'
+                    &> '${i}.Compare_trajectories_between_"${choice.input_file.traj_file.element_identifier}"_and_"${choice.input_file.traj_file2.element_identifier}".txt';
+            #elif $choice.input_file.calculate_select == "info_struc":
+                ln -s '$choice.input_file.struc_file' './$i.$choice.input_file.struc_file.element_identifier';
+                gmx check
+                    -c './$i.$choice.input_file.struc_file.element_identifier'
+                    -vdwfac '$choice.input_file.vdwfac'
+                    -bonlo '$choice.input_file.bonlo'
+                    -bonhi '$choice.input_file.bonhi'
+                    &> '${i}.Structure_information_for_"${choice.input_file.struc_file.element_identifier}".txt';
+            #elif $choice.input_file.calculate_select == "info_ener":
+                ln -s '$choice.input_file.ener_file' './$i.$choice.input_file.ener_file.element_identifier' ;
+                gmx check
+                    -e './$i.$choice.input_file.ener_file.element_identifier'
+                    &> '${i}.Energy_information_for_"${$choice.input_file.ener_file.element_identifier}".txt';
+            #elif $choice.input_file.calculate_select == "info_ind":
+                ln -s '$choice.input_file.ind_file' './$i.$choice.input_file.ind_file.element_identifier';
+                gmx check
+                    -n './$i.$choice.input_file.ind_file.element_identifier'
+                    &> '${i}.Index_information_for_"${choice.input_file.ind_file.element_identifier}".txt';
+            #elif $choice.input_file.calculate_select == "compare_ener":
+                ln -s '$choice.input_file.ener_file' './$i.$choice.input_file.ener_file.element_identifier';
+                ln -s '$choice.input_file.ener_file2' './$i.$choice.input_file.ener_file2.element_identifier';
+                gmx check
+                    -e './$i.$choice.input_file.ener_file.element_identifier'
+                    -e2 './$i.$choice.input_file.ener_file2.element_identifier'
+                    -tol '$choice.input_file.rel_tol'
+                    -abstol '$choice.input_file.abs_tol'
+                    -lastener '$choice.input_file.lastener'
+                    &> '${i}.Compare_energies_between_"${choice.input_file.ener_file.element_identifier}"_and_"${choice.input_file.ener_file2.element_identifier}".txt';
+            #else:
+                ln -s '$choice.input_file.top_file' './$i.$choice.input_file.top_file.element_identifier';
+                ln -s '$choice.input_file.top_file2' './$i.$choice.input_file.top_file2.element_identifier';
+                gmx check
+                    -s1 './$i.$choice.input_file.top_file.element_identifier'
+                    -s2 './$i.$choice.input_file.top_file2.element_identifier'
+                    -abstol '$choice.input_file.abs_tol'
+                    &> '${i}.Compare_topologies_between_"${choice.input_file.top_file.element_identifier}"_and_"${choice.input_file.top_file2.element_identifier}".txt';
+            #end if
+        #end for
     ]]></command>
     <inputs>
-      <conditional name="input_file">
-          <param name="calculate_select" type="select" label="What do you want to achieve?">
-              <option value="info_traj">Information on a trajectory file</option>
-              <option value="compare_traj">Compare two trajectory files</option>
-              <option value="info_struc">Information on a structure file</option>
-              <option value="info_ener">Information on a energy file</option>
-              <option value="info_ind">Information on a index file</option>
-              <option value="compare_top">Compare two topology files</option>
-              <option value="compare_ener">Compare two energy files</option>
-          </param>
-          <when value="info_traj">
-              <param name="traj_file" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory file"/>
-          </when>
-          <when value="compare_traj">
-              <param name="traj_file" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory file 1"/>
-              <param name="traj_file2" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory file 2"/>
-              <param name="rmsd" type="boolean" optional="True" label="Do you want to display the RMSD?"/>
-              <param name="abs_tol" type="float" value="0.001" optional="True" label="Enter absolute tolerance"/>
-          </when>
-          <when value="info_struc">
-              <param name="struc_file" type="data" format="tpr, gro, g96, pdb, brk, ent" label="Structure file"/>
-              <param name="vdwfac" type="float" value="0.8" optional="True" label="Enter the fraction of sum of VdW radii"/>
-              <param name="bonlo" type="float" value="0.4" optional="True" label="Enter the minimal fraction of sum of vdW radii for bonded atoms"/>
-              <param name="bonhi" type="float" value="0.7" optional="True" label="Enter the maximal fraction of sum of vdW radii for bonded atoms"/>
-          </when>
-          <when value="info_ener">
-              <param name="ener_file" type="data" format="edr" label="Energy file"/>
-          </when>
-          <when value="info_ind">
-              <param name="ind_file" type="data" format="ndx" label="Index file"/>
-          </when>
-          <when value="compare_top">
-              <param name="top_file" type="data" format="tpr" label="Topology file 1"/>
-              <param name="top_file2" type="data" format="tpr" label="Topology file 2"/>
-              <param name="abs_tol" type="float" value="0.001" optional="True" label="Enter absolute tolerance"/>
-          </when>
-          <when value="compare_ener">
-              <param name="ener_file" type="data" format="edr" label="Energy file 1"/>
-              <param name="ener_file2" type="data" format="edr" label="Energy file 2"/>
-              <param name="rel_tol" type="float" value="0.001" optional="True" label="Enter relative tolerance"/>
-              <param name="lastener" type="text" value="all" optional="True" label="Enter the last energy term to compare"/>
-          </when>
-      </conditional>
+        <repeat name="analysis" title="Type of analysis">
+            <conditional name="input_file">
+                <param name="calculate_select" type="select" label="Select the type of information you want to obtain">
+                    <option value="info_traj">Information about a trajectory</option>
+                    <option value="compare_traj">Compare two trajectories</option>
+                    <option value="info_struc">Information about the structure of a system</option>
+                    <option value="info_ener">Information about the energy of a system</option>
+                    <option value="info_ind">Information about the index of a system</option>
+                    <option value="compare_top">Compare two topologies</option>
+                    <option value="compare_ener">Compare two energy files</option>
+                </param>
+                <when value="info_traj">
+                    <param name="traj_file" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory file" help="Enter the trajectory file. Accepted format: xtc, trr, cpt, gro, g96, pdb, tng."/>
+                </when>
+                <when value="compare_traj">
+                    <param name="traj_file" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory file 1" help="Enter the first trajectory file. Accepted format: xtc, trr, cpt, gro, g96, pdb, tng."/>
+                    <param name="traj_file2" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory file 2" help="Enter the second trajectory file. Accepted format: xtc, trr, cpt, gro, g96, pdb, tng."/>
+                    <param name="rmsd" type="boolean" truevalue="-rmsd" falsevalue="" label="Do you want to display the RMSD?"/>
+                    <param name="rel_tol" type="float" max="1.0" value="0.001" label="Enter relative tolerance" help="Relative tolerance for comparing real values defined as 2*(a-b)/(|a|+|b|)."/>
+                    <param name="abs_tol" type="float" max="1.0" value="0.001" optional="True" label="Enter absolute tolerance" help="Absolute tolerance, useful when sums are close to zero."/>
+                </when>
+                <when value="info_struc">
+                    <param name="struc_file" type="data" format="tpr, gro, g96, pdb, brk, ent" label="Structure file" help="Enter the structure file. Accepted format: tpr, gro, g96, pdb, brk, ent."/>
+                    <param name="vdwfac" type="float" max="1.0" value="0.8" label="Enter the fraction of sum of VdW radii"/>
+                    <param name="bonlo" type="float" max="1.0" value="0.4" label="Enter the minimal fraction of sum of vdW radii for bonded atoms"/>
+                    <param name="bonhi" type="float" max="1.0" value="0.7" label="Enter the maximal fraction of sum of vdW radii for bonded atoms"/>
+                </when>
+                <when value="info_ener">
+                    <param name="ener_file" type="data" format="edr" label="Energy file" help="Enter the energy file. Accepted format: edr."/>
+                </when>
+                <when value="info_ind">
+                    <param name="ind_file" type="data" format="ndx" label="Index file" help="Enter the index file. Accepted format: ndx."/>
+                </when>
+                <when value="compare_top">
+                    <param name="top_file" type="data" format="tpr" label="Topology file 1" help="Enter the first topology file. Accepted format: tpr."/>
+                    <param name="top_file2" type="data" format="tpr" label="Topology file 2" help="Enter the second topology file. Accepted format: tpr."/>
+                    <param name="abs_tol" type="float" max="1.0" value="0.001" label="Enter absolute tolerance" help="Absolute tolerance, useful when sums are close to zero."/>
+                </when>
+                <when value="compare_ener">
+                    <param name="ener_file" type="data" format="edr" label="Energy file 1" help="Enter the first energy file. Accepted format: edr."/>
+                    <param name="ener_file2" type="data" format="edr" label="Energy file 2" help="Enter the second energy file. Accepted format: edr."/>
+                    <param name="rel_tol" type="float" max="1.0" value="0.001" label="Enter relative tolerance" help="Relative tolerance for comparing real values defined as 2*(a-b)/(|a|+|b|)."/>
+                    <param name="abs_tol" type="float" max="1.0" value="0.001" optional="True" label="Enter absolute tolerance" help="Absolute tolerance, useful when sums are close to zero."/>
+                    <param name="lastener" type="text" value="all" label="Enter the last energy term to compare" help="Last energy term to compare. It makes sense to go up until the Pressure."/>
+                </when>
+            </conditional>
+        </repeat>
     </inputs>
     <outputs>
-        <data name="output_file_traj" format="txt" label="infos trajectory">
-            <filter>input_file['calculate_select'] == 'info_traj'</filter>
-        </data>
-        <data name="output_file_ctraj" format="txt" label="compare trajectory">
-            <filter>input_file['calculate_select'] == 'compare_traj'</filter>
-        </data>
-        <data name="output_file_struc" format="txt" label="infos structure">
-            <filter>input_file['calculate_select'] == 'info_struc'</filter>
-        </data>
-        <data name="output_file_ener" format="txt" label="infos energy">
-            <filter>input_file['calculate_select'] == 'info_ener'</filter>
-        </data>
-        <data name="output_file_ind" format="txt" label="infos index">
-            <filter>input_file['calculate_select'] == 'info_ind'</filter>
-        </data>
-        <data name="output_file_top" format="txt" label="compare topology">
-            <filter>input_file['calculate_select'] == 'compare_top'</filter>
-        </data>
-        <data name="output_file_cener" format="txt" label="compare energy">
-            <filter>input_file['calculate_select'] == "compare_ener"</filter>
+        <data name="output">
+            <discover_datasets pattern="(?P&lt;name&gt;.+\.txt)$" ext="txt" visible="true" directory="" assign_primary_output="true"/>
         </data>
     </outputs>
     <tests>
         <test>
-          <conditional name="input_file">
-              <param name="calculate_select" value="info_traj"/>
-              <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
-          </conditional>
-          <output name="output_file_traj" file="check_traj.txt" ftype="txt" lines_diff="41"/>
+            <repeat name="analysis">
+                <conditional name="input_file">
+                    <param name="calculate_select" value="info_traj"/>
+                    <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
+                </conditional>
+            </repeat>
+            <output name="output" file="check_traj.txt" ftype="txt" lines_diff="41"/>
         </test>
         <test>
-          <conditional name="input_file">
+          <repeat name="analysis">
+            <conditional name="input_file">
               <param name="calculate_select" value="compare_traj"/>
               <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
               <param name="traj_file2" value="npt.xtc" ftype="xtc"/>
-          </conditional>
-          <output name="output_file_ctraj" file="check_compare_f.txt" ftype="txt" lines_diff="45"/>
-        </test>
-        <test>
-          <conditional name="input_file">
-              <param name="calculate_select" value="compare_traj"/>
-              <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
-              <param name="traj_file2" value="npt.xtc" ftype="xtc"/>
-              <param name="rmsd" value="True"/>
-          </conditional>
-          <output name="output_file_ctraj" file="check_comp_f_rmsd.txt" ftype="txt" lines_diff="20"/>
-        </test>
-        <test>
-          <conditional name="input_file">
-              <param name="calculate_select" value="compare_traj"/>
-              <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
-              <param name="traj_file2" value="npt.xtc" ftype="xtc"/>
-              <param name="abs_tol" value="0.1"/>
-          </conditional>
-          <output name="output_file_ctraj" file="check_comp_f_abstol.txt" ftype="txt" lines_diff="18"/>
-        </test>
-        <test>
+            </conditional>
+          </repeat>
+          <output name="output" file="check_compare_f.txt" ftype="txt" lines_diff="45" />
+      </test>
+      <test>
+        <repeat name="analysis">
           <conditional name="input_file">
               <param name="calculate_select" value="compare_traj"/>
               <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
               <param name="traj_file2" value="npt.xtc" ftype="xtc"/>
               <param name="rmsd" value="True"/>
-              <param name="abs_tol" value="0.1"/>
           </conditional>
-          <output name="output_file_ctraj" file="check_comp_f_abstol_rmsd.txt" ftype="txt" lines_diff="14"/>
-        </test>
-        <test>
+        </repeat>
+        <repeat name="analysis">
+          <conditional name="input_file">
+            <param name="calculate_select" value="compare_traj"/>
+            <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
+            <param name="traj_file2" value="npt.xtc" ftype="xtc"/>
+            <param name="abs_tol" value="0.1"/>
+          </conditional>
+        </repeat>
+        <repeat name="analysis">
+          <conditional name="input_file">
+            <param name="calculate_select" value="compare_traj"/>
+            <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
+            <param name="traj_file2" value="npt.xtc" ftype="xtc"/>
+            <param name="rmsd" value="True"/>
+            <param name="rel_tol" value="0.1"/>
+            <param name="abs_tol" value="0.1"/>
+          </conditional>
+        </repeat>
+        <output name="output" file="check_comp_f_rmsd.txt" ftype="txt" lines_diff="20" >
+          <discovered_dataset designation='1.Compare_trajectories_between_"nvt.xtc"_and_"npt.xtc".txt' file="check_comp_f_abstol.txt" ftype="txt" lines_diff="18"/>
+          <discovered_dataset designation='2.Compare_trajectories_between_"nvt.xtc"_and_"npt.xtc".txt' file="check_comp_f_abstol_rmsd.txt" ftype="txt" lines_diff="14"/>
+        </output>
+      </test>
+      <test>
+        <repeat name="analysis">
           <conditional name="input_file">
               <param name="calculate_select" value="info_struc"/>
               <param name="struc_file" value="minim.gro" ftype="gro"/>
           </conditional>
-          <output name="output_file_struc" file="check_struc.txt" ftype="txt" lines_diff="55"/>
-        </test>
-        <test>
+        </repeat>
+        <repeat name="analysis">
           <conditional name="input_file">
-              <param name="calculate_select" value="info_struc"/>
-              <param name="struc_file" value="minim.gro" ftype="gro"/>
-              <param name="vdwfac" value="0.5"/>
+            <param name="calculate_select" value="info_struc"/>
+            <param name="struc_file" value="minim.gro" ftype="gro"/>
+            <param name="vdwfac" value="0.5"/>
           </conditional>
-          <output name="output_file_struc" file="check_struc_vdw.txt" ftype="txt" lines_diff="14"/>
-        </test>
-        <test>
+        </repeat>
+        <repeat name="analysis">
           <conditional name="input_file">
-              <param name="calculate_select" value="info_struc"/>
-              <param name="struc_file" value="minim.gro" ftype="gro"/>
-              <param name="bonlo" value="0.2"/>
+            <param name="calculate_select" value="info_struc"/>
+            <param name="struc_file" value="minim.gro" ftype="gro"/>
+            <param name="bonlo" value="0.2"/>
           </conditional>
-          <output name="output_file_struc" file="check_struc_lo.txt" ftype="txt" lines_diff="20"/>
-        </test>
-        <test>
+        </repeat>
+        <repeat name="analysis">
           <conditional name="input_file">
-              <param name="calculate_select" value="info_struc"/>
-              <param name="struc_file" value="minim.gro" ftype="gro"/>
-              <param name="bonhi" value="0.8"/>
+            <param name="calculate_select" value="info_struc"/>
+            <param name="struc_file" value="minim.gro" ftype="gro"/>
+            <param name="bonhi" value="0.8"/>
           </conditional>
-          <output name="output_file_struc" file="check_struc_hi.txt" ftype="txt" lines_diff="14"/>
-        </test>
-        <test>
+        </repeat>
+        <repeat name="analysis">
           <conditional name="input_file">
-              <param name="calculate_select" value="info_struc"/>
-              <param name="struc_file" value="minim.gro" ftype="gro"/>
-              <param name="bonlo" value="0.2"/>
-              <param name="bonhi" value="0.8"/>
+            <param name="calculate_select" value="info_struc"/>
+            <param name="struc_file" value="minim.gro" ftype="gro"/>
+            <param name="bonlo" value="0.2"/>
+            <param name="bonhi" value="0.8"/>
           </conditional>
-          <output name="output_file_struc" file="check_struc_lo_hi.txt" ftype="txt" lines_diff="14"/>
-        </test>
-        <test>
+        </repeat>
+        <repeat name="analysis">
           <conditional name="input_file">
-              <param name="calculate_select" value="info_struc"/>
-              <param name="struc_file" value="minim.gro" ftype="gro"/>
-              <param name="vdwfac" value="0.5"/>
-              <param name="bonlo" value="0.2"/>
+            <param name="calculate_select" value="info_struc"/>
+            <param name="struc_file" value="minim.gro" ftype="gro"/>
+            <param name="vdwfac" value="0.5"/>
+            <param name="bonlo" value="0.2"/>
           </conditional>
-          <output name="output_file_struc" file="check_struc_vdw_lo.txt" ftype="txt" lines_diff="14"/>
-        </test>
-        <test>
+        </repeat>
+        <repeat name="analysis">
           <conditional name="input_file">
-              <param name="calculate_select" value="info_struc"/>
-              <param name="struc_file" value="minim.gro" ftype="gro"/>
-              <param name="vdwfac" value="0.5"/>
-              <param name="bonhi" value="0.8"/>
+            <param name="calculate_select" value="info_struc"/>
+            <param name="struc_file" value="minim.gro" ftype="gro"/>
+            <param name="vdwfac" value="0.5"/>
+            <param name="bonhi" value="0.8"/>
           </conditional>
-          <output name="output_file_struc" file="check_struc_vdw_hi.txt" ftype="txt" lines_diff="14"/>
-        </test>
-        <test>
+        </repeat>
+        <repeat name="analysis">
           <conditional name="input_file">
-              <param name="calculate_select" value="info_struc"/>
-              <param name="struc_file" value="minim.gro" ftype="gro"/>
-              <param name="vdwfac" value="0.5"/>
-              <param name="bonlo" value="0.2"/>
-              <param name="bonhi" value="0.8"/>
+            <param name="calculate_select" value="info_struc"/>
+            <param name="struc_file" value="minim.gro" ftype="gro"/>
+            <param name="vdwfac" value="0.5"/>
+            <param name="bonlo" value="0.2"/>
+            <param name="bonhi" value="0.8"/>
           </conditional>
-          <output name="output_file_struc" file="check_struc_vdw_lo_hi.txt" ftype="txt" lines_diff="14"/>
-        </test>
-        <test>
+        </repeat>
+        <output name="output" file="check_struc.txt" ftype="txt" lines_diff="55" >
+          <discovered_dataset designation='1.Structure_information_for_"minim.gro".txt' file="check_struc_vdw.txt" ftype="txt" lines_diff="14"/>
+          <discovered_dataset designation='2.Structure_information_for_"minim.gro".txt' file="check_struc_lo.txt" ftype="txt" lines_diff="20"/>
+          <discovered_dataset designation='3.Structure_information_for_"minim.gro".txt' file="check_struc_hi.txt" ftype="txt" lines_diff="14"/>
+          <discovered_dataset designation='4.Structure_information_for_"minim.gro".txt' file="check_struc_lo_hi.txt" ftype="txt" lines_diff="14"/>
+          <discovered_dataset designation='5.Structure_information_for_"minim.gro".txt' file="check_struc_vdw_lo.txt" ftype="txt" lines_diff="14"/>
+          <discovered_dataset designation='6.Structure_information_for_"minim.gro".txt' file="check_struc_vdw_hi.txt" ftype="txt" lines_diff="14"/>
+          <discovered_dataset designation='7.Structure_information_for_"minim.gro".txt' file="check_struc_vdw_lo_hi.txt" ftype="txt" lines_diff="14"/>
+        </output>
+      </test>
+      <test>
+        <repeat name="analysis">
           <conditional name="input_file">
               <param name="calculate_select" value="info_ener"/>
               <param name="ener_file" value="minim.edr" ftype="edr"/>
           </conditional>
-          <output name="output_file_ener" file="check_ener.txt" ftype="txt" lines_diff="45"/>
-        </test>
-        <test>
+        </repeat>
+        <repeat name="analysis">
           <conditional name="input_file">
-              <param name="calculate_select" value="info_ind"/>
-              <param name="ind_file" value="index.ndx" ftype="ndx"/>
+            <param name="calculate_select" value="info_ind"/>
+            <param name="ind_file" value="index.ndx" ftype="ndx"/>
           </conditional>
-          <output name="output_file_ind" file="check_ind.txt" ftype="txt" lines_diff="41"/>
-        </test>
-        <test>
+        </repeat>
+        <repeat name="analysis">
           <conditional name="input_file">
-              <param name="calculate_select" value="compare_ener"/>
-              <param name="ener_file" value="minim.edr" ftype="edr"/>
-              <param name="ener_file2" value="outp.edr" ftype="edr"/>
+            <param name="calculate_select" value="compare_top"/>
+            <param name="top_file" value="nvt.tpr" ftype="tpr"/>
+            <param name="top_file2" value="npt.tpr" ftype="tpr"/>
           </conditional>
-          <output name="output_file_cener" file="check_compare_e.txt" ftype="txt" lines_diff="38"/>
-        </test>
-        <test>
+        </repeat>
+        <repeat name="analysis">
           <conditional name="input_file">
-              <param name="calculate_select" value="compare_ener"/>
-              <param name="ener_file" value="minim.edr" ftype="edr"/>
-              <param name="ener_file2" value="outp.edr" ftype="edr"/>
-              <param name="rel_tol" value="0.1"/>
+            <param name="calculate_select" value="compare_top"/>
+            <param name="top_file" value="nvt.tpr" ftype="tpr"/>
+            <param name="top_file2" value="npt.tpr" ftype="tpr"/>
+            <param name="abs_tol" value="0.1"/>
           </conditional>
-          <output name="output_file_cener" file="check_comp_e_tol.txt" ftype="txt" lines_diff="38"/>
-        </test>
-        <test>
+        </repeat>
+        <output name="output" file="check_ener.txt" ftype="txt" lines_diff="45" >
+          <discovered_dataset designation='1.Index_information_for_"index.ndx".txt' file="check_ind.txt" ftype="txt" lines_diff="41"/>
+          <discovered_dataset designation='2.Compare_topologies_between_"nvt.tpr"_and_"npt.tpr".txt' file="check_compare_t.txt" ftype="txt" lines_diff="115"/>
+          <discovered_dataset designation='3.Compare_topologies_between_"nvt.tpr"_and_"npt.tpr".txt' file="check_compare_t_abstol.txt" ftype="txt" lines_diff="16"/>
+        </output>
+      </test>
+      <test>
+        <repeat name="analysis">
           <conditional name="input_file">
-              <param name="calculate_select" value="compare_ener"/>
-              <param name="ener_file" value="minim.edr" ftype="edr"/>
-              <param name="ener_file2" value="outp.edr" ftype="edr"/>
-              <param name="lastener" value="Pressure"/>
+            <param name="calculate_select" value="compare_ener"/>
+            <param name="ener_file" value="minim.edr" ftype="edr"/>
+            <param name="ener_file2" value="outp.edr" ftype="edr"/>
           </conditional>
-          <output name="output_file_cener" file="check_comp_e_last.txt" ftype="txt" lines_diff="34"/>
-        </test>
-        <test>
+        </repeat>
+        <repeat name="analysis">
           <conditional name="input_file">
-              <param name="calculate_select" value="compare_ener"/>
-              <param name="ener_file" value="minim.edr" ftype="edr"/>
-              <param name="ener_file2" value="outp.edr" ftype="edr"/>
-              <param name="rel_tol" value="0.1"/>
-              <param name="lastener" value="Pressure"/>
+            <param name="calculate_select" value="compare_ener"/>
+            <param name="ener_file" value="minim.edr" ftype="edr"/>
+            <param name="ener_file2" value="outp.edr" ftype="edr"/>
+            <param name="rel_tol" value="0.1"/>
           </conditional>
-          <output name="output_file_cener" file="check_comp_e_tol_last.txt" ftype="txt" lines_diff="28"/>
-        </test>
-        <test>
+        </repeat>
+        <repeat name="analysis">
           <conditional name="input_file">
-              <param name="calculate_select" value="compare_top"/>
-              <param name="top_file" value="nvt.tpr" ftype="tpr"/>
-              <param name="top_file2" value="npt.tpr" ftype="tpr"/>
+            <param name="calculate_select" value="compare_ener"/>
+            <param name="ener_file" value="minim.edr" ftype="edr"/>
+            <param name="ener_file2" value="outp.edr" ftype="edr"/>
+            <param name="lastener" value="Pressure"/>
           </conditional>
-          <output name="output_file_top" file="check_compare_t.txt" ftype="txt" lines_diff="115"/>
-        </test>
-        <test>
+        </repeat>
+        <repeat name="analysis">
           <conditional name="input_file">
-              <param name="calculate_select" value="compare_top"/>
-              <param name="top_file" value="nvt.tpr" ftype="tpr"/>
-              <param name="top_file2" value="npt.tpr" ftype="tpr"/>
-              <param name="abs_tol" value="0.1"/>
+            <param name="calculate_select" value="compare_ener"/>
+            <param name="ener_file" value="minim.edr" ftype="edr"/>
+            <param name="ener_file2" value="outp.edr" ftype="edr"/>
+            <param name="rel_tol" value="0.1"/>
+            <param name="abs_tol" value="0.1"/>
+            <param name="lastener" value="Pressure"/>
           </conditional>
-          <output name="output_file_top" file="check_compare_t_abstol.txt" ftype="txt" lines_diff="16"/>
-        </test>
+        </repeat>
+        <output name="output" file="check_compare_e.txt" ftype="txt" lines_diff="42" >
+          <discovered_dataset designation='1.Compare_energies_between_"minim.edr"_and_"outp.edr".txt' file="check_comp_e_tol.txt" ftype="txt" lines_diff="38"/>
+          <discovered_dataset designation='2.Compare_energies_between_"minim.edr"_and_"outp.edr".txt' file="check_comp_e_last.txt" ftype="txt" lines_diff="36"/>
+          <discovered_dataset designation='3.Compare_energies_between_"minim.edr"_and_"outp.edr".txt' file="check_comp_e_tol_last.txt" ftype="txt" lines_diff="28"/>
+        </output>
+      </test>
     </tests>
     <help><![CDATA[
-        Hello world!
+
+.. class:: infomark
+
+**What it does**
+
+This tool allows you to obtain information on trajectory, structure, energy or index files. It also allows to compare two energy, trajectory or topology files.
+
+_____
+
+.. class:: infomark
+
+**Inputs**
+
+**Information about a trajectory**
+    - Trajectory file : -f option. Trajectory file in xtc, trr, cpt, gro, g96, pdb or tng format.
+
+**Compare two trajectories**
+    - Trajectory file 1 : -f option. Trajectory file in xtc, trr, cpt, gro, g96, pdb or tng format.
+    - Trajectory file 2 : -f2 option. Trajectory file in xtc, trr, cpt, gro, g96, pdb or tng format.
+    - Do you want to display the RMSD? : -rmsd option. Print RMSD for x, v and f.
+    - Enter relative tolerance : -tol option. Relative tolerance for comparing real values.
+    - Enter absolute tolerance : -abstol option. Absolute tolerance, useful when sums are close to zero.
+
+**Information about the structure of a system**
+    - Structure file : -c option. Structure file in tpr, gro, g96, pdb, brk or ent format.
+    - Enter the fraction of sum of VdW radii : -vdwfac option.
+    - Enter the minimal fraction of sum of vdW radii for bonded atoms : -bonlo option.
+    - Enter the maximal fraction of sum of vdW radii for bonded atoms : -bonhi option.
+
+**Information about the energy of a system**
+    - Energy file : -e option. Energy file in edr format.
+
+**Information about the index of a system**
+    - Index file : -n option. Index file in ndx format.
+
+**Compare two topologies**
+    - Topology file 1 : -s1 option. Topology file in tpr format.
+    - Topology file 2 : -s2 option. Topology file in tpr format.
+    - Enter absolute tolerance : -abstol option. Absolute tolerance, useful when sums are close to zero.
+
+**Compare two energy files**
+    - Energy file 1 : -e option. Energy file in edr format.
+    - Energy file 2 : -e2 option. Energy file in edr format.
+    - Enter relative tolerance : -tol option. Relative tolerance for comparing real values.
+    - Enter absolute tolerance : -abstol option. Absolute tolerance, useful when sums are close to zero.
+    - Enter the last energy term to compare : -lastener. Last energy term to compare (if not given all are tested). It makes sense to go up until the Pressure.
+
+The -ab option is not implemented.
+
+_____
+
+.. class:: infomark
+
+**Output**
+
+    - list with one or more TXT files. This file contains either information about the trajectory, the structure, the index or the energy, or a comparison between two trajectories, two topologies or two energy files.
+
     ]]></help>
     <expand macro="citations" />
 </tool>
