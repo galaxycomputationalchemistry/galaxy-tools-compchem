@@ -106,16 +106,16 @@
             <param name="outputformat" value="none"/>
             <output name="rmsdmirror_output" ftype="xvg">
                 <assert_contents>
-                    <has_text text="0.1000000    0.1420089"/>
-                    <has_text text="0.2000000    0.1430562"/>
-                    <has_text text="0.3000000    0.1366720"/>
+                    <has_text_matching expression="0.1000000    0.1420089"/>
+                    <has_text_matching expression="0.2000000    0.1430562"/>
+                    <has_text_matching expression="0.3000000    0.1366720"/>
                 </assert_contents>
             </output>
             <output name="rmsd_output" ftype="xvg">
                 <assert_contents>
-                    <has_text text="0.1000000    0.0208356"/>
-                    <has_text text="0.2000000    0.0297601"/>
-                    <has_text text="0.3000000    0.0322985"/>
+                    <has_text_matching expression="0.1000000    0.0208356"/>
+                    <has_text_matching expression="0.2000000    0.0297601"/>
+                    <has_text_matching expression="0.3000000    0.0322985"/>
                 </assert_contents>
             </output>
         </test>
@@ -132,16 +132,16 @@
             <param name="outputformat" value="none"/>
             <output name="xpm_output" ftype="xpm">
                 <assert_contents>
-                    <has_text text="A  c #FFFFFF "/>
-                    <has_text text="B  c #FCFCFC "/>
-                    <has_text text="C  c #F9F9F9 "/>
+                    <has_text_matching expression="A  c #FFFFFF "/>
+                    <has_text_matching expression="B  c #FCFCFC "/>
+                    <has_text_matching expression="C  c #F9F9F9 "/>
                 </assert_contents>
             </output>
             <output name="rmsd_output" ftype="xvg">
                 <assert_contents>
-                    <has_text text="0.1000000    0.0208356"/>
-                    <has_text text="0.2000000    0.0297601"/>
-                    <has_text text="0.3000000    0.0322985"/>
+                    <has_text_matching expression="0.1000000    0.0208356"/>
+                    <has_text_matching expression="0.2000000    0.0297601"/>
+                    <has_text_matching expression="0.3000000    0.0322985"/>
                 </assert_contents>
             </output>
         </test>
