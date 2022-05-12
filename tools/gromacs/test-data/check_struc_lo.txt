@@ -1,206 +1,0 @@
-                       :-) GROMACS - gmx check, 2022 (-:
-
-Executable:   /usr/local/gromacs/bin/gmx
-Data prefix:  /usr/local/gromacs
-Working dir:  /home/aepetit/Documents/scripts/galaxy-tools-compchem/tools/gromacs/test-data
-Command line:
-  gmx check -c minim.gro -bonlo 0.2
-
-Checking coordinate file minim.gro
-94 atoms in file
-coordinates found
-box         found
-velocities  absent
-
-Checking for atoms closer than 0.8 and not between 0.2 and 0.7,
-relative to sum of Van der Waals distance:
-
-WARNING: Masses and atomic (Van der Waals) radii will be guessed
-         based on residue and atom names, since they could not be
-         definitively assigned from the information in your input
-         files. These guessed numbers might deviate from the mass
-         and radius of the atom type. Please check the output
-         files if necessary. Note, that this functionality may
-         be removed in a future GROMACS version. Please, consider
-         using another file format for your input.
-
-
-WARNING: Masses and atomic (Van der Waals) radii will be guessed
-         based on residue and atom names, since they could not be
-         definitively assigned from the information in your input
-         files. These guessed numbers might deviate from the mass
-         and radius of the atom type. Please check the output
-         files if necessary. Note, that this functionality may
-         be removed in a future GROMACS version. Please, consider
-         using another file format for your input.
-
-NOTE: From version 5.0 gmx check uses the Van der Waals radii
-from the source below. This means the results may be different
-compared to previous GROMACS versions.
-
-++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
-A. Bondi
-van der Waals Volumes and Radii
-J. Phys. Chem. 68 (1964) pp. 441-451
--------- -------- --- Thank You --- -------- --------
-
-atom# name  residue r_vdw  atom# name  residue r_vdw  distance
-    1    N  LYS   1 0.155      6   HA  LYS   1 0.12   0.2103
-    1    N  LYS   1 0.155      7   CB  LYS   1 0.17   0.2447
-    1    N  LYS   1 0.155     23    C  LYS   1 0.17   0.2437
-    2   H1  LYS   1 0.12       5   CA  LYS   1 0.17   0.205 
-    3   H2  LYS   1 0.12       5   CA  LYS   1 0.17   0.204 
-    5   CA  LYS   1 0.17       8  HB1  LYS   1 0.12   0.2166
-    5   CA  LYS   1 0.17       9  HB2  LYS   1 0.12   0.2169
-    5   CA  LYS   1 0.17      10   CG  LYS   1 0.17   0.2598
-    5   CA  LYS   1 0.17      24    O  LYS   1 0.152  0.235 
-    5   CA  LYS   1 0.17      25    N  VAL   2 0.155  0.2455
-    6   HA  LYS   1 0.12       7   CB  LYS   1 0.17   0.2176
-    6   HA  LYS   1 0.12      23    C  LYS   1 0.17   0.215 
-    7   CB  LYS   1 0.17      11  HG1  LYS   1 0.12   0.2154
-    7   CB  LYS   1 0.17      12  HG2  LYS   1 0.12   0.217 
-    7   CB  LYS   1 0.17      13   CD  LYS   1 0.17   0.252 
-    7   CB  LYS   1 0.17      23    C  LYS   1 0.17   0.2504
-    8  HB1  LYS   1 0.12       9  HB2  LYS   1 0.12   0.1744
-    8  HB1  LYS   1 0.12      10   CG  LYS   1 0.17   0.2149
-    9  HB2  LYS   1 0.12      10   CG  LYS   1 0.17   0.2132
-   10   10   CG  LYS   1 0.17      14  HD1  LYS   1 0.12   0.2135
-   10   CG  LYS   1 0.17      15  HD2  LYS   1 0.12   0.2152
-   10   CG  LYS   1 0.17      16   CE  LYS   1 0.17   0.251 
-   11  HG1  LYS   1 0.12      12  HG2  LYS   1 0.12   0.1752
-   11  HG1  LYS   1 0.12      13   CD  LYS   1 0.17   0.2145
-   12  HG2  LYS   1 0.12      13   CD  LYS   1 0.17   0.2141
-   13   CD  LYS   1 0.17      17  HE1  LYS   1 0.12   0.2158
-   13   CD  LYS   1 0.17      18  HE2  LYS   1 0.12   0.2161
-   13   CD  LYS   1 0.17      19   NZ  LYS   1 0.155  0.2464
-   14  HD1  LYS   1 0.12      15  HD2  LYS   1 0.12   0.1756
-   14  HD1  LYS   1 0.12      16   CE  LYS   1 0.17   0.2168
-   15  HD2  LYS   1 0.12      16   CE  LYS   1 0.17   0.2152
-   16   CE  LYS   1 0.17      20  HZ1  LYS   1 0.12   0.205 
-   16   CE  LYS   1 0.17      21  HZ2  LYS   1 0.12   0.2042
-   16   CE  LYS   1 0.17      22  HZ3  LYS   1 0.12   0.2043
-   17  HE1  LYS   1 0.12      18  HE2  LYS   1 0.12   0.1752
-   17  HE1  LYS   1 0.12      19   NZ  LYS   1 0.155  0.2104
-   18  HE2  LYS   1 0.12      19   NZ  LYS   1 0.155  0.2104
-   20   23    C  LYS   1 0.17      26    H  VAL   2 0.12   0.2057
-   23    C  LYS   1 0.17      27   CA  VAL   2 0.17   0.2452
-   24    O  LYS   1 0.152     25    N  VAL   2 0.155  0.2265
-   25    N  VAL   2 0.155     28   HA  VAL   2 0.12   0.212 
-   25    N  VAL   2 0.155     29   CB  VAL   2 0.17   0.2483
-   25    N  VAL   2 0.155     39    C  VAL   2 0.17   0.2402
-   26    H  VAL   2 0.12      27   CA  VAL   2 0.17   0.2099
-   27   CA  VAL   2 0.17      30   HB  VAL   2 0.12   0.2176
-   27   CA  VAL   2 0.17      31  CG1  VAL   2 0.17   0.2542
-   27   CA  VAL   2 0.17      35  CG2  VAL   2 0.17   0.2536
-   27   CA  VAL   2 0.17      40    O  VAL   2 0.152  0.2414
-   27   CA  VAL   2 0.17      41    N  PHE   3 0.155  0.2429
-   28   HA  VAL   2 0.12      29   CB  VAL   2 0.17   0.2139
-   28   HA  VAL   2 0.12      39    C  VAL   2 0.17   0.2153
-   29   CB  VAL   2 0.17      32 HG11  VAL   2 0.12   0.2179
-   29   CB  VAL   2 0.17      33 HG12  VAL   2 0.12   0.2189
-   29   CB  VAL   2 0.17      34 HG13  VAL   2 0.12   0.2179
-   29   CB  VAL   2 0.17      36 HG21  VAL   2 0.12   0.2167
-   29   CB  VAL   2 0.17      37 HG22  VAL   2 0.12   0.2176
-   29   CB  VAL   2 0.17      38 HG23  VAL   2 0.12   0.2192
-   29   CB  VAL   2 0.17      39    C  VAL   2 0.17   0.2543
-   30   30   HB  VAL   2 0.12      31  CG1  VAL   2 0.17   0.215 
-   30   HB  VAL   2 0.12      35  CG2  VAL   2 0.17   0.2146
-   31  CG1  VAL   2 0.17      35  CG2  VAL   2 0.17   0.2487
-   32 HG11  VAL   2 0.12      33 HG12  VAL   2 0.12   0.1757
-   32 HG11  VAL   2 0.12      34 HG13  VAL   2 0.12   0.1765
-   33 HG12  VAL   2 0.12      34 HG13  VAL   2 0.12   0.1761
-   36 HG21  VAL   2 0.12      37 HG22  VAL   2 0.12   0.176 
-   36 HG21  VAL   2 0.12      38 HG23  VAL   2 0.12   0.1755
-   37 HG22  VAL   2 0.12      38 HG23  VAL   2 0.12   0.1767
-   39    C  VAL   2 0.17      43   CA  PHE   3 0.17   0.2449
-   40   40    O  VAL   2 0.152     41    N  PHE   3 0.155  0.226 
-   41    N  PHE   3 0.155     44   HA  PHE   3 0.12   0.2084
-   41    N  PHE   3 0.155     45   CB  PHE   3 0.17   0.2467
-   41    N  PHE   3 0.155     59    C  PHE   3 0.17   0.2453
-   42    H  PHE   3 0.12      43   CA  PHE   3 0.17   0.2117
-   43   CA  PHE   3 0.17      46  HB1  PHE   3 0.12   0.2198
-   43   CA  PHE   3 0.17      47  HB2  PHE   3 0.12   0.2178
-   43   CA  PHE   3 0.17      48   CG  PHE   3 0.17   0.2554
-   43   CA  PHE   3 0.17      60    O  PHE   3 0.152  0.2405
-   43   CA  PHE   3 0.17      61    N  GLY   4 0.155  0.2431
-   44   HA  PHE   3 0.12      45   CB  PHE   3 0.17   0.2178
-   44   HA  PHE   3 0.12      59    C  PHE   3 0.17   0.2144
-   45   CB  PHE   3 0.17      49  CD1  PHE   3 0.17   0.2542
-   45   CB  PHE   3 0.17      51  CD2  PHE   3 0.17   0.2528
-   45   CB  PHE   3 0.17      59    C  PHE   3 0.17   0.2487
-   46  HB1  PHE   3 0.12      47  HB2  PHE   3 0.12   0.1734
-   46  HB1  PHE   3 0.12      48   CG  PHE   3 0.17   0.2139
-   47  HB2  PHE   3 0.12      48   CG  PHE   3 0.17   0.2104
-   48   CG  PHE   3 0.17      50  HD1  PHE   3 0.12   0.2158
-   48   CG  PHE   3 0.17      52  HD2  PHE   3 0.12   0.2172
-   48   CG  PHE   3 0.17      53  CE1  PHE   3 0.17   0.2437
-   48   CG  PHE   3 0.17      55  CE2  PHE   3 0.17   0.2448
-   49  CD1  PHE   3 0.17      51  CD2  PHE   3 0.17   0.244 
-   49  CD1  PHE   3 0.17      54  HE1  PHE   3 0.12   0.2153
-   49  CD1  PHE   3 0.17      57   CZ  PHE   3 0.17   0.2436
-   50   50  HD1  PHE   3 0.12      53  CE1  PHE   3 0.17   0.2161
-   51  CD2  PHE   3 0.17      56  HE2  PHE   3 0.12   0.2157
-   51  CD2  PHE   3 0.17      57   CZ  PHE   3 0.17   0.2439
-   52  HD2  PHE   3 0.12      55  CE2  PHE   3 0.17   0.2171
-   53  CE1  PHE   3 0.17      55  CE2  PHE   3 0.17   0.2446
-   53  CE1  PHE   3 0.17      58   HZ  PHE   3 0.12   0.216 
-   54  HE1  PHE   3 0.12      57   CZ  PHE   3 0.17   0.2166
-   55  CE2  PHE   3 0.17      58   HZ  PHE   3 0.12   0.2152
-   56  HE2  PHE   3 0.12      57   CZ  PHE   3 0.17   0.2174
-   59    C  PHE   3 0.17      63   CA  GLY   4 0.17   0.2439
-   60   60    O  PHE   3 0.152     61    N  GLY   4 0.155  0.2261
-   61    N  GLY   4 0.155     64  HA1  GLY   4 0.12   0.2097
-   61    N  GLY   4 0.155     65  HA2  GLY   4 0.12   0.208 
-   61    N  GLY   4 0.155     66    C  GLY   4 0.17   0.2418
-   62    H  GLY   4 0.12      63   CA  GLY   4 0.17   0.2113
-   63   CA  GLY   4 0.17      67    O  GLY   4 0.152  0.2357
-   63   CA  GLY   4 0.17      68    N  ARG   5 0.155  0.2453
-   64  HA1  GLY   4 0.12      65  HA2  GLY   4 0.12   0.1769
-   64  HA1  GLY   4 0.12      66    C  GLY   4 0.17   0.2199
-   65  HA2  GLY   4 0.12      66    C  GLY   4 0.17   0.214 
-   66    C  GLY   4 0.17      70   CA  ARG   5 0.17   0.2528
-   67    O  GLY   4 0.152     68    N  ARG   5 0.155  0.2269
-   68    N  ARG   5 0.155     71   HA  ARG   5 0.12   0.2006
-   68    N  ARG   5 0.155     72   CB  ARG   5 0.17   0.2455
-   69    H  ARG   5 0.12      70   CA  ARG   5 0.17   0.2121
-   70   70   CA  ARG   5 0.17      73  HB1  ARG   5 0.12   0.217 
-   70   CA  ARG   5 0.17      74  HB2  ARG   5 0.12   0.2158
-   70   CA  ARG   5 0.17      75   CG  ARG   5 0.17   0.2571
-   70   CA  ARG   5 0.17      91   O1  ARG   5 0.152  0.2432
-   70   CA  ARG   5 0.17      92   O2  ARG   5 0.152  0.2442
-   71   HA  ARG   5 0.12      72   CB  ARG   5 0.17   0.2124
-   71   HA  ARG   5 0.12      90    C  ARG   5 0.17   0.2062
-   72   CB  ARG   5 0.17      76  HG1  ARG   5 0.12   0.2188
-   72   CB  ARG   5 0.17      77  HG2  ARG   5 0.12   0.2156
-   72   CB  ARG   5 0.17      78   CD  ARG   5 0.17   0.2564
-   72   CB  ARG   5 0.17      90    C  ARG   5 0.17   0.2656
-   73  HB1  ARG   5 0.12      74  HB2  ARG   5 0.12   0.1759
-   73  HB1  ARG   5 0.12      75   CG  ARG   5 0.17   0.2148
-   74  HB2  ARG   5 0.12      75   CG  ARG   5 0.17   0.217 
-   75   CG  ARG   5 0.17      79  HD1  ARG   5 0.12   0.2096
-   75   CG  ARG   5 0.17      80  HD2  ARG   5 0.12   0.2119
-   75   CG  ARG   5 0.17      81   NE  ARG   5 0.155  0.2454
-   76  HG1  ARG   5 0.12      77  HG2  ARG   5 0.12   0.1745
-   77  HG2  ARG   5 0.12      78   CD  ARG   5 0.17   0.2156
-   78   CD  ARG   5 0.17      82   HE  ARG   5 0.12   0.2079
-   78   CD  ARG   5 0.17      83   CZ  ARG   5 0.17   0.2528
-   79  HD1  ARG   5 0.12      80  HD2  ARG   5 0.12   0.177 
-   79  HD1  ARG   5 0.12      81   NE  ARG   5 0.155  0.2117
-   80   80  HD2  ARG   5 0.12      81   NE  ARG   5 0.155  0.211 
-   81   NE  ARG   5 0.155     84  NH1  ARG   5 0.155  0.2347
-   81   NE  ARG   5 0.155     87  NH2  ARG   5 0.155  0.2296
-   82   HE  ARG   5 0.12      83   CZ  ARG   5 0.17   0.2053
-   83   CZ  ARG   5 0.17      85 HH11  ARG   5 0.12   0.2047
-   83   CZ  ARG   5 0.17      86 HH12  ARG   5 0.12   0.2067
-   83   CZ  ARG   5 0.17      88 HH21  ARG   5 0.12   0.204 
-   83   CZ  ARG   5 0.17      89 HH22  ARG   5 0.12   0.2059
-   84  NH1  ARG   5 0.155     87  NH2  ARG   5 0.155  0.231 
-   85 HH11  ARG   5 0.12      86 HH12  ARG   5 0.12   0.1717
-   88 HH21  ARG   5 0.12      89 HH22  ARG   5 0.12   0.1722
-   90   91   O1  ARG   5 0.152     92   O2  ARG   5 0.152  0.217 
-      
-no atoms found outside box
-
-
-GROMACS reminds you: "O My God, They Killed Kenny !" (South Park)
-

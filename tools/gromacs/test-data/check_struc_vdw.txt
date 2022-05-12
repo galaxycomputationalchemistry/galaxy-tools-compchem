@@ -1,108 +1,0 @@
-                       :-) GROMACS - gmx check, 2022 (-:
-
-Executable:   /usr/local/gromacs/bin/gmx
-Data prefix:  /usr/local/gromacs
-Working dir:  /home/aepetit/Documents/scripts/galaxy-tools-compchem/tools/gromacs/test-data
-Command line:
-  gmx check -c minim.gro -vdwfac 0.5
-
-Checking coordinate file minim.gro
-94 atoms in file
-coordinates found
-box         found
-velocities  absent
-
-Checking for atoms closer than 0.5 and not between 0.4 and 0.7,
-relative to sum of Van der Waals distance:
-
-WARNING: Masses and atomic (Van der Waals) radii will be guessed
-         based on residue and atom names, since they could not be
-         definitively assigned from the information in your input
-         files. These guessed numbers might deviate from the mass
-         and radius of the atom type. Please check the output
-         files if necessary. Note, that this functionality may
-         be removed in a future GROMACS version. Please, consider
-         using another file format for your input.
-
-
-WARNING: Masses and atomic (Van der Waals) radii will be guessed
-         based on residue and atom names, since they could not be
-         definitively assigned from the information in your input
-         files. These guessed numbers might deviate from the mass
-         and radius of the atom type. Please check the output
-         files if necessary. Note, that this functionality may
-         be removed in a future GROMACS version. Please, consider
-         using another file format for your input.
-
-NOTE: From version 5.0 gmx check uses the Van der Waals radii
-from the source below. This means the results may be different
-compared to previous GROMACS versions.
-
-++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
-A. Bondi
-van der Waals Volumes and Radii
-J. Phys. Chem. 68 (1964) pp. 441-451
--------- -------- --- Thank You --- -------- --------
-
-atom# name  residue r_vdw  atom# name  residue r_vdw  distance
-    1    N  LYS   1 0.155      2   H1  LYS   1 0.12   0.1008
-    1    N  LYS   1 0.155      3   H2  LYS   1 0.12   0.1012
-    1    N  LYS   1 0.155      4   H3  LYS   1 0.12   0.1019
-    5   CA  LYS   1 0.17       6   HA  LYS   1 0.12   0.1093
-    7   CB  LYS   1 0.17       8  HB1  LYS   1 0.12   0.1093
-    7   CB  LYS   1 0.17       9  HB2  LYS   1 0.12   0.1089
-   10   10   CG  LYS   1 0.17      11  HG1  LYS   1 0.12   0.1093
-   10   CG  LYS   1 0.17      12  HG2  LYS   1 0.12   0.1094
-   13   CD  LYS   1 0.17      14  HD1  LYS   1 0.12   0.1091
-   13   CD  LYS   1 0.17      15  HD2  LYS   1 0.12   0.1097
-   16   CE  LYS   1 0.17      17  HE1  LYS   1 0.12   0.1087
-   16   CE  LYS   1 0.17      18  HE2  LYS   1 0.12   0.1097
-   19   NZ  LYS   1 0.155     20  HZ1  LYS   1 0.12   0.1013
-   19   NZ  LYS   1 0.155     21  HZ2  LYS   1 0.12   0.1007
-   19   NZ  LYS   1 0.155     22  HZ3  LYS   1 0.12   0.1008
-   20   23    C  LYS   1 0.17      24    O  LYS   1 0.152  0.1227
-   25    N  VAL   2 0.155     26    H  VAL   2 0.12   0.1012
-   27   CA  VAL   2 0.17      28   HA  VAL   2 0.12   0.1087
-   29   CB  VAL   2 0.17      30   HB  VAL   2 0.12   0.1099
-   30   31  CG1  VAL   2 0.17      32 HG11  VAL   2 0.12   0.1091
-   31  CG1  VAL   2 0.17      33 HG12  VAL   2 0.12   0.1089
-   31  CG1  VAL   2 0.17      34 HG13  VAL   2 0.12   0.1094
-   35  CG2  VAL   2 0.17      36 HG21  VAL   2 0.12   0.1084
-   35  CG2  VAL   2 0.17      37 HG22  VAL   2 0.12   0.1092
-   35  CG2  VAL   2 0.17      38 HG23  VAL   2 0.12   0.1092
-   39    C  VAL   2 0.17      40    O  VAL   2 0.152  0.1239
-   40   41    N  PHE   3 0.155     42    H  PHE   3 0.12   0.1006
-   43   CA  PHE   3 0.17      44   HA  PHE   3 0.12   0.109 
-   45   CB  PHE   3 0.17      46  HB1  PHE   3 0.12   0.109 
-   45   CB  PHE   3 0.17      47  HB2  PHE   3 0.12   0.1089
-   49  CD1  PHE   3 0.17      50  HD1  PHE   3 0.12   0.1082
-   50   51  CD2  PHE   3 0.17      52  HD2  PHE   3 0.12   0.1089
-   53  CE1  PHE   3 0.17      54  HE1  PHE   3 0.12   0.108 
-   55  CE2  PHE   3 0.17      56  HE2  PHE   3 0.12   0.1079
-   57   CZ  PHE   3 0.17      58   HZ  PHE   3 0.12   0.1074
-   59    C  PHE   3 0.17      60    O  PHE   3 0.152  0.1233
-   60   61    N  GLY   4 0.155     62    H  GLY   4 0.12   0.1014
-   63   CA  GLY   4 0.17      64  HA1  GLY   4 0.12   0.109 
-   63   CA  GLY   4 0.17      65  HA2  GLY   4 0.12   0.1096
-   66    C  GLY   4 0.17      67    O  GLY   4 0.152  0.1224
-   68    N  ARG   5 0.155     69    H  ARG   5 0.12   0.1006
-   70   70   CA  ARG   5 0.17      71   HA  ARG   5 0.12   0.1085
-   72   CB  ARG   5 0.17      73  HB1  ARG   5 0.12   0.1104
-   72   CB  ARG   5 0.17      74  HB2  ARG   5 0.12   0.1091
-   75   CG  ARG   5 0.17      76  HG1  ARG   5 0.12   0.1079
-   75   CG  ARG   5 0.17      77  HG2  ARG   5 0.12   0.1091
-   78   CD  ARG   5 0.17      79  HD1  ARG   5 0.12   0.1082
-   78   CD  ARG   5 0.17      80  HD2  ARG   5 0.12   0.1091
-   80   81   NE  ARG   5 0.155     82   HE  ARG   5 0.12   0.1011
-   84  NH1  ARG   5 0.155     85 HH11  ARG   5 0.12   0.1019
-   84  NH1  ARG   5 0.155     86 HH12  ARG   5 0.12   0.1006
-   87  NH2  ARG   5 0.155     88 HH21  ARG   5 0.12   0.1001
-   87  NH2  ARG   5 0.155     89 HH22  ARG   5 0.12   0.1018
-   90   90    C  ARG   5 0.17      91   O1  ARG   5 0.152  0.125 
-   90    C  ARG   5 0.17      92   O2  ARG   5 0.152  0.1236
-      
-no atoms found outside box
-
-
-GROMACS reminds you: "My Heart is Just a Muscle In a Cavity" (F. Black)
-

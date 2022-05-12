@@ -1,15 +1,15 @@
-                       :-) GROMACS - gmx check, 2022 (-:
+                 :-) GROMACS - gmx check, 2022-conda_forge (-:
 
-Executable:   /usr/local/gromacs/bin/gmx
-Data prefix:  /usr/local/gromacs
-Working dir:  /home/aepetit/Documents/scripts/galaxy-tools-compchem/tools/gromacs/test-data
+Executable:   /home/aepetit/miniconda3/envs/__gromacs@2022/bin.AVX2_256/gmx
+Data prefix:  /home/aepetit/miniconda3/envs/__gromacs@2022
+Working dir:  /tmp/tmpr7sz9n9j/job_working_directory/000/26/working
 Command line:
-  gmx check -s1 nvt.tpr -s2 npt.tpr -abstol 0.1
+  gmx check -s1 ./0.nvt.tpr -s2 ./0.npt.tpr -abstol 0.1
 
 Note: When comparing run input files, default tolerances are reduced.
-Reading file nvt.tpr, VERSION 2021.3-bioconda (single precision)
+Reading file ./0.nvt.tpr, VERSION 2021.3-bioconda (single precision)
 Note: file tpx version 122, software tpx version 127
-Reading file npt.tpr, VERSION 2019.1 (single precision)
+Reading file ./0.npt.tpr, VERSION 2019.1 (single precision)
 Note: file tpx version 116, software tpx version 127
 comparing inputrec
 inputrec->nsteps (10000 - 500)
@@ -1168,7 +1168,7 @@ InteractionList entry[243] (258 - 235)
 InteractionList entry[246] (247 - 224)
 InteractionList entry[249] (259 - 236)
 InteractionList entry[252] (259 
-GROMACS reminds you: "It's 2040 now. Our President is a plant." (Ghostbusters 2016)
+GROMACS reminds you: "An intellectual is someone who has found something more interesting than sex." (Edgar Wallace)
 
 - 236)
 InteractionList entry[255] (259 - 236)
