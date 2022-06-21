@@ -1,8 +1,8 @@
                  :-) GROMACS - gmx check, 2022-conda_forge (-:
 
-Executable:   /home/aepetit/miniconda3/envs/__gromacs@2022/bin.AVX2_256/gmx
-Data prefix:  /home/aepetit/miniconda3/envs/__gromacs@2022
-Working dir:  /tmp/tmpr7sz9n9j/job_working_directory/000/22/working
+Executable:   /usr/local/bin.AVX2_256/gmx
+Data prefix:  /usr/local
+Working dir:  /tmp/tmpgswi37e1/job_working_directory/000/7/working
 Command line:
   gmx check -e ./0.minim.edr
 
