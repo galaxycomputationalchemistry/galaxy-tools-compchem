@@ -130,7 +130,7 @@
                     <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
                 </conditional>
             </repeat>
-            <output name="output" file="check_info_traj.txt" ftype="txt" lines_diff="4">
+            <output name="output" file="check_info_traj.txt" ftype="txt" lines_diff="6">
                 <assert_contents>
                     <has_n_lines n="38"/>
                     <has_text text="Reading frame"/>
@@ -150,7 +150,7 @@
                     <param name="abs_tol" value="0.1"/>
                 </conditional>
             </repeat>
-            <output name="output" file="check_compare_traj.txt" ftype="txt" lines_diff="4">
+            <output name="output" file="check_compare_traj.txt" ftype="txt" lines_diff="6">
                 <assert_contents>
                     <has_n_lines n="62"/>
                     <has_text text="Reading frame"/>
@@ -169,7 +169,7 @@
                     <param name="bonhi" value="0.7"/>
                 </conditional>
             </repeat>
-            <output name="output" file="check_info_structure.txt" ftype="txt" lines_diff="5">
+            <output name="output" file="check_info_structure.txt" ftype="txt" lines_diff="6">
                 <assert_contents>
                     <has_n_lines n="480"/>
                     <has_text text="94 atoms in file"/>
@@ -193,7 +193,7 @@
                     <param name="ind_file" value="index.ndx" ftype="ndx"/>
                 </conditional>
             </repeat>
-            <output name="output" file="check_info_energy.txt" ftype="txt" lines_diff="4">
+            <output name="output" file="check_info_energy.txt" ftype="txt" lines_diff="6">
                 <assert_contents>
                     <has_n_lines n="67"/>
                     <has_text text="Reading energy frame      1 time    1.000 "/>
@@ -221,7 +221,7 @@
                     <param name="abs_tol" value="0.1"/>
                 </conditional>
             </repeat>
-            <output name="output" file="check_compare_topology.txt" ftype="txt" lines_diff="4">
+            <output name="output" file="check_compare_topology.txt" ftype="txt" lines_diff="6">
                 <assert_contents>
                     <has_n_lines n="1229"/>
                     <has_text text="maxresnr (7 - 5)"/>
@@ -243,7 +243,7 @@
                     <param name="lastener" value="Pressure"/>
                 </conditional>
             </repeat>
-            <output name="output" file="check_compare_energy.txt" ftype="txt" lines_diff="4">
+            <output name="output" file="check_compare_energy.txt" ftype="txt" lines_diff="6">
                 <assert_contents>
                     <has_n_lines n="199"/>
                     <has_text text="Reading energy frame"/>
