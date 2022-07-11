@@ -75,17 +75,17 @@
                     <option value="compare_ener">Compare two energy files</option>
                 </param>
                 <when value="info_traj">
-                    <param name="traj_file" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory file" help="Enter the trajectory file. Accepted formats: xtc, trr, cpt, gro, g96, pdb, tng."/>
+                    <param name="traj_file" type="data" format="xtc, trr, cpt, gro, pdb" label="Trajectory file" help="Enter the trajectory file. Accepted formats: xtc, trr, cpt, gro, pdb."/>
                 </when>
                 <when value="compare_traj">
-                    <param name="traj_file" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory file 1" help="Enter the first trajectory file. Accepted formats: xtc, trr, cpt, gro, g96, pdb, tng."/>
-                    <param name="traj_file2" type="data" format="xtc, trr, cpt, gro, g96, pdb, tng" label="Trajectory file 2" help="Enter the second trajectory file. Accepted formats: xtc, trr, cpt, gro, g96, pdb, tng."/>
+                    <param name="traj_file" type="data" format="xtc, trr, cpt, gro, pdb" label="Trajectory file 1" help="Enter the first trajectory file. Accepted formats: xtc, trr, cpt, gro, pdb."/>
+                    <param name="traj_file2" type="data" format="xtc, trr, cpt, gro, pdb" label="Trajectory file 2" help="Enter the second trajectory file. Accepted formats: xtc, trr, cpt, gro, pdb."/>
                     <param name="rmsd" type="boolean" truevalue="-rmsd" falsevalue="" label="Do you want to display the RMSD?"/>
                     <param name="rel_tol" type="float" max="1.0" value="0.001" label="Enter relative tolerance" help="Relative tolerance for comparing real values defined as 2*(a-b)/(|a|+|b|)."/>
                     <param name="abs_tol" type="float" max="1.0" value="0.001" optional="True" label="Enter absolute tolerance" help="Absolute tolerance, useful when sums are close to zero."/>
                 </when>
                 <when value="info_struc">
-                    <param name="struc_file" type="data" format="tpr, gro, g96, pdb, brk, ent" label="Structure file" help="Enter the structure file. Accepted formats: tpr, gro, g96, pdb, brk, ent.">
+                    <param name="struc_file" type="data" format="tpr, gro, pdb, brk, ent" label="Structure file" help="Enter the structure file. Accepted formats: tpr, gro, pdb, brk, ent.">
                         <validator type="expression" message="Wrong file format">value.extension != 'edr' and value.extension != 'xtc'</validator>
                     </param>
                     <param name="vdwfac" type="float" max="1.0" value="0.8" label="Enter the fraction of sum of VdW radii sum"/>
@@ -261,7 +261,7 @@
 
 **What it does**
 
-This tool reads a trajectory (.tng, .trr or .xtc), an energy file (.edr) or an index file (.ndx) and prints out useful information about them.
+This tool reads a trajectory (.trr or .xtc), an energy file (.edr) or an index file (.ndx) and prints out useful information about them.
 
 Option -c checks for presence of coordinates, velocities and box in the file, for close contacts (smaller than -vdwfac and not bonded, i.e. not between -bonlo and -bonhi, all relative to the sum of both Van der Waals radii) and atoms outside the box (these may occur often and are no problem). If velocities are present, an estimated temperature will be calculated from them.
 
@@ -276,17 +276,17 @@ _____
 **Inputs**
 
 **Information about a trajectory**
-    - Trajectory file : -f option. Trajectory file in xtc, trr, cpt, gro, g96, pdb or tng format.
+    - Trajectory file : -f option. Trajectory file in xtc, trr, cpt, gro or pdb format.
 
 **Compare two trajectories**
-    - Trajectory file 1 : -f option. Trajectory file in xtc, trr, cpt, gro, g96, pdb or tng format.
-    - Trajectory file 2 : -f2 option. Trajectory file in xtc, trr, cpt, gro, g96, pdb or tng format.
+    - Trajectory file 1 : -f option. Trajectory file in xtc, trr, cpt, gro or pdb format.
+    - Trajectory file 2 : -f2 option. Trajectory file in xtc, trr, cpt, gro or pdb format.
     - Do you want to display the RMSD? : -rmsd option. Print RMSD for x, v and f.
     - Enter relative tolerance : -tol option. Relative tolerance for comparing real values.
     - Enter absolute tolerance : -abstol option. Absolute tolerance, useful when sums are close to zero.
 
 **Information about the structure of a system**
-    - Structure file : -c option. Structure file in tpr, gro, g96, pdb, brk or ent format.
+    - Structure file : -c option. Structure file in tpr, gro, pdb, brk or ent format.
     - Enter the fraction of sum of VdW radii : -vdwfac option.
     - Enter the minimal fraction of sum of vdW radii for bonded atoms : -bonlo option.
     - Enter the maximal fraction of sum of vdW radii for bonded atoms : -bonhi option.
