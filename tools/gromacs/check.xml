@@ -86,8 +86,8 @@
                     <validator type="expression" message="Wrong file format">value.extension != 'edr' and value.extension != 'xtc'</validator>
                 </param>
                 <param name="vdwfac" type="float" max="1.0" value="0.8" label="Enter the fraction of sum of VdW radii sum"/>
-                <param name="bonlo" type="float" max="1.0" value="0.4" label="Enter the minimal fraction of sum of vdW radii for bonded atoms"/>
-                <param name="bonhi" type="float" max="1.0" value="0.7" label="Enter the maximal fraction of sum of vdW radii for bonded atoms"/>
+                <param name="bonlo" type="float" max="1.0" value="0.4" label="Enter the minimal fraction of sum of van der Waals radii for bonded atoms"/>
+                <param name="bonhi" type="float" max="1.0" value="0.7" label="Enter the maximal fraction of sum of van der Waals radii for bonded atoms"/>
             </when>
             <when value="info_ener">
                 <param name="ener_file" type="data" format="edr" label="Energy file" help="Enter the energy file. Accepted format: edr."/>
@@ -186,13 +186,13 @@
 
 **What it does**
 
-This tool reads a trajectory (.trr or .xtc), an energy file (.edr) or an index file (.ndx) and prints out useful information about them.
+This tool reads a trajectory (trr or xtc), an energy file (edr) or an index file (ndx) and prints out useful information about them.
 
-Information about the structure of a system checks for the presence of coordinates, velocities and the box in the file, close contacts (smaller than VdW radii and not bound, i.e. not between minimal fraction of sum of vdW radii and maximal fraction of sum of vdW radii, all relative to the sum of the two Van der Waals radii) and atoms outside the box (these can occur often and are not a problem). If velocities are present, an estimated temperature will be calculated from them.
+Selecting 'information about the structure of a system' checks for the presence of coordinates, velocities and the box in the file, close contacts (smaller than van der Waals radii and not bound, i.e. not between minimal fraction of sum of van der Waals radii and maximal fraction of sum of van der Waals radii, all relative to the sum of the two van der Waals radii) and atoms outside the box (these can occur often and are not a problem). If velocities are present, an estimated temperature will be calculated from them.
 
-If an index file, is given its contents will be summarized.
+If an index file is given, its contents will be summarized.
 
-The program can compare two runtime input files (.tpr) when both topology file 1 and topology file 2 are provided. When comparing run input files this way, the default relative tolerance is reduced to 0.000001 and the absolute tolerance set to zero to find any differences not due to minor compiler optimization differences, although you can of course still set any other tolerances through the options. Similarly a pair of trajectory files can be compared (using compare two trajectories), or a pair of energy files (using compare two energy files).
+The program can compare two runtime input files (tpr) when both topology file 1 and topology file 2 are provided. When comparing run input files this way, the default relative tolerance is reduced to 0.000001 and the absolute tolerance set to zero to find any differences not due to minor compiler optimization differences, although you can of course still set any other tolerances through the options. Similarly a pair of trajectory files can be compared (using compare two trajectories), or a pair of energy files (using compare two energy files).
 
 _____
 
@@ -213,8 +213,8 @@ _____
 **Information about the structure of a system**
     - Structure file : structure file in tpr, gro, pdb, brk or ent format.
     - Enter the fraction of sum of VdW radii : fraction of sum of VdW radii used as warning cutoff.
-    - Enter the minimal fraction of sum of vdW radii for bonded atoms : minimal fraction of sum of VdW radii for bonded atoms.
-    - Enter the maximal fraction of sum of vdW radii for bonded atoms : maximal fraction of sum of VdW radii for bonded atoms.
+    - Enter the minimal fraction of sum of van der Waals radii for bonded atoms : minimal fraction of sum of van der Waals radii for bonded atoms.
+    - Enter the maximal fraction of sum of van der Waals radii for bonded atoms : maximal fraction of sum of van der Waals radii for bonded atoms.
 
 **Information about the energy of a system**
     - Energy file : energy file in edr format.
@@ -232,9 +232,7 @@ _____
     - Energy file 2 : energy file in edr format.
     - Enter relative tolerance : relative tolerance for comparing real values.
     - Enter absolute tolerance : absolute tolerance, useful when sums are close to zero.
-    - Enter the last energy term to compare : last energy term to compare (if not given all are tested). It makes sense to go up until the Pressure.
-
-The -ab option is not implemented.
+    - Enter the last energy term to compare : last energy term to compare (if not given all are tested). It makes sense to go up until the pressure.
 
 _____
 
@@ -242,7 +240,7 @@ _____
 
 **Output**
 
-    - list with one or more TXT files. This file contains either information about the trajectory, the structure, the index or the energy, or a comparison between two trajectories, two topologies or two energy files.
+    - list with one or more text files. This file contains either information about the trajectory, the structure, the index or the energy, or a comparison between two trajectories, two topologies or two energy files.
 
     ]]></help>
     <citations>
