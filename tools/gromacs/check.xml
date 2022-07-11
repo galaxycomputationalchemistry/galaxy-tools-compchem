@@ -188,11 +188,11 @@
 
 This tool reads a trajectory (.trr or .xtc), an energy file (.edr) or an index file (.ndx) and prints out useful information about them.
 
-Option -c checks for presence of coordinates, velocities and box in the file, for close contacts (smaller than -vdwfac and not bonded, i.e. not between -bonlo and -bonhi, all relative to the sum of both Van der Waals radii) and atoms outside the box (these may occur often and are no problem). If velocities are present, an estimated temperature will be calculated from them.
+Information about the structure of a system checks for the presence of coordinates, velocities and the box in the file, close contacts (smaller than VdW radii and not bound, i.e. not between minimal fraction of sum of vdW radii and maximal fraction of sum of vdW radii, all relative to the sum of the two Van der Waals radii) and atoms outside the box (these can occur often and are not a problem). If velocities are present, an estimated temperature will be calculated from them.
 
 If an index file, is given its contents will be summarized.
 
-The program can compare two run input (.tpr) files when both -s1 and -s2 are supplied. When comparing run input files this way, the default relative tolerance is reduced to 0.000001 and the absolute tolerance set to zero to find any differences not due to minor compiler optimization differences, although you can of course still set any other tolerances through the options.Similarly a pair of trajectory files can be compared (using the -f2 option), or a pair of energy files (using the -e2 option).
+The program can compare two runtime input files (.tpr) when both topology file 1 and topology file 2 are provided. When comparing run input files this way, the default relative tolerance is reduced to 0.000001 and the absolute tolerance set to zero to find any differences not due to minor compiler optimization differences, although you can of course still set any other tolerances through the options. Similarly a pair of trajectory files can be compared (using compare two trajectories), or a pair of energy files (using compare two energy files).
 
 _____
 
@@ -201,38 +201,38 @@ _____
 **Inputs**
 
 **Information about a trajectory**
-    - Trajectory file : -f option. Trajectory file in xtc, trr, cpt, gro or pdb format.
+    - Trajectory file : trajectory file in xtc, trr, cpt, gro or pdb format.
 
 **Compare two trajectories**
-    - Trajectory file 1 : -f option. Trajectory file in xtc, trr, cpt, gro or pdb format.
-    - Trajectory file 2 : -f2 option. Trajectory file in xtc, trr, cpt, gro or pdb format.
-    - Do you want to display the RMSD? : -rmsd option. Print RMSD for x, v and f.
-    - Enter relative tolerance : -tol option. Relative tolerance for comparing real values.
-    - Enter absolute tolerance : -abstol option. Absolute tolerance, useful when sums are close to zero.
+    - Trajectory file 1 : trajectory file in xtc, trr, cpt, gro or pdb format.
+    - Trajectory file 2 : trajectory file in xtc, trr, cpt, gro or pdb format.
+    - Do you want to display the RMSD? : print RMSD for x, v and f.
+    - Enter relative tolerance : relative tolerance for comparing real values.
+    - Enter absolute tolerance : absolute tolerance, useful when sums are close to zero.
 
 **Information about the structure of a system**
-    - Structure file : -c option. Structure file in tpr, gro, pdb, brk or ent format.
-    - Enter the fraction of sum of VdW radii : -vdwfac option.
-    - Enter the minimal fraction of sum of vdW radii for bonded atoms : -bonlo option.
-    - Enter the maximal fraction of sum of vdW radii for bonded atoms : -bonhi option.
+    - Structure file : structure file in tpr, gro, pdb, brk or ent format.
+    - Enter the fraction of sum of VdW radii : fraction of sum of VdW radii used as warning cutoff.
+    - Enter the minimal fraction of sum of vdW radii for bonded atoms : minimal fraction of sum of VdW radii for bonded atoms.
+    - Enter the maximal fraction of sum of vdW radii for bonded atoms : maximal fraction of sum of VdW radii for bonded atoms.
 
 **Information about the energy of a system**
-    - Energy file : -e option. Energy file in edr format.
+    - Energy file : energy file in edr format.
 
 **Information about the index of a system**
-    - Index file : -n option. Index file in ndx format.
+    - Index file : index file in ndx format.
 
 **Compare two topologies**
-    - Topology file 1 : -s1 option. Topology file in tpr format.
-    - Topology file 2 : -s2 option. Topology file in tpr format.
-    - Enter absolute tolerance : -abstol option. Absolute tolerance, useful when sums are close to zero.
+    - Topology file 1 : topology file in tpr format.
+    - Topology file 2 : topology file in tpr format.
+    - Enter absolute tolerance : absolute tolerance, useful when sums are close to zero.
 
 **Compare two energy files**
-    - Energy file 1 : -e option. Energy file in edr format.
-    - Energy file 2 : -e2 option. Energy file in edr format.
-    - Enter relative tolerance : -tol option. Relative tolerance for comparing real values.
-    - Enter absolute tolerance : -abstol option. Absolute tolerance, useful when sums are close to zero.
-    - Enter the last energy term to compare : -lastener. Last energy term to compare (if not given all are tested). It makes sense to go up until the Pressure.
+    - Energy file 1 : energy file in edr format.
+    - Energy file 2 : energy file in edr format.
+    - Enter relative tolerance : relative tolerance for comparing real values.
+    - Enter absolute tolerance : absolute tolerance, useful when sums are close to zero.
+    - Enter the last energy term to compare : last energy term to compare (if not given all are tested). It makes sense to go up until the Pressure.
 
 The -ab option is not implemented.
 
