@@ -4,7 +4,7 @@ Executable:   /usr/local/bin.AVX2_256/gmx
 Data prefix:  /usr/local
 Working dir:  /tmp/tmpgswi37e1/job_working_directory/000/2/working
 Command line:
-  gmx check -f ./0.nvt.xtc
+  gmx check -f ./nvt.xtc
 
 
 Reading frame       0 time    0.000   
@@ -35,4 +35,4 @@ Box             11    0.1
 
 GROMACS reminds you: "Right Between the Eyes" (F. Zappa)
 
-Checking file ./0.nvt.xtc
+Checking file ./nvt.xtc

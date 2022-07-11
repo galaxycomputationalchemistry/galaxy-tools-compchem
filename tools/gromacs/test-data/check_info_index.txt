@@ -4,12 +4,12 @@ Executable:   /usr/local/bin.AVX2_256/gmx
 Data prefix:  /usr/local
 Working dir:  /tmp/tmpgswi37e1/job_working_directory/000/7/working
 Command line:
-  gmx check -n ./1.index.ndx
+  gmx check -n ./index.ndx
 
 
 GROMACS reminds you: "Jede der Scherben spiegelt das Licht" (Wir sind Helden)
 
-Contents of index file ./1.index.ndx
+Contents of index file ./index.ndx
 --------------------------------------------------
 Nr.   Group               #Entries   First    Last
    0  System                    94       1      94

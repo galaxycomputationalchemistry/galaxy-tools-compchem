@@ -4,9 +4,9 @@ Executable:   /usr/local/bin.AVX2_256/gmx
 Data prefix:  /usr/local
 Working dir:  /tmp/tmpgswi37e1/job_working_directory/000/7/working
 Command line:
-  gmx check -c ./0.minim.gro -vdwfac 0.8 -bonlo 0.4 -bonhi 0.7
+  gmx check -c ./minim.gro -vdwfac 0.8 -bonlo 0.4 -bonhi 0.7
 
-Checking coordinate file ./0.minim.gro
+Checking coordinate file ./minim.gro
 94 atoms in file
 coordinates found
 box         found
