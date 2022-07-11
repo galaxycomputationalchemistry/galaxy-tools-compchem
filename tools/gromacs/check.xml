@@ -1,5 +1,5 @@
 <tool id="gmx_check" name="GROMACS check" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="@PROFILE@">
-    <description>using gmx check</description>
+    <description>to provide information about GROMACS input files</description>
     <macros>
         <token name="@GALAXY_VERSION@">0</token>
         <token name="@PROFILE@">21.05</token>
