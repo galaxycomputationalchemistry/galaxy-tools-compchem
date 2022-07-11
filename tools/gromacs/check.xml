@@ -162,8 +162,8 @@
         <test>
             <conditional name="input_file">
                 <param name="calculate_select" value="compare_top"/>
-                <param name="top_file" value="nvt.tpr" ftype="tpr"/>
-                <param name="top_file2" value="npt.tpr" ftype="tpr"/>
+                <param name="top_file" value="npt.tpr" ftype="tpr"/>
+                <param name="top_file2" value="npt2.tpr" ftype="tpr"/>
                 <param name="abs_tol" value="0.1"/>
             </conditional>
             <output name="output" file="check_compare_topology.txt" ftype="txt" lines_diff="8"/>
