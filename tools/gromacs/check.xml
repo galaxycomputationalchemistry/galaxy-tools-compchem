@@ -130,14 +130,7 @@
                     <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
                 </conditional>
             </repeat>
-            <output name="output" file="check_info_traj.txt" ftype="txt" lines_diff="6">
-                <assert_contents>
-                    <has_n_lines n="38"/>
-                    <has_text text="Reading frame"/>
-                    <has_text text="# Atoms  94"/>
-                    <has_text text="Step            11    0.1"/>
-                </assert_contents>
-            </output>
+            <output name="output" file="check_info_traj.txt" ftype="txt" lines_diff="6"/>
         </test>
         <test>
             <repeat name="analysis">
@@ -150,14 +143,7 @@
                     <param name="abs_tol" value="0.1"/>
                 </conditional>
             </repeat>
-            <output name="output" file="check_compare_traj.txt" ftype="txt" lines_diff="6">
-                <assert_contents>
-                    <has_n_lines n="62"/>
-                    <has_text text="Reading frame"/>
-                    <has_text text="Last frame         10 time    1.000"/>
-                    <has_text text="x RMSD 0.135353"/>
-                </assert_contents>
-            </output>
+            <output name="output" file="check_compare_traj.txt" ftype="txt" lines_diff="6"/>
         </test>
         <test>
             <repeat name="analysis">
@@ -169,16 +155,7 @@
                     <param name="bonhi" value="0.7"/>
                 </conditional>
             </repeat>
-            <output name="output" file="check_info_structure.txt" ftype="txt" lines_diff="6">
-                <assert_contents>
-                    <has_n_lines n="480"/>
-                    <has_text text="94 atoms in file"/>
-                    <has_text text="coordinates found"/>
-                    <has_text text="box         found"/>
-                    <has_text text="no atoms found outside box"/>
-                    <has_text text="atom# name  residue r_vdw  atom# name  residue r_vdw  distance"/>
-                </assert_contents>
-            </output>
+            <output name="output" file="check_info_structure.txt" ftype="txt" lines_diff="6"/>
         </test>
         <test>
             <repeat name="analysis">
@@ -194,22 +171,7 @@
                 </conditional>
             </repeat>
             <output name="output" file="check_info_energy.txt" ftype="txt" lines_diff="6">
-                <assert_contents>
-                    <has_n_lines n="67"/>
-                    <has_text text="Reading energy frame      1 time    1.000 "/>
-                    <has_text text="31 groups in energy file"/>
-                    <has_text text="Timesteps at t=20 don't match (2, 1)"/>
-                    <has_text text="Found 25 frames."/>
-                </assert_contents>
-                <discovered_dataset designation='1.Index_information_for_"index.ndx".txt' file="check_info_index.txt" ftype="txt" lines_diff="4">
-                    <assert_contents>
-                        <has_n_lines n="28"/>
-                        <has_text text="Contents of index file"/>
-                        <has_text text="Nr.   Group               #Entries   First    Last"/>
-                        <has_text text="  2  Protein-H                 43       1      92"/>
-                        <has_text text="  10  Prot-Masses               92       1      92"/>
-                    </assert_contents>
-                </discovered_dataset>
+                <discovered_dataset designation='1.Index_information_for_"index.ndx".txt' file="check_info_index.txt" ftype="txt" lines_diff="4"/>
             </output>
         </test>
         <test>
@@ -221,16 +183,7 @@
                     <param name="abs_tol" value="0.1"/>
                 </conditional>
             </repeat>
-            <output name="output" file="check_compare_topology.txt" ftype="txt" lines_diff="6">
-                <assert_contents>
-                    <has_n_lines n="1229"/>
-                    <has_text text="maxresnr (7 - 5)"/>
-                    <has_text text="comparing inputrec"/>
-                    <has_text text="inputrec->nstxout (1000 - 50)"/>
-                    <has_text text="ffparams->iparams[237]2: pos0A=( 1.25000000e-01, 1.25000000e-01, 0.00000000e+00)"/>
-                    <has_text text="InteractionList entry[255] (259 - 236)"/>
-                </assert_contents>
-            </output>
+            <output name="output" file="check_compare_topology.txt" ftype="txt" lines_diff="6"/>
         </test>
         <test>
             <repeat name="analysis">
@@ -243,16 +196,7 @@
                     <param name="lastener" value="Pressure"/>
                 </conditional>
             </repeat>
-            <output name="output" file="check_compare_energy.txt" ftype="txt" lines_diff="6">
-                <assert_contents>
-                    <has_n_lines n="199"/>
-                    <has_text text="Reading energy frame"/>
-                    <has_text text="enm[12] (- - Conserved En.)"/>
-                    <has_text text="Angle            step   1:       536.268,  step   1:      188.647"/>
-                    <has_text text="step (3 - 150)"/>
-                    <has_text text="Coul. recip.     step  14:       914.559,  step  14:      304.201"/>
-                </assert_contents>
-            </output>
+            <output name="output" file="check_compare_energy.txt" ftype="txt" lines_diff="6"/>
         </test>
     </tests>
     <help><![CDATA[
