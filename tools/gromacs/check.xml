@@ -8,56 +8,56 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         #if $input_file.calculate_select == "info_traj":
-            ln -s '$input_file.traj_file' './traj.$input_file.traj_file.ext';
+            ln -s '$input_file.traj_file' './traj.$input_file.traj_file.ext' &&
             gmx check
                 -f './traj.$input_file.traj_file.ext'
-                &> '$out_info_traj';
+                &> '$out_info_traj'
         #elif $input_file.calculate_select == "compare_traj":
-            ln -s '$input_file.traj_file' './traj1.$input_file.traj_file.ext';
-            ln -s '$input_file.traj_file2' './traj2.$input_file.traj_file2.ext';
+            ln -s '$input_file.traj_file' './traj1.$input_file.traj_file.ext' &&
+            ln -s '$input_file.traj_file2' './traj2.$input_file.traj_file2.ext' &&
             gmx check
                 -f './traj1.$input_file.traj_file.ext'
                 -f2 './traj2.$input_file.traj_file2.ext'
                 $input_file.rmsd
                 -tol '$input_file.rel_tol'
                 -abstol '$input_file.abs_tol'
-                &> '$out_compare_traj';
+                &> '$out_compare_traj'
         #elif $input_file.calculate_select == "info_struc":
-            ln -s '$input_file.struc_file' './struc.$input_file.struc_file.ext';
+            ln -s '$input_file.struc_file' './struc.$input_file.struc_file.ext' &&
             gmx check
                 -c './struc.$input_file.struc_file.ext'
                 -vdwfac '$input_file.vdwfac'
                 -bonlo '$input_file.bonlo'
                 -bonhi '$input_file.bonhi'
-                &> '$out_info_struc';
+                &> '$out_info_struc'
         #elif $input_file.calculate_select == "info_ener":
-            ln -s '$input_file.ener_file' './ener.$input_file.ener_file.ext' ;
+            ln -s '$input_file.ener_file' './ener.$input_file.ener_file.ext' &&
             gmx check
                 -e './ener.$input_file.ener_file.ext'
-                &> '$out_info_ener';
+                &> '$out_info_ener'
         #elif $input_file.calculate_select == "info_ind":
-            ln -s '$input_file.ind_file' './index.$input_file.ind_file.ext';
+            ln -s '$input_file.ind_file' './index.$input_file.ind_file.ext' &&
             gmx check
                 -n './index.$input_file.ind_file.ext'
-                &> '$out_info_ind';
+                &> '$out_info_ind'
         #elif $input_file.calculate_select == "compare_ener":
-            ln -s '$input_file.ener_file' './ener1.$input_file.ener_file.ext';
-            ln -s '$input_file.ener_file2' './ener2.$input_file.ener_file2.ext';
+            ln -s '$input_file.ener_file' './ener1.$input_file.ener_file.ext' &&
+            ln -s '$input_file.ener_file2' './ener2.$input_file.ener_file2.ext' &&
             gmx check
                 -e './ener1.$input_file.ener_file.ext'
                 -e2 './ener2.$input_file.ener_file2.ext'
                 -tol '$input_file.rel_tol'
                 -abstol '$input_file.abs_tol'
                 -lastener '$input_file.lastener'
-                &> '$out_compare_ener';
+                &> '$out_compare_ener'
         #else:
-            ln -s '$input_file.top_file' './top1.$input_file.top_file.ext';
-            ln -s '$input_file.top_file2' './top2.$input_file.top_file2.ext';
+            ln -s '$input_file.top_file' './top1.$input_file.top_file.ext' &&
+            ln -s '$input_file.top_file2' './top2.$input_file.top_file2.ext'&&
             gmx check
                 -s1 './top1.$input_file.top_file.ext'
                 -s2 './top2.$input_file.top_file2.ext'
                 -abstol '$input_file.abs_tol'
-                &> '$out_compare_topol';
+                &> '$out_compare_topol'
         #end if
     ]]></command>
     <inputs>
