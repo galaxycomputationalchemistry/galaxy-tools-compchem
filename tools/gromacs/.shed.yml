@@ -16,3 +16,5 @@ auto_tool_repositories:
   description_template: "Wrapper for the gromacs package: {{ tool_name }}"
 maintainers:
   - simonbray
+  - Agnes-Petit
+  - nagoue
