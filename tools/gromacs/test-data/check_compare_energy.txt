@@ -4,10 +4,10 @@ Executable:   /usr/local/bin.AVX2_256/gmx
 Data prefix:  /usr/local
 Working dir:  /tmp/tmpgswi37e1/job_working_directory/000/7/working
 Command line:
-  gmx check -e ./minim.edr -e2 ./outp.edr -tol 0.1 -abstol 0.1 -lastener Pressure
+  gmx check -e ./ener1.edr -e2 ./ener2.edr -tol 0.1 -abstol 0.1 -lastener Pressure
 
-Opened ./minim.edr as single precision energy file
-Opened ./outp.edr as single precision energy file
+Opened ./ener1.edr as single precision energy file
+Opened ./ener2.edr as single precision energy file
 
 Reading energy frame      0 time    0.000         
 Reading energy frame      0 time    0.000         
@@ -18,7 +18,7 @@ Reading energy frame      2 time    0.200
 Reading energy frame      3 time    3.000         
 Reading energy frame      3 time    0.300         
 Reading energy frame      4 time    4.000         
-Reading energy frame      4 time    0.400         comparing energy file ./minim.edr and ./outp.edr
+Reading energy frame      4 time    0.400         comparing energy file ./ener1.edr and ./ener2.edr
 
 There are 31 and 50 terms in the energy files
 
@@ -103,7 +103,7 @@ Coulomb (SR)     step   4:      -1769.41,  step   4:     -2150.06
 Coul. recip.     step   4:       932.888,  step   4:      375.412
 Potential        step   4:      -294.892,  step   4:     -1194.59
 Pressure         step   4:       242.456,  step   4:        62.96
-Vir-XX           step   4:      -736.257, 
+Vir-XX           step   4:      -736.257,
 Reading energy frame      5 time    5.000         
 Reading energy frame      5 time    0.500         
 Reading energy frame      6 time    7.000         
@@ -115,7 +115,7 @@ Reading energy frame      8 time    0.800
 Reading energy frame      9 time   12.000         
 Reading energy frame      9 time    0.900         
 Reading energy frame     10 time   14.000         
-Reading energy frame     10 time    1.000          step   4:     -3.54811
+Reading energy frame     10 time    1.000           step   4:     -3.54811
 t (5.000000e+00 - 5.000000e-01)
 step (5 - 250)
 Angle            step   5:       92.7917,  step   5:      228.041
@@ -185,15 +185,15 @@ Ryckaert-Bell.   step  14:       47.5084,  step  14:      116.045
 LJ-14            step  14:       112.831,  step  14:      128.155
 Coulomb-14       step  14:       54.3835,  step  14:      112.113
 LJ (SR)          step  14:      -29.3721,  step  14:      18.6406
-Coulomb (SR)     step  14
+Coulomb (SR)     step  1
 Reading energy frame     11 time   15.000         
 Last energy frame read 10 time    1.000         
-GROMACS reminds you: "Does college pay? They do if you are a good open-field runner." (Will Rogers)
+GROMACS reminds you: "I do not believe continuum electrostatics" (Arieh Warshel, Nobel lecture 2013)
 
-:      -1762.94,  step  14:     -2187.48
+4:      -1762.94,  step  14:     -2187.48
 Coul. recip.     step  14:       914.559,  step  14:      304.201
 Potential        step  14:      -557.441,  step  14:     -1306.67
 Pressure         step  14:       144.996,  step  14:     -10.3104
 Vir-XX           step  14:      -396.739,  step  14:      362.156
 
-End of file on ./outp.edr but not on ./minim.edr
+End of file on ./ener2.edr but not on ./ener1.edr

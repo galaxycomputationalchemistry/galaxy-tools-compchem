@@ -8,56 +8,56 @@
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
         #if $input_file.calculate_select == "info_traj":
-            ln -s '$input_file.traj_file' './$input_file.traj_file.element_identifier';
+            ln -s '$input_file.traj_file' './traj.$input_file.traj_file.ext';
             gmx check
-                -f './$input_file.traj_file.element_identifier'
-                &> 'Trajectory_information_for_"${input_file.traj_file.element_identifier}".txt';
+                -f './traj.$input_file.traj_file.ext'
+                &> '$out_info_traj';
         #elif $input_file.calculate_select == "compare_traj":
-            ln -s '$input_file.traj_file' './$input_file.traj_file.element_identifier';
-            ln -s '$input_file.traj_file2' './$input_file.traj_file2.element_identifier';
+            ln -s '$input_file.traj_file' './traj1.$input_file.traj_file.ext';
+            ln -s '$input_file.traj_file2' './traj2.$input_file.traj_file2.ext';
             gmx check
-                -f './$input_file.traj_file.element_identifier'
-                -f2 './$input_file.traj_file2.element_identifier'
+                -f './traj1.$input_file.traj_file.ext'
+                -f2 './traj2.$input_file.traj_file2.ext'
                 $input_file.rmsd
                 -tol '$input_file.rel_tol'
                 -abstol '$input_file.abs_tol'
-                &> 'Compare_trajectories_between_"${input_file.traj_file.element_identifier}"_and_"${input_file.traj_file2.element_identifier}".txt';
+                &> '$out_compare_traj';
         #elif $input_file.calculate_select == "info_struc":
-            ln -s '$input_file.struc_file' './$input_file.struc_file.element_identifier';
+            ln -s '$input_file.struc_file' './struc.$input_file.struc_file.ext';
             gmx check
-                -c './$input_file.struc_file.element_identifier'
+                -c './struc.$input_file.struc_file.ext'
                 -vdwfac '$input_file.vdwfac'
                 -bonlo '$input_file.bonlo'
                 -bonhi '$input_file.bonhi'
-                &> 'Structure_information_for_"${input_file.struc_file.element_identifier}".txt';
+                &> '$out_info_struc';
         #elif $input_file.calculate_select == "info_ener":
-            ln -s '$input_file.ener_file' './$input_file.ener_file.element_identifier' ;
+            ln -s '$input_file.ener_file' './ener.$input_file.ener_file.ext' ;
             gmx check
-                -e './$input_file.ener_file.element_identifier'
-                &> 'Energy_information_for_"${$input_file.ener_file.element_identifier}".txt';
+                -e './ener.$input_file.ener_file.ext'
+                &> '$out_info_ener';
         #elif $input_file.calculate_select == "info_ind":
-            ln -s '$input_file.ind_file' './$input_file.ind_file.element_identifier';
+            ln -s '$input_file.ind_file' './index.$input_file.ind_file.ext';
             gmx check
-                -n './$input_file.ind_file.element_identifier'
-                &> 'Index_information_for_"${input_file.ind_file.element_identifier}".txt';
+                -n './index.$input_file.ind_file.ext'
+                &> '$out_info_ind';
         #elif $input_file.calculate_select == "compare_ener":
-            ln -s '$input_file.ener_file' './$input_file.ener_file.element_identifier';
-            ln -s '$input_file.ener_file2' './$input_file.ener_file2.element_identifier';
+            ln -s '$input_file.ener_file' './ener1.$input_file.ener_file.ext';
+            ln -s '$input_file.ener_file2' './ener2.$input_file.ener_file2.ext';
             gmx check
-                -e './$input_file.ener_file.element_identifier'
-                -e2 './$input_file.ener_file2.element_identifier'
+                -e './ener1.$input_file.ener_file.ext'
+                -e2 './ener2.$input_file.ener_file2.ext'
                 -tol '$input_file.rel_tol'
                 -abstol '$input_file.abs_tol'
                 -lastener '$input_file.lastener'
-                &> 'Compare_energies_between_"${input_file.ener_file.element_identifier}"_and_"${input_file.ener_file2.element_identifier}".txt';
+                &> '$out_compare_ener';
         #else:
-            ln -s '$input_file.top_file' './$input_file.top_file.element_identifier';
-            ln -s '$input_file.top_file2' './$input_file.top_file2.element_identifier';
+            ln -s '$input_file.top_file' './top1.$input_file.top_file.ext';
+            ln -s '$input_file.top_file2' './top2.$input_file.top_file2.ext';
             gmx check
-                -s1 './$input_file.top_file.element_identifier'
-                -s2 './$input_file.top_file2.element_identifier'
+                -s1 './top1.$input_file.top_file.ext'
+                -s2 './top2.$input_file.top_file2.ext'
                 -abstol '$input_file.abs_tol'
-                &> 'Compare_topologies_between_"${input_file.top_file.element_identifier}"_and_"${input_file.top_file2.element_identifier}".txt';
+                &> '$out_compare_topol';
         #end if
     ]]></command>
     <inputs>
@@ -114,7 +114,27 @@
         </conditional>
     </inputs>
     <outputs>
-        <data name="output" format="txt" from_work_dir="*.txt"/>
+        <data name="out_info_traj" format="txt" from_work_dir="*.txt" label="${tool.name} : information on trajectory on ${on_string}">
+            <filter>input_file["calculate_select"] == "info_traj"</filter>
+        </data>
+        <data name="out_compare_traj" format="txt" from_work_dir="*.txt" label="${tool.name} : compare trajectories on ${on_string}">
+            <filter>input_file["calculate_select"] == "compare_traj"</filter>
+        </data>
+        <data name="out_info_struc" format="txt" from_work_dir="*.txt" label="${tool.name} : information on structure on ${on_string}">
+            <filter>input_file["calculate_select"] == "info_struc"</filter>
+        </data>
+        <data name="out_info_ener" format="txt" from_work_dir="*.txt" label="${tool.name} : information on energy on ${on_string}">
+            <filter>input_file["calculate_select"] == "info_ener"</filter>
+        </data>
+        <data name="out_info_ind" format="txt" from_work_dir="*.txt" label="${tool.name} : information on index file on ${on_string}">
+            <filter>input_file["calculate_select"] == "info_ind"</filter>
+        </data>
+        <data name="out_compare_ener" format="txt" from_work_dir="*.txt" label="${tool.name} : compare energy files on ${on_string}">
+            <filter>input_file["calculate_select"] == "compare_ener"</filter>
+        </data>
+        <data name="out_compare_topol" format="txt" from_work_dir="*.txt" label="${tool.name} : compare topology files on ${on_string}">
+            <filter>input_file["calculate_select"] == "compare_top"</filter>
+        </data>
     </outputs>
     <tests>
         <test>
@@ -122,7 +142,7 @@
                 <param name="calculate_select" value="info_traj"/>
                 <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
             </conditional>
-            <output name="output" file="check_info_traj.txt" ftype="txt" lines_diff="8"/>
+            <output name="out_info_traj" file="check_info_traj.txt" ftype="txt" lines_diff="8"/>
         </test>
         <test>
             <conditional name="input_file">
@@ -133,7 +153,7 @@
                 <param name="rel_tol" value="0.1"/>
                 <param name="abs_tol" value="0.1"/>
             </conditional>
-            <output name="output" file="check_compare_traj.txt" ftype="txt" lines_diff="8"/>
+            <output name="out_compare_traj" file="check_compare_traj.txt" ftype="txt" lines_diff="8"/>
         </test>
         <test>
             <conditional name="input_file">
@@ -143,21 +163,21 @@
                 <param name="bonlo" value="0.4"/>
                 <param name="bonhi" value="0.7"/>
             </conditional>
-            <output name="output" file="check_info_structure.txt" ftype="txt" lines_diff="10"/>
+            <output name="out_info_struc" file="check_info_structure.txt" ftype="txt" lines_diff="10"/>
         </test>
         <test>
             <conditional name="input_file">
                 <param name="calculate_select" value="info_ener"/>
                 <param name="ener_file" value="minim.edr" ftype="edr"/>
             </conditional>
-            <output name="output" file="check_info_energy.txt" ftype="txt" lines_diff="8"/>
+            <output name="out_info_ener" file="check_info_energy.txt" ftype="txt" lines_diff="8"/>
         </test>
         <test>
             <conditional name="input_file">
                 <param name="calculate_select" value="info_ind"/>
                 <param name="ind_file" value="index.ndx" ftype="ndx"/>
             </conditional>
-            <output name="output" file="check_info_index.txt" ftype="txt" lines_diff="8"/>
+            <output name="out_info_ind" file="check_info_index.txt" ftype="txt" lines_diff="8"/>
         </test>
         <test>
             <conditional name="input_file">
@@ -166,7 +186,7 @@
                 <param name="top_file2" value="npt2.tpr" ftype="tpr"/>
                 <param name="abs_tol" value="0.1"/>
             </conditional>
-            <output name="output" file="check_compare_topology.txt" ftype="txt" lines_diff="8"/>
+            <output name="out_compare_topol" file="check_compare_topology.txt" ftype="txt" lines_diff="8"/>
         </test>
         <test>
             <conditional name="input_file">
@@ -177,7 +197,7 @@
                 <param name="abs_tol" value="0.1"/>
                 <param name="lastener" value="Pressure"/>
             </conditional>
-            <output name="output" file="check_compare_energy.txt" ftype="txt" lines_diff="8"/>
+            <output name="out_compare_ener" file="check_compare_energy.txt" ftype="txt" lines_diff="8"/>
         </test>
     </tests>
     <help><![CDATA[

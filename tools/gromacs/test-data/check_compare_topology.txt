@@ -4,12 +4,12 @@ Executable:   /usr/local/bin.AVX2_256/gmx
 Data prefix:  /usr/local
 Working dir:  /tmp/tmpgswi37e1/job_working_directory/000/7/working
 Command line:
-  gmx check -s1 ./npt.tpr -s2 ./npt2.tpr -abstol 0.1
+  gmx check -s1 ./top1.tpr -s2 ./top2.tpr -abstol 0.1
 
 Note: When comparing run input files, default tolerances are reduced.
-Reading file ./npt.tpr, VERSION 2019.1 (single precision)
+Reading file ./top1.tpr, VERSION 2019.1 (single precision)
 Note: file tpx version 116, software tpx version 127
-Reading file ./npt2.tpr, VERSION 2022-conda_forge (single precision)
+Reading file ./top2.tpr, VERSION 2022-conda_forge (single precision)
 comparing inputrec
 inputrec->bContinuation (0 - 1)
 inputrec->epc (No - Parrinello-Rahman)
