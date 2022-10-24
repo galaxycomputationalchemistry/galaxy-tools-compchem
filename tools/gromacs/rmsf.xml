@@ -1,4 +1,4 @@
-<tool id="gmx_rmsf" name="GROMACS RMSF calculation" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+<tool id="gmx_rmsf" name="GROMACS RMSF calculation" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="21.09">
     <description>of molecular structures</description>
     <macros>
         <import>macros.xml</import>
@@ -34,7 +34,7 @@
         <param name="traj_input" type="data" format="trr,xtc" label="Trajectory file" help="In XTC or TRR format"/>
         <param name="structure_input" type="data" format="tpr,pdb,gro" label="Structure file" help="In TPR, PDB, or GRO format. Use a tpr file if your system contains nonstandard atom types, as atomic masses may not be directly obtained from PDB or GRO files."/>
         <param name="ndx_input" type="data" format="ndx" optional="true" label="Index (NDX) file" help="Index file (optional) containing your system's different atomic and molecular groups. If not specified, GROMACS uses a default set of groups."/>
-        <param name="index" value="0" min="0" type="integer" label="Index of group" help="Index of group for calculating the Root Mean Square Fluctuation (RMSF) - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0)."/>
+        <param name="index" type="integer" value="0" min="0" label="Index of group" help="Index of group for calculating the Root Mean Square Fluctuation (RMSF) - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0)."/>
         <param name="resavg" type="select" label="Calculate average RMSF for entire residues?" help="This option works best if the selected index group mainly includes whole residues.">
             <option value="false">No</option>
             <option value="true">Yes</option>
