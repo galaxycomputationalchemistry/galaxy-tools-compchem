@@ -1,0 +1,14 @@
+name: openmm
+owner: chemteam
+description: "OpenMM is a toolkit for molecular simulation using high performance GPU code."
+homepage_url: https://github.com/openmm
+remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/tree/master/tools/openmm
+type: unrestricted
+categories:
+- Molecular Dynamics
+- Computational chemistry
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the openmm package: {{ tool_name }}"
+maintainers:
+  - simonbray
