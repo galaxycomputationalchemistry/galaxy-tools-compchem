@@ -1,4 +1,4 @@
-<tool id="gmx_rmsd" name="GROMACS RMSD calculation" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+<tool id="gmx_rmsd" name="GROMACS RMSD calculation" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="21.09">
     <description>of molecular structures</description>
     <macros>
         <import>macros.xml</import>
@@ -77,8 +77,7 @@
             <when value="translation">
                 <param name="index_refgroup" value="0" min="0" type="integer" label="Index - least squares fitting group" help="Index number of the group you are fitting against, i.e. the reference group. For proteins, this group can be Backbone or C-alpha."/>
             </when>
-            <when value="none">
-            </when>
+            <when value="none"/>
         </conditional>
         <param name="outputformat" type="select" label="Output format" help="The default XVG format is compatible with XMGRACE and includes all of the graph's parameters. The raw data just includes 2 columns, one for the frame number and second for the corresponding RMSD value">
             <option value="xmgrace" selected="true">XVG</option>
