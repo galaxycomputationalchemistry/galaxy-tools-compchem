@@ -1,4 +1,4 @@
-<tool id="gmx_trj" name="Modify/convert and concatate GROMACS trajectories" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+<tool id="gmx_trj" name="Modify/convert and concatate GROMACS trajectories" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="21.09">
     <description>using trjconv and trjcat</description>
     <macros>
         <import>macros.xml</import>
