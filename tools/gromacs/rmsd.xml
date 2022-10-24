@@ -10,35 +10,41 @@
         ln -s '$traj_input' ./traj_input.${traj_input.ext} &&
         ln -s '$structure_input' ./structure_input.${structure_input.ext} &&
         #if $traj2.traj2select == 'true':
-        ln -s '$traj2.traj_input2' ./traj_input2.${traj_input2.ext} &&
+            ln -s '$traj2.traj_input2' ./traj_input2.${traj_input2.ext} &&
         #end if
         #if $ndx_input:
-        ln -s '$ndx_input' ./ndx_input.${ndx_input.ext} &&
+            ln -s '$ndx_input' ./ndx_input.${ndx_input.ext} &&
         #end if
         #if $fit.fit_type == 'none':
-        echo '$index_rmsdgroup' | gmx rms
+            echo '$index_rmsdgroup' | gmx rms
         #else
-        echo '$fit.index_refgroup' '$index_rmsdgroup' | gmx rms
+            echo '$fit.index_refgroup' '$index_rmsdgroup' | gmx rms
         #end if
-        ##inputs
-        -f ./traj_input.${traj_input.ext}  -s ./structure_input.${structure_input.ext}
+        
+        ## inputs
+        -f ./traj_input.${traj_input.ext}
+        -s ./structure_input.${structure_input.ext}
         #if $traj2.traj2select == 'true':
-        -f2 ./traj_input2.${traj_input2.ext} -m -skip '$traj2.skip' -skip2 '$traj2.skip' -max '$traj2.maxlevel' -min '$traj2.minlevel'
+            -f2 ./traj_input2.${traj_input2.ext}
+            -m
+            -skip '$traj2.skip'
+            -skip2 '$traj2.skip'
+            -max '$traj2.maxlevel'
+            -min '$traj2.minlevel'
         #end if
         #if '$ndx_input':
-        -n ./ndx_input.${ndx_input.ext}
+            -n ./ndx_input.${ndx_input.ext}
         #end if
 
         -fit '$fit.fit_type'
         -xvg '$outputformat'
         
         ## other options
+        
         #if $mir == 'true':
-        -mir
+            -mir
         #end if
         >> verbose.txt 2>&1
-        
- 
     ]]></command>
     <inputs>
         <param name="traj_input" type="data" format="trr,xtc" label="Trajectory file" help="In XTC or TRR format"/>
