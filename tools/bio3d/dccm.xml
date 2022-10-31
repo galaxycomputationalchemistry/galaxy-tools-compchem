@@ -5,7 +5,7 @@
         <token name="@GALAXY_VERSION@">0</token>
     </macros>
     <expand macro="requirements">
-        <requirement type="package" version="0.20_38">r-lattice</requirement>
+        <requirement type="package" version="0.20.29">r-lattice</requirement>
     </expand>
     <command detect_errors="exit_code">
 <![CDATA[ 
@@ -99,7 +99,7 @@
             <param name="sele" value="calpha"/>
             <output name="dccm_plot">
               <assert_contents>
-                <has_size value="280500" delta="20000"/>
+                <has_size value="350000" delta="20000"/>
               </assert_contents>
             </output>
         </test>
