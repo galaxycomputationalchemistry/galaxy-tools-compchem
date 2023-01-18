@@ -1,0 +1,126 @@
+<tool id="gmx_insertmolecules" name="GROMACS insert-molecules" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+    <description>to structure and topology files</description>
+    <macros>
+        <import>macros.xml</import>
+        <token name="@GALAXY_VERSION@">0</token>
+    </macros>
+
+    <expand macro="requirements">
+       <requirement type="package" version="3.8">python</requirement>
+    </expand>
+
+    <command detect_errors="exit_code"><![CDATA[
+
+        ln -s '$gro_input' ./gro_input.gro &&
+        ln -s '$mol_input' ./mol_input.gro &&
+
+        gmx insert-molecules -f ./gro_input.gro -ci ./mol_input.gro -o multiples.gro -nmol '$nmols'
+          #if $str($box.config) == "true":
+              -box $box.dim
+          #end if
+           
+          >> verbose.txt 2>&1
+          && python '$__tool_directory__/nmols.py'
+    ]]></command>
+
+    <inputs>
+        <param argument="gro_input" type="data" format='gro' label="GRO structure file to insert into"/>
+        <param argument="mol_input" type="data" format='gro' label="Inserting molecule's GRO structure file"/>
+        <param name="nmols" type="integer" value="0" min="0" label="Number of copies of the molecule to add to system"/>
+        <conditional name="box">
+            <param name="config" type="select" label="Change box size?">
+                <option value="true">Yes</option>
+                <option value="false" selected="true">No</option>
+            </param>
+            <when value="true">
+                <param name="dim" type="integer" value="0" min="0" label="New box dimensions in nanometers. By default produces a cubic box, so the value provided is assigned to all 3 dimensions x, y, and z." help="This is useful if you're adding a lot of large molecules that may not fit inside the original box size. These dimensions, and box type can always be changed later with gmx_editconf." />
+            </when>
+            <when value="false"/>
+        </conditional>   
+    </inputs>
+    <outputs>
+        <data name="output1" format="gro" from_work_dir="./multiples.gro" label="GROMACS new structure with inserted-molecules (GRO) on ${on_string}"/>
+        <data name="output2" format="txt" from_work_dir="./addedmols.txt" label="Total number of molecules succesfully added on ${on_string}"/>
+        <expand macro="log_outputs" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="gro_input" value="newbox.gro" />
+            <param name="nmols" value="5" />
+            <param name="mol_input" value="lig.gro" />
+            <output name="output1" ftype="gro">
+                <!-- file is big, thus we do not compare the whole file -->
+                <assert_contents>
+                    <has_line line="TEST" />
+                    <has_text text="197"/>
+                    <has_text text="6G5E     C1   93"/>
+                    <has_text text="7G5E     C1  114"/>
+                    <has_text text="8G5E     C1  135"/>
+                    <has_text text="9G5E     C1  156"/>
+                    <has_text text="10G5E     C1  177"/>
+                    <has_text text="4.09123   4.09123   4.09123"/>
+                </assert_contents>
+            </output>
+            <output name="output2" ftype="txt">
+                <assert_contents>
+                    <has_text text="5" />
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+            <param name="gro_input" value="newbox.gro" />
+            <param name="nmols" value="5" />
+            <param name="mol_input" value="lig.gro" />
+            <param name="config" value="true" />
+            <param name="dim" value="7" />
+            <output name="output1" ftype="gro">
+                <assert_contents>
+                    <has_line line="TEST" />
+                    <has_text text="197"/>
+                    <has_text text="6G5E     C1   93"/>
+                    <has_text text="7G5E     C1  114"/>
+                    <has_text text="8G5E     C1  135"/>
+                    <has_text text="9G5E     C1  156"/>
+                    <has_text text="10G5E     C1  177"/>
+                    <has_text text="7.00000   7.00000   7.00000"/>
+                </assert_contents>
+            </output>
+            <output name="output2" ftype="txt">
+                <assert_contents>
+                    <has_text text="5" />
+                </assert_contents>
+            </output>
+
+          </test>
+    </tests>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+This tool adds n number of copies of any given molecule into another system using their .gro files. The inserting molecule can be a small ligand or an entire protein. The output can later be solvated using gmx_solvate if desired. The resulting files can be used to run a molecular dynamics simulation, provided that the topologies are updated to reflect all the new changes.
+
+_____
+
+.. class:: infomark
+
+**Input**
+
+       - GRO structure file of system to insert into.
+       - GRO file of inserting molecule.
+
+_____
+
+
+.. class:: infomark
+
+**Output**
+
+       - GRO structure file of new system with inserted molecules.
+       - txt file containing number of succesfully added molecules. 
+    ]]></help>
+
+    <expand macro="citations" />
+</tool>
+
