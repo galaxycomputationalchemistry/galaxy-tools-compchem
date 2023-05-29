@@ -7,7 +7,7 @@
     <expand macro="requirements">
         <requirement type="package" version="1.10.1">scipy</requirement>
         <requirement type="package" version="0.12.2">seaborn</requirement>
-        <requirement type="package" version="3.1.1">nbdime</requirement>
+        <requirement type="package" version="3.2.1">nbdime</requirement>
         <requirement type="package" version="6.0">pyyaml</requirement>
     </expand>
     <command detect_errors="exit_code"><![CDATA[
