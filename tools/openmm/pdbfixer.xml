@@ -1,7 +1,7 @@
 <tool id="pdbfixer" name="PDBFixer"  version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
     <description>to automatically fix a PDB file before performing molecular dynamics simulation</description>
     <macros>
-        <token name="@TOOL_VERSION@">1.8.1</token>
+        <token name="@TOOL_VERSION@">1.9</token>
         <token name="@GALAXY_VERSION@">0</token>
     </macros>
     <requirements>
