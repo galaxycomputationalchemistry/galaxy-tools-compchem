@@ -1,8 +1,8 @@
-<tool id="gmx_trj" name="Modify/convert GROMACS trajectories" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+<tool id="gmx_trj" name="Modify/convert and concatate GROMACS trajectories" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="21.09">
     <description>using trjconv and trjcat</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">1</token>
+        <token name="@GALAXY_VERSION@">2</token>
         <xml name="fit_when" token_option="none">
             <when value="@OPTION@">
                 <param name="index_fit" type="text" label="Index of group to use for fitting" help="Index of group to use for fitting - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0).">
@@ -11,18 +11,33 @@
             </when>
         </xml>
     </macros>
-
-    <expand macro="requirements" />
-
+    <expand macro="requirements"/>
     <command detect_errors="exit_code"><![CDATA[
     #if $trj.trj_op == 'trjcat':
         mkdir trajs &&
-        #for $value, $file in enumerate($trj_input):
-            ln -s '$file' trajs/traj_${str(value).rjust(10, '0')}.${file.ext} &&
+        #set $file_count = 0  ## sets 1st input to 0
+        #set $file_list = []
+        #for $file_count, $file in enumerate($trj_input):  ## enumerates each input file, starting from 0
+            #set $filename = "trajs/traj_%i.%s" % ($file_count, $file.ext)
+            #silent $file_list.append($filename)
+            ln -s '$file' '$filename' &&
+        #end for
+        
+        ## runs inputs from a repeat block. By choosing each input, this allows the user to select individual input files at a time, as well as ensure the proper order.
+        #for $traj_repeat in $trj.inputtrajs:
+            #for $file in $traj_repeat.trj_input:
+                #set $file_count = $file_count + 1 ## inputs from this repeat block will be numbered at + 1 ahead of inputs from first multiple select above
+                #set $filename = "trajs/traj_%i.%s" % ($file_count, $file.ext)
+                #silent $file_list.append($filename)
+                ln -s '$file' '$filename' &&
+            #end for
         #end for
 
         gmx trjcat
-            -f trajs/traj* ## here we assume that they all have the same ext, probably reasonable
+            -f 
+            #for $filename in $file_list:
+                '$filename'
+            #end for
             $trj.cat
             -e '$time.e'
 
@@ -58,18 +73,20 @@
         #if $time.e != -1:
             -e '$time.e'
         #end if
+        #if $trj.skip:
+            -skip $trj.skip
+        #end if
     #end if
 
     -b '$time.b'
     -dt '$time.dt'
-    -o ./output.${output_format} &&
-    &>> verbose.txt
+    -o ./output.${output_format} 
+    >> verbose.txt 2>&1
     #if not $trj.sep:
         &&
         mv ./output.${output_format} '$output'
     #end if
     ]]></command>
-
     <inputs>
         <conditional name="trj">
             <param name="trj_op" type="select" label="Modify a trajectory or concatenate multiple trajectories?">
@@ -77,9 +94,9 @@
                 <option value="trjcat">Concatenate (trjcat)</option>
             </param>
             <when value="trjconv">
-                <param name="trj_input" type="data" format='xtc,trr,pdb,gro' label="Input trajectory" help="In XTC or TRR format; structure files with PDB or GRO format can also be used."/>
-                <param name="str_input" type="data" format='pdb,gro,tpr' label="Input structure" help="In PDB, GRO or TPR format."/>
-                <param name="ndx_input" type="data" format='ndx' label="Index (NDX) file" optional="true" help="In NDX format. Optional."/>
+                <param name="trj_input" type="data" format="xtc,trr,pdb,gro" label="Input trajectory" help="In XTC or TRR format; structure files with PDB or GRO format can also be used."/>
+                <param name="str_input" type="data" format="pdb,gro,tpr" label="Input structure" help="In PDB, GRO or TPR format."/>
+                <param name="ndx_input" type="data" format="ndx" label="Index (NDX) file" optional="true" help="In NDX format. Optional."/>
                 <param name="index_output" value="0" type="text" label="Index of group to save in the output" help="Index of group to save in the output - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0).">
                     <validator type="regex" message="Only numeric values allowed">^[0-9]*$</validator>
                 </param>
@@ -91,7 +108,7 @@
                     <option value="sep">Yes, write each frame separately</option>
                 </param>
                 <conditional name="pbc">
-                    <param name="pbc" type="select" label="PBC treatment" >
+                    <param name="pbc" type="select" label="PBC treatment">
                         <option value="none">none</option>
                         <option value="mol">mol</option>
                         <option value="res">res</option>
@@ -105,25 +122,26 @@
                             <validator type="regex" message="Only numeric values allowed">^[0-9]*$</validator>
                         </param>
                     </when>
-                    <when value="none" />
-                    <when value="mol" />
-                    <when value="res" />
-                    <when value="atom" />
-                    <when value="nojump" />
-                    <when value="whole" />
+                    <when value="none"/>
+                    <when value="mol"/>
+                    <when value="res"/>
+                    <when value="atom"/>
+                    <when value="nojump"/>
+                    <when value="whole"/>
                 </conditional>
                 <param name="ur" type="select" label="Unit cell representation" help="Only has effect in combination with PBC treatment of mol, res or atom">
                     <option value="rect" selected="true">rect</option>
                     <option value="tric">tric</option>
                     <option value="compact">compact</option>
                 </param>
-                <param name="boxcenter" type="select" label="Center for PBC and centering treatment" >
+                <param name="skip" type="integer" min="1" value="1" label="Number of frames to skip" help="This allows you to compress a trajectory file, by reducing the amount of frames written out into the new trajectory file."/>
+                <param name="boxcenter" type="select" label="Center for PBC and centering treatment">
                     <option value="rect">rect</option>
                     <option value="tric" selected="true">tric</option>
                     <option value="zero">zero</option>
                 </param>
                 <conditional name="fit">
-                    <param name="fit" type="select" label="Fit molecule to reference structure in the reference file?" >
+                    <param name="fit" type="select" label="Fit molecule to reference structure in the reference file?">
                         <option value="none" selected="true">No fitting</option>
                         <option value="rot+trans">rot+trans</option>
                         <option value="rotxy+transxy">rotxy+transxy</option>
@@ -140,23 +158,27 @@
                 </conditional>
             </when>
             <when value="trjcat">
-                <param name="trj_input" type="data" format='xtc,trr' label="Input trajectories" help="In XTC or TRR format, but please do not mix the two. Please note that if you want to take order into account when concatenating, you must use a collection as input." multiple="true"/>
+                <param name="trj_input" type="data" format="xtc,trr" label="Input trajectories" help="In XTC or TRR format, but please do not mix the two. Please note that the order of concatenation is the same as the consecutive order of these selected inputs." multiple="true"/>
+                <repeat name="inputtrajs" title="Select input trajectories" min="0">
+                    <param name="trj_input" type="data" format="xtc,trr" label="Input trajectories" help="In XTC or TRR format, but please do not mix the two. Please note that the order of concatenation is the same as the consecutive order of these selected inputs." multiple="true"/>
+                </repeat>
                 <param name="cat" type="boolean" label="Do not discard double time frames" truevalue="-cat" falsevalue="-nocat"/>
-                <param name="sep" type="hidden" value="" />
+                <param name="sep" type="hidden" value=""/>
             </when>
         </conditional>
-        <param name="output_format" type="select" label="Output format" >
+        <param name="output_format" type="select" label="Output format">
             <option value="xtc">XTC</option>
             <option value="trr">TRR</option>
             <option value="pdb">PDB</option>
             <option value="gro">GRO</option>
         </param>
-        <section title="Time" name='time' expanded="true">
+        <section title="Time" name="time" expanded="true">
             <param name="b" type="integer" label="Start time" help="Time (ps) of first frame to read from trajectory" value="0" min="0"/>
-            <param name="e" type="integer" label="End time" help="Time (ps) of last frame to read from trajectory" value="-1"  min="-1"/> <!-- stupidly this has different default values for trjconv and trjcat -->
-            <param name="dt" type="integer" label="Write frames at this time interval (ps)" help="Only write frame when t is exactly divisible by this value. Leave as 0 to record all frames." value="0"  min="0"/>
+            <param name="e" type="integer" label="End time" help="Time (ps) of last frame to read from trajectory" value="-1" min="-1"/>
+            <!-- stupidly this has different default values for trjconv and trjcat -->
+            <param name="dt" type="integer" label="Write frames at this time interval (ps)" help="Only write frame when t is exactly divisible by this value. Leave as 0 to record all frames." value="0" min="0"/>
         </section>
-        <expand macro="log" />
+        <expand macro="log"/>
     </inputs>
     <outputs>
         <data name="output" format="xtc">
@@ -176,45 +198,80 @@
             <filter>trj.get("sep") and output_format == 'pdb'</filter>
             <discover_datasets pattern="(?P&lt;designation&gt;^output[0-9]{9}\.pdb$)" ext="pdb"/>
         </collection>
-        <expand macro="log_outputs" />
+        <expand macro="log_outputs"/>
     </outputs>
     <tests>
         <test>
             <!-- gmx trjcat -f npt.xtc nvt.xtc -cat -o test.xtc -->
-            <param name="trj_op" value="trjcat" />
-            <param name="trj_input" value="npt.xtc,nvt.xtc" />
-            <param name="b" value="0" />
-            <param name="e" value="-1" />
-            <param name="dt" value="0" />
-            <param name="cat" value="true" />
+            <param name="trj_op" value="trjcat"/>
+            <param name="trj_input" value="npt.xtc,nvt.xtc"/>
+            <param name="b" value="0"/>
+            <param name="e" value="-1"/>
+            <param name="dt" value="0"/>
+            <param name="cat" value="true"/>
+            <output name="output" file="trjcat.xtc" ftype="xtc"/>
+        </test>
+        <test>
+            <!-- gmx trjcat -f npt.xtc nvt.xtc -cat -o test.xtc -->
+            <conditional name="trj">
+                <param name="trj_op" value="trjcat"/>
+                <param name="trj_input" value="npt.xtc"/>
+                <repeat name="inputtrajs">
+                    <param name="trj_input" value="nvt.xtc"/>
+                </repeat>
+                <param name="cat" value="true"/>
+            </conditional>
+            <param name="output_format" value="xtc"/>
+            <section name="time">
+                <param name="b" value="0"/>
+                <param name="e" value="-1"/>
+                <param name="dt" value="0"/>
+            </section>
             <output name="output" file="trjcat.xtc" ftype="xtc"/>
         </test>
         <test>
             <!-- echo '1 1' | gmx trjconv -f npt.xtc -s npt.tpr -n -center -pbc mol -ur compact -o npt_c.xtc -->
             <!-- <param name="trj_op" value="trjconv" /> -->
-            <param name="trj_input" value="npt.xtc" />
+            <param name="trj_input" value="npt.xtc"/>
             <param name="str_input" value="npt.tpr" ftype="tpr"/>
-            <param name="ndx_input" value="index.ndx" />
-            <param name="b" value="0" />
-            <param name="e" value="-1" />
-            <param name="dt" value="0" />
-            <param name="index_output" value="1" />
-            <param name="index_center" value="1" />
-            <param name="pbc" value="mol" />
-            <param name="ur" value="tric" />
+            <param name="ndx_input" value="index.ndx"/>
+            <param name="b" value="0"/>
+            <param name="e" value="-1"/>
+            <param name="dt" value="0"/>
+            <param name="index_output" value="1"/>
+            <param name="index_center" value="1"/>
+            <param name="pbc" value="mol"/>
+            <param name="ur" value="tric"/>
             <output name="output" file="trjconv.xtc" ftype="xtc"/>
         </test>
         <test>
-            <!-- test sep flag -->
-            <param name="trj_input" value="npt.xtc" />
+            <!-- testing skip -->
+            <!-- echo '1 1' | gmx trjconv -f npt.xtc -s npt.tpr -n -center -pbc mol -ur compact -skip 2 -o npt_c.xtc -->
+            <!-- <param name="trj_op" value="trjconv" /> -->
+            <param name="trj_input" value="npt.xtc"/>
             <param name="str_input" value="npt.tpr" ftype="tpr"/>
-            <param name="ndx_input" value="index.ndx" />
-            <param name="b" value="0" />
-            <param name="e" value="-1" />
-            <param name="dt" value="0" />
-            <param name="index_output" value="0" />
-            <param name="sep" value="sep" />
-            <param name="output_format" value="pdb" />
+            <param name="ndx_input" value="index.ndx"/>
+            <param name="b" value="0"/>
+            <param name="e" value="-1"/>
+            <param name="dt" value="0"/>
+            <param name="index_output" value="1"/>
+            <param name="index_center" value="1"/>
+            <param name="pbc" value="mol"/>
+            <param name="ur" value="compact"/>
+            <param name="skip" value="2"/>
+            <output name="output" file="trjconv_skip2.xtc" ftype="xtc"/>
+        </test>
+        <test>
+            <!-- test sep flag -->
+            <param name="trj_input" value="npt.xtc"/>
+            <param name="str_input" value="npt.tpr" ftype="tpr"/>
+            <param name="ndx_input" value="index.ndx"/>
+            <param name="b" value="0"/>
+            <param name="e" value="-1"/>
+            <param name="dt" value="0"/>
+            <param name="index_output" value="0"/>
+            <param name="sep" value="sep"/>
+            <param name="output_format" value="pdb"/>
             <output_collection name="pdb_frames" type="list">
                 <element name="output000000007.pdb" ftype="pdb" file="frame7.pdb"/>
             </output_collection>
@@ -250,5 +307,5 @@ _____
 
 
     ]]></help>
-    <expand macro="citations" />
+    <expand macro="citations"/>
 </tool>
