@@ -9,7 +9,7 @@
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
 
-    ln -s '$structure_input' ./structure_input.${structure_input.ext} &&
+    ln -s '$structure_input' ./structure_input.pdb &&
 	pulchra 
 	
 	##inputs
