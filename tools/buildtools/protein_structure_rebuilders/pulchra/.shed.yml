@@ -1,0 +1,17 @@
+name: pulchra
+owner: chemteam
+description: "Pulchra is a package used for rebuilding protein structures from reduced representations."
+homepage_url: https://www.pirx.com/pulchra/
+long_description: |
+    Pulchra (https://www.pirx.com/pulchra/) is a package used for rebuilding protein structures from reduced representations. Using a coarse grain model as input (alpha trace, with or without a sidechain bead), it can reconstruct the protein's missing heavy atoms. 
+remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/
+type: unrestricted
+categories:
+  - Structural biology
+  - Computational chemistry
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the Pulchra package: {{ tool_name }}"
+maintainers:
+  - thepineapplepirate
+
