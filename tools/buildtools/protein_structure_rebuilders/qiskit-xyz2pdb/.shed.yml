@@ -1,0 +1,18 @@
+name: Qiskit-xyz2pdb
+owner: chemteam
+description: "This is a python script wrapped into a Galaxy tool that converts generic alpha carbon xyz files into proper PDB files."
+homepage_url: https://pypi.org/project/qiskit-xyz2pdb/
+long_description: |
+    Qiskit-xyz2pdb is a python script wrapped into a Galaxy tool that converts generic alpha carbon xyz files into proper PDB files. Current version is most compatible with outputs from Qiskit's protein folding algorithm, but future development will make the tool more generalizable.
+remote_repository_url: https://github.com/thepineapplepirate/qiskit-xyz2pdb
+type: unrestricted
+categories:
+  - Structural biology
+  - Quantum computing
+  - Computational chemistry
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for Qiskit-xyz2pdb: {{ tool_name }}"
+maintainers:
+  - thepineapplepirate
+  - cumbof
