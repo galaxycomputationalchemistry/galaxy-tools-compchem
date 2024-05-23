@@ -1,0 +1,69 @@
+<tool id="BioPDB_align_and_rmsd" name="Align structures and compute relative RMSDs" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+    <description>using Biopython</description>
+    <macros>
+        <token name="@TOOL_VERSION@">1.79</token>
+        <token name="@GALAXY_VERSION@">0</token>
+    </macros>
+    <requirements>
+        <requirement type="package" version="1.79">biopython</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+
+    python3 '$__tool_directory__/BioPDB_align_and_rmsd.py' --start_residue '$start_residue' --end_residue '$end_residue' --ref_structure '$ref_structure' --model '$model' --aligned_structure '$aligned_structure' --rmsd '$rmsd_out' >> verbose.txt 2>&1
+    
+    ]]></command>
+    <inputs>
+        <param name="start_residue" type="integer" label="Starting residue to align" help="This should be the same starting residue for the model and reference structure." value="0" />
+        <param name="end_residue" type="integer" label="Ending residue to align" help="This should be the same ending residue for the model and reference structure." value="0"/>
+        <param name="ref_structure" type="data" format="pdb" label="Reference structure" help="This can be an experimental structure or another model you wish to compare against."/>
+        <param name="model" type="data" format="pdb" label="Sample structure" help="This is the structure you wish to align and compute a relative RMSD for. This can also be an experimental structure or another model."/>
+    </inputs>
+
+    <outputs>
+        <data name="aligned_structure" format="pdb" label="PDB file of the aligned structure ${on_string}"></data>
+        <data name="rmsd_out" format="tabular" label="RMSD of the aligned structure ${on_string}"></data>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="start_residue" value="1" />
+            <param name="end_residue" value="15"/>
+            <param name="ref_structure" value="reference_structure.pdb" />
+            <param name="model" value="model.pdb" />
+            <output name="aligned_structure" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM      5  CA  ARG     1       6.016   6.125  -0.066  1.00  0.00           C"/>
+                    <has_text text="ATOM     29  CA  HIS     2       4.909   5.168   3.434  1.00  0.00           C"/>
+                    <has_text text="ATOM     46  CA  TYR     3       7.956   4.326   5.551  1.00  0.00           C"/>
+                </assert_contents>
+            </output>
+            <output name="rmsd_out" ftype="tabular">
+                <assert_contents>
+                    <has_text text="5.492787964992471"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+
+        <help><![CDATA[
+Tool to align protein structures and compute relative RMSDs, using the alpha carbon coordinates.
+
+.. class:: infomark
+
+**Inputs**
+
+PDB files for the reference structure, a model, as well as the starting and ending residues for the alignment.
+
+.. class:: infomark
+
+**Outputs**
+
+1) Tabular file containing the RMSD.
+2) PDB file of the model with the aligned coordinates.
+
+
+        ]]></help>
+    <citations>
+        <citation type="doi">https://doi.org/10.1093/bioinformatics/btp163</citation>
+    </citations>
+</tool>

@@ -1,0 +1,16 @@
+name: BioPDB
+owner: chemteam
+description: "Biopython is a collection of modules for dealing with biological data in Python."
+homepage_url: https://biopython.org/
+long_description: |
+   Biophython (https://biopython.org/) is a collection of modules for dealing with biological data in Python. This particular set of tools uses the Bio.PDB package to analyze and compare protein structures.
+remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/
+type: unrestricted
+categories:
+  - Structural biology
+  - Computational chemistry
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for Biopython's Bio.PDB package: {{ tool_name }}"
+maintainers:
+  - thepineapplepirate
