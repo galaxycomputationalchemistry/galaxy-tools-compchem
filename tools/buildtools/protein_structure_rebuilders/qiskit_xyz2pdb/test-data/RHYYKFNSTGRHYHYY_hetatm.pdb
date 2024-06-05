@@ -1,0 +1,35 @@
+COMPND    My Protein Sequence                                                   
+AUTHOR    Galaxy User                                                          
+HETATM    1  R   PEP     1       0.000   0.000   0.000  1.00  0.00           R  
+HETATM    2  H   PEP     2       2.194   2.194  -2.194  1.00  0.00           H  
+HETATM    3  Y   PEP     3       4.388   0.000  -4.388  1.00  0.00           Y  
+HETATM    4  Y   PEP     4       2.194  -2.194  -6.582  1.00  0.00           Y  
+HETATM    5  K   PEP     5       0.000  -4.388  -4.388  1.00  0.00           K  
+HETATM    6  F   PEP     6       2.194  -2.194  -6.582  1.00  0.00           F  
+HETATM    7  N   PEP     7       4.388   0.000  -4.388  1.00  0.00           N  
+HETATM    8  S   PEP     8       2.194   2.194  -2.194  1.00  0.00           S  
+HETATM    9  T   PEP     9       0.000   4.388  -4.388  1.00  0.00           T  
+HETATM   10  G   PEP    10      -2.194   6.582  -2.194  1.00  0.00           G  
+HETATM   11  R   PEP    11      -4.388   4.388  -0.000  1.00  0.00           R  
+HETATM   12  H   PEP    12      -2.194   2.194   2.194  1.00  0.00           H  
+HETATM   13  Y   PEP    13       0.000   0.000  -0.000  1.00  0.00           Y  
+HETATM   14  H   PEP    14       2.194   2.194  -2.194  1.00  0.00           H  
+HETATM   15  Y   PEP    15       4.388   0.000  -4.388  1.00  0.00           Y  
+HETATM   16  Y   PEP    16       2.194   2.194  -2.194  1.00  0.00           Y  
+CONECT    1    2    0    0    0
+CONECT    2    3    0    0    0
+CONECT    3    4    0    0    0
+CONECT    4    5    0    0    0
+CONECT    5    6    0    0    0
+CONECT    6    7    0    0    0
+CONECT    7    8    0    0    0
+CONECT    8    9    0    0    0
+CONECT    9   10    0    0    0
+CONECT   10   11    0    0    0
+CONECT   11   12    0    0    0
+CONECT   12   13    0    0    0
+CONECT   13   14    0    0    0
+CONECT   14   15    0    0    0
+CONECT   15   16    0    0    0
+MASTER        0    0    0    0    0    0    0    0   16    0   16    0
+END
