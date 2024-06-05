@@ -1,4 +1,4 @@
-<tool id="qiskit-xyz2pdb" name="Convert Qiskit's XYZ files to" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+<tool id="qiskit_xyz2pdb" name="Convert Qiskit's XYZ files to" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
     <description>alpha carbon PDB files</description>
     <macros>
         <token name="@TOOL_VERSION@">0.1.2</token>
