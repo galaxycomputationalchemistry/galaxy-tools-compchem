@@ -1,4 +1,4 @@
-<tool id="pulchra" name="PULCHRA recontruction of all atom proteins" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+<tool id="pulchra" name="PULCHRA recontruction of all atom proteins" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="22.05">
     <description>from reduced representations</description>
     <macros>
         <token name="@TOOL_VERSION@">3.06</token>
