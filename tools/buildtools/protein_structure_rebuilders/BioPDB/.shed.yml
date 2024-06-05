@@ -1,4 +1,4 @@
-name: BioPDB
+name: biopdb
 owner: chemteam
 description: "Biopython is a collection of modules for dealing with biological data in Python."
 homepage_url: https://biopython.org/
