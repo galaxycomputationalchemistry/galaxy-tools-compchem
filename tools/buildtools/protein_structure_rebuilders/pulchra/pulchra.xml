@@ -14,9 +14,7 @@
 	
 	##inputs
 	./structure_input.${structure_input.ext}
-     #if $skip_sidechain:
-    -s
-    #end if
+     $skip_sidechain
 
     -v
  
