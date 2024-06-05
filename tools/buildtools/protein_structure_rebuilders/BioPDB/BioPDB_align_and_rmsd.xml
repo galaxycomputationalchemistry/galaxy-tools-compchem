@@ -1,4 +1,4 @@
-<tool id="BioPDB_align_and_rmsd" name="Align structures and compute relative RMSDs" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
+<tool id="biopdb_align_and_rmsd" name="Align structures and compute relative RMSDs" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@">
     <description>using Biopython</description>
     <macros>
         <token name="@TOOL_VERSION@">1.79</token>
