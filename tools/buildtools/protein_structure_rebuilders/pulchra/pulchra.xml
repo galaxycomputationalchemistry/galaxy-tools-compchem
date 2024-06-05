@@ -21,7 +21,7 @@
     ]]></command>
     <inputs>
         <param name="structure_input" type="data" format="pdb" label="Structure file" help="In PDB format. This input is usually an 'alpha trace' or other incomplete structure file."/>
-        <param name="skip_sidechain" type="boolean" label="Skip sidechain reconstruction?" help="By default, both sidechains and backbone will be reconstructed otherwise."/>
+        <param argument="-s" name="skip_sidechain" type="boolean" truevalue="-s" falsevalue="" label="Skip sidechain reconstruction?" help="By default, both sidechains and backbone will be reconstructed otherwise."/>
     </inputs>
     <outputs>
         <data name="output1" format="pdb" from_work_dir="*.rebuilt.pdb" label="PULCHRA rebuilt pdb file on ${on_string}"/>
