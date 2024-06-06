@@ -5,7 +5,7 @@
         <token name="@GALAXY_VERSION@">0</token>
     </macros>
     <requirements>
-        <requirement type="package" version="3.06">pulchra</requirement>
+        <requirement type="package" version="@TOOL_VERSION@">pulchra</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
 
