@@ -5,9 +5,9 @@
         <token name="@GALAXY_VERSION@">0</token>
     </macros>
     <expand macro="requirements">
-        <requirement type="package" version="0.10.0">seaborn</requirement>
-        <requirement type="package" version="2.10.0">h5py</requirement>
-        <requirement type="package" version="2.11.1">jinja2</requirement>
+        <requirement type="package" version="0.13.0">seaborn</requirement>
+        <requirement type="package" version="3.10.0">h5py</requirement>
+        <requirement type="package" version="3.1.2">jinja2</requirement>
     </expand>
     <command detect_errors="exit_code"><![CDATA[
         python '$__tool_directory__/ramachandran_auto_protein.py'
@@ -78,7 +78,7 @@
             </output>
             <output name="o_plot2">
                 <assert_contents>
-                    <has_size value="31740" delta="3000" />
+                    <has_size value="112000" delta="3000" />
                 </assert_contents>
             </output>
             <output name="o_data1">
