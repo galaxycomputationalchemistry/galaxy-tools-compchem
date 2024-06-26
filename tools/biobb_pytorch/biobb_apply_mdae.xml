@@ -1,0 +1,92 @@
+<tool id="biobb_pytorch_apply_mdae" name="ApplyMdae" version="4.2.1" >
+    <description>Apply a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.</description>
+
+    <requirements>
+      <requirement type="package" version="4.2.1">biobb_pytorch</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+
+      ln -s $input_data_npy_path ./input_data_npy_path.$input_data_npy_path.ext;
+      ln -s $input_model_pth_path ./input_model_pth_path.$input_model_pth_path.ext;
+      #if str($config_json) != 'None':
+        ln -s $config_json ./config_json.$config_json.ext;
+      #end if
+
+      apply_mdae
+
+      #if str($config_json) != 'None':
+        --config ./config_json.$config_json.ext
+      #end if
+
+      --input_data_npy_path ./input_data_npy_path.$input_data_npy_path.ext
+      --input_model_pth_path ./input_model_pth_path.$input_model_pth_path.ext
+      --output_reconstructed_data_npy_path $outname_output_reconstructed_data_npy_path
+      #if str($outname_output_latent_space_npy_path) != 'None':
+        --output_latent_space_npy_path $outname_output_latent_space_npy_path
+      #end if
+      ;
+
+      if test -f $outname_output_reconstructed_data_npy_path; then mv $outname_output_reconstructed_data_npy_path $output_reconstructed_data_npy_path; fi;
+      if test -f $outname_output_latent_space_npy_path; then mv $outname_output_latent_space_npy_path $output_latent_space_npy_path; fi;
+
+      ]]>
+    </command>
+
+    <inputs>
+      <param name="input_data_npy_path"  type="data" format="npy"  optional="False" label="input NPY file" help="Path to the input data file. Format: [input].npy"/>
+      <param name="input_model_pth_path" type="data" format="pth"  optional="False" label="input PTH file" help="Path to the input model file. Format: [input].pth"/>
+      <param name="outname_output_reconstructed_data_npy_path" type="text" value="myapply_mdae.npy" optional="False" label="output NPY name" help="Path to the output reconstructed data file Format: [output].npy "/>
+      <param name="outname_output_latent_space_npy_path" type="text" value="myapply_mdae.npy" optional="True" label="output NPY name" help="Path to the reduced dimensionality file Format: [output].npy "/>
+      <param name="config_json" type="data" format="json" optional="True" label="Configuration file" help="File containing tool settings. See below for the syntax"/>
+    </inputs>
+
+    <outputs>
+      <data name="output_reconstructed_data_npy_path" format="npy" />
+      <data name="output_latent_space_npy_path"       format="npy" />
+    </outputs>
+
+    <tests>
+        <test>
+          <param name="config_json" value="config_apply_mdae.json" ftype="json" />
+          <param name="input_data_npy_path"  value="train_mdae_traj.npy" ftype="npy" />
+          <param name="input_model_pth_path" value="ref_output_model.pth" />
+          <param name="outname_output_reconstructed_data_npy_path" value="output_reconstructed_data.npy" />
+          <param name="outname_output_latent_space_npy_path" value="output_latent_space.npy" />
+          <output name="output_reconstructed_data_npy_path" file="ref_output_reconstructed_data.npy" compare="sim_size" />
+          <output name="output_latent_space_npy_path" file="ref_output_latent_space.npy" compare="sim_size" />
+        </test>
+    </tests>
+
+    <help>
+.. class:: infomark
+
+Check the syntax for the tool parameters at the original library documentation: https://biobb_pytorch.readthedocs.io/en/latest
+
+-----
+
+.. image:: http://mmb.irbbarcelona.org/biobb/assets/layouts/layout3/img/logo.png
+    :width: 150
+
+**https://mmb.irbbarcelona.org/biobb**
+
+.. image:: https://bioexcel.eu/wp-content/uploads/2019/08/Bioexcel_logo_no_subheading_660px.png
+        :width: 150
+
+**https://bioexcel.eu**
+   </help>
+
+    <citations>
+        <citation type="bibtex">
+            @misc{githubbiobb,
+            author = {Andrio P, Bayarri, G., Hospital A, Gelpi JL},
+            year = {2019-21},
+            title = {biobb: BioExcel building blocks },
+            publisher = {GitHub},
+            journal = {GitHub repository},
+            url = {https://github.com/bioexcel/biobb_pytorch},
+            }
+        </citation>
+        <citation type="doi">10.1038/s41597-019-0177-4</citation>
+    </citations>
+</tool>

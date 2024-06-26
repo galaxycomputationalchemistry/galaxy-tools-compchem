@@ -1,0 +1,25 @@
+name: biobb_pytorch
+owner: "Biobb team"
+description: "biobb_pytorch is the Biobb module collection to create and train ML & DL models using the popular [PyTorch](https://pytorch.org/) Python library."
+homepage_url: https://github.com/bioexcel/biobb_pytorch
+long_description: |
+    biobb_pytorch is the Biobb module collection to create and train ML & DL models using the popular [PyTorch](https://pytorch.org/) Python library.
+    Biobb (BioExcel building blocks) packages are Python building blocks that
+    create new layer of compatibility and interoperability over popular
+    bioinformatics tools.
+    The latest documentation of this package can be found in our readthedocs site:
+    [latest API documentation](http://biobb-pytorch.readthedocs.io/en/latest/).
+remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/tree/master/tools/biobb_pytorch
+type: unrestricted
+categories:
+  - Molecular Dynamics
+  - Computational chemistry
+  - Machine Learning
+  - Deep Learning
+  - PyTorch
+  - Biobb
+  - Autoencoders
+maintainers:
+  - Pau Andrio
+  - Genis Bayarri
+  - Adam Hospital

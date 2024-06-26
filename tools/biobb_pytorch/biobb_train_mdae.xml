@@ -1,0 +1,102 @@
+<tool id="biobb_pytorch_train_mdae" name="TrainMdae" version="4.2.1" >
+    <description>: Train a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.</description>
+
+    <requirements>
+      <requirement type="package" version="4.2.1">biobb_pytorch</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+
+      ln -s $input_train_npy_path ./input_train_npy_path.$input_train_npy_path.ext;
+      #if str($input_model_pth_path) != 'None':
+        ln -s $input_model_pth_path ./input_model_pth_path.$input_model_pth_path.ext;
+      #end if
+      #if str($config_json) != 'None':
+        ln -s $config_json ./config_json.$config_json.ext;
+      #end if
+
+      train_mdae
+
+      #if str($config_json) != 'None':
+        --config ./config_json.$config_json.ext
+      #end if
+
+      --input_train_npy_path ./input_train_npy_path.$input_train_npy_path.ext
+      #if str($input_model_pth_path) != 'None':
+        --input_model_pth_path ./input_model_pth_path.$input_model_pth_path.ext
+      #end if
+      --output_model_pth_path $outname_output_model_pth_path
+      #if str($outname_output_train_data_npz_path) != 'None':
+        --output_train_data_npz_path $outname_output_train_data_npz_path
+      #end if
+      #if str($outname_output_performance_npz_path) != 'None':
+        --output_performance_npz_path $outname_output_performance_npz_path
+      #end if
+      ;
+
+      if test -f $outname_output_model_pth_path; then mv $outname_output_model_pth_path $output_model_pth_path; fi;
+      if test -f $outname_output_train_data_npz_path; then mv $outname_output_train_data_npz_path $output_train_data_npz_path; fi;
+      if test -f $outname_output_performance_npz_path; then mv $outname_output_performance_npz_path $output_performance_npz_path; fi;
+
+      ]]>
+    </command>
+
+    <inputs>
+      <param name="input_train_npy_path" type="data" format="npy"  optional="False" label="input NPY file" help="Path to the input train data file. Format: [input].npy"/>
+      <param name="input_model_pth_path" type="data" format="pth"  optional="True" label="input PTH file" help="Path to the input model file. Format: [input].pth"/>
+      <param name="outname_output_model_pth_path" type="text" value="mytrain_mdae.pth" optional="False" label="output PTH name" help="Path to the output model file Format: [output].pth "/>
+      <param name="outname_output_train_data_npz_path" type="text" value="mytrain_mdae.npz" optional="True" label="output train data NPZ name" help="Path to the output train data file Format: [output].npz "/>
+      <param name="outname_output_performance_npz_path" type="text" value="mytrain_mdae.npz" optional="True" label="output performance NPZ name" help="Path to the output performance file Format: [output].npz "/>
+      <param name="config_json" type="data" format="json" optional="True" label="Configuration file" help="File containing tool settings. See below for the syntax"/>
+    </inputs>
+
+    <outputs>
+      <data name="output_model_pth_path" />
+      <data name="output_train_data_npz_path"  format="npz" />
+      <data name="output_performance_npz_path" format="npz" />
+    </outputs>
+
+    <tests>
+      <test>
+        <param name="config_json" value="config_train_mdae.json" ftype="json" />
+        <param name="input_train_npy_path" value="train_mdae_traj.npy" ftype="npy" />
+        <param name="outname_output_model_pth_path" value="output_model.pth" />
+        <param name="outname_output_train_data_npz_path" value="output_train_data.npz" />
+        <param name="outname_output_performance_npz_path" value="output_performance.npz" />
+        <output name="output_model_pth_path"       file="ref_output_model.pth" compare="sim_size" />
+        <output name="output_train_data_npz_path"  file="ref_output_train_data.npz" compare="sim_size" />
+        <output name="output_performance_npz_path" file="ref_output_performance.npz" compare="sim_size" />
+      </test>
+    </tests>
+
+    <help>
+.. class:: infomark
+
+Check the syntax for the tool parameters at the original library documentation: https://biobb_pytorch.readthedocs.io/en/latest
+
+-----
+
+.. image:: http://mmb.irbbarcelona.org/biobb/assets/layouts/layout3/img/logo.png
+    :width: 150
+
+**https://mmb.irbbarcelona.org/biobb**
+
+.. image:: https://bioexcel.eu/wp-content/uploads/2019/08/Bioexcel_logo_no_subheading_660px.png
+        :width: 150
+
+**https://bioexcel.eu**
+   </help>
+
+    <citations>
+        <citation type="bibtex">
+            @misc{githubbiobb,
+            author = {Andrio P, Bayarri, G., Hospital A, Gelpi JL},
+            year = {2019-21},
+            title = {biobb: BioExcel building blocks },
+            publisher = {GitHub},
+            journal = {GitHub repository},
+            url = {https://github.com/bioexcel/biobb_pytorch},
+            }
+        </citation>
+        <citation type="doi">10.1038/s41597-019-0177-4</citation>
+    </citations>
+</tool>
