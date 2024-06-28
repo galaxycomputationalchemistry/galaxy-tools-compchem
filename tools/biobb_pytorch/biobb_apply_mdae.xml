@@ -9,7 +9,7 @@
 
       ln -s $input_data_npy_path ./input_data_npy_path.$input_data_npy_path.ext;
       ln -s $input_model_pth_path ./input_model_pth_path.$input_model_pth_path.ext;
-      #if str($config_json) != 'None':
+      #if $config_json:
         ln -s $config_json ./config_json.$config_json.ext;
       #end if
 
