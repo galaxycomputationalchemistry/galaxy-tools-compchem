@@ -1,5 +1,5 @@
 name: biobb_pytorch
-owner: "Biobb team"
+owner: chemteam
 description: "biobb_pytorch is the Biobb module collection to create and train ML & DL models using the popular [PyTorch](https://pytorch.org/) Python library."
 homepage_url: https://github.com/bioexcel/biobb_pytorch
 long_description: |
@@ -20,6 +20,6 @@ categories:
   - Biobb
   - Autoencoders
 maintainers:
-  - Pau Andrio
-  - Genis Bayarri
-  - Adam Hospital
+  - PauAndrio
+  - gbayarri
+  - adamhospital

@@ -1,8 +1,11 @@
-<tool id="biobb_pytorch_apply_mdae" name="ApplyMdae" version="4.2.1" >
+<tool id="biobb_pytorch_apply_mdae" name="ApplyMdae" version="@TOOL_VERSION@" >
     <description>Apply a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.</description>
+    <macros>
+      <token name="@TOOL_VERSION@">4.2.1</token>
+    </macros>
 
     <requirements>
-      <requirement type="package" version="4.2.1">biobb_pytorch</requirement>
+      <requirement type="package" version="@TOOL_VERSION@">biobb_pytorch</requirement>
     </requirements>
 
     <command detect_errors="exit_code"><![CDATA[
@@ -15,19 +18,19 @@
 
       apply_mdae
 
-      #if str($config_json) != 'None':
+      #if $config_json:
         --config ./config_json.$config_json.ext
       #end if
 
       --input_data_npy_path ./input_data_npy_path.$input_data_npy_path.ext
       --input_model_pth_path ./input_model_pth_path.$input_model_pth_path.ext
       --output_reconstructed_data_npy_path $outname_output_reconstructed_data_npy_path
-      #if str($outname_output_latent_space_npy_path) != 'None':
+      #if $outname_output_latent_space_npy_path:
         --output_latent_space_npy_path $outname_output_latent_space_npy_path
       #end if
       ;
 
-      if test -f $outname_output_reconstructed_data_npy_path; then mv $outname_output_reconstructed_data_npy_path $output_reconstructed_data_npy_path; fi;
+      mv $outname_output_reconstructed_data_npy_path $output_reconstructed_data_npy_path;
       if test -f $outname_output_latent_space_npy_path; then mv $outname_output_latent_space_npy_path $output_latent_space_npy_path; fi;
 
       ]]>
@@ -53,8 +56,16 @@
           <param name="input_model_pth_path" value="ref_output_model.pth" />
           <param name="outname_output_reconstructed_data_npy_path" value="output_reconstructed_data.npy" />
           <param name="outname_output_latent_space_npy_path" value="output_latent_space.npy" />
-          <output name="output_reconstructed_data_npy_path" file="ref_output_reconstructed_data.npy" compare="sim_size" />
-          <output name="output_latent_space_npy_path" file="ref_output_latent_space.npy" compare="sim_size" />
+          <output name="output_reconstructed_data_npy_path" ftype="npy">
+            <assert_contents>
+              <has_size value="123k" delta="50k"/>
+            </assert_contents>
+          </output>
+          <output name="output_latent_space_npy_path" ftype="npy">
+            <assert_contents>
+              <has_size value="928" delta="200"/>
+            </assert_contents>
+          </output>
         </test>
     </tests>
 
