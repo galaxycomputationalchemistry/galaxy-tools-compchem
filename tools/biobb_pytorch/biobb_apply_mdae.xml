@@ -34,7 +34,7 @@
     </command>
 
     <inputs>
-      <param name="input_data_npy_path"  type="data" format="npy"  optional="False" label="input NPY file" help="Path to the input data file. Format: [input].npy"/>
+      <param name="input_data_npy_path"  type="data" format="npy"  optional="False" label="Input NPY file" help="Input data file"/>
       <param name="input_model_pth_path" type="data" format="pth"  optional="False" label="input PTH file" help="Path to the input model file. Format: [input].pth"/>
       <param name="outname_output_reconstructed_data_npy_path" type="text" value="myapply_mdae.npy" optional="False" label="output NPY name" help="Path to the output reconstructed data file Format: [output].npy "/>
       <param name="outname_output_latent_space_npy_path" type="text" value="myapply_mdae.npy" optional="True" label="output NPY name" help="Path to the reduced dimensionality file Format: [output].npy "/>
