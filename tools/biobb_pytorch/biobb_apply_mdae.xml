@@ -30,8 +30,8 @@
       #end if
       ;
 
-      mv $outname_output_reconstructed_data_npy_path $output_reconstructed_data_npy_path;
-      if test -f $outname_output_latent_space_npy_path; then mv $outname_output_latent_space_npy_path $output_latent_space_npy_path; fi;
+      mv '$outname_output_reconstructed_data_npy_path' '$output_reconstructed_data_npy_path' &&
+      if test -f '$outname_output_latent_space_npy_path'; then mv '$outname_output_latent_space_npy_path' '$output_latent_space_npy_path'; fi;
 
       ]]>
     </command>
