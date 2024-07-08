@@ -12,13 +12,7 @@ long_description: |
 remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/tree/master/tools/biobb_pytorch
 type: unrestricted
 categories:
-  - Molecular Dynamics
-  - Computational chemistry
-  - Machine Learning
-  - Deep Learning
-  - PyTorch
-  - Biobb
-  - Autoencoders
+  - biobb
 maintainers:
   - PauAndrio
   - gbayarri
