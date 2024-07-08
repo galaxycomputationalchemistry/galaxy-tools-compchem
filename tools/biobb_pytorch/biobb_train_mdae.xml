@@ -1,5 +1,5 @@
 <tool id="biobb_pytorch_train_mdae" name="TrainMdae" version="@TOOL_VERSION@" profile="22.05">
-    <description>Train a Molecular Dynamics AutoEncoder (MDAE) PyTorch model</description>
+    <description>Train a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.</description>
     <macros>
       <token name="@TOOL_VERSION@">4.2.1</token>
     </macros>
@@ -7,14 +7,15 @@
     <requirements>
       <requirement type="package" version="@TOOL_VERSION@">biobb_pytorch</requirement>
     </requirements>
+
     <command detect_errors="exit_code"><![CDATA[
 
-      ln -s $input_train_npy_path ./input_train_npy_path.$input_train_npy_path.ext;
+      ln -s '$input_train_npy_path' ./input_train_npy_path.$input_train_npy_path.ext &&
       #if $input_model_pth_path:
-        ln -s $input_model_pth_path ./input_model_pth_path.$input_model_pth_path.ext;
+        ln -s '$input_model_pth_path' ./input_model_pth_path.$input_model_pth_path.ext &&
       #end if
       #if $config_json:
-        ln -s $config_json ./config_json.$config_json.ext;
+        ln -s '$config_json' ./config_json.$config_json.ext &&
       #end if
 
       train_mdae
@@ -36,9 +37,9 @@
       #end if
       ;
 
-      mv $outname_output_model_pth_path $output_model_pth_path;
-      if test -f $outname_output_train_data_npz_path; then mv $outname_output_train_data_npz_path $output_train_data_npz_path; fi;
-      if test -f $outname_output_performance_npz_path; then mv $outname_output_performance_npz_path $output_performance_npz_path; fi;
+      mv '$outname_output_model_pth_path' '$output_model_pth_path' &&
+      if test -f '$outname_output_train_data_npz_path'; then mv '$outname_output_train_data_npz_path' '$output_train_data_npz_path'; fi;
+      if test -f '$outname_output_performance_npz_path'; then mv '$outname_output_performance_npz_path' '$output_performance_npz_path'; fi;
 
       ]]>
     </command>
