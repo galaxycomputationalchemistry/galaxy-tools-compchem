@@ -45,12 +45,12 @@
     </command>
 
     <inputs>
-      <param name="input_train_npy_path" type="data" format="npy"  optional="False" label="input NPY file" help="Path to the input train data file. Format: [input].npy"/>
-      <param name="input_model_pth_path" type="data" format="pth"  optional="True" label="input PTH file" help="Path to the input model file. Format: [input].pth"/>
-      <param name="outname_output_model_pth_path" type="text" value="mytrain_mdae.pth" optional="False" label="output PTH name" help="Path to the output model file Format: [output].pth "/>
-      <param name="outname_output_train_data_npz_path" type="text" value="mytrain_mdae.npz" optional="True" label="output train data NPZ name" help="Path to the output train data file Format: [output].npz "/>
-      <param name="outname_output_performance_npz_path" type="text" value="mytrain_mdae.npz" optional="True" label="output performance NPZ name" help="Path to the output performance file Format: [output].npz "/>
-      <param name="config_json" type="data" format="json" optional="True" label="Configuration file" help="File containing tool settings. See below for the syntax"/>
+      <param name="input_train_npy_path" type="data" format="npy"  optional="False" label="input NPY file" help="Input train NPY data file"/>
+      <param name="input_model_pth_path" type="data" format="pth"  optional="True" label="input PTH file" help="Input model PTH file"/>
+      <param name="outname_output_model_pth_path" type="text" value="mytrain_mdae.pth" optional="False" label="Output PTH name" help="Output model file"/>
+      <param name="outname_output_train_data_npz_path" type="text" value="mytrain_mdae.npz" optional="True" label="Output train data NPZ name" help="Output train data file"/>
+      <param name="outname_output_performance_npz_path" type="text" value="mytrain_mdae.npz" optional="True" label="Output performance NPZ name" help="Output performance file"/>
+      <param name="config_json" type="data" format="json" optional="True" label="Configuration file" help="File containing tool settings"/>
     </inputs>
 
     <outputs>
