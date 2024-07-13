@@ -45,8 +45,8 @@
     </inputs>
 
     <outputs>
-      <data name="output_reconstructed_data_npy_path" format="npy" />
-      <data name="output_latent_space_npy_path"       format="npy" />
+      <data format="npy" name="output_reconstructed_data_npy_path" label="output_reconstructed_data_npy_path" />
+      <data format="npy" name="output_latent_space_npy_path" label="output_latent_space_npy_path" />
     </outputs>
 
     <tests>
@@ -73,18 +73,6 @@
 .. class:: infomark
 
 Check the syntax for the tool parameters at the original library documentation: https://biobb-pytorch.readthedocs.io/en/latest
-
------
-
-.. image:: http://mmb.irbbarcelona.org/biobb/assets/layouts/layout3/img/logo.png
-    :width: 150
-
-**https://mmb.irbbarcelona.org/biobb**
-
-.. image:: https://bioexcel.eu/wp-content/uploads/2019/08/Bioexcel_logo_no_subheading_660px.png
-        :width: 150
-
-**https://bioexcel.eu**
    </help>
 
     <citations>
