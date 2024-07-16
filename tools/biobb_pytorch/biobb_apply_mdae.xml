@@ -10,12 +10,26 @@
 
     <command detect_errors="exit_code"><![CDATA[
 
+      `#Required inputs using file extension`
       ln -s '$input_data_npy_path' ./input_data_npy_path.$input_data_npy_path.ext &&
-      ln -s '$input_model_pth_path' ./input_model_pth_path.$input_model_pth_path.ext &&
+      ln -s '$input_model_pth_path' ./input_model_pth_path.pth &&
+
+      `#Optional inputs using file extension`
       #if $config_json:
         ln -s '$config_json' ./config_json.$config_json.ext &&
       #end if
 
+      `#Required Outputs using file extension`
+      touch '$output_reconstructed_data_npy_path' &&
+      ln -s '$output_reconstructed_data_npy_path' ./output_reconstructed_data_npy_path.$output_reconstructed_data_npy_path.ext &&
+
+      `#Optional Outputs using file extension`
+      #if $output_latent_space_npy_path:
+        touch '$output_latent_space_npy_path' &&
+        ln -s '$output_latent_space_npy_path' ./output_latent_space_npy_path.$output_latent_space_npy_path.ext &&
+      #end if
+
+      `#Command`
       apply_mdae
 
       #if $config_json:
@@ -23,24 +37,18 @@
       #end if
 
       --input_data_npy_path ./input_data_npy_path.$input_data_npy_path.ext
-      --input_model_pth_path ./input_model_pth_path.$input_model_pth_path.ext
-      --output_reconstructed_data_npy_path $outname_output_reconstructed_data_npy_path
-      #if $outname_output_latent_space_npy_path:
-        --output_latent_space_npy_path $outname_output_latent_space_npy_path
+      --input_model_pth_path ./input_model_pth_path.pth
+      #if $output_latent_space_npy_path:
+      --output_latent_space_npy_path ./output_latent_space_npy_path.$output_latent_space_npy_path.ext
       #end if
+      --output_reconstructed_data_npy_path ./output_reconstructed_data_npy_path.$output_reconstructed_data_npy_path.ext
       ;
-
-      mv '$outname_output_reconstructed_data_npy_path' '$output_reconstructed_data_npy_path' &&
-      if test -f '$outname_output_latent_space_npy_path'; then mv '$outname_output_latent_space_npy_path' '$output_latent_space_npy_path'; fi;
-
       ]]>
     </command>
 
     <inputs>
       <param name="input_data_npy_path"  type="data" format="npy"  optional="False" label="Input NPY file" help="Input data file"/>
       <param name="input_model_pth_path" type="data" format="pth"  optional="False" label="Input PTH file" help="Input model file"/>
-      <param name="outname_output_reconstructed_data_npy_path" type="text" value="myapply_mdae.npy" optional="False" label="Output NPY name" help="Output reconstructed data file"/>
-      <param name="outname_output_latent_space_npy_path" type="text" value="myapply_mdae.npy" optional="True" label="Output NPY name" help="Output reduced dimensionality file"/>
       <param name="config_json" type="data" format="json" optional="True" label="Configuration file" help="File containing tool settings"/>
     </inputs>
 
@@ -54,8 +62,6 @@
           <param name="config_json" value="config_apply_mdae.json" ftype="json" />
           <param name="input_data_npy_path"  value="train_mdae_traj.npy" ftype="npy" />
           <param name="input_model_pth_path" value="ref_output_model.pth" />
-          <param name="outname_output_reconstructed_data_npy_path" value="output_reconstructed_data.npy" />
-          <param name="outname_output_latent_space_npy_path" value="output_latent_space.npy" />
           <output name="output_reconstructed_data_npy_path" ftype="npy">
             <assert_contents>
               <has_size value="123k" delta="50k"/>
