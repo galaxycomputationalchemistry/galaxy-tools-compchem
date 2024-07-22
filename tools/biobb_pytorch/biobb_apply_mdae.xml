@@ -10,26 +10,13 @@
 
     <command detect_errors="exit_code"><![CDATA[
 
-      `#Required inputs using file extension`
       ln -s '$input_data_npy_path' ./input_data_npy_path.$input_data_npy_path.ext &&
       ln -s '$input_model_pth_path' ./input_model_pth_path.pth &&
 
-      `#Optional inputs using file extension`
       #if $config_json:
         ln -s '$config_json' ./config_json.$config_json.ext &&
       #end if
 
-      `#Required Outputs using file extension`
-      touch '$output_reconstructed_data_npy_path' &&
-      ln -s '$output_reconstructed_data_npy_path' ./output_reconstructed_data_npy_path.$output_reconstructed_data_npy_path.ext &&
-
-      `#Optional Outputs using file extension`
-      #if $output_latent_space_npy_path:
-        touch '$output_latent_space_npy_path' &&
-        ln -s '$output_latent_space_npy_path' ./output_latent_space_npy_path.$output_latent_space_npy_path.ext &&
-      #end if
-
-      `#Command`
       apply_mdae
 
       #if $config_json:
@@ -39,9 +26,9 @@
       --input_data_npy_path ./input_data_npy_path.$input_data_npy_path.ext
       --input_model_pth_path ./input_model_pth_path.pth
       #if $output_latent_space_npy_path:
-      --output_latent_space_npy_path ./output_latent_space_npy_path.$output_latent_space_npy_path.ext
+      --output_latent_space_npy_path ./output_latent_space_npy_path.npy
       #end if
-      --output_reconstructed_data_npy_path ./output_reconstructed_data_npy_path.$output_reconstructed_data_npy_path.ext
+      --output_reconstructed_data_npy_path ./output_reconstructed_data_npy_path.npy
       ;
       ]]>
     </command>
@@ -53,8 +40,8 @@
     </inputs>
 
     <outputs>
-      <data format="npy" name="output_reconstructed_data_npy_path" label="output_reconstructed_data_npy_path" />
-      <data format="npy" name="output_latent_space_npy_path" label="output_latent_space_npy_path" />
+      <data format="npy" name="output_reconstructed_data_npy_path" from_work_dir="output_reconstructed_data_npy_path.npy" label="output_reconstructed_data_npy_path" />
+      <data format="npy" name="output_latent_space_npy_path" from_work_dir="output_latent_space_npy_path.npy" label="output_latent_space_npy_path" />
     </outputs>
 
     <tests>

@@ -10,10 +10,8 @@
 
     <command detect_errors="exit_code"><![CDATA[
 
-      `#Required inputs using file extension`
       ln -s '$input_train_npy_path' ./input_train_npy_path.$input_train_npy_path.ext &&
 
-      `#Optional inputs using file extension`
       #if $input_model_pth_path:
         ln -s '$input_model_pth_path' ./input_model_pth_path.$input_model_pth_path.ext &&
       #end if
@@ -21,21 +19,6 @@
         ln -s '$config_json' ./config_json.$config_json.ext &&
       #end if
 
-      `#Required Outputs using file extension`
-      touch '$output_model_pth_path' &&
-      ln -s '$output_model_pth_path' ./output_model_pth_path.pth &&
-
-      `#Optional Outputs using file extension`
-      #if $output_train_data_npz_path:
-        touch '$output_train_data_npz_path' &&
-        ln -s '$output_train_data_npz_path' ./output_train_data_npz_path.npz &&
-      #end if
-      #if $output_performance_npz_path:
-        touch '$output_performance_npz_path' &&
-        ln -s '$output_performance_npz_path' ./output_performance_npz_path.npz &&
-      #end if
-
-      `#Command`
       train_mdae
 
       #if $config_json:
@@ -46,7 +29,7 @@
       #if $input_model_pth_path:
         --input_model_pth_path ./input_model_pth_path.$input_model_pth_path.ext
       #end if
-      --output_model_pth_path $output_model_pth_path
+      --output_model_pth_path ./output_model_pth_path.pth
       #if $output_train_data_npz_path:
         --output_train_data_npz_path ./output_train_data_npz_path.npz
       #end if
@@ -64,9 +47,9 @@
     </inputs>
 
     <outputs>
-      <data format="pth" name="output_model_pth_path" label="output_model_pth_path" />
-      <data format="npz" name="output_train_data_npz_path" label="output_train_data_npz_path" />
-      <data format="npz" name="output_performance_npz_path" label="output_performance_npz_path" />
+      <data format="pth" name="output_model_pth_path" from_work_dir="output_model_pth_path.pth" label="output_model_pth_path" />
+      <data format="npz" name="output_train_data_npz_path" from_work_dir="output_train_data_npz_path.npz" label="output_train_data_npz_path" />
+      <data format="npz" name="output_performance_npz_path" from_work_dir="output_performance_npz_path.npz" label="output_performance_npz_path" />
     </outputs>
 
     <tests>
