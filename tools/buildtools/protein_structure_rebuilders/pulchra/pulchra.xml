@@ -1,0 +1,83 @@
+<tool id="pulchra" name="PULCHRA recontruction of all atom proteins" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="22.05">
+    <description>from reduced representations</description>
+    <macros>
+        <token name="@TOOL_VERSION@">3.06</token>
+        <token name="@GALAXY_VERSION@">0</token>
+    </macros>
+    <requirements>
+        <requirement type="package" version="@TOOL_VERSION@">pulchra</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+
+    ln -s '$structure_input' ./structure_input.${structure_input.ext} &&
+	pulchra 
+	
+	##inputs
+	./structure_input.${structure_input.ext}
+     $skip_sidechain
+
+    -v
+ 
+    ]]></command>
+    <inputs>
+        <param name="structure_input" type="data" format="pdb" label="Structure file" help="In PDB format. This input is usually an 'alpha trace' or other incomplete structure file."/>
+        <param argument="-s" name="skip_sidechain" type="boolean" truevalue="-s" falsevalue="" label="Skip sidechain reconstruction?" help="By default, both sidechains and backbone will be reconstructed otherwise."/>
+    </inputs>
+    <outputs>
+        <data name="output1" format="pdb" from_work_dir="*.rebuilt.pdb" label="PULCHRA rebuilt pdb file on ${on_string}"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="structure_input" value="model.pdb"/>
+            <output name="output1" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM      1  N   PHE     1      16.391  50.300  23.791"/>
+                    <has_text text="ATOM     12  N   LEU     2      14.039  47.806  25.433"/>
+                    <has_text text="ATOM     20  N   VAL     3      10.836  47.425  24.846"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+            <param name="structure_input" value="model.pdb"/>
+            <param name="skip_sidechain" value="true" />
+            <output name="output1" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM      1  N   PHE     1      16.391  50.300  23.791"/>
+                    <has_text text="ATOM     12  O   VAL     3       8.414  45.957  24.602"/>
+                    <has_text text="ATOM     20  O   MET     5       1.327  47.936  26.198"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+
+        .. class:: infomark
+        
+        **What it does**
+        
+        This tool rebuilds a protein structure from reduced representations (alpha carbon trace), producing an all-heavy atom PDB file.
+        
+_____
+        
+        .. class:: infomark
+        
+        **Input**
+        
+               - Alpha carbon trace PDB file
+        
+        
+_____
+        
+        
+        .. class:: infomark
+        
+        **Output**
+        
+               - Rebuilt all-heavy atom PDB file
+        
+            ]]></help>
+        <citations>
+            <citation type="doi">10.1002/jcc.20906</citation>
+        </citations>
+</tool>
+
