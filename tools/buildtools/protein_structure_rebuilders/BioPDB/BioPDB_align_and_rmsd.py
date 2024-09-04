@@ -96,7 +96,6 @@ def __main__():
     # Save RMSD into an output file:
     with open(args.rmsd, 'w') as rmsd_out:
         rmsd_out.write("{}\n".format(super_imposer.rms))
-        
 
     # Save aligned coordinates of the model:
     io = Bio.PDB.PDBIO()
