@@ -1,0 +1,84 @@
+<tool id="biobb_pytorch_apply_mdae" name="ApplyMdae" version="@TOOL_VERSION@" profile="22.05">
+    <description>Apply a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.</description>
+    <macros>
+      <token name="@TOOL_VERSION@">4.2.1</token>
+    </macros>
+
+    <requirements>
+      <requirement type="package" version="@TOOL_VERSION@">biobb_pytorch</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+
+      ln -s '$input_data_npy_path' ./input_data_npy_path.$input_data_npy_path.ext &&
+      ln -s '$input_model_pth_path' ./input_model_pth_path.pth &&
+
+      #if $config_json:
+        ln -s '$config_json' ./config_json.$config_json.ext &&
+      #end if
+
+      apply_mdae
+
+      #if $config_json:
+        --config ./config_json.$config_json.ext
+      #end if
+
+      --input_data_npy_path ./input_data_npy_path.$input_data_npy_path.ext
+      --input_model_pth_path ./input_model_pth_path.pth
+      #if $output_latent_space_npy_path:
+      --output_latent_space_npy_path ./output_latent_space_npy_path.npy
+      #end if
+      --output_reconstructed_data_npy_path ./output_reconstructed_data_npy_path.npy
+      ;
+      ]]>
+    </command>
+
+    <inputs>
+      <param name="input_data_npy_path"  type="data" format="npy"  optional="False" label="Input NPY file" help="Input data file"/>
+      <param name="input_model_pth_path" type="data" format="pth"  optional="False" label="Input PTH file" help="Input model file"/>
+      <param name="config_json" type="data" format="json" optional="True" label="Configuration file" help="File containing tool settings"/>
+    </inputs>
+
+    <outputs>
+      <data format="npy" name="output_reconstructed_data_npy_path" from_work_dir="output_reconstructed_data_npy_path.npy" label="output_reconstructed_data_npy_path" />
+      <data format="npy" name="output_latent_space_npy_path" from_work_dir="output_latent_space_npy_path.npy" label="output_latent_space_npy_path" />
+    </outputs>
+
+    <tests>
+        <test>
+          <param name="config_json" value="config_apply_mdae.json" ftype="json" />
+          <param name="input_data_npy_path"  value="train_mdae_traj.npy" ftype="npy" />
+          <param name="input_model_pth_path" value="ref_output_model.pth" />
+          <output name="output_reconstructed_data_npy_path" ftype="npy">
+            <assert_contents>
+              <has_size value="123k" delta="50k"/>
+            </assert_contents>
+          </output>
+          <output name="output_latent_space_npy_path" ftype="npy">
+            <assert_contents>
+              <has_size value="928" delta="200"/>
+            </assert_contents>
+          </output>
+        </test>
+    </tests>
+
+    <help>
+.. class:: infomark
+
+Check the syntax for the tool parameters at the original library documentation: https://biobb-pytorch.readthedocs.io/en/latest
+   </help>
+
+    <citations>
+        <citation type="bibtex">
+            @misc{githubbiobb,
+            author = {Andrio P, Bayarri, G., Hospital A, Gelpi JL},
+            year = {2019-21},
+            title = {biobb: BioExcel building blocks },
+            publisher = {GitHub},
+            journal = {GitHub repository},
+            url = {https://github.com/bioexcel/biobb_pytorch},
+            }
+        </citation>
+        <citation type="doi">10.1038/s41597-019-0177-4</citation>
+    </citations>
+</tool>
