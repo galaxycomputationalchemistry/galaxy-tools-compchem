@@ -1,7 +1,7 @@
 <tool id="biobb_pytorch_apply_mdae" name="ApplyMdae" version="@TOOL_VERSION@" profile="22.05">
     <description>Apply a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.</description>
     <macros>
-      <token name="@TOOL_VERSION@">4.2.1</token>
+      <token name="@TOOL_VERSION@">5.0.0</token>
     </macros>
 
     <requirements>
