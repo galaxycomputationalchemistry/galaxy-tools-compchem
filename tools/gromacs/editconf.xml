@@ -17,6 +17,9 @@
                 -d $box.dim 
                 -bt $box.type
             #end if
+	        #if $renumber.renum =="true":
+            -resnr $renumber.startres_id
+            #end if
             &>> verbose.txt &&
 
         cp ./output.${output_format} '$output'
@@ -29,7 +32,17 @@
             <option value="gro">GRO file</option>
             <option value="pdb">PDB file</option>
         </param>
-        
+	<conditional name="renumber">
+            <param argument="renum" type="select" label="Renumber residues in PDB file?">
+                <option value="true">Yes</option>
+                <option value="false" selected="true">No</option>
+            </param>
+            <when value="true">
+                <param argument="startres_id" type="integer" value="1" label="New starting residue" help="This will renumber the residues in your pdb file starting with this number." />
+	        </when>
+	        <when value="false"/>
+        </conditional>
+
         <conditional name="box">
             <param argument="config" type="select" label="Configure box?">
                 <option value="true">Yes</option>
