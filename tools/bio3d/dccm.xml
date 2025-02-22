@@ -5,7 +5,7 @@
         <token name="@GALAXY_VERSION@">0</token>
     </macros>
     <expand macro="requirements">
-        <requirement type="package" version="0.20_38">r-lattice</requirement>
+        <requirement type="package" version="0.22_6">r-lattice</requirement>
     </expand>
     <command detect_errors="exit_code">
 <![CDATA[ 
