@@ -2,7 +2,7 @@
     <description>using trjconv and trjcat</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">2</token>
+        <token name="@GALAXY_VERSION@">0</token>
         <xml name="fit_when" token_option="none">
             <when value="@OPTION@">
                 <param name="index_fit" type="text" label="Index of group to use for fitting" help="Index of group to use for fitting - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0).">
