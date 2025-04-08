@@ -3,6 +3,7 @@
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="@TOOL_VERSION@">gromacs</requirement>
+        <yield/>
         </requirements>
     </xml>
     <token name="@MAXWARN_CMD@">-maxwarn '$mxw'</token>
