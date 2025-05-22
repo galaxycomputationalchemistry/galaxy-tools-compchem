@@ -1,0 +1,54 @@
+<tool id = "mypmfs_matrix_generator" name = "MyPMFs Energy Matrix Generator" version="1.00">
+    <requirements>
+        <requirement type="package" version="0.1.8">mypmfs_py</requirement>
+    </requirements>
+    <command>
+        <![CDATA[
+        python '$__tool_directory__/top_energies_to_matrix.py' --protein_file '$protein_file' --txtmatrix '$txt_matrix' --csvmatrix '$csv_matrix' &&
+        cp ./data_potentials/top_energies.tsv '$tabular_data' &&
+        rm -rf pdb_files &&
+        rm -rf data_potentials &&
+        rm -rf training_dataset
+        ]]>
+        
+    </command>
+    <inputs>
+        <param name = "protein_file" type = "data" format = "txt" label = "Proteins" />
+    </inputs>
+    <outputs>
+        <data name = "txt_matrix" format = "txt" label="Energy Matrix in TXT Format"/>
+        <data name = "csv_matrix" format = "csv" label="Energy Matrix in CSV Format"/>
+        <data name = "tabular_data" format = "tsv" label = "MyPMF Tabular Output" />
+    </outputs>
+    <tests>
+        <test>
+            <param name = "protein_file" value = "tool_test_prot_set.txt" />
+            <output name = "txt_matrix" ftype = "txt">
+                <assert_contents>    
+                    <has_line line = "    C       M       F       I       L       V       W       Y       A       G       T       S       N       Q       D       E       H       R       K       P" />
+                    <has_line line = "-3.28782e+00 -2.06392e+00 -1.39002e+00 -0.917444e+00 -1.24458e+00 -1.30954e+00 -2.50284e+00 -2.2641e+00 -1.60693e+00 -3.08945e+00 -1.77235e+00 -1.2323e+00 -1.87494e+00 -1.24254e+00 -1.39911e+00 -1.42567e+00 -1.99608e+00 -2.86549e+00 -1.25521e+00 -1.42597e+00 " />
+                    <has_line line = "0e+00 -2.00996e+00 -1.41985e+00 -1.37605e+00 -0.863096e+00 -1.11723e+00 -2.76912e+00 -1.69742e+00 -1.42273e+00 -1.4535e+00 -1.89546e+00 -1.38755e+00 -1.51381e+00 -0.860924e+00 -1.62311e+00 -1.13913e+00 -1.78284e+00 -1.30014e+00 -2.04266e+00 -1.12656e+00 " />
+                </assert_contents>
+            </output>
+            <output name = "csv_matrix" ftype = "csv">
+                <assert_contents>
+                    <has_line line = "C,M,F,I,L,V,W,Y,A,G,T,S,N,Q,D,E,H,R,K,P" />    
+                    <has_line line = "-3.28782,-2.06392,-1.39002,-0.917444,-1.24458,-1.30954,-2.50284,-2.2641,-1.60693,-3.08945,-1.77235,-1.2323,-1.87494,-1.24254,-1.39911,-1.42567,-1.99608,-2.86549,-1.25521,-1.42597" />
+                </assert_contents>
+            </output>
+            <output name = "tabular_data" ftype = "tsv">
+                <assert_contents>    
+                    <has_line line = "KCAWCA&#009;-5.31084" />
+                    <has_line line = "WCAYCA&#009;-4.36443" />
+                    <has_line line = "GCAGCA&#009;-4.3505" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+
+    <help><![CDATA[This tool generates an amino acid energy matrix based on statistical potentials using the MyPMFs tool. It processes a user-provided CSV file of Protein Data Bank codes to calculate pairwise interaction energies between amino acids.]]></help>
+    
+    <citations>
+        <citation type = "doi">doi:10.1016/j.biochi.2018.05.013</citation>
+    </citations>
+</tool>
