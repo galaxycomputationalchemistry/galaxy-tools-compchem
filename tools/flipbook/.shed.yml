@@ -1,0 +1,15 @@
+name: flipbook
+owner: chemteam
+description: Flipbook visualization and time-sliced residue fluctuation analysis for molecular dynamics trajectories.
+long_description: |
+  RMSX Flipbook divides a molecular dynamics trajectory into time slices,
+  calculates residue-level fluctuation across those slices, and emits tables,
+  plots, PDB snapshots, and a typed manifest for the native Galaxy Molstar
+  Flipbook visualization.
+homepage_url: https://github.com/AntunesLab/rmsx
+remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/
+categories:
+  - Proteomics
+  - Visualization
+  - Computational chemistry
+type: unrestricted

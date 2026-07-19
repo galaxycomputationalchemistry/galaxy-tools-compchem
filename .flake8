@@ -1,0 +1,5 @@
+[flake8]
+per-file-ignores =
+    # The wrapper scripts intentionally contain long embedded Molstar/CSS/JS
+    # literals; wrapping those strings would alter the generated manifest.
+    tools/flipbook/*.py:E501
