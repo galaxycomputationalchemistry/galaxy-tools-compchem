@@ -3,6 +3,9 @@
     <macros>
         <import>macros.xml</import>
     </macros>
+    <xrefs>
+        <xref type="bio.tools">rmsx_and_flipbook</xref>
+    </xrefs>
     <expand macro="requirements"/>
     <required_files>
         <include path="rmsx_preflight.py"/>

@@ -11,3 +11,4 @@
   input path and cover it with a Galaxy tool test.
 - Add the Flipbook logo, static plots, preflight validation, explicit test-data
   provenance, and Tool Shed publication notes.
+- Link the wrapper to the `rmsx_and_flipbook` bio.tools registry entry.

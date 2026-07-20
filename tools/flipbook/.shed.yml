@@ -7,7 +7,7 @@ long_description: |
   plots, PDB snapshots, and a typed manifest for the native Galaxy Molstar
   Flipbook visualization.
 homepage_url: https://github.com/AntunesLab/rmsx
-remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/
+remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/tree/master/tools/flipbook
 categories:
   - Proteomics
   - Visualization

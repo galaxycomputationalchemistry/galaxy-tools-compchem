@@ -35,8 +35,9 @@ The Molstar Flipbook manifest uses schema version
 ``flipbook-molstar-viewer/v1`` and is emitted as typed Galaxy ``rmsx.json``.
 That datatype makes the manifest a first-class visualization-ready output
 instead of arbitrary JSON. The datatype and native visualization registration
-are proposed upstream in ``galaxyproject/galaxy#23009``; the packaged viewer is
-proposed in ``galaxyproject/galaxy-visualizations#174``.
+are proposed upstream in ``galaxyproject/galaxy#23009``. The packaged viewer
+was merged in ``galaxyproject/galaxy-visualizations#174`` and is published as
+``@galaxyproject/rmsxflipbook@0.0.2``.
 
 Dependency status
 -----------------
@@ -69,12 +70,13 @@ Publication notes
   bundled test data.
 * ``galaxyproject/galaxy#23009`` must be merged before standard Galaxy installs
   recognize the ``rmsx.json`` output datatype.
-* ``galaxyproject/galaxy-visualizations#174`` must be merged and version 0.0.2
-  published before Galaxy can consume the final viewer package.
+* The community chemistry repository currently tests against Galaxy
+  ``release_24.0``. Its CI branch must move to a Galaxy revision containing
+  ``rmsx.json`` before this wrapper can pass its normal datatype lint.
 * The pinned GHCR runtime must be publicly and anonymously pullable before a
   community wrapper CI job can execute the tests.
-* A bio.tools entry or equivalent EDAM/xref strategy should be settled before
-  submission.
+* The Galaxy wrapper references the registered bio.tools identifier
+  ``rmsx_and_flipbook``.
 * Upstream RMSX release metadata should be reconciled so the tag, package
   version, and Galaxy wrapper version tell the same story.
 * Test-data provenance and the full transitive dependency license inventory
