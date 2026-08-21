@@ -1,0 +1,139 @@
+{
+    "summary": {
+        "num_errors": 0,
+        "num_failures": 0,
+        "num_skips": 0,
+        "num_tests": 1
+    },
+    "tests": [
+        {
+            "data": {
+                "inputs": {
+                    "convolve_value": "4",
+                    "kh_O_zero_dx": {
+                        "id": "07a86267b6b71ddd",
+                        "src": "hda"
+                    },
+                    "sigma_value": "1.0",
+                    "species_value": "O"
+                },
+                "job": {
+                    "command_line": "ln -s /data/home/joshij/software/galaxy_25_1/database/objects/7/f/f/dataset_7fffbc4f-25d2-4daf-ba20-cf947a6febfe.dat out.kh.O.0.dx && metatwist --dx out.kh.O.0.dx --species O --convolve 4 --sigma 1.0 --odx out.kh.O.dx > /data/home/joshij/software/galaxy_25_1/database/objects/c/4/9/dataset_c4951e94-33a5-4ed8-8703-059ebeca0c26.dat && mv out.kh.O.dx /data/home/joshij/software/galaxy_25_1/database/objects/6/2/7/dataset_627b03e8-4a80-465b-a363-7d9f316d0651.dat",
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-21T18:12:55.036633",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__ambertools@26.0",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "ambertools",
+                            "version": "26.0"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": "3229212",
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "4fb563a6a1060ab1",
+                    "id": "e0b9dac86e53905e",
+                    "inputs": {
+                        "kh_O_zero_dx": {
+                            "id": "07a86267b6b71ddd",
+                            "src": "hda",
+                            "uuid": "7fffbc4f-25d2-4daf-ba20-cf947a6febfe"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": [
+                        {
+                            "name": "galaxy_slots",
+                            "plugin": "core",
+                            "raw_value": "32.0000000",
+                            "title": "Cores Allocated",
+                            "value": "32"
+                        },
+                        {
+                            "name": "start_epoch",
+                            "plugin": "core",
+                            "raw_value": "1787335975.0000000",
+                            "title": "Job Start Time",
+                            "value": "2026-08-21 14:12:55"
+                        },
+                        {
+                            "name": "end_epoch",
+                            "plugin": "core",
+                            "raw_value": "1787335982.0000000",
+                            "title": "Job End Time",
+                            "value": "2026-08-21 14:13:02"
+                        },
+                        {
+                            "name": "runtime_seconds",
+                            "plugin": "core",
+                            "raw_value": "7.0000000",
+                            "title": "Job Runtime (Wall Clock)",
+                            "value": "7 seconds"
+                        }
+                    ],
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "kh_O_dx": {
+                            "id": "07742e26a3b8f020",
+                            "src": "hda",
+                            "uuid": "627b03e8-4a80-465b-a363-7d9f316d0651"
+                        },
+                        "lp_file": {
+                            "id": "670a7ed4da714629",
+                            "src": "hda",
+                            "uuid": "c4951e94-33a5-4ed8-8703-059ebeca0c26"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "convolve_value": "\"4\"",
+                        "dbkey": "\"?\"",
+                        "sigma_value": "\"1.0\"",
+                        "species_value": "\"O\""
+                    },
+                    "state": "ok",
+                    "stderr": "",
+                    "stdout": "",
+                    "tool_id": "solv_laplacian_calculator",
+                    "tool_stderr": "",
+                    "tool_stdout": "",
+                    "update_time": "2026-08-21T18:13:02.963715",
+                    "user_email": "jaidev53ster@gmail.com",
+                    "user_id": "f2db41e1fa331b3e"
+                },
+                "status": "success",
+                "test_index": 0,
+                "time_seconds": 21.477916717529297,
+                "tool_id": "solv_laplacian_calculator",
+                "tool_version": "0.1.0"
+            },
+            "has_data": true,
+            "id": "solv_laplacian_calculator-0"
+        }
+    ],
+    "version": "0.1"
+}

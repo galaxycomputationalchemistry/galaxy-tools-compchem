@@ -1,0 +1,51 @@
+    
+; PRODUCTION MD RUN (10 ns, 5,000,000 steps at 2 fs)
+
+integrator              = md
+dt                      = 0.002          ; 2 fs
+nsteps                  = 5000000        ; 10,000 ps = 10 ns
+
+; Trajectory / output control
+nstxout                 = 0              ; no full-precision coords to .trr
+nstvout                 = 0
+nstfout                 = 0
+nstxout-compressed      = 10000           ; coords every 10 ps to .xtc
+
+nstcalcenergy           = 10000          ; calc energies every 20 ps
+nstenergy               = 10000          ; write energies every 20 ps
+nstlog                  = 10000          ; log every 20 ps
+
+; Neighborsearching / cutoffs
+cutoff-scheme           = Verlet
+nstlist                 = 20
+rlist                   = 1.2
+vdwtype                 = Cut-off
+vdw-modifier            = Force-switch
+DispCorr                = EnerPres
+rvdw_switch             = 1.0
+rvdw                    = 1.2
+coulombtype             = PME
+rcoulomb                = 1.2
+
+; Temperature coupling (production)
+tcoupl                  = Nose-Hoover
+tc_grps                 = Protein_PA_PC_OL Water_NA+_CL- 
+tau_t                   = 1.0 1.0
+ref_t                   = 323.15 323.15
+
+; Pressure coupling (production)
+pcoupl                  = Parrinello-Rahman
+pcoupltype              = semiisotropic
+tau_p                   = 5.0
+compressibility         = 4.5e-5  4.5e-5
+ref_p                   = 1.0     1.0
+
+; Constraints
+constraints             = h-bonds
+constraint_algorithm    = LINCS
+continuation            = yes
+
+; Center-of-mass motion removal
+nstcomm                 = 100
+comm_mode               = linear
+comm_grps               =  Protein_PA_PC_OL Water_NA+_CL- 

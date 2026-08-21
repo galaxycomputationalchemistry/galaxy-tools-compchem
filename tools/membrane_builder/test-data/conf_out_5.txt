@@ -1,0 +1,2 @@
+lipid:PA,OL,PC
+ions:NA+,CL-

@@ -1,0 +1,173 @@
+{
+    "summary": {
+        "num_errors": 0,
+        "num_failures": 0,
+        "num_skips": 0,
+        "num_tests": 1
+    },
+    "tests": [
+        {
+            "data": {
+                "inputs": {
+                    "bulk_value": "55.55",
+                    "kh_O_dx": {
+                        "id": "9f5ee21cc335dd70",
+                        "src": "hda"
+                    },
+                    "kh_O_zero_dx": {
+                        "id": "ba7eb98139a22d35",
+                        "src": "hda"
+                    },
+                    "map_value": "blobsper",
+                    "parm_file": {
+                        "id": "9b6b370489eec940",
+                        "src": "hda"
+                    },
+                    "rst_file": {
+                        "id": "5972b60471c04955",
+                        "src": "hda"
+                    },
+                    "species_value": "O WAT",
+                    "threshold_value": "0.5"
+                },
+                "job": {
+                    "command_line": "ln -s /data/home/joshij/software/galaxy_25_1/database/objects/c/f/5/dataset_cf5f8405-ebae-405a-b401-c3f3062d5df4.dat in.kh.O.0.dx && ln -s /data/home/joshij/software/galaxy_25_1/database/objects/f/1/2/dataset_f1294c5e-012d-4017-8529-7ddb7effd762.dat in.kh.O.dx && ln -s '/data/home/joshij/software/galaxy_25_1/database/objects/5/5/b/dataset_55b3b084-cbcb-4d75-a82d-10685cef24fd.dat' in.parm7 && ln -s '/data/home/joshij/software/galaxy_25_1/database/objects/9/3/e/dataset_93e2b4d6-2c8f-4fba-b8db-fc20810cd503.dat' in.rst7 &&  metatwist --dx in.kh.O.0.dx --ldx in.kh.O.dx --map 'blobsper' --species 'O WAT' --bulk '55.55' --threshold '0.5' > /data/home/joshij/software/galaxy_25_1/database/objects/e/1/8/dataset_e182432f-9168-4a36-990c-7d51923cc38e.dat && grep -v TER in.kh.O.0-in.kh.O-blobs-centroid.pdb > wats.pdb && python '/data/home/joshij/Desktop/MemGen/place_solv_mol/fixed.py' wats.pdb fixed_pdb.pdb && ambpdb -p in.parm7  < in.rst7 > in.amber.pdb && sed 's/END/TER/' in.amber.pdb > in.wat.pdb && gwh -p in.parm7 -w fixed_pdb.pdb < in.amber.pdb >> in.wat.pdb 2>> out.blobs",
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-21T18:14:44.054395",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__ambertools@26.0",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "ambertools",
+                            "version": "26.0"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": "3235211",
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "cab68a1ccca17e68",
+                    "id": "9f7b3c7371dd2039",
+                    "inputs": {
+                        "kh_O_dx": {
+                            "id": "9f5ee21cc335dd70",
+                            "src": "hda",
+                            "uuid": "f1294c5e-012d-4017-8529-7ddb7effd762"
+                        },
+                        "kh_O_zero_dx": {
+                            "id": "ba7eb98139a22d35",
+                            "src": "hda",
+                            "uuid": "cf5f8405-ebae-405a-b401-c3f3062d5df4"
+                        },
+                        "parm_file": {
+                            "id": "9b6b370489eec940",
+                            "src": "hda",
+                            "uuid": "55b3b084-cbcb-4d75-a82d-10685cef24fd"
+                        },
+                        "rst_file": {
+                            "id": "5972b60471c04955",
+                            "src": "hda",
+                            "uuid": "93e2b4d6-2c8f-4fba-b8db-fc20810cd503"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": [
+                        {
+                            "name": "galaxy_slots",
+                            "plugin": "core",
+                            "raw_value": "32.0000000",
+                            "title": "Cores Allocated",
+                            "value": "32"
+                        },
+                        {
+                            "name": "start_epoch",
+                            "plugin": "core",
+                            "raw_value": "1787336084.0000000",
+                            "title": "Job Start Time",
+                            "value": "2026-08-21 14:14:44"
+                        },
+                        {
+                            "name": "end_epoch",
+                            "plugin": "core",
+                            "raw_value": "1787336093.0000000",
+                            "title": "Job End Time",
+                            "value": "2026-08-21 14:14:53"
+                        },
+                        {
+                            "name": "runtime_seconds",
+                            "plugin": "core",
+                            "raw_value": "9.0000000",
+                            "title": "Job Runtime (Wall Clock)",
+                            "value": "9 seconds"
+                        }
+                    ],
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "blobs": {
+                            "id": "ef2447a879a3a3d4",
+                            "src": "hda",
+                            "uuid": "e182432f-9168-4a36-990c-7d51923cc38e"
+                        },
+                        "in_wat_pdb": {
+                            "id": "bb45c480a672c7a0",
+                            "src": "hda",
+                            "uuid": "a2781f72-3758-4509-b2c2-575f8a9238f7"
+                        },
+                        "out_pdb": {
+                            "id": "fa0a91a97f0d4429",
+                            "src": "hda",
+                            "uuid": "5fc64a4b-a473-480e-ae5d-fb3a39fcfadd"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "bulk_value": "\"55.55\"",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "map_value": "\"blobsper\"",
+                        "species_value": "\"O WAT\"",
+                        "threshold_value": "\"0.5\""
+                    },
+                    "state": "ok",
+                    "stderr": "",
+                    "stdout": "\u2713 Processing complete. Output saved to: fixed_pdb.pdb\n",
+                    "tool_id": "place_solv_mol",
+                    "tool_stderr": "",
+                    "tool_stdout": "\u2713 Processing complete. Output saved to: fixed_pdb.pdb\n",
+                    "update_time": "2026-08-21T18:14:53.500867",
+                    "user_email": "jaidev53ster@gmail.com",
+                    "user_id": "f2db41e1fa331b3e"
+                },
+                "status": "success",
+                "test_index": 0,
+                "time_seconds": 24.169425010681152,
+                "tool_id": "place_solv_mol",
+                "tool_version": "0.1.0"
+            },
+            "has_data": true,
+            "id": "place_solv_mol-0"
+        }
+    ],
+    "version": "0.1"
+}

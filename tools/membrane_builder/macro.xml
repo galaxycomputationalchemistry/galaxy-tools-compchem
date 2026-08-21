@@ -1,0 +1,356 @@
+<macros>
+    <xml name="lipid_options">
+
+        <option value="AHPA"> AHPA (1-arachidonoyl-2-docosahexaenoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="AHPC"> AHPC (1-arachidonoyl-2-docosahexaenoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="AHPE"> AHPE (1-arachidonoyl-2-docosahexaenoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="AHPG"> AHPG (1-arachidonoyl-2-docosahexaenoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="AHPS"> AHPS (1-arachidonoyl-2-docosahexaenoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="ALPA"> ALPA (1-arachidonoyl-2-lauroyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="ALPC"> ALPC (1-arachidonoyl-2-lauroyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="ALPE"> ALPE (1-arachidonoyl-2-lauroyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="ALPG"> ALPG (1-arachidonoyl-2-lauroyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="ALPS"> ALPS (1-arachidonoyl-2-lauroyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="AMPA"> AMPA (1-arachidonoyl-2-myristoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="AMPC"> AMPC (1-arachidonoyl-2-myristoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="AMPE"> AMPE (1-arachidonoyl-2-myristoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="AMPG"> AMPG (1-arachidonoyl-2-myristoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="AMPS"> AMPS (1-arachidonoyl-2-myristoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="AOPA"> AOPA (1-arachidonoyl-2-oleoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="AOPC"> AOPC (1-arachidonoyl-2-oleoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="AOPE"> AOPE (1-arachidonoyl-2-oleoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="AOPG"> AOPG (1-arachidonoyl-2-oleoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="AOPS"> AOPS (1-arachidonoyl-2-oleoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="APPA"> APPA (1-arachidonoyl-2-palmitoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="APPC"> APPC (1-arachidonoyl-2-palmitoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="APPE"> APPE (1-arachidonoyl-2-palmitoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="APPG"> APPG (1-arachidonoyl-2-palmitoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="APPS"> APPS (1-arachidonoyl-2-palmitoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="ASM"> ASM (N-arachidonoyl-D-erythro-sphingosylphosphorylcholine) [Only available with Lipid21], Charge 0 </option>
+
+        <option value="ASPA"> ASPA (1-arachidonoyl-2-stearoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="ASPC"> ASPC (1-arachidonoyl-2-stearoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="ASPE"> ASPE (1-arachidonoyl-2-stearoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="ASPG"> ASPG (1-arachidonoyl-2-stearoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="ASPS"> ASPS (1-arachidonoyl-2-stearoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        
+
+        <option value="DAPA"> DAPA (1,2-diarachidonoyl-sn-glycero-3-phosphate), Charge -1 </option>
+
+        <option value="DAPE"> DAPE (1,2-diarachidonoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="DAPG"> DAPG (1,2-diarachidonoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="DAPS"> DAPS (1,2-diarachidonoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="DHPA"> DHPA (1,2-didocosahexaenoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="DHPC"> DHPC (1,2-didocosahexaenoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="DHPE"> DHPE (1,2-didocosahexaenoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="DHPG"> DHPG (1,2-didocosahexaenoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="DHPS"> DHPS (1,2-didocosahexaenoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="DLPA"> DLPA (1,2-dilauroyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="DLPC"> DLPC (1,2-dilauroyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="DLPE"> DLPE (1,2-dilauroyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="DLPG"> DLPG (1,2-dilauroyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="DLPS"> DLPS (1,2-dilauroyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="DMPA"> DMPA (1,2-dimyristoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="DMPC"> DMPC (1,2-dimyristoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="DMPE"> DMPE (1,2-dimyristoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="DMPG"> DMPG (1,2-dimyristoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="DMPS"> DMPS (1,2-dimyristoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="DOPA"> DOPA (1,2-dioleoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="DOPC"> DOPC (1,2-dioleoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="DOPE"> DOPE (1,2-dioleoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="DOPG"> DOPG (1,2-dioleoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="DOPS"> DOPS (1,2-dioleoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="DPPA"> DPPA (1,2-dipalmitoyl-sn-glycero-3-phosphate), Charge -1 </option>
+  
+        <option value="DPPE"> DPPE (1,2-dipalmitoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="DPPG"> DPPG (1,2-dipalmitoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="DPPS"> DPPS (1,2-dipalmitoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="DSPA"> DSPA (1,2-distearoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="DSPC"> DSPC (1,2-distearoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="DSPE"> DSPE (1,2-distearoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="DSPG"> DSPG (1,2-distearoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="DSPS"> DSPS (1,2-distearoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="HAPA"> HAPA (1-docosahexaenoyl-2-arachidonoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="HAPC"> HAPC (1-docosahexaenoyl-2-arachidonoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="HAPE"> HAPE (1-docosahexaenoyl-2-arachidonoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="HAPG"> HAPG (1-docosahexaenoyl-2-arachidonoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="HAPS"> HAPS (1-docosahexaenoyl-2-arachidonoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="HLPA"> HLPA (1-docosahexaenoyl-2-lauroyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="HLPC"> HLPC (1-docosahexaenoyl-2-lauroyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="HLPE"> HLPE (1-docosahexaenoyl-2-lauroyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="HLPG"> HLPG (1-docosahexaenoyl-2-lauroyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="HLPS"> HLPS (1-docosahexaenoyl-2-lauroyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="HMPA"> HMPA (1-docosahexaenoyl-2-myristoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="HMPC"> HMPC (1-docosahexaenoyl-2-myristoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="HMPE"> HMPE (1-docosahexaenoyl-2-myristoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="HMPG"> HMPG (1-docosahexaenoyl-2-myristoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="HMPS"> HMPS (1-docosahexaenoyl-2-myristoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="HOPA"> HOPA (1-docosahexaenoyl-2-oleoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="HOPC"> HOPC (1-docosahexaenoyl-2-oleoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="HOPE"> HOPE (1-docosahexaenoyl-2-oleoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="HOPG"> HOPG (1-docosahexaenoyl-2-oleoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="HOPS"> HOPS (1-docosahexaenoyl-2-oleoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="HPPA"> HPPA (1-docosahexaenoyl-2-palmitoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="HPPC"> HPPC (1-docosahexaenoyl-2-palmitoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="HPPE"> HPPE (1-docosahexaenoyl-2-palmitoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="HPPG"> HPPG (1-docosahexaenoyl-2-palmitoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="HPPS"> HPPS (1-docosahexaenoyl-2-palmitoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="HSM"> HSM (N-docosahexaenoyl-D-erythro-sphingosylphosphorylcholine) [Only available with Lipid21], Charge 0 </option>
+
+        <option value="HSPA"> HSPA (1-docosahexaenoyl-2-stearoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="HSPC"> HSPC (1-docosahexaenoyl-2-stearoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="HSPE"> HSPE (1-docosahexaenoyl-2-stearoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="HSPG"> HSPG (1-docosahexaenoyl-2-stearoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="HSPS"> HSPS (1-docosahexaenoyl-2-stearoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="LAPA"> LAPA (1-lauroyl-2-arachidonoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="LAPC"> LAPC (1-lauroyl-2-arachidonoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="LAPE"> LAPE (1-lauroyl-2-arachidonoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="LAPG"> LAPG (1-lauroyl-2-arachidonoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="LAPS"> LAPS (1-lauroyl-2-arachidonoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="LHPA"> LHPA (1-lauroyl-2-docosahexaenoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="LHPC"> LHPC (1-lauroyl-2-docosahexaenoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="LHPE"> LHPE (1-lauroyl-2-docosahexaenoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="LHPG"> LHPG (1-lauroyl-2-docosahexaenoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="LHPS"> LHPS (1-lauroyl-2-docosahexaenoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="LMPA"> LMPA (1-lauroyl-2-myristoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="LMPC"> LMPC (1-lauroyl-2-myristoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="LMPE"> LMPE (1-lauroyl-2-myristoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="LMPG"> LMPG (1-lauroyl-2-myristoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="LMPS"> LMPS (1-lauroyl-2-myristoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="LOPA"> LOPA (1-lauroyl-2-oleoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="LOPC"> LOPC (1-lauroyl-2-oleoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="LOPE"> LOPE (1-lauroyl-2-oleoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="LOPG"> LOPG (1-lauroyl-2-oleoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="LOPS"> LOPS (1-lauroyl-2-oleoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="LPPA"> LPPA (1-lauroyl-2-palmitoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="LPPC"> LPPC (1-lauroyl-2-palmitoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="LPPE"> LPPE (1-lauroyl-2-palmitoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="LPPG"> LPPG (1-lauroyl-2-palmitoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="LPPS"> LPPS (1-lauroyl-2-palmitoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="LSM"> LSM (N-lauroyl-D-erythro-sphingosylphosphorylcholine) [Only available with Lipid21], Charge 0 </option>
+
+        <option value="LSPA"> LSPA (1-lauroyl-2-stearoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="LSPC"> LSPC (1-lauroyl-2-stearoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="LSPE"> LSPE (1-lauroyl-2-stearoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="LSPG"> LSPG (1-lauroyl-2-stearoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="LSPS"> LSPS (1-lauroyl-2-stearoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="MAPA"> MAPA (1-myristoyl-2-arachidonoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="MAPC"> MAPC (1-myristoyl-2-arachidonoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="MAPE"> MAPE (1-myristoyl-2-arachidonoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="MAPG"> MAPG (1-myristoyl-2-arachidonoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="MAPS"> MAPS (1-myristoyl-2-arachidonoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="MHPA"> MHPA (1-myristoyl-2-docosahexaenoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="MHPC"> MHPC (1-myristoyl-2-docosahexaenoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="MHPE"> MHPE (1-myristoyl-2-docosahexaenoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="MHPG"> MHPG (1-myristoyl-2-docosahexaenoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="MHPS"> MHPS (1-myristoyl-2-docosahexaenoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="MLPA"> MLPA (1-myristoyl-2-lauroyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="MLPC"> MLPC (1-myristoyl-2-lauroyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="MLPE"> MLPE (1-myristoyl-2-lauroyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="MLPG"> MLPG (1-myristoyl-2-lauroyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="MLPS"> MLPS (1-myristoyl-2-lauroyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="MOPA"> MOPA (1-myristoyl-2-oleoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="MOPC"> MOPC (1-myristoyl-2-oleoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="MOPE"> MOPE (1-myristoyl-2-oleoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="MOPG"> MOPG (1-myristoyl-2-oleoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="MOPS"> MOPS (1-myristoyl-2-oleoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="MPPA"> MPPA (1-myristoyl-2-palmitoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="MPPC"> MPPC (1-myristoyl-2-palmitoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="MPPE"> MPPE (1-myristoyl-2-palmitoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="MPPG"> MPPG (1-myristoyl-2-palmitoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="MPPS"> MPPS (1-myristoyl-2-palmitoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="MSM"> MSM (N-myristoyl-D-erythro-sphingosylphosphorylcholine) [Only available with Lipid21], Charge 0 </option>
+
+        <option value="MSPA"> MSPA (1-myristoyl-2-stearoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="MSPC"> MSPC (1-myristoyl-2-stearoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="MSPE"> MSPE (1-myristoyl-2-stearoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="MSPG"> MSPG (1-myristoyl-2-stearoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="MSPS"> MSPS (1-myristoyl-2-stearoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="OAPA"> OAPA (1-oleoyl-2-arachidonoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="OAPC"> OAPC (1-oleoyl-2-arachidonoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="OAPE"> OAPE (1-oleoyl-2-arachidonoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="OAPG"> OAPG (1-oleoyl-2-arachidonoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="OAPS"> OAPS (1-oleoyl-2-arachidonoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="OHPA"> OHPA (1-oleoyl-2-docosahexaenoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="OHPC"> OHPC (1-oleoyl-2-docosahexaenoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="OHPE"> OHPE (1-oleoyl-2-docosahexaenoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="OHPG"> OHPG (1-oleoyl-2-docosahexaenoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="OHPS"> OHPS (1-oleoyl-2-docosahexaenoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="OLPA"> OLPA (1-oleoyl-2-lauroyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="OLPC"> OLPC (1-oleoyl-2-lauroyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="OLPE"> OLPE (1-oleoyl-2-lauroyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="OLPG"> OLPG (1-oleoyl-2-lauroyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="OLPS"> OLPS (1-oleoyl-2-lauroyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="OMPA"> OMPA (1-oleoyl-2-myristoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="OMPC"> OMPC (1-oleoyl-2-myristoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="OMPE"> OMPE (1-oleoyl-2-myristoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="OMPG"> OMPG (1-oleoyl-2-myristoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="OMPS"> OMPS (1-oleoyl-2-myristoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="OPPA"> OPPA (1-oleoyl-2-palmitoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="OPPC"> OPPC (1-oleoyl-2-palmitoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="OPPE"> OPPE (1-oleoyl-2-palmitoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="OPPG"> OPPG (1-oleoyl-2-palmitoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="OPPS"> OPPS (1-oleoyl-2-palmitoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="OSM"> OSM (N-oleoyl-D-erythro-sphingosylphosphorylcholine) [Only available with Lipid21], Charge 0 </option>
+
+        <option value="OSPA"> OSPA (1-oleoyl-2-stearoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="OSPC"> OSPC (1-oleoyl-2-stearoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="OSPE"> OSPE (1-oleoyl-2-stearoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="OSPG"> OSPG (1-oleoyl-2-stearoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="OSPS"> OSPS (1-oleoyl-2-stearoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="PAPA"> PAPA (1-palmitoyl-2-arachidonoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        
+        <option value="PAPE"> PAPE (1-palmitoyl-2-arachidonoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+       
+        <option value="PAPS"> PAPS (1-palmitoyl-2-arachidonoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="PHPA"> PHPA (1-palmitoyl-2-docosahexaenoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="PHPC"> PHPC (1-palmitoyl-2-docosahexaenoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="PHPE"> PHPE (1-palmitoyl-2-docosahexaenoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="PHPG"> PHPG (1-palmitoyl-2-docosahexaenoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="PHPS"> PHPS (1-palmitoyl-2-docosahexaenoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="PLPA"> PLPA (1-palmitoyl-2-lauroyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="PLPC"> PLPC (1-palmitoyl-2-lauroyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="PLPE"> PLPE (1-palmitoyl-2-lauroyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="PLPG"> PLPG (1-palmitoyl-2-lauroyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="PLPS"> PLPS (1-palmitoyl-2-lauroyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="PMPA"> PMPA (1-palmitoyl-2-myristoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="PMPC"> PMPC (1-palmitoyl-2-myristoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="PMPE"> PMPE (1-palmitoyl-2-myristoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="PMPG"> PMPG (1-palmitoyl-2-myristoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="PMPS"> PMPS (1-palmitoyl-2-myristoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="POPA"> POPA (1-palmitoyl-2-oleoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        
+        <option value="POPE"> POPE (1-palmitoyl-2-oleoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="POPG"> POPG (1-palmitoyl-2-oleoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="POPS"> POPS (1-palmitoyl-2-oleoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="PSM"> PSM (N-palmitoyl-D-erythro-sphingosylphosphorylcholine) [Only available with Lipid21], Charge 0 </option>
+
+        <option value="PSPA"> PSPA (1-palmitoyl-2-stearoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="PSPC"> PSPC (1-palmitoyl-2-stearoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="PSPE"> PSPE (1-palmitoyl-2-stearoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="PSPG"> PSPG (1-palmitoyl-2-stearoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="PSPS"> PSPS (1-palmitoyl-2-stearoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="SAPA"> SAPA (1-stearoyl-2-arachidonoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="SAPC"> SAPC (1-stearoyl-2-arachidonoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="SAPE"> SAPE (1-stearoyl-2-arachidonoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="SAPG"> SAPG (1-stearoyl-2-arachidonoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="SAPS"> SAPS (1-stearoyl-2-arachidonoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="SDPA"> SDPA (1-stearoyl-2-docosahexaenoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="SDPC"> SDPC (1-stearoyl-2-docosahexaenoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="SDPE"> SDPE (1-stearoyl-2-docosahexaenoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="SDPG"> SDPG (1-stearoyl-2-docosahexaenoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="SDPS"> SDPS (1-stearoyl-2-docosahexaenoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="SHPA"> SHPA (1-stearoyl-2-docosahexaenoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="SHPC"> SHPC (1-stearoyl-2-docosahexaenoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="SHPE"> SHPE (1-stearoyl-2-docosahexaenoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="SHPG"> SHPG (1-stearoyl-2-docosahexaenoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="SHPS"> SHPS (1-stearoyl-2-docosahexaenoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="SLPA"> SLPA (1-stearoyl-2-lauroyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="SLPC"> SLPC (1-stearoyl-2-lauroyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="SLPE"> SLPE (1-stearoyl-2-lauroyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="SLPG"> SLPG (1-stearoyl-2-lauroyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="SLPS"> SLPS (1-stearoyl-2-lauroyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="SMPA"> SMPA (1-stearoyl-2-myristoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="SMPC"> SMPC (1-stearoyl-2-myristoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="SMPE"> SMPE (1-stearoyl-2-myristoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="SMPG"> SMPG (1-stearoyl-2-myristoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="SMPS"> SMPS (1-stearoyl-2-myristoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="SOPA"> SOPA (1-stearoyl-2-oleoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="SOPC"> SOPC (1-stearoyl-2-oleoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="SOPE"> SOPE (1-stearoyl-2-oleoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="SOPG"> SOPG (1-stearoyl-2-oleoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="SOPS"> SOPS (1-stearoyl-2-oleoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="SPPA"> SPPA (1-stearoyl-2-palmitoyl-sn-glycero-3-phosphate), Charge -1 </option>
+        <option value="SPPC"> SPPC (1-stearoyl-2-palmitoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+        <option value="SPPE"> SPPE (1-stearoyl-2-palmitoyl-sn-glycero-3-phosphoethanolamine), Charge 0 </option>
+        <option value="SPPG"> SPPG (1-stearoyl-2-palmitoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+        <option value="SPPS"> SPPS (1-stearoyl-2-palmitoyl-sn-glycero-3-phosphoserine), Charge -1 </option>
+
+        <option value="SSM"> SSM (N-stearoyl-D-erythro-sphingosylphosphorylcholine) [Only available with Lipid21], Charge 0 </option>
+
+        <option value="siDMPC"> siDMPC (1,2-dimyristoyl-sn-glycero-3-phosphocholine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siDMPE"> siDMPE (1,2-dimyristoyl-sn-glycero-3-phosphoethanolamine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siDMPS"> siDMPS (1,2-dimyristoyl-sn-glycero-3-phosphoserine) [Only available with SIRAH], Charge -1 </option>
+
+        <option value="siDOPC"> siDOPC (1,2-dioleoyl-sn-glycero-3-phosphocholine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siDOPE"> siDOPE (1,2-dioleoyl-sn-glycero-3-phosphoethanolamine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siDOPS"> siDOPS (1,2-dioleoyl-sn-glycero-3-phosphoserine) [Only available with SIRAH], Charge -1 </option>
+
+        <option value="siDPPC"> siDPPC (1,2-dipalmitoyl-sn-glycero-3-phosphocholine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siDPPE"> siDPPE (1,2-dipalmitoyl-sn-glycero-3-phosphoethanolamine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siDPPS"> siDPPS (1,2-dipalmitoyl-sn-glycero-3-phosphoserine) [Only available with SIRAH], Charge -1 </option>
+
+        <option value="siMOPC"> siMOPC (1-myristoyl-2-oleoyl-sn-glycero-3-phosphocholine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siMOPE"> siMOPE (1-myristoyl-2-oleoyl-sn-glycero-3-phosphoethanolamine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siMOPS"> siMOPS (1-myristoyl-2-oleoyl-sn-glycero-3-phosphoserine) [Only available with SIRAH], Charge -1 </option>
+
+        <option value="siMPPC"> siMPPC (1-myristoyl-2-palmitoyl-sn-glycero-3-phosphocholine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siMPPE"> siMPPE (1-myristoyl-2-palmitoyl-sn-glycero-3-phosphoethanolamine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siMPPS"> siMPPS (1-myristoyl-2-palmitoyl-sn-glycero-3-phosphoserine) [Only available with SIRAH], Charge -1 </option>
+
+        <option value="siOMPC"> siOMPC (1-oleoyl-2-myristoyl-sn-glycero-3-phosphocholine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siOMPE"> siOMPE (1-oleoyl-2-myristoyl-sn-glycero-3-phosphoethanolamine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siOMPS"> siOMPS (1-oleoyl-2-myristoyl-sn-glycero-3-phosphoserine) [Only available with SIRAH], Charge -1 </option>
+
+        <option value="siOPPC"> siOPPC (1-oleoyl-2-palmitoyl-sn-glycero-3-phosphocholine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siOPPE"> siOPPE (1-oleoyl-2-palmitoyl-sn-glycero-3-phosphoethanolamine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siOPPS"> siOPPS (1-oleoyl-2-palmitoyl-sn-glycero-3-phosphoserine) [Only available with SIRAH], Charge -1 </option>
+
+        <option value="siPMPC"> siPMPC (1-palmitoyl-2-myristoyl-sn-glycero-3-phosphocholine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siPMPE"> siPMPE (1-palmitoyl-2-myristoyl-sn-glycero-3-phosphoethanolamine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siPMPS"> siPMPS (1-palmitoyl-2-myristoyl-sn-glycero-3-phosphoserine) [Only available with SIRAH], Charge -1 </option>
+
+        <option value="siPOPC"> siPOPC (1-palmitoyl-2-oleoyl-sn-glycero-3-phosphocholine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siPOPE"> siPOPE (1-palmitoyl-2-oleoyl-sn-glycero-3-phosphoethanolamine) [Only available with SIRAH], Charge 0 </option>
+        <option value="siPOPS"> siPOPS (1-palmitoyl-2-oleoyl-sn-glycero-3-phosphoserine) [Only available with SIRAH], Charge -1 </option>
+    </xml>
+</macros>

@@ -1,0 +1,47 @@
+#
+#
+# metaTwist (compiled on Jul 15 2026 @ 02:49:03)
+#
+#
+# Reading from input: 
+# metatwist --dx out.kh.O.0.dx --species O --convolve 4 --sigma 1.0 --odx out.kh.O.dx 
+#
+#
+#
+#
+# Volumetric data initiated.
+# name        : out.kh.O.0
+# file        : out.kh.O.0.dx
+#
+#
+#
+#
+#
+# Volumetric data details.
+# name        : out.kh.O.0
+# species     : O 
+# residue     : O 
+# bulk dens(particle * A^-3): 6.023E-04 
+# bulk conc(M):    1.000 
+# 
+# origin [A]  :  -40.086  -19.422   -7.417
+# skew        :    0.335    0.000    0.000
+# skew        :    0.000    0.343    0.000
+# skew        :    0.000    0.000    0.328
+# max value   :   12.147 
+# min value   :    0.000 
+# grid size   : 64 x 64 x 70 
+# 
+# a  [A]      :  21.4330   0.0000   0.0000
+# b  [A]      :   0.0000  21.9570   0.0000
+# c  [A]      :   0.0000   0.0000  22.9720
+# a* [A^-1]   :   0.0467   0.0000   0.0000
+# b* [A^-1]   :   0.0000   0.0455   0.0000
+# c* [A^-1]   :   0.0000   0.0000   0.0435
+# 
+# Volume [A^3]:    10810.725 
+# Vvoxel [A^3]:        0.038 
+# Convolving density map.
+# Laplacian of a Gaussian Filter.
+# >> Writing density to out.kh.O.dx.
+# metatwist completed succesfully!

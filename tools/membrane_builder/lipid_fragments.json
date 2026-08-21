@@ -1,0 +1,1397 @@
+{
+  "AHPA": [
+    "AR",
+    "DHA",
+    "PH-"
+  ],
+  "AHPC": [
+    "AR",
+    "DHA",
+    "PC"
+  ],
+  "AHPE": [
+    "AR",
+    "DHA",
+    "PE"
+  ],
+  "AHPG": [
+    "AR",
+    "DHA",
+    "PGR"
+  ],
+  "AHPS": [
+    "AR",
+    "DHA",
+    "PS"
+  ],
+  "ALPA": [
+    "AR",
+    "LAL",
+    "PH-"
+  ],
+  "ALPC": [
+    "AR",
+    "LAL",
+    "PC"
+  ],
+  "ALPE": [
+    "AR",
+    "LAL",
+    "PE"
+  ],
+  "ALPG": [
+    "AR",
+    "LAL",
+    "PGR"
+  ],
+  "ALPS": [
+    "AR",
+    "LAL",
+    "PS"
+  ],
+  "AMPA": [
+    "AR",
+    "MY",
+    "PH-"
+  ],
+  "AMPC": [
+    "AR",
+    "MY",
+    "PC"
+  ],
+  "AMPE": [
+    "AR",
+    "MY",
+    "PE"
+  ],
+  "AMPG": [
+    "AR",
+    "MY",
+    "PGR"
+  ],
+  "AMPS": [
+    "AR",
+    "MY",
+    "PS"
+  ],
+  "AOPA": [
+    "AR",
+    "OL",
+    "PH-"
+  ],
+  "AOPC": [
+    "AR",
+    "OL",
+    "PC"
+  ],
+  "AOPE": [
+    "AR",
+    "OL",
+    "PE"
+  ],
+  "AOPG": [
+    "AR",
+    "OL",
+    "PGR"
+  ],
+  "AOPS": [
+    "AR",
+    "OL",
+    "PS"
+  ],
+  "APPA": [
+    "AR",
+    "PA",
+    "PH-"
+  ],
+  "APPC": [
+    "AR",
+    "PA",
+    "PC"
+  ],
+  "APPE": [
+    "AR",
+    "PA",
+    "PE"
+  ],
+  "APPG": [
+    "AR",
+    
+    "PA",
+    "PGR"
+  ],
+  "APPS": [
+    "AR",
+    
+    "PA",
+    "PS"
+  ],
+  "ASM": [
+    "AR",
+    "SA",
+    "SPM"
+  ],
+  "ASPA": [
+    "AR",
+    
+    "PH-",
+    "ST"
+  ],
+  "ASPC": [
+    "AR",
+    "PC",
+    "ST"
+  ],
+  "ASPE": [
+    "AR",
+    "PE",
+    "ST"
+  ],
+  "ASPG": [
+    "AR",
+    
+    "PGR",
+    "ST"
+  ],
+  "ASPS": [
+    "AR",
+    
+    "PS",
+    "ST"
+  ],
+  "DAPA": [
+    "AR",
+    
+    "PH-"
+  ],
+  "DAPE": [
+    "AR",
+    "PE"
+  ],
+  "DAPG": [
+    "AR",
+    
+    "PGR"
+  ],
+  "DAPS": [
+    "AR",
+    
+    "PS"
+  ],
+  "DHPA": [
+    "DHA",
+    
+    "PH-"
+  ],
+  "DHPC": [
+    "DHA",
+    "PC"
+  ],
+  "DHPE": [
+    "DHA",
+    "PE"
+  ],
+  "DHPG": [
+    "DHA",
+    
+    "PGR"
+  ],
+  "DHPS": [
+    "DHA",
+    
+    "PS"
+  ],
+  "DLPA": [
+    
+    "LAL",
+    "PH-"
+  ],
+  "DLPC": [
+    "LAL",
+    "PC"
+  ],
+  "DLPE": [
+    "LAL",
+    "PE"
+  ],
+  "DLPG": [
+    
+    "LAL",
+    "PGR"
+  ],
+  "DLPS": [
+    
+    "LAL",
+    "PS"
+  ],
+  "DMPA": [
+    
+    "MY",
+    "PH-"
+  ],
+  "DMPC": [
+    "MY",
+    "PC"
+  ],
+  "DMPE": [
+    "MY",
+    "PE"
+  ],
+  "DMPG": [
+    
+    "MY",
+    "PGR"
+  ],
+  "DMPS": [
+    
+    "MY",
+    "PS"
+  ],
+  "DOPA": [
+    
+    "OL",
+    "PH-"
+  ],
+  "DOPC": [
+    "OL",
+    "PC"
+  ],
+  "DOPE": [
+    "OL",
+    "PE"
+  ],
+  "DOPG": [
+    
+    "OL",
+    "PGR"
+  ],
+  "DOPS": [
+    
+    "OL",
+    "PS"
+  ],
+  "DPPA": [
+    
+    "PA",
+    "PH-"
+  ],
+  "DPPE": [
+    "PA",
+    "PE"
+  ],
+  "DPPG": [
+    
+    "PA",
+    "PGR"
+  ],
+  "DPPS": [
+    
+    "PA",
+    "PS"
+  ],
+  "DSPA": [
+    
+    "PH-",
+    "ST"
+  ],
+  "DSPC": [
+    "PC",
+    "ST"
+  ],
+  "DSPE": [
+    "PE",
+    "ST"
+  ],
+  "DSPG": [
+    
+    "PGR",
+    "ST"
+  ],
+  "DSPS": [
+    
+    "PS",
+    "ST"
+  ],
+  "HAPA": [
+    "AR",
+    "DHA",
+    
+    "PH-"
+  ],
+  "HAPC": [
+    "AR",
+    "DHA",
+    "PC"
+  ],
+  "HAPE": [
+    "AR",
+    "DHA",
+    "PE"
+  ],
+  "HAPG": [
+    "AR",
+    "DHA",
+    
+    "PGR"
+  ],
+  "HAPS": [
+    "AR",
+    "DHA",
+    
+    "PS"
+  ],
+  "HLPA": [
+    "DHA",
+    
+    "LAL",
+    "PH-"
+  ],
+  "HLPC": [
+    "DHA",
+    "LAL",
+    "PC"
+  ],
+  "HLPE": [
+    "DHA",
+    "LAL",
+    "PE"
+  ],
+  "HLPG": [
+    "DHA",
+    
+    "LAL",
+    "PGR"
+  ],
+  "HLPS": [
+    "DHA",
+    
+    "LAL",
+    "PS"
+  ],
+  "HMPA": [
+    "DHA",
+    
+    "MY",
+    "PH-"
+  ],
+  "HMPC": [
+    "DHA",
+    "MY",
+    "PC"
+  ],
+  "HMPE": [
+    "DHA",
+    "MY",
+    "PE"
+  ],
+  "HMPG": [
+    "DHA",
+    
+    "MY",
+    "PGR"
+  ],
+  "HMPS": [
+    "DHA",
+    
+    "MY",
+    "PS"
+  ],
+  "HOPA": [
+    "DHA",
+    
+    "OL",
+    "PH-"
+  ],
+  "HOPC": [
+    "DHA",
+    "OL",
+    "PC"
+  ],
+  "HOPE": [
+    "DHA",
+    "OL",
+    "PE"
+  ],
+  "HOPG": [
+    "DHA",
+    
+    "OL",
+    "PGR"
+  ],
+  "HOPS": [
+    "DHA",
+    
+    "OL",
+    "PS"
+  ],
+  "HPPA": [
+    "DHA",
+    
+    "PA",
+    "PH-"
+  ],
+  "HPPC": [
+    "DHA",
+    "PA",
+    "PC"
+  ],
+  "HPPE": [
+    "DHA",
+    "PA",
+    "PE"
+  ],
+  "HPPG": [
+    "DHA",
+    
+    "PA",
+    "PGR"
+  ],
+  "HPPS": [
+    "DHA",
+    
+    "PA",
+    "PS"
+  ],
+  "HSM": [
+    "DHA",
+    "SA",
+    "SPM"
+  ],
+  "HSPA": [
+    "DHA",
+    
+    "PH-",
+    "ST"
+  ],
+  "HSPC": [
+    "DHA",
+    "PC",
+    "ST"
+  ],
+  "HSPE": [
+    "DHA",
+    "PE",
+    "ST"
+  ],
+  "HSPG": [
+    "DHA",
+    
+    "PGR",
+    "ST"
+  ],
+  "HSPS": [
+    "DHA",
+    
+    "PS",
+    "ST"
+  ],
+  "LAPA": [
+    "AR",
+    
+    "LAL",
+    "PH-"
+  ],
+  "LAPC": [
+    "AR",
+    "LAL",
+    "PC"
+  ],
+  "LAPE": [
+    "AR",
+    "LAL",
+    "PE"
+  ],
+  "LAPG": [
+    "AR",
+    
+    "LAL",
+    "PGR"
+  ],
+  "LAPS": [
+    "AR",
+    
+    "LAL",
+    "PS"
+  ],
+  "LHPA": [
+    "DHA",
+    
+    "LAL",
+    "PH-"
+  ],
+  "LHPC": [
+    "DHA",
+    "LAL",
+    "PC"
+  ],
+  "LHPE": [
+    "DHA",
+    "LAL",
+    "PE"
+  ],
+  "LHPG": [
+    "DHA",
+    
+    "LAL",
+    "PGR"
+  ],
+  "LHPS": [
+    "DHA",
+    
+    "LAL",
+    "PS"
+  ],
+  "LMPA": [
+    
+    "LAL",
+    "MY",
+    "PH-"
+  ],
+  "LMPC": [
+    "LAL",
+    "MY",
+    "PC"
+  ],
+  "LMPE": [
+    "LAL",
+    "MY",
+    "PE"
+  ],
+  "LMPG": [
+    
+    "LAL",
+    "MY",
+    "PGR"
+  ],
+  "LMPS": [
+    
+    "LAL",
+    "MY",
+    "PS"
+  ],
+  "LOPA": [
+    
+    "LAL",
+    "OL",
+    "PH-"
+  ],
+  "LOPC": [
+    "LAL",
+    "OL",
+    "PC"
+  ],
+  "LOPE": [
+    "LAL",
+    "OL",
+    "PE"
+  ],
+  "LOPG": [
+    
+    "LAL",
+    "OL",
+    "PGR"
+  ],
+  "LOPS": [
+    
+    "LAL",
+    "OL",
+    "PS"
+  ],
+  "LPPA": [
+    
+    "LAL",
+    "PA",
+    "PH-"
+  ],
+  "LPPC": [
+    "LAL",
+    "PA",
+    "PC"
+  ],
+  "LPPE": [
+    "LAL",
+    "PA",
+    "PE"
+  ],
+  "LPPG": [
+    
+    "LAL",
+    "PA",
+    "PGR"
+  ],
+  "LPPS": [
+    
+    "LAL",
+    "PA",
+    "PS"
+  ],
+  "LSM": [
+    "LAL",
+    "SA",
+    "SPM"
+  ],
+  "LSPA": [
+    
+    "LAL",
+    "PH-",
+    "ST"
+  ],
+  "LSPC": [
+    "LAL",
+    "PC",
+    "ST"
+  ],
+  "LSPE": [
+    "LAL",
+    "PE",
+    "ST"
+  ],
+  "LSPG": [
+    
+    "LAL",
+    "PGR",
+    "ST"
+  ],
+  "LSPS": [
+    
+    "LAL",
+    "PS",
+    "ST"
+  ],
+  "MAPA": [
+    "AR",
+    
+    "MY",
+    "PH-"
+  ],
+  "MAPC": [
+    "AR",
+    "MY",
+    "PC"
+  ],
+  "MAPE": [
+    "AR",
+    "MY",
+    "PE"
+  ],
+  "MAPG": [
+    "AR",
+    
+    "MY",
+    "PGR"
+  ],
+  "MAPS": [
+    "AR",
+    
+    "MY",
+    "PS"
+  ],
+  "MHPA": [
+    "DHA",
+    
+    "MY",
+    "PH-"
+  ],
+  "MHPC": [
+    "DHA",
+    "MY",
+    "PC"
+  ],
+  "MHPE": [
+    "DHA",
+    "MY",
+    "PE"
+  ],
+  "MHPG": [
+    "DHA",
+    
+    "MY",
+    "PGR"
+  ],
+  "MHPS": [
+    "DHA",
+    
+    "MY",
+    "PS"
+  ],
+  "MLPA": [
+    
+    "LAL",
+    "MY",
+    "PH-"
+  ],
+  "MLPC": [
+    "LAL",
+    "MY",
+    "PC"
+  ],
+  "MLPE": [
+    "LAL",
+    "MY",
+    "PE"
+  ],
+  "MLPG": [
+    
+    "LAL",
+    "MY",
+    "PGR"
+  ],
+  "MLPS": [
+    
+    "LAL",
+    "MY",
+    "PS"
+  ],
+  "MOPA": [
+    
+    "MY",
+    "OL",
+    "PH-"
+  ],
+  "MOPC": [
+    "MY",
+    "OL",
+    "PC"
+  ],
+  "MOPE": [
+    "MY",
+    "OL",
+    "PE"
+  ],
+  "MOPG": [
+    
+    "MY",
+    "OL",
+    "PGR"
+  ],
+  "MOPS": [
+    
+    "MY",
+    "OL",
+    "PS"
+  ],
+  "MPPA": [
+    
+    "MY",
+    "PA",
+    "PH-"
+  ],
+  "MPPC": [
+    "MY",
+    "PA",
+    "PC"
+  ],
+  "MPPE": [
+    "MY",
+    "PA",
+    "PE"
+  ],
+  "MPPG": [
+    
+    "MY",
+    "PA",
+    "PGR"
+  ],
+  "MPPS": [
+    
+    "MY",
+    "PA",
+    "PS"
+  ],
+  "MSM": [
+    "MY",
+    "SA",
+    "SPM"
+  ],
+  "MSPA": [
+    
+    "MY",
+    "PH-",
+    "ST"
+  ],
+  "MSPC": [
+    "MY",
+    "PC",
+    "ST"
+  ],
+  "MSPE": [
+    "MY",
+    "PE",
+    "ST"
+  ],
+  "MSPG": [
+    
+    "MY",
+    "PGR",
+    "ST"
+  ],
+  "MSPS": [
+    
+    "MY",
+    "PS",
+    "ST"
+  ],
+  "OAPA": [
+    "AR",
+    
+    "OL",
+    "PH-"
+  ],
+  "OAPC": [
+    "AR",
+    "OL",
+    "PC"
+  ],
+  "OAPE": [
+    "AR",
+    "OL",
+    "PE"
+  ],
+  "OAPG": [
+    "AR",
+    
+    "OL",
+    "PGR"
+  ],
+  "OAPS": [
+    "AR",
+    
+    "OL",
+    "PS"
+  ],
+  "OHPA": [
+    "DHA",
+    
+    "OL",
+    "PH-"
+  ],
+  "OHPC": [
+    "DHA",
+    "OL",
+    "PC"
+  ],
+  "OHPE": [
+    "DHA",
+    "OL",
+    "PE"
+  ],
+  "OHPG": [
+    "DHA",
+    
+    "OL",
+    "PGR"
+  ],
+  "OHPS": [
+    "DHA",
+    
+    "OL",
+    "PS"
+  ],
+  "OLPA": [
+    
+    "LAL",
+    "OL",
+    "PH-"
+  ],
+  "OLPC": [
+    "LAL",
+    "OL",
+    "PC"
+  ],
+  "OLPE": [
+    "LAL",
+    "OL",
+    "PE"
+  ],
+  "OLPG": [
+    
+    "LAL",
+    "OL",
+    "PGR"
+  ],
+  "OLPS": [
+    
+    "LAL",
+    "OL",
+    "PS"
+  ],
+  "OMPA": [
+    
+    "MY",
+    "OL",
+    "PH-"
+  ],
+  "OMPC": [
+    "MY",
+    "OL",
+    "PC"
+  ],
+  "OMPE": [
+    "MY",
+    "OL",
+    "PE"
+  ],
+  "OMPG": [
+    
+    "MY",
+    "OL",
+    "PGR"
+  ],
+  "OMPS": [
+    
+    "MY",
+    "OL",
+    "PS"
+  ],
+  "OPPA": [
+    
+    "OL",
+    "PA",
+    "PH-"
+  ],
+  "OPPC": [
+    "OL",
+    "PA",
+    "PC"
+  ],
+  "OPPE": [
+    "OL",
+    "PA",
+    "PE"
+  ],
+  "OPPG": [
+    
+    "OL",
+    "PA",
+    "PGR"
+  ],
+  "OPPS": [
+    
+    "OL",
+    "PA",
+    "PS"
+  ],
+  "OSM": [
+    "OL",
+    "SA",
+    "SPM"
+  ],
+  "OSPA": [
+    
+    "OL",
+    "PH-",
+    "ST"
+  ],
+  "OSPC": [
+    "OL",
+    "PC",
+    "ST"
+  ],
+  "OSPE": [
+    "OL",
+    "PE",
+    "ST"
+  ],
+  "OSPG": [
+    
+    "OL",
+    "PGR",
+    "ST"
+  ],
+  "OSPS": [
+    
+    "OL",
+    "PS",
+    "ST"
+  ],
+  "PAPA": [
+    "AR",
+    
+    "PA",
+    "PH-"
+  ],
+  "PAPE": [
+    "AR",
+    "PA",
+    "PE"
+  ],
+  "PAPS": [
+    "AR",
+    "PA",
+    "PS"
+  ],
+  "PHPA": [
+    "DHA",
+    
+    "PA",
+    "PH-"
+  ],
+  "PHPC": [
+    "DHA",
+    "PA",
+    "PC"
+  ],
+  "PHPE": [
+    "DHA",
+    "PA",
+    "PE"
+  ],
+  "PHPG": [
+    "DHA",
+    
+    "PA",
+    "PGR"
+  ],
+  "PHPS": [
+    "DHA",
+    
+    "PA",
+    "PS"
+  ],
+  "PLPA": [
+    
+    "LAL",
+    "PA",
+    "PH-"
+  ],
+  "PLPC": [
+    "LAL",
+    "PA",
+    "PC"
+  ],
+  "PLPE": [
+    "LAL",
+    "PA",
+    "PE"
+  ],
+  "PLPG": [
+    
+    "LAL",
+    "PA",
+    "PGR"
+  ],
+  "PLPS": [
+    
+    "LAL",
+    "PA",
+    "PS"
+  ],
+  "PMPA": [
+    
+    "MY",
+    "PA",
+    "PH-"
+  ],
+  "PMPC": [
+    "MY",
+    "PA",
+    "PC"
+  ],
+  "PMPE": [
+    "MY",
+    "PA",
+    "PE"
+  ],
+  "PMPG": [
+    
+    "MY",
+    "PA",
+    "PGR"
+  ],
+  "PMPS": [
+    
+    "MY",
+    "PA",
+    "PS"
+  ],
+  "POPA": [
+    
+    "OL",
+    "PA",
+    "PH-"
+  ],
+  "POPE": [
+    "OL",
+    "PA",
+    "PE"
+  ],
+  "POPG": [
+    
+    "OL",
+    "PA",
+    "PGR"
+  ],
+  "POPS": [
+    
+    "OL",
+    "PA",
+    "PS"
+  ],
+  "PSM": [
+    "PA",
+    "SA",
+    "SPM"
+  ],
+  "PSPA": [
+    
+    "PA",
+    "PH-",
+    "ST"
+  ],
+  "PSPC": [
+    "PA",
+    "PC",
+    "ST"
+  ],
+  "PSPE": [
+    "PA",
+    "PE",
+    "ST"
+  ],
+  "PSPG": [
+    
+    "PA",
+    "PGR",
+    "ST"
+  ],
+  "PSPS": [
+    
+    "PA",
+    "PS",
+    "ST"
+  ],
+  "SAPA": [
+    "AR",
+    
+    "PH-",
+    "ST"
+  ],
+  "SAPC": [
+    "AR",
+    "PC",
+    "ST"
+  ],
+  "SAPE": [
+    "AR",
+    "PE",
+    "ST"
+  ],
+  "SAPG": [
+    "AR",
+    
+    "PGR",
+    "ST"
+  ],
+  "SAPS": [
+    "AR",
+    
+    "PS",
+    "ST"
+  ],
+  "SDPA": [
+    "DHA",
+    
+    "PH-",
+    "ST"
+  ],
+  "SDPC": [
+    "DHA",
+    "PC",
+    "ST"
+  ],
+  "SDPE": [
+    "DHA",
+    "PE",
+    "ST"
+  ],
+  "SDPG": [
+    "DHA",
+    
+    "PGR",
+    "ST"
+  ],
+  "SDPS": [
+    "DHA",
+    
+    "PS",
+    "ST"
+  ],
+  "SHPA": [
+    "DHA",
+    
+    "PH-",
+    "ST"
+  ],
+  "SHPC": [
+    "DHA",
+    "PC",
+    "ST"
+  ],
+  "SHPE": [
+    "DHA",
+    "PE",
+    "ST"
+  ],
+  "SHPG": [
+    "DHA",
+    
+    "PGR",
+    "ST"
+  ],
+  "SHPS": [
+    "DHA",
+    
+    "PS",
+    "ST"
+  ],
+  "SLPA": [
+    
+    "LAL",
+    "PH-",
+    "ST"
+  ],
+  "SLPC": [
+    "LAL",
+    "PC",
+    "ST"
+  ],
+  "SLPE": [
+    "LAL",
+    "PE",
+    "ST"
+  ],
+  "SLPG": [
+    
+    "LAL",
+    "PGR",
+    "ST"
+  ],
+  "SLPS": [
+    
+    "LAL",
+    "PS",
+    "ST"
+  ],
+  "SMPA": [
+    
+    "MY",
+    "PH-",
+    "ST"
+  ],
+  "SMPC": [
+    "MY",
+    "PC",
+    "ST"
+  ],
+  "SMPE": [
+    "MY",
+    "PE",
+    "ST"
+  ],
+  "SMPG": [
+    
+    "MY",
+    "PGR",
+    "ST"
+  ],
+  "SMPS": [
+    
+    "MY",
+    "PS",
+    "ST"
+  ],
+  "SOPA": [
+    
+    "OL",
+    "PH-",
+    "ST"
+  ],
+  "SOPC": [
+    "OL",
+    "PC",
+    "ST"
+  ],
+  "SOPE": [
+    "OL",
+    "PE",
+    "ST"
+  ],
+  "SOPG": [
+    
+    "OL",
+    "PGR",
+    "ST"
+  ],
+  "SOPS": [
+    
+    "OL",
+    "PS",
+    "ST"
+  ],
+  "SPPA": [
+    
+    "PA",
+    "PH-",
+    "ST"
+  ],
+  "SPPC": [
+    "PA",
+    "PC",
+    "ST"
+  ],
+  "SPPE": [
+    "PA",
+    "PE",
+    "ST"
+  ],
+  "SPPG": [
+    
+    "PA",
+    "PGR",
+    "ST"
+  ],
+  "SPPS": [
+    
+    "PA",
+    "PS",
+    "ST"
+  ],
+  "SSM": [
+    "SA",
+    "SPM",
+    "ST"
+  ],
+  "DPPC": [
+    "PA",
+    "PC"
+  ],
+  "PAPC": [
+    "PA",
+    "PC",
+    "AR"
+  ],
+  "CHL1":
+  [
+    "CHL"
+  ],
+  "DAPC": [
+    "AR",
+    "PC"
+  ],
+  "PAPG":[
+    "PA", 
+    "PGR",
+    "AR"
+  ],
+  "POPC": [
+    "PA",
+    "PC",
+    "OL"
+  ]
+
+
+
+
+
+
+}

@@ -1,0 +1,513 @@
+{
+    "summary": {
+        "num_errors": 0,
+        "num_failures": 0,
+        "num_skips": 0,
+        "num_tests": 5
+    },
+    "tests": [
+        {
+            "data": {
+                "inputs": {
+                    "add_missing_atoms": false,
+                    "input_pdb": {
+                        "id": "e020908390c1a492",
+                        "src": "hda"
+                    },
+                    "keep_altloc": false,
+                    "keep_nonstd": false,
+                    "reduce_option": true,
+                    "remove_hydrogen": false,
+                    "remove_water": false
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T20:47:47.463230",
+                    "dependencies": [],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "670857f81f5e6664",
+                    "id": "bfde2d61d3635e28",
+                    "inputs": {
+                        "input_pdb": {
+                            "id": "e020908390c1a492",
+                            "src": "hda",
+                            "uuid": "1fb888b2-d789-473f-b3e1-24934d29ca57"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "log_file": {
+                            "id": "0e9fa20cc43bccef",
+                            "src": "hda",
+                            "uuid": "bf713d9f-19fa-4c61-ad78-4b80ae5c1209"
+                        },
+                        "output_pdb": {
+                            "id": "a9fec8e76c7d472e",
+                            "src": "hda",
+                            "uuid": "076de799-987a-4eb0-9683-497bdbead4fd"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "add_missing_atoms": "false",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "keep_altloc": "false",
+                        "keep_nonstd": "false",
+                        "reduce_option": "true",
+                        "remove_hydrogen": "false",
+                        "remove_water": "false"
+                    },
+                    "state": "ok",
+                    "stderr": "",
+                    "stdout": "",
+                    "tool_id": "pdb4amber",
+                    "tool_stderr": "",
+                    "tool_stdout": "",
+                    "update_time": "2026-08-20T20:47:58.595375",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 0,
+                "time_seconds": 24.462578296661377,
+                "tool_id": "pdb4amber",
+                "tool_version": "24.8"
+            },
+            "has_data": true,
+            "id": "pdb4amber-0"
+        },
+        {
+            "data": {
+                "inputs": {
+                    "add_missing_atoms": false,
+                    "input_pdb": {
+                        "id": "75cce93097e9e3bc",
+                        "src": "hda"
+                    },
+                    "keep_altloc": false,
+                    "keep_nonstd": false,
+                    "reduce_option": true,
+                    "remove_hydrogen": false,
+                    "remove_water": true
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T20:48:11.957417",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__biobb_amber@5.3.1",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "biobb_amber",
+                            "version": "5.3.1"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "19951abfae45e3ed",
+                    "id": "991a2c3d48998b5f",
+                    "inputs": {
+                        "input_pdb": {
+                            "id": "75cce93097e9e3bc",
+                            "src": "hda",
+                            "uuid": "369486bc-66b1-40cf-9322-6ed60f8c7de9"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "log_file": {
+                            "id": "bc15e52e1924a090",
+                            "src": "hda",
+                            "uuid": "40b8c53a-1752-45c7-93ca-7a530d643da4"
+                        },
+                        "output_pdb": {
+                            "id": "383b0c1e0134333d",
+                            "src": "hda",
+                            "uuid": "06eaae4c-9186-4eb5-b0db-12379024b865"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "add_missing_atoms": "false",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "keep_altloc": "false",
+                        "keep_nonstd": "false",
+                        "reduce_option": "true",
+                        "remove_hydrogen": "false",
+                        "remove_water": "true"
+                    },
+                    "state": "ok",
+                    "stderr": "",
+                    "stdout": "",
+                    "tool_id": "pdb4amber",
+                    "tool_stderr": "",
+                    "tool_stdout": "",
+                    "update_time": "2026-08-20T20:48:23.161061",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 1,
+                "time_seconds": 24.379449129104614,
+                "tool_id": "pdb4amber",
+                "tool_version": "24.8"
+            },
+            "has_data": true,
+            "id": "pdb4amber-1"
+        },
+        {
+            "data": {
+                "inputs": {
+                    "add_missing_atoms": false,
+                    "input_pdb": {
+                        "id": "7c69b29f1a111f6e",
+                        "src": "hda"
+                    },
+                    "keep_altloc": false,
+                    "keep_nonstd": false,
+                    "reduce_option": false,
+                    "remove_hydrogen": true,
+                    "remove_water": false
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T20:48:36.275713",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__biobb_amber@5.3.1",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "biobb_amber",
+                            "version": "5.3.1"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "1cc9e71640659469",
+                    "id": "9c576535c7e740f3",
+                    "inputs": {
+                        "input_pdb": {
+                            "id": "7c69b29f1a111f6e",
+                            "src": "hda",
+                            "uuid": "9eb88e89-4d2a-458c-a145-9525748f2261"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "log_file": {
+                            "id": "f3da9c8f3efd3fed",
+                            "src": "hda",
+                            "uuid": "f4c9573e-b55a-43a3-98ce-703e43d2a574"
+                        },
+                        "output_pdb": {
+                            "id": "4588f2360919b288",
+                            "src": "hda",
+                            "uuid": "5fdfde20-e7e5-4365-b112-dff74328cb76"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "add_missing_atoms": "false",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "keep_altloc": "false",
+                        "keep_nonstd": "false",
+                        "reduce_option": "false",
+                        "remove_hydrogen": "true",
+                        "remove_water": "false"
+                    },
+                    "state": "ok",
+                    "stderr": "",
+                    "stdout": "",
+                    "tool_id": "pdb4amber",
+                    "tool_stderr": "",
+                    "tool_stdout": "",
+                    "update_time": "2026-08-20T20:48:45.151976",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 2,
+                "time_seconds": 21.921589136123657,
+                "tool_id": "pdb4amber",
+                "tool_version": "24.8"
+            },
+            "has_data": true,
+            "id": "pdb4amber-2"
+        },
+        {
+            "data": {
+                "inputs": {
+                    "add_missing_atoms": true,
+                    "input_pdb": {
+                        "id": "87fd0e83bc0ee196",
+                        "src": "hda"
+                    },
+                    "keep_altloc": false,
+                    "keep_nonstd": false,
+                    "reduce_option": true,
+                    "remove_hydrogen": false,
+                    "remove_water": false
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T20:48:58.366288",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__biobb_amber@5.3.1",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "biobb_amber",
+                            "version": "5.3.1"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "1bf06a2bcfbb8cf9",
+                    "id": "55263d43ff83ce11",
+                    "inputs": {
+                        "input_pdb": {
+                            "id": "87fd0e83bc0ee196",
+                            "src": "hda",
+                            "uuid": "0983b4b6-b5c5-41c7-9fe3-905ba0d246a9"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "log_file": {
+                            "id": "6528c8ae1b98f97f",
+                            "src": "hda",
+                            "uuid": "f0d43086-7e02-45c6-9de7-fc633d52ff99"
+                        },
+                        "output_pdb": {
+                            "id": "daeb4aeaf62761e1",
+                            "src": "hda",
+                            "uuid": "b80a8399-5c01-4c53-b588-e238148d9a22"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "add_missing_atoms": "true",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "keep_altloc": "false",
+                        "keep_nonstd": "false",
+                        "reduce_option": "true",
+                        "remove_hydrogen": "false",
+                        "remove_water": "false"
+                    },
+                    "state": "ok",
+                    "stderr": "",
+                    "stdout": "",
+                    "tool_id": "pdb4amber",
+                    "tool_stderr": "",
+                    "tool_stdout": "",
+                    "update_time": "2026-08-20T20:49:10.588179",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 3,
+                "time_seconds": 25.126973152160645,
+                "tool_id": "pdb4amber",
+                "tool_version": "24.8"
+            },
+            "has_data": true,
+            "id": "pdb4amber-3"
+        },
+        {
+            "data": {
+                "inputs": {
+                    "add_missing_atoms": false,
+                    "input_pdb": {
+                        "id": "99808589d221c281",
+                        "src": "hda"
+                    },
+                    "keep_altloc": false,
+                    "keep_nonstd": true,
+                    "reduce_option": false,
+                    "remove_hydrogen": false,
+                    "remove_water": false
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T20:49:23.805767",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__biobb_amber@5.3.1",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "biobb_amber",
+                            "version": "5.3.1"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "2fd1d72d379aa820",
+                    "id": "1ec7d9da0ca039c2",
+                    "inputs": {
+                        "input_pdb": {
+                            "id": "99808589d221c281",
+                            "src": "hda",
+                            "uuid": "8a394059-694e-4cc4-b73d-fff4d5de9fe7"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "log_file": {
+                            "id": "e62b75a8a377a5fa",
+                            "src": "hda",
+                            "uuid": "46a0085a-7516-44fe-9cf6-d1ad9ef95054"
+                        },
+                        "output_pdb": {
+                            "id": "823d021cffd56414",
+                            "src": "hda",
+                            "uuid": "e54b67c5-0bf6-4c94-b301-264de964197d"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "add_missing_atoms": "false",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "keep_altloc": "false",
+                        "keep_nonstd": "true",
+                        "reduce_option": "false",
+                        "remove_hydrogen": "false",
+                        "remove_water": "false"
+                    },
+                    "state": "ok",
+                    "stderr": "",
+                    "stdout": "",
+                    "tool_id": "pdb4amber",
+                    "tool_stderr": "",
+                    "tool_stdout": "",
+                    "update_time": "2026-08-20T20:49:47.373345",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 4,
+                "time_seconds": 36.94266223907471,
+                "tool_id": "pdb4amber",
+                "tool_version": "24.8"
+            },
+            "has_data": true,
+            "id": "pdb4amber-4"
+        }
+    ],
+    "version": "0.1"
+}

@@ -1,0 +1,30 @@
+single-point nonperiodic 3D-RISM calculation using the sander interface
+&cntrl
+   ntx=1,
+   nstlim=0,
+   irism=1,
+/
+&rism
+   periodic='pmen',
+   closure='kh',
+   tolerance=1e-6,
+
+   grdspc=0.35,0.35,0.35,
+
+   buffer=10.0,
+   centering=1,
+
+   mdiis_del=0.4,
+   mdiis_nvec=20,
+   maxstep=5000,
+   mdiis_restart=50,
+
+   solvcut=9.0,
+
+   verbose=2,
+   npropagate=0,
+   apply_rism_force=0,
+
+   volfmt='dx',
+   ntwrism=1,
+/

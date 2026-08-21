@@ -1,0 +1,103 @@
+<tool id="merge_extract_residues" name="Merge Water Residues" version="1.0">
+    <description>Extract specific water residues from a PDB file and merge into a System PDB file</description>
+    
+    <requirements>
+        <requirement type="package" version="3.10">python</requirement>
+    </requirements>
+    
+    <command detect_errors="exit_code"><![CDATA[
+        python '$__tool_directory__/merge.py' 
+        '$water_pdb'
+        -n $residue_numbers
+        -r '$residue_name'
+        -s '$system_pdb'
+        -o '$output_pdb'
+    ]]></command>
+    
+    <inputs>
+        <param name="water_pdb" type="data" format="pdb" label="PDB with water molecules" 
+               help="Input PDB file containing water residues to extract"/>
+        
+        <param name="system_pdb" type="data" format="pdb" label="System PDB file" 
+               help="Target System PDB file to append water molecules into"/>
+        
+        <param name="residue_numbers" type="text" label="Residue numbers (space-separated)" 
+               help="Space-separated list of residue numbers to extract (e.g. 293 309 310)"/>
+        
+        <param name="residue_name" type="select" label="Residue name" 
+               help="Name of residue to match">
+            <option value="HOH">HOH (Water)</option>
+            <option value="WAT">WAT (Water)</option>
+            <option value="SPC">SPC (Water)</option>
+            <option value="TIP3P">TIP3P (Water)</option>
+            <option value="LIG">LIG (Ligand)</option>
+            <option value="ALL">ALL (Any residue)</option>
+        </param>
+    </inputs>
+    
+    <outputs>
+        <data name="output_pdb" format="pdb" label="Merged PDB with extracted residues"/>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="water_pdb" value="in_wat.pdb"/>
+            <param name="system_pdb" value="System.pdb"/>
+            <param name="residue_numbers" value="477 478"/>
+            <param name="residue_name" value="HOH"/>
+            <output name="output_pdb" file="output.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="WAT" />
+                    <has_text text="END" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+**What it does**
+
+This tool extracts specific water residues (or other residues) from a source PDB file and appends them to a target System PDB file.
+
+**Inputs**
+
+- **PDB with water molecules**: Source PDB file containing the water residues you want to extract
+- **System PDB file**: Target System PDB file where the extracted residues will be appended
+- **Residue numbers**: Space-separated list of residue numbers to extract (e.g., 293 309 310)
+- **Residue name**: Name of residue type to match (HOH, WAT, SPC, TIP3P, LIG, or ALL)
+
+**Output**
+
+- **Merged PDB**: Combined PDB file containing:
+
+  - All atoms from the original System PDB
+  - Extracted residues from the source PDB
+  - HOH residues automatically converted to WAT
+  - Proper TIP3 element column formatting
+  - TER records between residues for structure termination
+  - END record at the end of file
+
+**Features**
+
+- Automatically converts HOH to WAT naming conventions
+- Adds proper element column (TIP3) for water molecules
+- Inserts TER records between residues
+- Appends to System PDB before the END record
+- Preserves original atom and residue numbering
+
+**Example Workflow**
+
+To extract residues 293 and 309 (HOH type) from water.pdb and merge into system.pdb:
+
+- Water PDB: water.pdb
+- System PDB: system.pdb
+- Residue numbers: 293 309
+- Residue name: HOH
+    ]]></help>
+
+
+    <citations>
+        <citation type="doi">10.1021/ci034227x</citation>
+    </citations>
+
+</tool>
