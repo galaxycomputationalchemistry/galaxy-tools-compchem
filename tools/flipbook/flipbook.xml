@@ -9,6 +9,7 @@
     <expand macro="requirements"/>
     <required_files>
         <include path="rmsx_preflight.py"/>
+        <include path="rmsx_multichain.py"/>
         <include path="rmsx_static_plots.py"/>
         <include path="flipbook_molstar_report.py"/>
         <include path="flipbook_report_common.py"/>
@@ -17,7 +18,7 @@
     </required_files>
     <version_command><![CDATA[python3 -c "import importlib.metadata; print(importlib.metadata.version('rmsx'))"]]></version_command>
     <command detect_errors="exit_code"><![CDATA[
-        mkdir -p rmsx_output pdb_slices &&
+        mkdir -p rmsx_output galaxy_outputs &&
         #if str($input_source.source) == "example"
             ln -s '$__tool_directory__/test-data/1UBQ.pdb' input_topology.pdb &&
             ln -s '$__tool_directory__/test-data/mon_sys.xtc' input_trajectory.xtc &&
@@ -29,11 +30,15 @@
             topology_path='input_topology.$input_source.topology.ext' &&
             trajectory_path='input_trajectory.$input_source.trajectory.ext' &&
         #end if
-        chain_id='$input_source.chain' &&
+        #if str($input_source.chain_scope.mode) == "all"
+            chain_selector='all' &&
+        #else
+            chain_selector='$input_source.chain_scope.chain' &&
+        #end if
         python3 '$__tool_directory__/rmsx_preflight.py'
             --topology "\${topology_path}"
             --trajectory "\${trajectory_path}"
-            --selector "\${chain_id}"
+            --selector "\${chain_selector}"
             --num-slices '$input_source.num_slices'
             --start-frame '$analysis.start_frame'
             #if str($analysis.end_frame).strip() not in ("", "None")
@@ -41,50 +46,32 @@
             #end if
             --analysis-type '$analysis.analysis_type'
             > '$log' 2>&1 &&
-            RMSX_NO_CITATION=1 rmsx
-            "\${topology_path}"
-            "\${trajectory_path}"
-            --output_dir rmsx_output
-            --num_slices '$input_source.num_slices'
-            --chain "\${chain_id}"
-            --palette viridis
-            --start_frame '$analysis.start_frame'
-            #if str($analysis.end_frame).strip() not in ("", "None")
-                --end_frame '$analysis.end_frame'
+        RMSX_NO_CITATION=1 python3 '$__tool_directory__/rmsx_multichain.py'
+            --topology "\${topology_path}"
+            --trajectory "\${trajectory_path}"
+            --output-dir rmsx_output
+            --galaxy-output-dir galaxy_outputs
+            --chain-mode '$input_source.chain_scope.mode'
+            #if str($input_source.chain_scope.mode) == "selected"
+                --chains '$input_source.chain_scope.chain'
             #end if
-            --analysis_type '$analysis.analysis_type'
-            --summary_n '$analysis.summary_n'
-            $analysis.interpolate
-            --no-plot
-            --quiet
-            --overwrite
-            >> '$log' 2>&1 &&
-        chain_dir="rmsx_output/chain_\${chain_id}_rmsx" &&
-        source_rmsx_csv=\$(python3 -c "import glob, sys; matches = sorted(glob.glob(sys.argv[1] + '/rmsx_*.csv')); print(matches[0]) if matches else sys.exit('No RMSX CSV found in ' + sys.argv[1])" "\${chain_dir}") &&
-        cp "\${source_rmsx_csv}" '$rmsx_table' &&
-        cp "\${chain_dir}"/rmsd.csv '$rmsd_table' &&
-        cp "\${chain_dir}"/rmsf.csv '$rmsf_table' &&
-        if [ -f "\${chain_dir}"/masked_residues.csv ]; then
-            cp "\${chain_dir}"/masked_residues.csv '$mask_table';
-        else
-            python3 -c "import csv, sys; rows = csv.DictReader(open(sys.argv[1], newline='')); out = csv.DictWriter(open(sys.argv[2], 'w', newline=''), fieldnames=['ResidueID', 'ChainID', 'Masked'], lineterminator='\n'); out.writeheader(); out.writerows({'ResidueID': row['ResidueID'], 'ChainID': row['ChainID'], 'Masked': 'False'} for row in rows)" '$rmsx_table' '$mask_table';
-        fi &&
-        cp "\${chain_dir}"/slice_*_first_frame.pdb pdb_slices/ &&
-        python3 '$__tool_directory__/rmsx_static_plots.py'
-            --rmsx-source "\${source_rmsx_csv}"
-            --rmsd-source "\${chain_dir}/rmsd.csv"
-            --rmsf-source "\${chain_dir}/rmsf.csv"
+            --num-slices '$input_source.num_slices'
+            --start-frame '$analysis.start_frame'
+            #if str($analysis.end_frame).strip() not in ("", "None")
+                --end-frame '$analysis.end_frame'
+            #end if
+            --analysis-type '$analysis.analysis_type'
+            --summary-n '$analysis.summary_n'
             --palette '$palette'
-            --heatmap-output '$rmsx_heatmap_plot'
-            --triple-output '$rmsx_triple_plot'
             #if str($analysis.interpolate) == "--interpolate"
                 --interpolate
             #end if
+            --plot-helper '$__tool_directory__/rmsx_static_plots.py'
             >> '$log' 2>&1 &&
         python3 '$__tool_directory__/flipbook_molstar_report.py'
-            --pdb-dir pdb_slices
-            --rmsx-table '$rmsx_table'
-            --mask-table '$mask_table'
+            --pdb-dir galaxy_outputs/pdb_slices
+            --rmsx-table galaxy_outputs/combined_rmsx.csv
+            --mask-table galaxy_outputs/combined_mask.csv
             --palette '$palette'
             --manifest-output '$viewer_manifest'
             --title 'RMSX Flipbook viewer'
@@ -98,15 +85,33 @@
             <when value="history">
                 <param name="topology" type="data" format="pdb" label="Topology or structure file" help="The current wrapper supports PDB topology/structure input. Broader MDAnalysis-readable topology formats are tracked as follow-up work."/>
                 <param name="trajectory" type="data" format="dcd,xtc" label="Trajectory file" help="The current wrapper supports DCD and XTC trajectory input. Broader MDAnalysis-readable trajectory formats are tracked as follow-up work."/>
-                <param argument="--chain" type="text" value="A" label="Chain/segment selector" help="Passed to RMSX with --chain. Comma-separated values such as A,B are allowed; the preflight check reports available segment IDs and chain IDs.">
-                    <validator type="regex" message="Use comma-separated letters, numbers, underscores, hyphens, or periods.">^[A-Za-z0-9_.-]+(,[A-Za-z0-9_.-]+)*$</validator>
-                </param>
+                <conditional name="chain_scope">
+                    <param name="mode" type="select" label="Chains to analyze">
+                        <option value="all" selected="true">All valid chains</option>
+                        <option value="selected">Selected chains or segments</option>
+                    </param>
+                    <when value="all"/>
+                    <when value="selected">
+                        <param argument="--chain" type="text" value="A" label="Chain/segment selectors" help="Enter one or more comma-separated chain or segment IDs, such as A,B. The preflight check reports the available IDs.">
+                            <validator type="regex" message="Use comma-separated letters, numbers, underscores, hyphens, or periods.">^[A-Za-z0-9_.-]+(,[A-Za-z0-9_.-]+)*$</validator>
+                        </param>
+                    </when>
+                </conditional>
                 <param argument="--num_slices" type="integer" value="9" min="1" label="Number of trajectory slices"/>
             </when>
             <when value="example">
-                <param argument="--chain" type="text" value="7" label="Chain/segment selector" help="The bundled 1UBQ/mon_sys example uses segment ID 7.">
-                    <validator type="regex" message="Use comma-separated letters, numbers, underscores, hyphens, or periods.">^[A-Za-z0-9_.-]+(,[A-Za-z0-9_.-]+)*$</validator>
-                </param>
+                <conditional name="chain_scope">
+                    <param name="mode" type="select" label="Chains to analyze">
+                        <option value="all" selected="true">All valid chains</option>
+                        <option value="selected">Selected chains or segments</option>
+                    </param>
+                    <when value="all"/>
+                    <when value="selected">
+                        <param argument="--chain" type="text" value="7" label="Chain/segment selectors" help="The bundled 1UBQ/mon_sys example uses segment ID 7.">
+                            <validator type="regex" message="Use comma-separated letters, numbers, underscores, hyphens, or periods.">^[A-Za-z0-9_.-]+(,[A-Za-z0-9_.-]+)*$</validator>
+                        </param>
+                    </when>
+                </conditional>
                 <param argument="--num_slices" type="integer" value="9" min="1" label="Number of trajectory slices"/>
             </when>
         </conditional>
@@ -134,15 +139,27 @@
         </param>
     </inputs>
     <outputs>
-        <data name="rmsx_table" format="csv" label="${tool.name} on ${on_string}: RMSX table"/>
-        <data name="rmsd_table" format="csv" label="${tool.name} on ${on_string}: RMSD table"/>
-        <data name="rmsf_table" format="csv" label="${tool.name} on ${on_string}: RMSF table"/>
-        <data name="mask_table" format="csv" label="${tool.name} on ${on_string}: mask metadata"/>
-        <collection type="list" name="pdb_slices" label="${tool.name} on ${on_string}: PDB slices">
-            <discover_datasets directory="pdb_slices" pattern="(?P&lt;designation&gt;slice_[0-9]+_first_frame)\.pdb" ext="pdb"/>
+        <collection type="list" name="rmsx_tables" label="${tool.name} on ${on_string}: per-chain RMSX tables">
+            <discover_datasets directory="galaxy_outputs/rmsx_tables" pattern="(?P&lt;designation&gt;chain_.+)\.csv" ext="csv"/>
         </collection>
-        <data name="rmsx_heatmap_plot" format="png" label="${tool.name} on ${on_string}: RMSX heatmap plot"/>
-        <data name="rmsx_triple_plot" format="png" label="${tool.name} on ${on_string}: RMSX triple plot"/>
+        <collection type="list" name="rmsd_tables" label="${tool.name} on ${on_string}: per-chain RMSD tables">
+            <discover_datasets directory="galaxy_outputs/rmsd_tables" pattern="(?P&lt;designation&gt;chain_.+)\.csv" ext="csv"/>
+        </collection>
+        <collection type="list" name="rmsf_tables" label="${tool.name} on ${on_string}: per-chain RMSF tables">
+            <discover_datasets directory="galaxy_outputs/rmsf_tables" pattern="(?P&lt;designation&gt;chain_.+)\.csv" ext="csv"/>
+        </collection>
+        <collection type="list" name="mask_tables" label="${tool.name} on ${on_string}: per-chain mask metadata">
+            <discover_datasets directory="galaxy_outputs/mask_tables" pattern="(?P&lt;designation&gt;chain_.+)\.csv" ext="csv"/>
+        </collection>
+        <collection type="list" name="pdb_slices" label="${tool.name} on ${on_string}: PDB slices">
+            <discover_datasets directory="galaxy_outputs/pdb_slices" pattern="(?P&lt;designation&gt;slice_[0-9]+_first_frame)\.pdb" ext="pdb"/>
+        </collection>
+        <collection type="list" name="heatmap_plots" label="${tool.name} on ${on_string}: per-chain RMSX heatmaps">
+            <discover_datasets directory="galaxy_outputs/heatmap_plots" pattern="(?P&lt;designation&gt;chain_.+)\.png" ext="png"/>
+        </collection>
+        <collection type="list" name="triple_plots" label="${tool.name} on ${on_string}: per-chain RMSX triple plots">
+            <discover_datasets directory="galaxy_outputs/triple_plots" pattern="(?P&lt;designation&gt;chain_.+)\.png" ext="png"/>
+        </collection>
         <data name="log" format="txt" label="${tool.name} on ${on_string}: execution log"/>
         <data name="viewer_manifest" format="rmsx.json" label="${tool.name} on ${on_string}: RMSX Flipbook viewer manifest - open with Visualize"/>
     </outputs>
@@ -151,31 +168,39 @@
             <param name="input_source|source" value="history"/>
             <param name="input_source|topology" value="1UBQ.pdb" ftype="pdb"/>
             <param name="input_source|trajectory" value="mon_sys.xtc" ftype="xtc"/>
-            <param name="input_source|chain" value="7"/>
+            <param name="input_source|chain_scope|mode" value="all"/>
             <param name="input_source|num_slices" value="3"/>
             <param name="palette" value="viridis"/>
-            <output name="rmsx_table">
-                <assert_contents>
-                    <has_line line="ResidueID,ChainID,slice_1.dcd,slice_2.dcd,slice_3.dcd"/>
-                    <has_line_matching expression="1,7,[0-9.]+,[0-9.]+,[0-9.]+"/>
-                </assert_contents>
-            </output>
-            <output name="rmsd_table">
-                <assert_contents>
-                    <has_line line="Frame,Time,RMSD"/>
-                    <has_line_matching expression="0\.0,0\.0,[0-9.eE+-]+"/>
-                </assert_contents>
-            </output>
-            <output name="rmsf_table">
-                <assert_contents>
-                    <has_line line="ResidueID,RMSF"/>
-                </assert_contents>
-            </output>
-            <output name="mask_table">
-                <assert_contents>
-                    <has_line line="ResidueID,ChainID,Masked"/>
-                </assert_contents>
-            </output>
+            <output_collection name="rmsx_tables" type="list" count="1">
+                <element name="chain_7" ftype="csv">
+                    <assert_contents>
+                        <has_line line="ResidueID,ChainID,slice_1.dcd,slice_2.dcd,slice_3.dcd"/>
+                        <has_line_matching expression="1,7,[0-9.]+,[0-9.]+,[0-9.]+"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="rmsd_tables" type="list" count="1">
+                <element name="chain_7" ftype="csv">
+                    <assert_contents>
+                        <has_line line="Frame,Time,RMSD"/>
+                        <has_line_matching expression="0\.0,0\.0,[0-9.eE+-]+"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="rmsf_tables" type="list" count="1">
+                <element name="chain_7" ftype="csv">
+                    <assert_contents>
+                        <has_line line="ResidueID,RMSF"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="mask_tables" type="list" count="1">
+                <element name="chain_7" ftype="csv">
+                    <assert_contents>
+                        <has_line line="ResidueID,ChainID,Masked"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
             <output_collection name="pdb_slices" type="list" count="3">
                 <element name="slice_1_first_frame" ftype="pdb">
                     <assert_contents>
@@ -191,16 +216,20 @@
                     <has_text text="RMSX static plots written"/>
                 </assert_contents>
             </output>
-            <output name="rmsx_heatmap_plot" ftype="png">
-                <assert_contents>
-                    <has_size min="1000"/>
-                </assert_contents>
-            </output>
-            <output name="rmsx_triple_plot" ftype="png">
-                <assert_contents>
-                    <has_size min="1000"/>
-                </assert_contents>
-            </output>
+            <output_collection name="heatmap_plots" type="list" count="1">
+                <element name="chain_7" ftype="png">
+                    <assert_contents>
+                        <has_size min="1000"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="triple_plots" type="list" count="1">
+                <element name="chain_7" ftype="png">
+                    <assert_contents>
+                        <has_size min="1000"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
             <output name="viewer_manifest" ftype="rmsx.json">
                 <assert_contents>
                     <has_text text="&quot;schemaVersion&quot;: &quot;flipbook-molstar-viewer/v1&quot;"/>
@@ -225,15 +254,17 @@
         </test>
         <test expect_num_outputs="9">
             <param name="input_source|source" value="example"/>
-            <param name="input_source|chain" value="7"/>
+            <param name="input_source|chain_scope|mode" value="all"/>
             <param name="input_source|num_slices" value="3"/>
             <param name="palette" value="turbo"/>
-            <output name="rmsx_table">
-                <assert_contents>
-                    <has_line line="ResidueID,ChainID,slice_1.dcd,slice_2.dcd,slice_3.dcd"/>
-                    <has_line_matching expression="1,7,[0-9.]+,[0-9.]+,[0-9.]+"/>
-                </assert_contents>
-            </output>
+            <output_collection name="rmsx_tables" type="list" count="1">
+                <element name="chain_7" ftype="csv">
+                    <assert_contents>
+                        <has_line line="ResidueID,ChainID,slice_1.dcd,slice_2.dcd,slice_3.dcd"/>
+                        <has_line_matching expression="1,7,[0-9.]+,[0-9.]+,[0-9.]+"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
             <output_collection name="pdb_slices" type="list" count="3">
                 <element name="slice_1_first_frame" ftype="pdb">
                     <assert_contents>
@@ -249,16 +280,20 @@
                     <has_text text="RMSX static plots written"/>
                 </assert_contents>
             </output>
-            <output name="rmsx_heatmap_plot" ftype="png">
-                <assert_contents>
-                    <has_size min="1000"/>
-                </assert_contents>
-            </output>
-            <output name="rmsx_triple_plot" ftype="png">
-                <assert_contents>
-                    <has_size min="1000"/>
-                </assert_contents>
-            </output>
+            <output_collection name="heatmap_plots" type="list" count="1">
+                <element name="chain_7" ftype="png">
+                    <assert_contents>
+                        <has_size min="1000"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="triple_plots" type="list" count="1">
+                <element name="chain_7" ftype="png">
+                    <assert_contents>
+                        <has_size min="1000"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
             <output name="viewer_manifest" ftype="rmsx.json">
                 <assert_contents>
                     <has_text text="&quot;schemaVersion&quot;: &quot;flipbook-molstar-viewer/v1&quot;"/>
@@ -269,9 +304,68 @@
                 </assert_contents>
             </output>
         </test>
+        <test expect_num_outputs="9">
+            <param name="input_source|source" value="history"/>
+            <param name="input_source|topology" value="1UBQ_two_chain.pdb" ftype="pdb"/>
+            <param name="input_source|trajectory" value="mon_sys_two_chain.xtc" ftype="xtc"/>
+            <param name="input_source|chain_scope|mode" value="all"/>
+            <param name="input_source|num_slices" value="3"/>
+            <param name="palette" value="viridis"/>
+            <output_collection name="rmsx_tables" type="list" count="2">
+                <element name="chain_A" ftype="csv">
+                    <assert_contents>
+                        <has_line_matching expression="1,A,[0-9.]+,[0-9.]+,[0-9.]+"/>
+                    </assert_contents>
+                </element>
+                <element name="chain_B" ftype="csv">
+                    <assert_contents>
+                        <has_line_matching expression="1,B,[0-9.]+,[0-9.]+,[0-9.]+"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="rmsd_tables" type="list" count="2"/>
+            <output_collection name="rmsf_tables" type="list" count="2"/>
+            <output_collection name="mask_tables" type="list" count="2"/>
+            <output_collection name="pdb_slices" type="list" count="3">
+                <element name="slice_1_first_frame" ftype="pdb">
+                    <assert_contents>
+                        <has_text text=" A   1"/>
+                        <has_text text=" B   1"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="heatmap_plots" type="list" count="2">
+                <element name="chain_A" ftype="png">
+                    <assert_contents>
+                        <has_size min="1000"/>
+                    </assert_contents>
+                </element>
+                <element name="chain_B" ftype="png">
+                    <assert_contents>
+                        <has_size min="1000"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="triple_plots" type="list" count="2"/>
+            <output name="log">
+                <assert_contents>
+                    <has_text text="Resolved RMSX segment IDs: A, B"/>
+                    <has_text text="Galaxy outputs staged for 2 chain(s)."/>
+                </assert_contents>
+            </output>
+            <output name="viewer_manifest" ftype="rmsx.json">
+                <assert_contents>
+                    <has_text text="&quot;key&quot;: &quot;A:1&quot;"/>
+                    <has_text text="&quot;key&quot;: &quot;B:1&quot;"/>
+                    <has_text text=" A   1"/>
+                    <has_text text=" B   1"/>
+                </assert_contents>
+            </output>
+        </test>
         <test expect_failure="true">
             <param name="input_source|source" value="example"/>
-            <param name="input_source|chain" value="missing_segment"/>
+            <param name="input_source|chain_scope|mode" value="selected"/>
+            <param name="input_source|chain_scope|chain" value="missing_segment"/>
             <param name="input_source|num_slices" value="3"/>
             <param name="palette" value="viridis"/>
         </test>
@@ -299,8 +393,8 @@ _____
 
 Use either the bundled 1UBQ example or datasets from the current history. The
 current wrapper supports PDB topology/structure input with DCD or XTC trajectory
-input. Select the chain or segment to analyze; comma-separated selectors such as
-``A,B`` are accepted.
+input. All valid protein chains are analyzed by default. To limit the run, choose
+selected chains or segments and enter comma-separated selectors such as ``A,B``.
 
 Before RMSX runs, a preflight check reports available chain and segment IDs and
 catches common load, selector, frame-window, and slice-count problems.
@@ -315,9 +409,10 @@ _____
 
 **Outputs**
 
-The tool produces RMSX, RMSD, RMSF, and mask metadata tables; a PDB slice
-collection with RMSX values written into the B-factor column; static RMSX
-heatmap and triple-panel PNG plots; an execution log; and a viewer manifest.
+The tool produces per-chain collections of RMSX, RMSD, RMSF, and mask metadata
+tables; one combined PDB slice collection with RMSX values written into the
+B-factor column; per-chain static RMSX heatmap and triple-panel PNG collections;
+an execution log; and one combined viewer manifest.
 
 Open the manifest with Galaxy's Visualize action and choose ``RMSX Flipbook``.
 The manifest uses schema version ``flipbook-molstar-viewer/v1`` and is emitted

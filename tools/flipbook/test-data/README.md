@@ -1,10 +1,16 @@
 # Flipbook Galaxy Test Data
 
-This directory contains the PDB/XTC fixture used by the Galaxy wrapper tests.
+This directory contains the PDB/XTC fixtures used by the Galaxy wrapper tests.
 
 - `1UBQ.pdb`: ubiquitin structure fixture used with the RMSX example path.
 - `mon_sys.xtc`: compressed trajectory fixture used with `1UBQ.pdb`; current
   size is 1,002,408 bytes.
+- `1UBQ_two_chain.pdb`: two translated copies of `1UBQ.pdb`, assigned segment
+  and chain IDs `A` and `B`; 199,548 bytes; SHA256
+  `6eb887d33cc0649ecb28abaff1dee3520d03d937a760395dc9fe13d883e6ca5f`.
+- `mon_sys_two_chain.xtc`: 12 uniformly sampled frames containing both copies;
+  112,268 bytes; SHA256
+  `2fc8712151b1a5fc093d56b42f9c528c89bf9e395dfc5ffa25a0bcc1da63e1a8`.
 
 ## Source And Provenance
 
@@ -46,6 +52,24 @@ The checked-in `1UBQ.pdb` is byte-identical to the archive copy. The checked-in
 `mon_sys.dcd`; its SHA256 is
 `367c424cd9ff7506c671f5c8ee8f25e00c27d4a2f9aee91707dc4194bdc0676b`.
 
+The two-chain fixture is a deterministic test-only derivative of those same
+files. It duplicates each atom and trajectory coordinate, translates the second
+copy by 45 A along X, assigns segment/chain IDs `A` and `B`, and keeps 12
+uniformly sampled frames. It is regenerated with:
+
+```bash
+docker run --rm \
+  --entrypoint python3 \
+  -v "$PWD:/work" \
+  ghcr.io/antuneslab/flipbook-galaxy:0.2.3-galaxy0 \
+  /work/tools/flipbook/test-data/create_multichain_rmsx_fixture.py \
+    --topology /work/tools/flipbook/test-data/1UBQ.pdb \
+    --trajectory /work/tools/flipbook/test-data/mon_sys.xtc \
+    --output-topology /work/tools/flipbook/test-data/1UBQ_two_chain.pdb \
+    --output-trajectory /work/tools/flipbook/test-data/mon_sys_two_chain.xtc \
+    --frames 12
+```
+
 Redistribution note: the case-studies page links to the TCBG copyright
 statement, which says the materials are copyrighted and may be reproduced and
 distributed for educational use with credit. This appears compatible with a
@@ -82,3 +106,5 @@ The fixture still exercises:
 - Static heatmap and triple-plot generation.
 - PDB slice collection output.
 - Molstar manifest generation.
+- Two-chain discovery, per-chain outputs, combined PDB slices, and distinct
+  `A:residue`/`B:residue` viewer keys.

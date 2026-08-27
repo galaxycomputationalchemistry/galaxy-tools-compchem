@@ -25,6 +25,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--heatmap-output", required=True, help="Explicit Galaxy heatmap PNG output path.")
     parser.add_argument("--triple-output", required=True, help="Explicit Galaxy triple-plot PNG output path.")
     parser.add_argument("--interpolate", action="store_true", help="Interpolate the static RMSX heatmap raster.")
+    parser.add_argument("--min-value", type=float, help="Optional shared RMSX color-scale minimum.")
+    parser.add_argument("--max-value", type=float, help="Optional shared RMSX color-scale maximum.")
     parser.add_argument("--rscript", default="Rscript", help="Rscript executable path.")
     parser.add_argument("--plot-script", help="Override plot_rmsx.R path for tests/development.")
     return parser.parse_args()
@@ -118,6 +120,8 @@ def run_r_plot(
     interpolate: bool,
     triple: bool,
     generated_png: Path,
+    min_value: float | None = None,
+    max_value: float | None = None,
 ) -> None:
     if generated_png.exists():
         generated_png.unlink()
@@ -130,8 +134,8 @@ def run_r_plot(
         "TRUE" if interpolate else "FALSE",
         "TRUE" if triple else "FALSE",
         palette,
-        "",
-        "",
+        "" if min_value is None else str(min_value),
+        "" if max_value is None else str(max_value),
         "FALSE",
         "",
         "FALSE",
@@ -158,6 +162,10 @@ def main() -> None:
     rmsf_csv = Path(args.rmsf_source)
     heatmap_output = Path(args.heatmap_output)
     triple_output = Path(args.triple_output)
+    if (args.min_value is None) != (args.max_value is None):
+        raise ValueError("--min-value and --max-value must be supplied together.")
+    if args.min_value is not None and args.min_value >= args.max_value:
+        raise ValueError("--min-value must be smaller than --max-value.")
     plot_script = locate_plot_script(args.plot_script)
     verify_r_packages(args.rscript)
 
@@ -178,6 +186,8 @@ def main() -> None:
         interpolate=args.interpolate,
         triple=True,
         generated_png=generated_png,
+        min_value=args.min_value,
+        max_value=args.max_value,
     )
     copy_verified_png(generated_png, triple_output, "RMSX triple plot")
 
@@ -191,6 +201,8 @@ def main() -> None:
         interpolate=args.interpolate,
         triple=False,
         generated_png=generated_png,
+        min_value=args.min_value,
+        max_value=args.max_value,
     )
     copy_verified_png(generated_png, heatmap_output, "RMSX heatmap plot")
 

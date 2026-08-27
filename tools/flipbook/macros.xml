@@ -7,28 +7,10 @@
     <xml name="requirements">
         <requirements>
             <!--
-            RMSX is not yet packaged as a Galaxy-ready Conda dependency.
-            This requirement documents the intended executable dependency for the
-            first wrapper scaffold. See README.rst and packaging/flipbook-galaxy/ for
-            local development and container packaging notes.
-            The temporary container pins upstream source ref @RMSX_SOURCE_REF@,
-            whose Python package metadata currently reports @TOOL_VERSION@.
+            This is intentionally container-only until RMSX has a Bioconda recipe.
+            The image is built from Git tag @RMSX_SOURCE_REF@; that tag's Python
+            package metadata reports rmsx==@TOOL_VERSION@.
             -->
-            <requirement type="package" version="@TOOL_VERSION@">rmsx</requirement>
-            <requirement type="package" version="2.10.0">mdanalysis</requirement>
-            <requirement type="package" version="3.0.3">pandas</requirement>
-            <requirement type="package" version="2.4.6">numpy</requirement>
-            <requirement type="package" version="6.8.0">plotly</requirement>
-            <requirement type="package" version="9.14.1">ipython</requirement>
-            <requirement type="package" version="4.5.3">r-base</requirement>
-            <requirement type="package" version="4.0.3">r-ggplot2</requirement>
-            <requirement type="package" version="0.6.5">r-viridis</requirement>
-            <requirement type="package" version="1.2.1">r-dplyr</requirement>
-            <requirement type="package" version="1.3.2">r-tidyr</requirement>
-            <requirement type="package" version="1.6.0">r-stringr</requirement>
-            <requirement type="package" version="2.2.0">r-readr</requirement>
-            <requirement type="package" version="2.3">r-gridextra</requirement>
-            <requirement type="package" version="1.3.1">r-ggpattern</requirement>
             <container type="docker">@CONTAINER_IMAGE@</container>
         </requirements>
     </xml>

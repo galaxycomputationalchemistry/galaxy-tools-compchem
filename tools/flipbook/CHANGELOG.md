@@ -12,3 +12,9 @@
 - Add the Flipbook logo, static plots, preflight validation, explicit test-data
   provenance, and Tool Shed publication notes.
 - Link the wrapper to the `rmsx_and_flipbook` bio.tools registry entry.
+- Analyze all valid chains by default, retain an explicit selected-chain mode,
+  and return per-chain tables and plots with one combined Molstar manifest.
+- Add a compact two-chain regression fixture that verifies duplicate residue
+  numbers remain distinct through the RMSX, PDB, and viewer-manifest paths.
+- Use the pinned public container as the sole runtime dependency until an RMSX
+  Bioconda recipe is available.

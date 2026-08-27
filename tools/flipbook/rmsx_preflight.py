@@ -62,8 +62,9 @@ def main():
     if args.end_frame is not None and args.end_frame < args.start_frame:
         return fail("End frame must be greater than or equal to the start frame.")
 
-    selectors = requested_selectors(args.selector)
-    if not selectors:
+    select_all = args.selector.strip().lower() == "all"
+    selectors = [] if select_all else requested_selectors(args.selector)
+    if not select_all and not selectors:
         return fail("At least one chain/segment selector is required.")
 
     try:
@@ -105,6 +106,11 @@ def main():
 
     segids = unique_atom_values(universe.atoms, "segids")
     chain_ids = unique_atom_values(universe.atoms, "chainIDs")
+    if select_all:
+        selectors = segids
+        print("selection mode: all valid chains")
+        if not selectors:
+            return fail("No segment IDs were found in the topology.")
     matched_segids = sorted(set(selectors).intersection(segids))
     matched_chain_ids = sorted(set(selectors).intersection(chain_ids))
     missing = [selector for selector in selectors if selector not in segids and selector not in chain_ids]

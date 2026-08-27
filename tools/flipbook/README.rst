@@ -8,11 +8,11 @@ Flipbook trajectory analysis
 
 RMSX partitions a molecular dynamics trajectory into time slices and computes
 per-residue RMSF within each slice. This Galaxy wrapper exposes the RMSX compute
-path and returns workflow-friendly Galaxy datasets: RMSX, RMSD, and RMSF CSV
-tables; mask metadata; a list collection of PDB slice snapshots; a standalone
-RMSX heatmap PNG; the original RMSD/RMSX/RMSF triple plot PNG; an execution log;
-and a schema-validated JSON manifest for the native Galaxy Molstar Flipbook
-viewer.
+path and returns workflow-friendly Galaxy datasets: per-chain collections of
+RMSX, RMSD, RMSF, and mask metadata tables; a combined list collection of PDB
+slice snapshots; per-chain RMSX heatmap and RMSD/RMSX/RMSF triple-plot
+collections; an execution log; and one schema-validated JSON manifest for the
+native Galaxy Molstar Flipbook viewer.
 
 Scope
 -----
@@ -28,6 +28,12 @@ or XTC trajectory input. RMSX and MDAnalysis can support additional molecular
 dynamics formats, but broader Galaxy datatype coverage should be added
 deliberately with tests for each supported pair.
 
+The wrapper analyzes every valid protein segment by default. Users can instead
+choose one or more comma-separated chain or segment IDs. RMSX is invoked once
+per selected segment through its public Python API, the static plots share one
+global RMSX color range, and the combined Molstar manifest preserves residue
+identity as ``chain:residue``.
+
 Viewer manifest
 ---------------
 
@@ -42,17 +48,13 @@ was merged in ``galaxyproject/galaxy-visualizations#174`` and is published as
 Dependency status
 -----------------
 
-The wrapper currently declares RMSX, MDAnalysis, Python table dependencies,
-Plotly, the rich-display package imported by upstream RMSX at startup,
-``r-base``, and the R plotting packages required by the original RMSX plot
-script. A temporary container scaffold is provided at
-``ghcr.io/antuneslab/flipbook-galaxy:0.2.3-galaxy0`` and pins upstream RMSX
-``v0.2.3``. That tag currently installs Python package metadata as
-``rmsx==0.1.0``, so the wrapper requirement and version command remain honest
-about the executable package version while this upstream metadata mismatch is
-tracked as an upstream packaging issue. The intended durable route is a
-Conda/Bioconda RMSX package and a Galaxy-visible mulled container generated
-from Conda dependencies.
+The wrapper currently declares only the public, pinned runtime image
+``ghcr.io/antuneslab/flipbook-galaxy:0.2.3-galaxy0``. The image contains RMSX,
+MDAnalysis, the Python table stack, and the complete R plotting stack. It is
+built from RMSX Git tag ``v0.2.3``; that tag's ``pyproject.toml`` still reports
+``rmsx==0.1.0``, which is why the Galaxy tool version and version command report
+``0.1.0``. A Bioconda recipe is intended as follow-up packaging work; until it
+exists, undeclared or unresolvable Conda requirements are deliberately omitted.
 
 The Galaxy runtime path must not install R packages at job runtime. The
 container and future Conda recipe should preinstall the R stack and tests should
@@ -68,13 +70,12 @@ Publication notes
   recorded in ``test-data/README.md`` and ``test-data/LICENSE.md``. Repository
   maintainers should confirm that the educational-use terms are acceptable for
   bundled test data.
-* ``galaxyproject/galaxy#23009`` must be merged before standard Galaxy installs
-  recognize the ``rmsx.json`` output datatype.
-* The community chemistry repository currently tests against Galaxy
-  ``release_24.0``. Its CI branch must move to a Galaxy revision containing
-  ``rmsx.json`` before this wrapper can pass its normal datatype lint.
-* The pinned GHCR runtime must be publicly and anonymously pullable before a
-  community wrapper CI job can execute the tests.
+* ``galaxyproject/galaxy#23009`` merged into Galaxy ``dev`` and provides the
+  ``rmsx.json`` datatype and native visualization registration. This wrapper's
+  community CI therefore tests against ``dev`` until that code reaches
+  a Galaxy release branch.
+* The pinned GHCR runtime is public and has been verified with an anonymous
+  pull.
 * The Galaxy wrapper references the registered bio.tools identifier
   ``rmsx_and_flipbook``.
 * Upstream RMSX release metadata should be reconciled so the tag, package
