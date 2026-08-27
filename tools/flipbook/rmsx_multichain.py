@@ -183,6 +183,23 @@ def renumber_pdb_atom_serials(path: Path) -> None:
     path.write_text("".join(output_lines), encoding="utf-8")
 
 
+def canonicalize_pdb_as_single_structure(path: Path) -> None:
+    """Remove concatenated-chain boundaries emitted by older RMSX releases."""
+    header_lines = []
+    atom_lines = []
+    saw_atom = False
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith(("ATOM", "HETATM")):
+            saw_atom = True
+            atom_lines.append(line)
+        elif not saw_atom and not line.startswith(("END", "MODEL")):
+            header_lines.append(line)
+
+    if not atom_lines:
+        raise ValueError(f"No atom records found in staged PDB slice: {path}")
+    path.write_text("\n".join([*header_lines, *atom_lines, "END"]) + "\n", encoding="utf-8")
+
+
 def run_static_plots(
     plot_helper: Path,
     chain_outputs: list[ChainOutput],
@@ -325,6 +342,7 @@ def main() -> None:
     for path in pdb_paths:
         staged = collection_dirs["pdb_slices"] / path.name
         shutil.copyfile(path, staged)
+        canonicalize_pdb_as_single_structure(staged)
         renumber_pdb_atom_serials(staged)
 
     rmsx_paths = [output["rmsx"] for output in chain_outputs]

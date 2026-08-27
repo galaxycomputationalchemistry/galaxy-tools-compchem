@@ -331,6 +331,7 @@
                     <assert_contents>
                         <has_text text=" A   1"/>
                         <has_text text=" B   1"/>
+                        <has_n_lines n="155"/>
                     </assert_contents>
                 </element>
             </output_collection>

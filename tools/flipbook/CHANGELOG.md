@@ -16,5 +16,7 @@
   and return per-chain tables and plots with one combined Molstar manifest.
 - Add a compact two-chain regression fixture that verifies duplicate residue
   numbers remain distinct through the RMSX, PDB, and viewer-manifest paths.
+- Normalize combined PDB slices to one structure boundary so older RMSX
+  runtimes cannot expose separate chain records as separate Molstar entries.
 - Use the pinned public container as the sole runtime dependency until an RMSX
   Bioconda recipe is available.
