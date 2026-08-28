@@ -1,7 +1,7 @@
 <macros>
     <token name="@TOOL_VERSION@">0.1.0</token>
     <token name="@RMSX_SOURCE_REF@">v0.2.3</token>
-    <token name="@VERSION_SUFFIX@">0</token>
+    <token name="@VERSION_SUFFIX@">1</token>
     <token name="@CONTAINER_IMAGE@">ghcr.io/antuneslab/flipbook-galaxy:0.2.3-galaxy0</token>
 
     <xml name="requirements">

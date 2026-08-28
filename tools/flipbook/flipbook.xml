@@ -72,6 +72,9 @@
             --pdb-dir galaxy_outputs/pdb_slices
             --rmsx-table galaxy_outputs/combined_rmsx.csv
             --mask-table galaxy_outputs/combined_mask.csv
+            --rmsd-dir galaxy_outputs/rmsd_tables
+            --rmsf-dir galaxy_outputs/rmsf_tables
+            --chain-index galaxy_outputs/viewer_chain_index.json
             --palette '$palette'
             --manifest-output '$viewer_manifest'
             --title 'RMSX Flipbook viewer'
@@ -243,6 +246,10 @@
                     <has_text text="&quot;visualMapping&quot;"/>
                     <has_text text="&quot;rotationModel&quot;"/>
                     <has_text text="&quot;molstarRenderStyle&quot;"/>
+                    <has_text text="&quot;analysis&quot;"/>
+                    <has_text text="&quot;rmsdPointLimit&quot;: 2048"/>
+                    <has_text text="&quot;timeUnit&quot;: &quot;ns&quot;"/>
+                    <has_text text="&quot;chainAtomRanges&quot;"/>
                     <has_text text="&quot;filename&quot;: &quot;slice_1_first_frame.pdb&quot;"/>
                     <has_text text="&quot;rmsxColumn&quot;: &quot;slice_1.dcd&quot;"/>
                     <has_text text="ATOM"/>
@@ -358,6 +365,10 @@
                 <assert_contents>
                     <has_text text="&quot;key&quot;: &quot;A:1&quot;"/>
                     <has_text text="&quot;key&quot;: &quot;B:1&quot;"/>
+                    <has_text text="&quot;id&quot;: &quot;A&quot;"/>
+                    <has_text text="&quot;id&quot;: &quot;B&quot;"/>
+                    <has_text text="&quot;chainAtomRanges&quot;"/>
+                    <has_text text="&quot;sourcePointCount&quot;"/>
                     <has_text text=" A   1"/>
                     <has_text text=" B   1"/>
                 </assert_contents>

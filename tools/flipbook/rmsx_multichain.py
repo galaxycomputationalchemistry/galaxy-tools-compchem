@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import re
 import shutil
 import subprocess
@@ -17,6 +18,7 @@ CHAIN_ID_RE = re.compile(r"^[A-Za-z0-9_.-]+$")
 
 
 class ChainOutput(TypedDict):
+    chain: str
     designation: str
     directory: Path
     rmsx: Path
@@ -183,6 +185,90 @@ def renumber_pdb_atom_serials(path: Path) -> None:
     path.write_text("".join(output_lines), encoding="utf-8")
 
 
+def pdb_slice_sort_key(path: Path) -> int:
+    match = re.match(r"slice_(\d+)_first_frame\.pdb$", path.name)
+    return int(match.group(1)) if match else 0
+
+
+def stage_combined_pdb_slices(
+    chain_outputs: list[ChainOutput],
+    output_dir: Path,
+    chain_index_path: Path,
+    expected_slices: int,
+) -> list[Path]:
+    """Combine chain PDBs while recording logical chain atom serial ranges."""
+    if not chain_outputs:
+        raise ValueError("No chain outputs were available to stage PDB slices.")
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    source_paths = sorted(
+        chain_outputs[0]["directory"].glob("slice_*_first_frame.pdb"),
+        key=pdb_slice_sort_key,
+    )
+    if len(source_paths) != expected_slices:
+        raise RuntimeError(f"Expected {expected_slices} PDB slices, found {len(source_paths)}.")
+
+    slice_ranges = {}
+    staged_paths = []
+    for source_path in source_paths:
+        header_lines = []
+        first_lines = source_path.read_text(encoding="utf-8").splitlines()
+        for line in first_lines:
+            if line.startswith(("ATOM", "HETATM")):
+                break
+            if not line.startswith(("END", "MODEL", "ENDMDL", "TER")):
+                header_lines.append(line)
+
+        serial = 0
+        atom_lines = []
+        ranges = []
+        for output in chain_outputs:
+            chain_path = output["directory"] / source_path.name
+            if not chain_path.is_file():
+                raise FileNotFoundError(f"PDB slice missing for chain {output['chain']}: {chain_path}")
+            source_atoms = [
+                line
+                for line in chain_path.read_text(encoding="utf-8").splitlines()
+                if line.startswith(("ATOM", "HETATM"))
+            ]
+            if not source_atoms:
+                raise ValueError(f"No atom records found for chain {output['chain']}: {chain_path}")
+
+            start_serial = serial + 1
+            for line in source_atoms:
+                serial += 1
+                if serial > 99999:
+                    raise ValueError(f"Combined PDB exceeds the 99,999 atom serial limit: {source_path.name}")
+                padded = line.ljust(11)
+                atom_lines.append(f"{padded[:6]}{serial:5d}{padded[11:]}")
+            ranges.append(
+                {
+                    "chain": output["chain"],
+                    "atomSerialStart": start_serial,
+                    "atomSerialEnd": serial,
+                }
+            )
+
+        staged_path = output_dir / source_path.name
+        staged_path.write_text(
+            "\n".join([*header_lines, *atom_lines, "END"]) + "\n",
+            encoding="utf-8",
+        )
+        staged_paths.append(staged_path)
+        slice_ranges[source_path.name] = ranges
+
+    chain_index = {
+        "version": 1,
+        "chains": [
+            {"id": output["chain"], "designation": output["designation"]}
+            for output in chain_outputs
+        ],
+        "slices": slice_ranges,
+    }
+    chain_index_path.write_text(f"{json.dumps(chain_index, indent=2)}\n", encoding="utf-8")
+    return staged_paths
+
+
 def canonicalize_pdb_as_single_structure(path: Path) -> None:
     """Remove concatenated-chain boundaries emitted by older RMSX releases."""
     header_lines = []
@@ -243,7 +329,7 @@ def run_static_plots(
 def main() -> None:
     args = parse_args()
     import MDAnalysis as mda
-    from rmsx.core import combine_pdb_files, compute_global_rmsx_min_max, get_selection_string, run_rmsx
+    from rmsx.core import compute_global_rmsx_min_max, get_selection_string, run_rmsx
 
     output_dir = Path(args.output_dir)
     galaxy_output_dir = Path(args.galaxy_output_dir)
@@ -316,6 +402,7 @@ def main() -> None:
         shutil.copyfile(rmsf_csv, collection_dirs["rmsf_tables"] / f"{designation}.csv")
         chain_outputs.append(
             {
+                "chain": chain,
                 "designation": designation,
                 "directory": chain_dir,
                 "rmsx": rmsx_csv,
@@ -325,25 +412,12 @@ def main() -> None:
             }
         )
 
-    if len(chain_outputs) == 1:
-        pdb_source = chain_outputs[0]["directory"]
-    else:
-        pdb_source = output_dir / "combined"
-        combine_pdb_files(
-            [str(output["directory"]) for output in chain_outputs],
-            str(pdb_source),
-            silent=True,
-            verbose=False,
-        )
-
-    pdb_paths = sorted(pdb_source.glob("slice_*_first_frame.pdb"))
-    if len(pdb_paths) != args.num_slices:
-        raise RuntimeError(f"Expected {args.num_slices} combined PDB slices, found {len(pdb_paths)}.")
-    for path in pdb_paths:
-        staged = collection_dirs["pdb_slices"] / path.name
-        shutil.copyfile(path, staged)
-        canonicalize_pdb_as_single_structure(staged)
-        renumber_pdb_atom_serials(staged)
+    stage_combined_pdb_slices(
+        chain_outputs,
+        collection_dirs["pdb_slices"],
+        galaxy_output_dir / "viewer_chain_index.json",
+        args.num_slices,
+    )
 
     rmsx_paths = [output["rmsx"] for output in chain_outputs]
     mask_paths = [output["mask"] for output in chain_outputs]

@@ -45,6 +45,20 @@ are proposed upstream in ``galaxyproject/galaxy#23009``. The packaged viewer
 was merged in ``galaxyproject/galaxy-visualizations#174`` and is published as
 ``@galaxyproject/rmsxflipbook@0.0.2``.
 
+The schema version remains unchanged for the reference-style Analysis view.
+New manifests optionally include per-chain RMSD and RMSF arrays, one shared
+time domain, per-slice time bounds, and ``chainAtomRanges``. RMSD is reduced to
+at most 2,048 chronological min/max-bin points while retaining the first,
+last, and global extrema; all RMSF residues are retained in source order.
+Older viewers ignore these optional fields, and newer viewers fall back to a
+compact heatmap/structure Analysis layout when they are absent.
+
+While assembling combined PDB slices, the wrapper writes an internal logical
+chain index. This preserves multi-character segment identities such as
+``SYSTEM`` even though a PDB chain field can hold only one character. The
+index is consumed while generating the manifest and is not exposed as a
+separate Galaxy history output.
+
 Dependency status
 -----------------
 

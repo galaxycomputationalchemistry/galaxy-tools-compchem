@@ -5,6 +5,7 @@ import argparse
 import csv
 import html
 import json
+import math
 from pathlib import Path
 
 from flipbook_report_common import (
@@ -25,6 +26,7 @@ MASK_OPACITY = 0.30
 MIN_TILE_SPACING_FACTOR = 0.0
 MAX_TILE_SPACING_FACTOR = 2.5
 DEFAULT_TILE_SPACING_FACTOR = 1.0
+MAX_EMBEDDED_RMSD_POINTS = 2048
 
 FLIPBOOK_PALETTES = {
     "magma": [
@@ -75,6 +77,9 @@ def parse_args():
     parser.add_argument("--pdb-dir", required=True, help="Directory containing slice_*_first_frame.pdb files.")
     parser.add_argument("--rmsx-table", required=True, help="RMSX CSV table.")
     parser.add_argument("--mask-table", required=True, help="Mask metadata CSV table.")
+    parser.add_argument("--rmsd-dir", help="Directory containing per-chain chain_*.csv RMSD tables.")
+    parser.add_argument("--rmsf-dir", help="Directory containing per-chain chain_*.csv RMSF tables.")
+    parser.add_argument("--chain-index", help="Logical-chain atom range index written by rmsx_multichain.py.")
     parser.add_argument("--output", help="Optional standalone HTML report output path for development/debugging.")
     parser.add_argument("--manifest-output", help="Optional native Galaxy visualization manifest JSON output path.")
     parser.add_argument("--palette", default="viridis", choices=sorted(FLIPBOOK_PALETTES), help="Flipbook color palette.")
@@ -115,6 +120,163 @@ def read_mask_summary(path):
     }
 
 
+def read_chain_index(path):
+    if not path:
+        return None
+    index = json.loads(Path(path).read_text(encoding="utf-8"))
+    if index.get("version") != 1:
+        raise ValueError(f"Unsupported viewer chain index version: {index.get('version')}")
+    if not isinstance(index.get("chains"), list) or not isinstance(index.get("slices"), dict):
+        raise ValueError("Viewer chain index must contain chains and slices.")
+    return index
+
+
+def metric_table_map(directory):
+    if not directory:
+        return {}
+    result = {}
+    for path in sorted(Path(directory).glob("chain_*.csv")):
+        chain_id = path.stem.removeprefix("chain_")
+        if not chain_id:
+            continue
+        if chain_id in result:
+            raise ValueError(f"Duplicate metric table for chain {chain_id}: {path}")
+        result[chain_id] = path
+    return result
+
+
+def read_rmsd_points(path):
+    points = []
+    with Path(path).open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            try:
+                frame = float(row["Frame"])
+                time_ns = float(row["Time"]) / 1000.0
+                value = float(row["RMSD"])
+            except (KeyError, TypeError, ValueError):
+                continue
+            if all(math.isfinite(number) for number in (frame, time_ns, value)):
+                points.append((frame, time_ns, value))
+    if not points:
+        raise ValueError(f"No numeric RMSD points found in {path}")
+    return points
+
+
+def downsample_rmsd_points(points, maximum=MAX_EMBEDDED_RMSD_POINTS):
+    if len(points) <= maximum:
+        return list(points), "none"
+    if maximum < 4:
+        raise ValueError("RMSD point limit must be at least four.")
+
+    interior = points[1:-1]
+    bin_count = max(1, (maximum - 2) // 2)
+    selected = [points[0]]
+    for bin_index in range(bin_count):
+        start = math.floor(bin_index * len(interior) / bin_count)
+        end = math.floor((bin_index + 1) * len(interior) / bin_count)
+        bucket = interior[start:end]
+        if not bucket:
+            continue
+        minimum_index = min(range(len(bucket)), key=lambda index: bucket[index][2])
+        maximum_index = max(range(len(bucket)), key=lambda index: bucket[index][2])
+        for point_index in sorted({minimum_index, maximum_index}):
+            selected.append(bucket[point_index])
+    selected.append(points[-1])
+    return selected[:maximum], "min-max-bin"
+
+
+def read_rmsf_points(path):
+    residue_ids = []
+    values = []
+    with Path(path).open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            residue_id = str(row.get("ResidueID") or "").strip()
+            try:
+                value = float(row["RMSF"])
+            except (KeyError, TypeError, ValueError):
+                continue
+            if residue_id and math.isfinite(value):
+                residue_ids.append(residue_id)
+                values.append(value)
+    if not residue_ids:
+        raise ValueError(f"No numeric RMSF points found in {path}")
+    return residue_ids, values
+
+
+def build_analysis_payload(rmsd_dir, rmsf_dir, chain_index=None):
+    if not rmsd_dir and not rmsf_dir:
+        return None
+    if not rmsd_dir or not rmsf_dir:
+        raise ValueError("Both --rmsd-dir and --rmsf-dir are required when embedding analysis metrics.")
+
+    rmsd_tables = metric_table_map(rmsd_dir)
+    rmsf_tables = metric_table_map(rmsf_dir)
+    if chain_index:
+        chain_ids = [str(entry.get("id") or "").strip() for entry in chain_index["chains"]]
+        chain_ids = [chain_id for chain_id in chain_ids if chain_id]
+    else:
+        chain_ids = sorted(set(rmsd_tables) | set(rmsf_tables))
+    if not chain_ids:
+        raise ValueError("No chain metric tables were found.")
+
+    chains = []
+    all_times = []
+    for chain_id in chain_ids:
+        if chain_id not in rmsd_tables or chain_id not in rmsf_tables:
+            raise ValueError(f"RMSD and RMSF tables are both required for chain {chain_id}.")
+        source_points = read_rmsd_points(rmsd_tables[chain_id])
+        sampled_points, sampling = downsample_rmsd_points(source_points)
+        residue_ids, rmsf_values = read_rmsf_points(rmsf_tables[chain_id])
+        times = [point[1] for point in sampled_points]
+        all_times.extend(point[1] for point in source_points)
+        chains.append(
+            {
+                "id": chain_id,
+                "rmsd": {
+                    "frames": [point[0] for point in sampled_points],
+                    "timeNs": times,
+                    "values": [point[2] for point in sampled_points],
+                    "sourcePointCount": len(source_points),
+                    "sampling": sampling,
+                },
+                "rmsf": {
+                    "residueIds": residue_ids,
+                    "values": rmsf_values,
+                },
+            }
+        )
+
+    return {
+        "timeUnit": "ns",
+        "distanceUnit": "angstrom",
+        "timeDomainNs": [min(all_times), max(all_times)],
+        "rmsdPointLimit": MAX_EMBEDDED_RMSD_POINTS,
+        "chains": chains,
+    }
+
+
+def annotate_slices_for_analysis(slices, analysis=None, chain_index=None):
+    time_domain = analysis.get("timeDomainNs") if analysis else None
+    time_min, time_max = time_domain if time_domain and len(time_domain) == 2 else (None, None)
+    time_span = time_max - time_min if time_min is not None and time_max is not None else None
+    slice_count = max(1, len(slices))
+
+    for slice_position, slice_entry in enumerate(slices):
+        if chain_index:
+            ranges = chain_index["slices"].get(slice_entry["filename"])
+            if ranges is None:
+                raise ValueError(f"Viewer chain index is missing {slice_entry['filename']}.")
+            slice_entry["chainAtomRanges"] = ranges
+        if time_span is not None and math.isfinite(time_span):
+            start_ns = time_min + time_span * slice_position / slice_count
+            end_ns = time_min + time_span * (slice_position + 1) / slice_count
+            slice_entry["time"] = {
+                "startNs": start_ns,
+                "endNs": end_ns,
+                "centerNs": (start_ns + end_ns) / 2,
+            }
+
+
 def build_flipbook_reference(slices, domain, palette_name, palette_colors):
     interval = 0
     if len(palette_colors) > 1:
@@ -152,7 +314,7 @@ def build_flipbook_reference(slices, domain, palette_name, palette_colors):
     }
 
 
-def build_viewer_payload(title, slices, summaries, domain, mask_summary, residues, palette_name):
+def build_viewer_payload(title, slices, summaries, domain, mask_summary, residues, palette_name, analysis=None):
     palette_colors = FLIPBOOK_PALETTES[palette_name]
     domain_span = max(0.000001, domain["max"] - domain["min"])
     color_domain_step = round(max(0.1, domain_span / 50), 3)
@@ -275,6 +437,8 @@ def build_viewer_payload(title, slices, summaries, domain, mask_summary, residue
             ],
         },
     }
+    if analysis:
+        payload["analysis"] = analysis
     payload["reportPayload"]["estimatedJsonBytes"] = len(json.dumps(payload).encode("utf-8"))
     return payload
 
@@ -4250,11 +4414,23 @@ def html_report(payload):
 def main():
     args = parse_args()
     slices = read_slices(args.pdb_dir)
+    chain_index = read_chain_index(args.chain_index)
+    analysis = build_analysis_payload(args.rmsd_dir, args.rmsf_dir, chain_index)
+    annotate_slices_for_analysis(slices, analysis, chain_index)
     rmsx_rows, slice_columns = read_rmsx_table(args.rmsx_table)
     summaries, domain = summarize_slices(rmsx_rows, slice_columns)
     residues = build_residue_payload(rmsx_rows, slice_columns)
     mask_summary = read_mask_summary(args.mask_table)
-    payload = build_viewer_payload(args.title, slices, summaries, domain, mask_summary, residues, args.palette)
+    payload = build_viewer_payload(
+        args.title,
+        slices,
+        summaries,
+        domain,
+        mask_summary,
+        residues,
+        args.palette,
+        analysis,
+    )
     if args.output:
         output = Path(args.output)
         output.write_text(

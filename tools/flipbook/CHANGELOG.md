@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.0+galaxy1
+
+- Embed optional Analysis metrics without changing the v1 viewer schema,
+  downsampling RMSD to at most 2,048 chronological extrema points while
+  retaining every RMSF residue.
+- Record per-slice time bounds and logical chain atom ranges for aligned
+  chain-only and full-assembly Molstar lanes.
+- Add focused generator tests for metric ordering, extrema preservation, time
+  annotations, combined PDB serials, and multi-character logical chain IDs.
+
 ## 0.1.0+galaxy0
 
 - Pin the RMSX runtime scaffold to upstream RMSX `v0.2.3`.
