@@ -5,12 +5,11 @@ This directory contains the PDB/XTC fixtures used by the Galaxy wrapper tests.
 - `1UBQ.pdb`: ubiquitin structure fixture used with the RMSX example path.
 - `mon_sys.xtc`: compressed trajectory fixture used with `1UBQ.pdb`; current
   size is 1,002,408 bytes.
-- `1UBQ_two_chain.pdb`: two translated copies of `1UBQ.pdb`, assigned segment
-  and chain IDs `A` and `B`; 199,548 bytes; SHA256
-  `6eb887d33cc0649ecb28abaff1dee3520d03d937a760395dc9fe13d883e6ca5f`.
-- `mon_sys_two_chain.xtc`: 12 uniformly sampled frames containing both copies;
-  112,268 bytes; SHA256
-  `2fc8712151b1a5fc093d56b42f9c528c89bf9e395dfc5ffa25a0bcc1da63e1a8`.
+- `protease_backbone.pdb` and `protease_compact.xtc`: the real two-chain
+  protease assembly, retaining 790 backbone atoms and 99 C-alpha residues per
+  chain, with overlapping residue IDs 1–99 in chains A and B. The trajectory
+  contains 180 uniformly sampled source frames, giving 20 frames per slice in
+  nine-slice acceptance tests. No chain is duplicated or translated.
 
 ## Source And Provenance
 
@@ -52,25 +51,6 @@ The checked-in `1UBQ.pdb` is byte-identical to the archive copy. The checked-in
 `mon_sys.dcd`; its SHA256 is
 `367c424cd9ff7506c671f5c8ee8f25e00c27d4a2f9aee91707dc4194bdc0676b`.
 
-The two-chain fixture is a deterministic test-only derivative of those same
-files. It duplicates each atom and trajectory coordinate, translates the second
-copy by 45 A along X, assigns segment/chain IDs `A` and `B`, and keeps 36
-uniformly sampled frames, preserving the source timestamps. Nine slices therefore
-contain four frames each and exercise nonzero RMSX values. It is regenerated with:
-
-```bash
-docker run --rm \
-  --entrypoint python3 \
-  -v "$PWD:/work" \
-  ghcr.io/antuneslab/flipbook-galaxy:0.2.3-galaxy0 \
-  /work/tools/flipbook/test-data/create_multichain_rmsx_fixture.py \
-    --topology /work/tools/flipbook/test-data/1UBQ.pdb \
-    --trajectory /work/tools/flipbook/test-data/mon_sys.xtc \
-    --output-topology /work/tools/flipbook/test-data/1UBQ_two_chain.pdb \
-    --output-trajectory /work/tools/flipbook/test-data/mon_sys_two_chain.xtc \
-    --frames 36
-```
-
 Redistribution note: the case-studies page links to the TCBG copyright
 statement, which says the materials are copyrighted and may be reproduced and
 distributed for educational use with credit. This appears compatible with a
@@ -110,7 +90,32 @@ The fixture still exercises:
 - Two-chain discovery, per-chain outputs, combined PDB slices, and distinct
   `A:residue`/`B:residue` viewer keys.
 
-Release-fixture SHA256 checksums:
+## Real protease multi-chain fixture
 
-- `1UBQ_two_chain.pdb`: `6eb887d33cc0649ecb28abaff1dee3520d03d937a760395dc9fe13d883e6ca5f`
-- `mon_sys_two_chain.xtc`: `fdba7435ba996ad3f9cfb15e655a21420a9f29537fab0e71515a0a616d74c2a7`
+The inputs are from the verified RMSX 0.1.5 source distribution (SHA256
+`48a90b8b412d9cff95e108e7ff704ec16350a17025f7baacee51a81fb81cc3b4`),
+under `rmsx/test_files/`. This is the same protease system used in the existing
+viewer regression. The upstream RMSX distribution carries the MIT license;
+its bundled protease data have no separate license notice. Retain upstream
+attribution and request reviewer confirmation of data redistribution terms.
+The educational-use notice above applies to the ubiquitin single-chain example.
+
+Source and compact-fixture SHA256 checksums:
+
+- `source protease_backbone.pdb` (64116 bytes): `45f98d39a5507cdf8b86a19b05147d053c054cb88f0f04b054c57aa322feddfe`
+- `source short_protease_backbone.dcd` (47809916 bytes): `bd6207f770e8362725f2bfcf41039af5a7864871c4f6e6bd48b8eb1f2d7a4bc3`
+- `protease_backbone.pdb` (64116 bytes): `742f100899a91e3b7e2bef946a796868639506c30cffc4f2de9e1243a2e8c100`
+- `protease_compact.xtc` (559596 bytes): `19acb5966a6eeabd7ab88d856d75a230329f31b9aa2db1a3eea22438ddc863d0`
+
+Regenerate from the extracted RMSX distribution in the pinned runtime:
+
+```bash
+python tools/flipbook/test-data/create_multichain_rmsx_fixture.py \
+  --topology /path/to/rmsx/test_files/protease_backbone.pdb \
+  --trajectory /path/to/rmsx/test_files/short_protease_backbone.dcd \
+  --output-topology tools/flipbook/test-data/protease_backbone.pdb \
+  --output-trajectory tools/flipbook/test-data/protease_compact.xtc --frames 180
+```
+
+The generator retains the source chain identities, coordinates, dimensions, and
+chronological timestamps; XTC uses precision 3. Both output files are below 1 MB.

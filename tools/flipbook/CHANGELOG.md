@@ -3,7 +3,7 @@
 ## 0.1.0+galaxy1
 
 - First public-server candidate includes multi-chain analysis and Analysis metrics.
-- Preserve source timestamps in the 36-frame two-chain regression fixture.
+- Use the real two-chain protease fixture with 180 source frames and retained timestamps.
 - Record actual analyzed frame/time bounds instead of interpolated slice bounds.
 - Cover selected-chain frame windows and reject non-chronological RMSD metrics.
 

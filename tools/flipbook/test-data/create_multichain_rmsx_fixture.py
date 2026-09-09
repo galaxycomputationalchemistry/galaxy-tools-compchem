@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create a compact two-chain RMSX regression fixture from one trajectory."""
+"""Create a compact two-chain RMSX regression fixture from the real two-chain protease trajectory."""
 
 from __future__ import annotations
 
@@ -17,8 +17,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--trajectory", required=True)
     parser.add_argument("--output-topology", required=True)
     parser.add_argument("--output-trajectory", required=True)
-    parser.add_argument("--frames", type=int, default=36)
-    parser.add_argument("--chain-offset", type=float, default=45.0)
+    parser.add_argument("--frames", type=int, default=180)
     return parser.parse_args()
 
 
@@ -31,45 +30,28 @@ def main() -> None:
     frame_count = min(args.frames, len(source.trajectory))
     frame_indices = np.unique(np.linspace(0, len(source.trajectory) - 1, frame_count, dtype=int))
 
-    combined = mda.Merge(source.atoms, source.atoms)
-    if combined.atoms.n_segments != 2:
-        raise RuntimeError(f"Expected two merged segments, found {combined.atoms.n_segments}.")
-    combined.segments.segids = ["A", "B"]
-    combined.atoms.chainIDs = np.concatenate(
-        [
-            np.full(source.atoms.n_atoms, "A", dtype=object),
-            np.full(source.atoms.n_atoms, "B", dtype=object),
-        ]
-    )
+    if set(source.segments.segids) != {"A", "B"}:
+        raise RuntimeError("Expected the source protease segments A and B.")
+    if any(len(source.select_atoms(f"segid {chain} and name CA")) != 99 for chain in ["A", "B"]):
+        raise RuntimeError("Expected 99 C-alpha residues in each protease chain.")
 
     output_topology = Path(args.output_topology)
     output_trajectory = Path(args.output_trajectory)
     output_topology.parent.mkdir(parents=True, exist_ok=True)
     output_trajectory.parent.mkdir(parents=True, exist_ok=True)
-    offset = np.array([args.chain_offset, 0.0, 0.0], dtype=np.float32)
+    source.trajectory[int(frame_indices[0])]
+    source.atoms.write(str(output_topology))
 
-    def set_combined_positions(frame_index: int) -> None:
-        source.trajectory[frame_index]
-        combined.trajectory.ts.time = source.trajectory.ts.time
-        combined.trajectory.ts.frame = source.trajectory.ts.frame
-        positions = source.atoms.positions.copy()
-        combined.atoms.positions = np.concatenate([positions, positions + offset])
-        if source.dimensions is not None:
-            combined.dimensions = source.dimensions
-
-    set_combined_positions(int(frame_indices[0]))
-    combined.atoms.write(str(output_topology))
-
-    writer_kwargs = {"n_atoms": combined.atoms.n_atoms}
+    writer_kwargs = {"n_atoms": source.atoms.n_atoms}
     if output_trajectory.suffix.lower() == ".xtc":
         writer_kwargs["precision"] = 3
     with mda.Writer(str(output_trajectory), **writer_kwargs) as writer:
         for frame_index in frame_indices:
-            set_combined_positions(int(frame_index))
-            writer.write(combined.atoms)
+            source.trajectory[int(frame_index)]
+            writer.write(source.atoms)
 
     print(
-        f"Wrote two-chain fixture with {combined.atoms.n_atoms} atoms, "
+        f"Wrote real protease fixture with {source.atoms.n_atoms} atoms, "
         f"{len(frame_indices)} frames, and segment IDs A/B."
     )
 

@@ -313,32 +313,32 @@
         </test>
         <test expect_num_outputs="9">
             <param name="input_source|source" value="history"/>
-            <param name="input_source|topology" value="1UBQ_two_chain.pdb" ftype="pdb"/>
-            <param name="input_source|trajectory" value="mon_sys_two_chain.xtc" ftype="xtc"/>
+            <param name="input_source|topology" value="protease_backbone.pdb" ftype="pdb"/>
+            <param name="input_source|trajectory" value="protease_compact.xtc" ftype="xtc"/>
             <param name="input_source|chain_scope|mode" value="all"/>
-            <param name="input_source|num_slices" value="3"/>
+            <param name="input_source|num_slices" value="9"/>
             <param name="palette" value="viridis"/>
             <output_collection name="rmsx_tables" type="list" count="2">
                 <element name="chain_A" ftype="csv">
                     <assert_contents>
-                        <has_line_matching expression="1,A,[0-9.]+,[0-9.]+,[0-9.]+"/>
+                        <has_line_matching expression="1,A,[0-9.]+(?:,[0-9.]+){8}"/>
                     </assert_contents>
                 </element>
                 <element name="chain_B" ftype="csv">
                     <assert_contents>
-                        <has_line_matching expression="1,B,[0-9.]+,[0-9.]+,[0-9.]+"/>
+                        <has_line_matching expression="1,B,[0-9.]+(?:,[0-9.]+){8}"/>
                     </assert_contents>
                 </element>
             </output_collection>
             <output_collection name="rmsd_tables" type="list" count="2"/>
             <output_collection name="rmsf_tables" type="list" count="2"/>
             <output_collection name="mask_tables" type="list" count="2"/>
-            <output_collection name="pdb_slices" type="list" count="3">
+            <output_collection name="pdb_slices" type="list" count="9">
                 <element name="slice_1_first_frame" ftype="pdb">
                     <assert_contents>
                         <has_text text=" A   1"/>
                         <has_text text=" B   1"/>
-                        <has_n_lines n="155"/>
+                        <has_n_lines n="201"/>
                     </assert_contents>
                 </element>
             </output_collection>
@@ -376,8 +376,8 @@
         </test>
         <test expect_num_outputs="9">
             <param name="input_source|source" value="history"/>
-            <param name="input_source|topology" value="1UBQ_two_chain.pdb" ftype="pdb"/>
-            <param name="input_source|trajectory" value="mon_sys_two_chain.xtc" ftype="xtc"/>
+            <param name="input_source|topology" value="protease_backbone.pdb" ftype="pdb"/>
+            <param name="input_source|trajectory" value="protease_compact.xtc" ftype="xtc"/>
             <param name="input_source|chain_scope|mode" value="selected"/>
             <param name="input_source|chain_scope|chain" value="B"/>
             <param name="input_source|num_slices" value="3"/>
