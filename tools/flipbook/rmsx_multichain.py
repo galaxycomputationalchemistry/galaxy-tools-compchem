@@ -257,7 +257,25 @@ def stage_combined_pdb_slices(
         staged_paths.append(staged_path)
         slice_ranges[source_path.name] = ranges
 
+    slice_times = {}
+    if chain_outputs[0].get("rmsd"):
+        with chain_outputs[0]["rmsd"].open(newline="", encoding="utf-8") as handle:
+            frames = list(csv.DictReader(handle))
+        if len(frames) % expected_slices:
+            raise ValueError("Analyzed RMSD frames do not divide evenly into slices.")
+        width = len(frames) // expected_slices
+        if not width:
+            raise ValueError("No analyzed frames per slice.")
+        for index, path in enumerate(staged_paths):
+            first, last = frames[index * width], frames[(index + 1) * width - 1]
+            start_ns, end_ns = float(first["Time"]) / 1000, float(last["Time"]) / 1000
+            slice_times[path.name] = {
+                "startNs": start_ns, "endNs": end_ns, "centerNs": (start_ns + end_ns) / 2,
+                "startFrame": int(float(first["Frame"])), "endFrame": int(float(last["Frame"])),
+            }
+
     chain_index = {
+        "sliceTimes": slice_times,
         "version": 1,
         "chains": [
             {"id": output["chain"], "designation": output["designation"]}

@@ -54,8 +54,9 @@ The checked-in `1UBQ.pdb` is byte-identical to the archive copy. The checked-in
 
 The two-chain fixture is a deterministic test-only derivative of those same
 files. It duplicates each atom and trajectory coordinate, translates the second
-copy by 45 A along X, assigns segment/chain IDs `A` and `B`, and keeps 12
-uniformly sampled frames. It is regenerated with:
+copy by 45 A along X, assigns segment/chain IDs `A` and `B`, and keeps 36
+uniformly sampled frames, preserving the source timestamps. Nine slices therefore
+contain four frames each and exercise nonzero RMSX values. It is regenerated with:
 
 ```bash
 docker run --rm \
@@ -67,7 +68,7 @@ docker run --rm \
     --trajectory /work/tools/flipbook/test-data/mon_sys.xtc \
     --output-topology /work/tools/flipbook/test-data/1UBQ_two_chain.pdb \
     --output-trajectory /work/tools/flipbook/test-data/mon_sys_two_chain.xtc \
-    --frames 12
+    --frames 36
 ```
 
 Redistribution note: the case-studies page links to the TCBG copyright
@@ -108,3 +109,8 @@ The fixture still exercises:
 - Molstar manifest generation.
 - Two-chain discovery, per-chain outputs, combined PDB slices, and distinct
   `A:residue`/`B:residue` viewer keys.
+
+Release-fixture SHA256 checksums:
+
+- `1UBQ_two_chain.pdb`: `6eb887d33cc0649ecb28abaff1dee3520d03d937a760395dc9fe13d883e6ca5f`
+- `mon_sys_two_chain.xtc`: `fdba7435ba996ad3f9cfb15e655a21420a9f29537fab0e71515a0a616d74c2a7`

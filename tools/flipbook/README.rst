@@ -41,12 +41,13 @@ The Molstar Flipbook manifest uses schema version
 ``flipbook-molstar-viewer/v1`` and is emitted as typed Galaxy ``rmsx.json``.
 That datatype makes the manifest a first-class visualization-ready output
 instead of arbitrary JSON. The datatype and native visualization registration
-are proposed upstream in ``galaxyproject/galaxy#23009``. The packaged viewer
+were merged into Galaxy dev in ``galaxyproject/galaxy#23009``. The packaged viewer
 was merged in ``galaxyproject/galaxy-visualizations#174`` and is published as
 ``@galaxyproject/rmsxflipbook@0.0.2``.
 
 The schema version remains unchanged for the reference-style Analysis view.
-New manifests optionally include per-chain RMSD and RMSF arrays, one shared
+The enhanced Analysis viewer is prepared as version 0.0.3 and requires a
+matching Galaxy package pin. New manifests optionally include per-chain RMSD and RMSF arrays, one shared
 time domain, per-slice time bounds, and ``chainAtomRanges``. RMSD is reduced to
 at most 2,048 chronological min/max-bin points while retaining the first,
 last, and global extrema; all RMSF residues are retained in source order.
@@ -67,8 +68,9 @@ The wrapper currently declares only the public, pinned runtime image
 MDAnalysis, the Python table stack, and the complete R plotting stack. It is
 built from RMSX Git tag ``v0.2.3``; that tag's ``pyproject.toml`` still reports
 ``rmsx==0.1.0``, which is why the Galaxy tool version and version command report
-``0.1.0``. A Bioconda recipe is intended as follow-up packaging work; until it
-exists, undeclared or unresolvable Conda requirements are deliberately omitted.
+``0.1.0``. A Bioconda recipe for reconciled upstream RMSX 0.1.5 is prepared as
+follow-up work. Dependency resolution remains container-backed until clean
+installation and scientific equivalence are verified.
 
 The Galaxy runtime path must not install R packages at job runtime. The
 container and future Conda recipe should preinstall the R stack and tests should

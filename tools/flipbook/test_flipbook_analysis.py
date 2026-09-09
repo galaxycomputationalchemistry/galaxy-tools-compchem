@@ -14,6 +14,7 @@ from flipbook_molstar_report import (  # noqa: E402
     annotate_slices_for_analysis,
     build_analysis_payload,
     downsample_rmsd_points,
+    read_rmsd_points,
 )
 from rmsx_multichain import stage_combined_pdb_slices  # noqa: E402
 
@@ -120,6 +121,15 @@ class AnalysisMetricTests(unittest.TestCase):
         self.assertEqual(slices[0]["chainAtomRanges"][0]["chain"], "SYSTEM")
 
 
+class MetricValidationTests(unittest.TestCase):
+    def test_out_of_order_frames_fail_instead_of_drawing_misleading_time_axis(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "rmsd.csv"
+            path.write_text("Frame,Time,RMSD\n2,20,1\n1,10,2\n")
+            with self.assertRaisesRegex(ValueError, "chronological"):
+                read_rmsd_points(path)
+
+
 class ChainIndexTests(unittest.TestCase):
     def test_combined_slices_record_logical_chain_atom_ranges(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -149,10 +159,16 @@ class ChainIndexTests(unittest.TestCase):
                     }
                 )
 
+            (root / "unused.csv").write_text("Frame,Time,RMSD\n2,200,0.1\n3,300,0.2\n4,400,0.3\n5,500,0.4\n")
             output_dir = root / "combined"
             index_path = root / "viewer_chain_index.json"
             staged = stage_combined_pdb_slices(outputs, output_dir, index_path, expected_slices=2)
             index = json.loads(index_path.read_text(encoding="utf-8"))
+            self.assertEqual(index["sliceTimes"][staged[0].name]["startFrame"], 2)
+            self.assertEqual(index["sliceTimes"][staged[0].name]["endNs"], 0.3)
+            annotated = [{"filename": path.name} for path in staged]
+            annotate_slices_for_analysis(annotated, {"timeDomainNs": [0.2, 0.5]}, index)
+            self.assertEqual(annotated[0]["time"]["endNs"], 0.3)
             atom_serials = [
                 int(line[6:11])
                 for line in staged[0].read_text(encoding="utf-8").splitlines()

@@ -159,6 +159,8 @@ def read_rmsd_points(path):
                 points.append((frame, time_ns, value))
     if not points:
         raise ValueError(f"No numeric RMSD points found in {path}")
+    if any(right[0] <= left[0] or right[1] < left[1] for left, right in zip(points, points[1:])):
+        raise ValueError(f"RMSD frames and times must be chronological in {path}")
     return points
 
 
@@ -267,7 +269,10 @@ def annotate_slices_for_analysis(slices, analysis=None, chain_index=None):
             if ranges is None:
                 raise ValueError(f"Viewer chain index is missing {slice_entry['filename']}.")
             slice_entry["chainAtomRanges"] = ranges
-        if time_span is not None and math.isfinite(time_span):
+        exact_time = (chain_index or {}).get("sliceTimes", {}).get(slice_entry["filename"])
+        if exact_time is not None:
+            slice_entry["time"] = exact_time
+        elif time_span is not None and math.isfinite(time_span):
             start_ns = time_min + time_span * slice_position / slice_count
             end_ns = time_min + time_span * (slice_position + 1) / slice_count
             slice_entry["time"] = {

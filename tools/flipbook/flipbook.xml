@@ -374,6 +374,31 @@
                 </assert_contents>
             </output>
         </test>
+        <test expect_num_outputs="9">
+            <param name="input_source|source" value="history"/>
+            <param name="input_source|topology" value="1UBQ_two_chain.pdb" ftype="pdb"/>
+            <param name="input_source|trajectory" value="mon_sys_two_chain.xtc" ftype="xtc"/>
+            <param name="input_source|chain_scope|mode" value="selected"/>
+            <param name="input_source|chain_scope|chain" value="B"/>
+            <param name="input_source|num_slices" value="3"/>
+            <param name="analysis|start_frame" value="2"/>
+            <param name="analysis|end_frame" value="18"/>
+            <output_collection name="rmsx_tables" type="list" count="1">
+                <element name="chain_B" ftype="csv"><assert_contents>
+                    <has_line_matching expression="1,B,[0-9.]+,[0-9.]+,[0-9.]+"/>
+                </assert_contents></element>
+            </output_collection>
+            <output_collection name="rmsd_tables" type="list" count="1"/>
+            <output_collection name="rmsf_tables" type="list" count="1"/>
+            <output_collection name="heatmap_plots" type="list" count="1"/>
+            <output_collection name="triple_plots" type="list" count="1"/>
+            <output name="viewer_manifest" ftype="rmsx.json"><assert_contents>
+                <has_text text="&quot;key&quot;: &quot;B:1&quot;"/>
+                <not_has_text text="&quot;key&quot;: &quot;A:1&quot;"/>
+                <has_text text="&quot;startFrame&quot;: 2"/>
+                <has_text text="&quot;endFrame&quot;: 16"/>
+            </assert_contents></output>
+        </test>
         <test expect_failure="true">
             <param name="input_source|source" value="example"/>
             <param name="input_source|chain_scope|mode" value="selected"/>
@@ -407,6 +432,10 @@ Use either the bundled 1UBQ example or datasets from the current history. The
 current wrapper supports PDB topology/structure input with DCD or XTC trajectory
 input. All valid protein chains are analyzed by default. To limit the run, choose
 selected chains or segments and enter comma-separated selectors such as ``A,B``.
+
+RMSX divides the requested frame window into equal-sized slices and discards
+trailing remainder frames. The manifest records the actual first and last frame
+and time of each analyzed slice.
 
 Before RMSX runs, a preflight check reports available chain and segment IDs and
 catches common load, selector, frame-window, and slice-count problems.

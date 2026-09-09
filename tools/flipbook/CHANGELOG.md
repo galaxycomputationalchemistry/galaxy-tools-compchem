@@ -2,6 +2,11 @@
 
 ## 0.1.0+galaxy1
 
+- First public-server candidate includes multi-chain analysis and Analysis metrics.
+- Preserve source timestamps in the 36-frame two-chain regression fixture.
+- Record actual analyzed frame/time bounds instead of interpolated slice bounds.
+- Cover selected-chain frame windows and reject non-chronological RMSD metrics.
+
 - Embed optional Analysis metrics without changing the v1 viewer schema,
   downsampling RMSD to at most 2,048 chronological extrema points while
   retaining every RMSF residue.

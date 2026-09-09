@@ -17,7 +17,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--trajectory", required=True)
     parser.add_argument("--output-topology", required=True)
     parser.add_argument("--output-trajectory", required=True)
-    parser.add_argument("--frames", type=int, default=12)
+    parser.add_argument("--frames", type=int, default=36)
     parser.add_argument("--chain-offset", type=float, default=45.0)
     return parser.parse_args()
 
@@ -50,6 +50,8 @@ def main() -> None:
 
     def set_combined_positions(frame_index: int) -> None:
         source.trajectory[frame_index]
+        combined.trajectory.ts.time = source.trajectory.ts.time
+        combined.trajectory.ts.frame = source.trajectory.ts.frame
         positions = source.atoms.positions.copy()
         combined.atoms.positions = np.concatenate([positions, positions + offset])
         if source.dimensions is not None:
