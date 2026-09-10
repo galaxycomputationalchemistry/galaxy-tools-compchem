@@ -97,6 +97,8 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Show commit range
       run: echo '${{ steps.discover.outputs.commit-range }}'
+    - name: Validate CI report completeness checks
+      run: python -m unittest discover -s .github -p 'test_check_test_reports.py' -v
     - name: Show repository list
       run: echo '${{ steps.discover.outputs.repository-list }}'
     - name: Show tool list
@@ -310,7 +312,14 @@ jobs:
         galaxy-slots: ${{ steps.cpu-cores.outputs.count }}
         # Limit each test to 15 minutes
         test_timeout: 1800
+    - name: Preserve and validate each tool-group report
+      run: |
+        mkdir -p upload/raw-reports
+        cp tool_list_chunk.txt upload/tool-groups.txt
+        cp json_output/*.json upload/raw-reports/
+        python .github/check_test_reports.py chunk upload
     - uses: actions/upload-artifact@v4
+      if: ${{ always() }}
       with:
         name: 'Tool test output ${{ matrix.chunk }}'
         path: upload
@@ -329,6 +338,9 @@ jobs:
       matrix:
         python-version: ['3.11']
     steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
     - uses: actions/download-artifact@v4
       with:
         path: artifacts
@@ -348,24 +360,19 @@ jobs:
         mode: combine
         html-report: true
         markdown-report: true
+    - name: Require every selected tool test and chunk report
+      env:
+        EXPECTED_REPOSITORIES: ${{ needs.setup.outputs.repository-list }}
+        EXPECTED_CHUNKS: ${{ needs.setup.outputs.chunk-count }}
+      run: |
+        printf '%s\n' "$EXPECTED_REPOSITORIES" > expected-repositories.txt
+        python .github/check_test_reports.py combined --repositories expected-repositories.txt --artifacts artifacts --report upload/tool_test_output.json --chunks "$EXPECTED_CHUNKS"
     - uses: actions/upload-artifact@v4
+      if: ${{ always() }}
       with:
         name: 'All tool test results'
         path: upload
     - run: cat upload/tool_test_output.md >> "$GITHUB_STEP_SUMMARY"
-    - name: Require executed tool tests
-      run: |
-        python - <<'PYTHON'
-        import json
-        from pathlib import Path
-
-        tests = json.loads(Path("upload/tool_test_output.json").read_text()).get("tests", [])
-        if not tests:
-            raise SystemExit("No tool tests executed; an empty report cannot pass release validation")
-        if any(test.get("data", {}).get("status") != "success" for test in tests):
-            raise SystemExit("Every executed tool test must pass; skipped tests are not accepted")
-        print(f"All {len(tests)} tool tests executed and passed")
-        PYTHON
     - name: Check outputs
       uses: galaxyproject/planemo-ci-action@v1
       id: check
