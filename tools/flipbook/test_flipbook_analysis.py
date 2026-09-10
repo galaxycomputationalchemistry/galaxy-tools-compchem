@@ -16,6 +16,7 @@ from flipbook_molstar_report import (  # noqa: E402
     downsample_rmsd_points,
     read_rmsd_points,
 )
+
 from rmsx_multichain import stage_combined_pdb_slices  # noqa: E402
 
 
