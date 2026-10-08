@@ -8,10 +8,18 @@
     <expand macro="requirements" />
 
     <command detect_errors="exit_code"><![CDATA[
-
+        #if $str($prev_index_cond.use_prev_index) == "yes":
+        ln -s '$input_file' ./input.$input_file.ext &&
+        ln -s '$prev_index' ./prev.ndx &&
+        (echo '$sel'; echo 'q') | gmx make_ndx -f ./input.$input_file.ext -n ./prev.ndx -o ./ndx.ndx &>> verbose.txt &&
+        cp ./ndx.ndx '$ndx'
+        
+        #else:
         ln -s '$input_file' ./input.$input_file.ext &&
         (echo '$sel'; echo 'q') | gmx make_ndx -f ./input.$input_file.ext -o ./ndx.ndx &>> verbose.txt &&
         cp ./ndx.ndx '$ndx'
+
+        #end if
 
     ]]></command>
 
@@ -26,6 +34,15 @@
                 </valid>
             </sanitizer>
         </param>
+        <conditional name="prev_index_cond">
+             <param name="use_prev_index" type="select" label="Would you like to use a previous index file?" help="If you have a previous index file, the new groups you create with this tool can be added to your new index file. If not, leave this option unchecked.">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </param>
+            <when value="yes">
+                <param argument="prev_index" type="data" format="ndx" label="Previous index file" help="The previous index file to be used and modified." />
+            </when>
+        </conditional>
 
         <expand macro="log" />
 
