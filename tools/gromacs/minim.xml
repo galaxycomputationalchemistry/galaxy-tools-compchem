@@ -19,7 +19,11 @@
         ln -s '$top_input' ./top_input.top &&
   
         gmx grompp -f ./minim.mdp -c ./solv_ions.gro -r ./solv_ions.gro -p ./top_input.top -o em.tpr @MAXWARN_CMD@ &>> verbose.txt &&
-        gmx mdrun -nt "\${GALAXY_SLOTS:-4}" -deffnm em &>> verbose.txt
+        gmx mdrun -nt "\${GALAXY_SLOTS:-4}" -deffnm em &>> verbose.txt &&
+        if grep -Fq 'Energy minimization has stopped because the force on at least one atom is not' verbose.txt; then
+            echo 'GROMACS energy minimization failed: a force was non-finite, usually because atoms overlap. See the log for details.' >&2
+            exit 1
+        fi
         
     ]]></command>
         <configfiles>
