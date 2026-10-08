@@ -4,9 +4,9 @@
         <import>macros.xml</import>
         <token name="@GALAXY_VERSION@">0</token>
     </macros>
-    <expand macro="requirements">
-        <requirement type="package" version="2021.02.05.22.15">acpype</requirement>
-    </expand>
+    <requirements>
+        <requirement type="package" version="2026.9.4">acpype</requirement>
+    </requirements>
     <command detect_errors="exit_code"><![CDATA[
         ln -s '$input1' ./input1.${input1.ext} &&
         ln -s '$input2' ./input2.${input2.ext} &&
@@ -14,12 +14,12 @@
         
     ]]></command>
     <inputs>
-        <param name="input1" type="data" format="txt" label="Amber Topology file" help="Topology file (prmtop) generated in Tleap"/>
-        <param name="input2" type="data" format="txt" label="Amber Coordinate file" help="Coordinate file (inpcrd) generated in Tleap"/>
+        <param name="input1" type="data" format="txt,prmtop" label="Amber Topology file" help="Topology file (prmtop) generated in Tleap"/>
+        <param name="input2" type="data" format="txt,inpcrd" label="Amber Coordinate file" help="Coordinate file (inpcrd) generated in Tleap"/>
     </inputs>
     <outputs>
-        <data format="top" name="top_output" label="GROMACS topology file" from_work_dir='*.top'/>
-        <data format="gro" name="gro_output" label="GROMACS coordinate file" from_work_dir="*.gro"/>
+        <data format="top" name="top_output" label="GROMACS topology file" from_work_dir='*.amb2gmx/*.top'/>
+        <data format="gro" name="gro_output" label="GROMACS coordinate file" from_work_dir="*.amb2gmx/*.gro"/>
     </outputs>
     <tests>
         <test>
