@@ -1,0 +1,317 @@
+<?xml version="1.0"?>
+<tool id="pdb4amber" name="Amber compatible PDB converter" version="24.8" python_template_version="3.10">
+	<description>Convert PDB files to AMBER-compatible format</description>
+
+    <requirements>
+        <requirement type="package" version="5.3.1">biobb_amber</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        pdb4amber
+        -i $input_pdb
+        -o amber.pdb
+        
+        #if $reduce_option == 'true'
+            --reduce
+        #end if
+        
+        #if $remove_water == 'true'
+            -d
+        #end if
+        
+        #if $keep_altloc
+            --keep-altlocs
+        #else
+            --most-populous
+        #end if
+        
+        #if $add_missing_atoms
+            --add-missing-atoms
+        #end if
+        
+        #if $remove_hydrogen == 'true'
+            -y
+        #end if
+        
+        #if $keep_nonstd == 'true'
+            -a
+        #end if
+        
+        -l $log_file
+
+        && 
+
+        mv amber.pdb $output_pdb
+    ]]></command>
+
+    <inputs>
+        <param type="data" name="input_pdb" format="pdb" argument="-i" label="PDB structure file" help="Protein Data Bank (PDB) file to convert to AMBER-compatible format" optional="false"/>
+        
+        <param type="boolean" name="reduce_option" argument="-y" truevalue="true" falsevalue="false" checked="true" label="Run Reduce hydrogen optimization" help="Run Reduce tool to add/optimize hydrogen atoms and correct hydrogen bonding network. Recommended for accurate simulations."/>
+        
+        <param type="boolean" argument="--remove-water" truevalue="true" falsevalue="false" checked="false" label="Remove water molecules" help="Strip all water molecules (HOH, WAT, H2O) from the structure. Useful for gas-phase simulations or user-controlled solvation."/>
+
+        <param type="boolean" argument="--keep-altloc" truevalue="true" falsevalue="false" checked="false" label="Keep all alternate conformations" help="Keep all alternate atom locations when present. Default: select most populous conformation (occupancy-based)."/>
+
+        <param type="boolean" name="add_missing_atoms" argument="-a" truevalue="true" falsevalue="false" checked="false" label="Add missing heavy atoms" help="Add missing non-hydrogen atoms using AMBER force field definitions. Useful for incomplete structures from PDB."/>
+
+        <param type="boolean" argument="--remove-hydrogen" truevalue="true" falsevalue="false" checked="false" label="Remove hydrogen atoms" help="Strip all hydrogen atoms from output. Useful for visualization or analysis workflows."/>
+
+        <param type="boolean" argument="--keep-nonstd" truevalue="true" falsevalue="false" checked="false" label="Keep non-standard residues" help="Preserve non-standard/modified residues (ligands, non-canonical amino acids). Default: remove non-standard residues."/>
+    </inputs>
+
+    <outputs>
+        <data name="output_pdb" format="pdb" label="${tool.name}: Converted PDB file (.pdb)" from_work_dir="amber.pdb"/>
+        <data name="log_file" format="txt" label="${tool.name}: Log file (.txt)" from_work_dir="output.log"/>
+    </outputs>
+
+    <tests>
+        <!-- Test 1: Basic conversion with default settings -->
+        <test expect_num_outputs="2">
+            <param name="input_pdb" value="m1.pdb"/>
+            <param name="reduce_option" value="true"/>
+            <param name="remove_water" value="false"/>
+            <param name="keep_altloc" value="false"/>
+            <param name="add_missing_atoms" value="false"/>
+            <param name="remove_hydrogen" value="false"/>
+            <param name="keep_nonstd" value="false"/>
+            
+            <output name="output_pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM"/>
+                </assert_contents>
+            </output>
+            
+            <output name="log_file" ftype="txt">
+                <assert_contents>
+                    <has_text text="pdb4amber"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <!-- Test 2: Remove water molecules -->
+        <test expect_num_outputs="2">
+            <param name="input_pdb" value="m1.pdb"/>
+            <param name="reduce_option" value="true"/>
+            <param name="remove_water" value="true"/>
+            <param name="keep_altloc" value="false"/>
+            <param name="add_missing_atoms" value="false"/>
+            <param name="remove_hydrogen" value="false"/>
+            <param name="keep_nonstd" value="false"/>
+            
+            <output name="output_pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM"/>
+                </assert_contents>
+            </output>
+            
+            <output name="log_file" ftype="txt">
+                <assert_contents>
+                    <has_text text="pdb4amber"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <!-- Test 3: Remove hydrogen atoms -->
+        <test expect_num_outputs="2">
+            <param name="input_pdb" value="m1.pdb"/>
+            <param name="reduce_option" value="false"/>
+            <param name="remove_water" value="false"/>
+            <param name="keep_altloc" value="false"/>
+            <param name="add_missing_atoms" value="false"/>
+            <param name="remove_hydrogen" value="true"/>
+            <param name="keep_nonstd" value="false"/>
+            
+            <output name="output_pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM"/>
+                </assert_contents>
+            </output>
+            
+            <output name="log_file" ftype="txt">
+                <assert_contents>
+                    <has_text text="pdb4amber"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <!-- Test 4: Add missing heavy atoms -->
+        <test expect_num_outputs="2">
+            <param name="input_pdb" value="m1.pdb"/>
+            <param name="reduce_option" value="true"/>
+            <param name="remove_water" value="false"/>
+            <param name="keep_altloc" value="false"/>
+            <param name="add_missing_atoms" value="true"/>
+            <param name="remove_hydrogen" value="false"/>
+            <param name="keep_nonstd" value="false"/>
+            
+            <output name="output_pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM"/>
+                </assert_contents>
+            </output>
+            
+            <output name="log_file" ftype="txt">
+                <assert_contents>
+                    <has_text text="pdb4amber"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <!-- Test 5: Keep non-standard residues -->
+        <test expect_num_outputs="2">
+            <param name="input_pdb" value="m1.pdb"/>
+            <param name="reduce_option" value="false"/>
+            <param name="remove_water" value="false"/>
+            <param name="keep_altloc" value="false"/>
+            <param name="add_missing_atoms" value="false"/>
+            <param name="remove_hydrogen" value="false"/>
+            <param name="keep_nonstd" value="true"/>
+            
+            <output name="output_pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM"/>
+                </assert_contents>
+            </output>
+            
+            <output name="log_file" ftype="txt">
+                <assert_contents>
+                    <has_text text="pdb4amber"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+PDB4Amber converts PDB (Protein Data Bank) files to AMBER-compatible format. This tool prepares protein structures for molecular dynamics simulations using AMBER force fields by:
+
+- Standardizing atom naming conventions
+- Fixing PDB format issues
+- Optimizing hydrogen bond networks (via Reduce)
+- Handling alternate conformations
+- Removing or keeping non-standard residues
+- Managing water molecules and ions
+
+-----
+
+**Key Features**
+
+- **Reduce integration**: Automatically add hydrogens and optimize hydrogen bonding networks
+- **Flexible atom handling**: Remove or keep hydrogen atoms as needed
+- **Conformation management**: Select most populous or keep all alternate locations
+- **Non-standard residue handling**: Remove or preserve non-standard residues
+- **Water management**: Optionally remove water molecules
+- **Missing atoms**: Add missing heavy atoms based on AMBER topology
+- **Detailed logging**: Generate comprehensive conversion logs
+
+-----
+
+**Inputs**
+
+- **Input PDB file** *(required)*: Protein structure file in PDB format to be converted to AMBER-compatible format.
+
+-----
+
+**Outputs**
+
+- **Converted PDB**: AMBER-compatible PDB file ready for further AMBER processing or MD simulations.
+- **Log file**: Detailed log of the conversion process including any warnings or issues.
+
+-----
+
+**Parameters**
+
+- **Run Reduce**: Add hydrogens and optimize hydrogen bonding networks. Recommended for accurate simulations.
+- **Remove water molecules**: Strip water molecules from the protein structure.
+- **Keep alternate locations**: Keep all alternate conformations instead of selecting the most populous.
+- **Add missing heavy atoms**: Use AMBER topology to add missing heavy atoms.
+- **Remove hydrogen atoms**: Strip all hydrogen atoms from output.
+- **Keep non-standard residues**: Preserve non-standard/modified residues (default: remove).
+
+-----
+
+**Common Workflows**
+
+**Workflow 1: Standard Protein Preparation**
+    
+    1. Upload PDB file
+    2. Keep default settings (Reduce enabled)
+    3. Run to generate AMBER-compatible PDB
+    4. Use output for subsequent TLEAP or LEAP parameterization
+
+**Workflow 2: Protein with Ligand**
+    
+    1. Upload PDB file containing protein and ligand
+    2. Enable "Keep non-standard residues" (ligand won't be removed)
+    3. Disable "Remove water" (if waters are needed)
+    4. Run conversion
+    5. Use with AMBER force field parameterization tools
+
+**Workflow 3: Membrane Protein Preparation**
+    
+    1. Upload membrane protein PDB
+    2. Enable "Run Reduce" for proper hydrogen placement
+    3. Disable "Remove water" to preserve crystal waters
+    4. Run conversion
+    5. Feed to Membrane Builder tool for bilayer embedding
+
+**Workflow 4: Clean Structure (Hydrogens Removed)**
+    
+    1. Upload PDB file
+    2. Disable "Run Reduce"
+    3. Enable "Remove hydrogen atoms"
+    4. Run for hydrogen-free structure useful for visualization
+
+-----
+
+**Tips and Best Practices**
+
+- **Use Reduce**: Running Reduce (default) helps optimize hydrogen bond networks and is recommended for most simulations.
+
+- **PDB quality**: Ensure input PDB is from reliable source (e.g., RCSB PDB). Lower quality structures may have issues.
+
+- **Alternate conformations**: If your structure has alternate conformations (sidechain orientations), decide whether to keep all or select most populous based on your needs.
+
+- **Non-standard residues**: Ligands and modified amino acids are considered non-standard. Enable "Keep non-standard residues" if your structure contains them.
+
+- **Crystal waters**: For membrane proteins or crystal structures, consider keeping water molecules ("Remove water" disabled) if they were explicitly modeled.
+
+- **Missing atoms**: Use "Add missing heavy atoms" if AMBER parameterization fails due to incomplete structures.
+
+-----
+
+**References**
+
+- **PDB4Amber**: Cerutti DS, Swope WC, Rice JE, Case DA. *Ff14SB: Improving the Accuracy of Protein Side Chain Packing with the ff14SB Force Field*. J Chem Theory Comput. 2014;10(5):2232-2245. doi:10.1021/ct500016v
+
+- **AmberTools**: Case DA, et al. *AmberTools Reference Manual*. 2023. University of California, San Francisco.
+
+- **Reduce**: Word JM, Lovell SC, LaBean TH, Taylor HC, Zalis ME, Presley BK, Richardson JS, Richardson DC. *Visualizing and Quantifying Molecular Goodness-of-Fit: High-resolution Crystallography and the Power of Expectation*. J Mol Biol. 1999;285(4):1711-1733. doi:10.1006/jmbi.1998.2400
+
+- **RCSB PDB**: Burley SK, et al. *RCSB Protein Data Bank: biological macromolecular structures enabling research and education*. Nucleic Acids Res. 2023;51(D1):D488-D508. doi:10.1093/nar/gkac1045
+
+    ]]></help>
+
+    <citations>
+        <citation type="bibtex">
+            @article{Case2023,
+                title = {AmberTools},
+                volume = {63},
+                ISSN = {1549-960X},
+                url = {http://dx.doi.org/10.1021/acs.jcim.3c01153},
+                DOI = {10.1021/acs.jcim.3c01153},
+                number = {20},
+                journal = {Journal of Chemical Information and Modeling},
+                publisher = {American Chemical Society (ACS)},
+                author = {Case,  David A. and Aktulga,  Hasan Metin and Belfon,  Kellon and Cerutti,  David S. and Cisneros,  G. Andrés and Cruzeiro,  Vinícius Wilian D. and Forouzesh,  Negin and Giese,  Timothy J. and G\"{o}tz,  Andreas W. and Gohlke,  Holger and Izadi,  Saeed and Kasavajhala,  Koushik and Kaymak,  Mehmet C. and King,  Edward and Kurtzman,  Tom and Lee,  Tai-Sung and Li,  Pengfei and Liu,  Jian and Luchko,  Tyler and Luo,  Ray and Manathunga,  Madushanka and Machado,  Matias R. and Nguyen,  Hai Minh and O'Hearn,  Kurt A. and Onufriev,  Alexey V. and Pan,  Feng and Pantano,  Sergio and Qi,  Ruxi and Rahnamoun,  Ali and Risheh,  Ali and Schott-Verdugo,  Stephan and Shajan,  Akhil and Swails,  Jason and Wang,  Junmei and Wei,  Haixin and Wu,  Xiongwu and Wu,  Yongxian and Zhang,  Shi and Zhao,  Shiji and Zhu,  Qiang and Cheatham,  Thomas E. and Roe,  Daniel R. and Roitberg,  Adrian and Simmerling,  Carlos and York,  Darrin M. and Nagan,  Maria C. and Merz,  Kenneth M.},
+                year = {2023},
+                month = oct,
+                pages = {6183–6191}
+            }
+        </citation>
+    </citations>
+</tool>

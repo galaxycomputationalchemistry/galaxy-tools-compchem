@@ -1,0 +1,133 @@
+<tool id="solv_dens_calculator" name="Solvent Density Calculator" version="0.1.0" python_template_version="3.14">
+	<description>Calculates solvent density around the protein</description>
+  
+    <requirements>
+        <requirement type="package" version="26.0">ambertools</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        ln -s '$parm_file' input.parm7 &&
+        ln -s '$rst_file' input.rst7 &&
+        ln -s '$rism_file' input.rism &&
+        ln -s '$xvv_file' cSPCE_kh.xvv &&
+
+
+        sander -O -i input.rism -o out.kh.r3d -p input.parm7 -c input.rst7 -xvv cSPCE_kh.xvv -guv out.kh
+        && 
+        mv mdinfo '$mdinfo'
+        && 
+        mv out.kh.r3d '$r_three_d_file'
+        && 
+        mv out.kh.H1.0.dx '$out_kh_H1_0_dx'
+        && 
+        mv out.kh.O.0.dx '$out_kh_O_0_dx'
+
+    ]]></command>
+
+    <inputs>
+        <param type="data" format="data" name="rism_file" argument="-i" optional="false" label="RISM input parameters file" help="Upload the RISM input file containing solvation parameters and calculations."/>
+        <param type="data" name="parm_file" format="data" argument="-p" optional="false" label="AMBER Parm7 topology file"  help="Upload the AMBER Parm7 topology file defining the force field and molecular structure."/>
+        <param type="data" name="rst_file" format="data" argument="-c" optional="false" label="AMBER Rst7 coordinate file" help="Upload the AMBER Rst7 restart file containing atomic coordinates."/>
+        <param type="data" name="xvv_file" format="data" argument="-xvv" optional="false" label="Water model parameters file" help="Upload the water model file for custom solvation parameters (e.g., cSPCE, SPC/E models)."/>
+    </inputs>
+
+    <outputs>   
+        <data name="r_three_d_file" format='txt' label="${tool.name}: 3D-RISM results (out.kh.r3d)" from_work_dir="out.kh.r3d"/>
+        <data name="out_kh_H1_0_dx" format="txt" label="${tool.name}: KH H-atom density map (out.kh.H1.0.dx)" from_work_dir="out.kh.H1.0.dx"/>
+        <data name="out_kh_O_0_dx" format="txt" label="${tool.name}: KH O-atom density map (out.kh.O.0.dx)" from_work_dir="out.kh.O.0.dx"/>
+        <data name="mdinfo" format="txt" label="${tool.name}: Calculation info file (.mdinfo)" from_work_dir="mdinfo"/>
+    </outputs>
+
+    <tests>
+        <test expect_num_outputs="4">
+            <param name="rism_file" value="mdin.rism.txt" />
+            <param name="parm_file" value="test.parm7.txt" />
+            <param name="rst_file" value="test.rst7.txt" />
+            <param name="xvv_file" value="cSPCE_kh.txt" />
+            <output name="r_three_d_file" file="1AHO.kh.r3d.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="Amber 26 SANDER"/>
+                </assert_contents>
+            </output>
+            <output name="out_kh_H1_0_dx" file="1AHO.kh.H1.0.dx.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="object 1 class gridpositions"/>
+                </assert_contents>
+            </output>
+            <output name="out_kh_O_0_dx" file="1AHO.kh.O.0.dx.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="object 1 class gridpositions"/>
+                </assert_contents>
+            </output>
+            <output name="mdinfo" file="1AHO.mdinfo.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="NSTEP"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+ 
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Calculates solvent density distribution around a protein using RISM (Reference Interaction Site Model) theory. This tool performs 3D-RISM calculations to generate KH potential maps showing favorable solvation sites and hydration patterns around the protein.
+
+-----
+
+**Key Features**
+
+- **3D-RISM calculations**: Computes detailed solvation structure using integral equation theory
+- **Multi-site water models**: Supports different water models (cSPCE, SPC/E, etc.)
+- **Density maps**: Generates separate maps for different solvent atoms (O, H1)
+- **Laplacian analysis**: Calculates spatial derivatives for structure identification
+- **Bulk reference**: Accounts for bulk solvent properties in calculations
+
+-----
+
+**Inputs**
+
+- **RISM input file**: File containing 3D-RISM parameters and input settings
+- **AMBER Parm7 topology**: Force field parameters and atom definitions
+- **AMBER Rst7 coordinates**: Initial atomic positions and system geometry
+- **Water model file** (optional): Custom solvent parameters (uses default cSPCE if not provided)
+
+-----
+
+**Outputs**
+
+- **KH O-atom density map (out.kh.O.0.dx)**: Density distribution of oxygen atoms
+- **KH H-atom density map (out.kh.H1.0.dx)**: Density distribution of hydrogen atoms
+- **3D RISM structure file (out.kh.r3d)**: Full 3D-RISM results
+- **Sander info file (mdinfo)**: Calculation details and convergence information
+
+-----
+
+**Notes**
+
+- RISM calculations can be computationally intensive for large systems
+- Output maps are in OpenDX format for visualization
+- Results depend on accuracy of input topology and coordinates
+- Bulk concentration affects solvation structure predictions
+
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+          @article{Case2023,
+              title = {AmberTools},
+              volume = {63},
+              ISSN = {1549-960X},
+              url = {http://dx.doi.org/10.1021/acs.jcim.3c01153},
+              DOI = {10.1021/acs.jcim.3c01153},
+              number = {20},
+              journal = {Journal of Chemical Information and Modeling},
+              publisher = {American Chemical Society (ACS)},
+              author = {Case,  David A. and Aktulga,  Hasan Metin and Belfon,  Kellon and Cerutti,  David S. and Cisneros,  G. Andrés and Cruzeiro,  Vinícius Wilian D. and Forouzesh,  Negin and Giese,  Timothy J. and G\"{o}tz,  Andreas W. and Gohlke,  Holger and Izadi,  Saeed and Kasavajhala,  Koushik and Kaymak,  Mehmet C. and King,  Edward and Kurtzman,  Tom and Lee,  Tai-Sung and Li,  Pengfei and Liu,  Jian and Luchko,  Tyler and Luo,  Ray and Manathunga,  Madushanka and Machado,  Matias R. and Nguyen,  Hai Minh and O’Hearn,  Kurt A. and Onufriev,  Alexey V. and Pan,  Feng and Pantano,  Sergio and Qi,  Ruxi and Rahnamoun,  Ali and Risheh,  Ali and Schott-Verdugo,  Stephan and Shajan,  Akhil and Swails,  Jason and Wang,  Junmei and Wei,  Haixin and Wu,  Xiongwu and Wu,  Yongxian and Zhang,  Shi and Zhao,  Shiji and Zhu,  Qiang and Cheatham,  Thomas E. and Roe,  Daniel R. and Roitberg,  Adrian and Simmerling,  Carlos and York,  Darrin M. and Nagan,  Maria C. and Merz,  Kenneth M.},
+              year = {2023},
+              month = oct,
+              pages = {6183–6191}
+            }
+        </citation>
+      </citations>
+</tool>

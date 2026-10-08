@@ -1,0 +1,79 @@
+08/20/2026 05:21:46 PM:DEBUG:
+Execution line:     /data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__ambertools@24.8/bin/packmol-memgen --pdb inputfile.pdb --keepligs --nloop 1 --nloop_all 2 --writeout 1 --random --tolerance 2.5 --prot_rad 2.0 --lipids POPC --ratio 1 --distxy_fix 90.0 --leaflet 23 --noprogress --dist 5 --dist_wat 8 --notprotonate --nottrim --output out.pdb --log /data/home/joshij/software/galaxy_25_1/database/objects/8/c/2/dataset_8c2edb85-053b-4b73-866d-f08f3e1968ed.dat
+08/20/2026 05:21:46 PM:DEBUG:
+Water model was not set. Using tip3p for ff14SB
+08/20/2026 05:21:46 PM:INFO:
+Preprocessing inputfile.pdb. This might take a minute.
+08/20/2026 05:21:46 PM:DEBUG:
+Orienting the protein using MEMEMBED...
+08/20/2026 05:22:23 PM:DEBUG:
+Estimating the volume by building a grid (PDBREMIX)...
+08/20/2026 05:22:33 PM:DEBUG:
+
+     Estimated values for input protein:
+    
+     Input PDB                = inputfilein_EMBED_ligs.pdb
+     Charge                   = 17       
+     Mass                     = 50584.75100000225    Da
+     Density                  = 0.85         Da/A^3
+     Estimated volume         = 45428.25     A^3
+         in upper leaflet     = 13016.25     A^3
+         in lower leaflet     = 12315.62     A^3
+         in upper water box   = 19652        A^3
+         in lower water box   = 444.12       A^3
+                
+08/20/2026 05:22:33 PM:INFO:
+
+     Information for packing:
+    
+     Input PDB(s)                     = ['inputfile.pdb']
+     Output PDB                       = out.pdb  
+     Packmol output and log prefix    = packmol  
+     Lipids                           = ['POPC'] 
+     Lipid ratio                      = ['1']    
+     Solvents                         = WAT      
+     Solvent ratio                    = 1        
+     Salt concentration            (M)= 0        
+     Distance to boundaries        (A)= 5.0      
+     Minimum water distance        (A)= 8.0      
+     Packmol loops                    = 1        
+     Packmol loops for All-together   = 2        
+08/20/2026 05:22:33 PM:DEBUG:
+
+     Box information:
+     x_min                    = -45.0    
+     x_max                    = 45.0     
+     x_len                    = 90.0     
+    
+     y_min                    = -45.0    
+     y_max                    = 45.0     
+     y_len                    = 90.0     
+    
+     z_min                    = -31.0    
+     z_max                    = 31.0     
+     z_len                    = 62.0     
+     
+08/20/2026 05:22:33 PM:DEBUG:
+Experimental value for POPC volume not available in parm file. Using estimated 1227 A^3 instead...
+08/20/2026 05:22:33 PM:DEBUG:
+
+                Lower water box vol    = 64355.88  A^3
+                Upper water box vol    = 45147.75  A^3
+                Mem. upper leaflet vol = 181655.75 A^3
+                Mem. lower leaflet vol = 182356.38 A^3
+    
+                
+08/20/2026 05:22:33 PM:DEBUG:
+Script for packmol written to packmol.inp
+08/20/2026 05:22:33 PM:INFO:
+
+Running Packmol...
+08/20/2026 05:22:50 PM:DEBUG:
+
+Individual packing processes complete. Initiating all-together packing. This might take a while!
+08/20/2026 05:23:17 PM:INFO:
+Transforming to AMBER
+08/20/2026 05:23:17 PM:DEBUG:
+Deleting temporary files...
+08/20/2026 05:23:17 PM:INFO:
+#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#

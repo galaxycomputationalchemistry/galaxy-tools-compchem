@@ -1,0 +1,93 @@
+01/07/2026 01:17:42 PM:DEBUG:
+Execution line:     /home/joshij/softwares/galaxy/database/dependencies/_conda/envs/__ambertools@24.8/bin/packmol-memgen --pdb inputfile.pdb --lipids POPC --ratio 1 --solute /home/joshij/softwares/galaxy/database/objects/6/2/c/dataset_62c102e3-047c-4a75-9cbc-fac206c92244.dat --solute_con 0.15M --solute_charge 1 --solute_inmem --solute_prot_dist 5 --nloop 3 --nloop_all 5 --tolerance 2.5 --prot_rad 2.0 --writeout 1 --random --packall --movebadrandom --xygauss 40 40 8 --curvature 0.1 --curv_radius 100.0 --dims 80 80 80 --dist 10 --dist_wat 15 --notprotonate --nottrim --output out.pdb --log /home/joshij/softwares/galaxy/database/objects/5/f/9/dataset_5f92e8cc-6cd7-45b5-b693-79b85172a3e0.dat
+01/07/2026 01:17:42 PM:DEBUG:
+Water model was not set. Using tip3p for ff14SB
+01/07/2026 01:17:42 PM:INFO:
+Extra solute PDB         = /home/joshij/softwares/galaxy/database/objects/6/2/c/dataset_62c102e3-047c-4a75-9cbc-fac206c92244.dat
+01/07/2026 01:17:42 PM:INFO:
+Solute to be added       = 0.15M    
+01/07/2026 01:17:42 PM:INFO:
+Preprocessing inputfile.pdb. This might take a minute.
+01/07/2026 01:17:42 PM:DEBUG:
+Orienting the protein using MEMEMBED...
+01/07/2026 01:17:57 PM:DEBUG:
+Estimating the volume by building a grid (PDBREMIX)...
+01/07/2026 01:17:58 PM:DEBUG:
+
+     Estimated values for input protein:
+    
+     Input PDB                = inputfilein_EMBED.pdb
+     Charge                   = 5        
+     Mass                     = 3805.323999999978    Da
+     Density                  = 0.91         Da/A^3
+     Estimated volume         = 2882.5       A^3
+         in upper leaflet     = 0.0          A^3
+         in lower leaflet     = 2882.5       A^3
+         in upper water box   = 0            A^3
+         in lower water box   = 0.0          A^3
+                
+01/07/2026 01:17:58 PM:INFO:
+
+     Information for packing:
+    
+     Input PDB(s)                     = ['inputfile.pdb']
+     Output PDB                       = out.pdb  
+     Packmol output and log prefix    = packmol  
+     Lipids                           = ['POPC'] 
+     Lipid ratio                      = ['1']    
+     Solvents                         = WAT      
+     Solvent ratio                    = 1        
+     Salt concentration            (M)= 0        
+     Distance to boundaries        (A)= 10.0     
+     Minimum water distance        (A)= 15.0     
+     Packmol loops                    = 3        
+     Packmol loops for All-together   = 5        
+01/07/2026 01:17:58 PM:INFO:
+ Membrane curvature          (1/A)= 0.01      
+01/07/2026 01:17:58 PM:DEBUG:
+
+     Box information:
+     x_min                    = -40.0    
+     x_max                    = 40.0     
+     x_len                    = 80.0     
+    
+     y_min                    = -40.0    
+     y_max                    = 40.0     
+     y_len                    = 80.0     
+    
+     z_min                    = -52.0    
+     z_max                    = 28.0     
+     z_len                    = 80.0     
+     
+01/07/2026 01:17:58 PM:DEBUG:
+Curvature lower leaflet area:8978.377182148779
+01/07/2026 01:17:58 PM:DEBUG:
+Experimental value for POPC volume not available in parm file. Using estimated 1227 A^3 instead...
+01/07/2026 01:17:58 PM:DEBUG:
+Curvature upper leaflet area:7173.681781661251
+01/07/2026 01:17:58 PM:INFO:
+Adding 0.15M /home/joshij/softwares/galaxy/database/objects/6/2/c/dataset_62c102e3-047c-4a75-9cbc-fac206c92244.dat to the lipid volume
+01/07/2026 01:17:58 PM:DEBUG:
+The solutes contribute a charge of 28 to the system. It will be considered for the neutralization.
+01/07/2026 01:17:59 PM:DEBUG:
+
+                Lower water box vol    = 137947.69 A^3
+                Upper water box vol    = 60478.98  A^3
+                Mem. upper leaflet vol = 154257.32 A^3
+                Mem. lower leaflet vol = 156433.51 A^3
+    
+                
+01/07/2026 01:17:59 PM:DEBUG:
+Script for packmol written to packmol.inp
+01/07/2026 01:17:59 PM:INFO:
+
+Running Packmol...
+01/07/2026 01:18:14 PM:DEBUG:
+
+Individual packing processes complete. Initiating all-together packing. This might take a while!
+01/07/2026 01:19:41 PM:INFO:
+Transforming to AMBER
+01/07/2026 01:19:41 PM:DEBUG:
+Deleting temporary files...
+01/07/2026 01:19:41 PM:INFO:
+#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#

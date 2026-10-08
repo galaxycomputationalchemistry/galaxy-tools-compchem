@@ -1,0 +1,1407 @@
+{
+    "summary": {
+        "num_errors": 0,
+        "num_failures": 0,
+        "num_skips": 0,
+        "num_tests": 10
+    },
+    "tests": [
+        {
+            "data": {
+                "inputs": {
+                    "all_the_advance_options|Computational_electrophysiology|advance": "simple",
+                    "all_the_advance_options|MEMEMBED_options|advance": "simple",
+                    "all_the_advance_options|PACKMOL_options|advance": "advance",
+                    "all_the_advance_options|PACKMOL_options|input_movebadrandom": false,
+                    "all_the_advance_options|PACKMOL_options|input_notrun": false,
+                    "all_the_advance_options|PACKMOL_options|input_packall": false,
+                    "all_the_advance_options|advance": "advance",
+                    "all_the_advance_options|others_parameters|Computational_solvate_system|advance": "simple",
+                    "all_the_advance_options|others_parameters|advance": "advance",
+                    "all_the_advance_options|others_parameters|advance_curved_2d_gaussian|advance": "simple",
+                    "all_the_advance_options|others_parameters|input_keep": false,
+                    "all_the_advance_options|others_parameters|input_noprogress": true,
+                    "all_the_advance_options|others_parameters|translate_protein_orient_option|advance": "simple",
+                    "input_dist": "5",
+                    "input_dist_wat": "8",
+                    "input_distxy_fix": "85",
+                    "input_keepligs": true,
+                    "input_lipids_1": "POPC",
+                    "input_nloop": "1",
+                    "input_nloop_all": "2",
+                    "input_notprotonate": true,
+                    "input_nottrim": true,
+                    "input_preoriented": true,
+                    "input_prot_rad": "2.0",
+                    "input_random": true,
+                    "input_tolerance": "2.5",
+                    "input_writeout": "1",
+                    "ligand_options|advance": "no",
+                    "pdb_file": {
+                        "id": "12272af6c52f50fb",
+                        "src": "hda"
+                    },
+                    "salt_options|input_salt_c": "K+",
+                    "salt_options|salt": "add",
+                    "salt_options|salt_conc_option|advance": "advance",
+                    "salt_options|salt_conc_option|input_saltcon": "0.296",
+                    "second_lipid_options|advance": "advance",
+                    "second_lipid_options|input_lipids_2": "CHL1",
+                    "second_lipid_options|input_ratio": "7:3"
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T21:01:18.068670",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__ambertools@24.8",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "ambertools",
+                            "version": "24.8"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "3226521ce19dcb7a",
+                    "id": "667f94d1baef4e97",
+                    "inputs": {
+                        "pdb_file": {
+                            "id": "12272af6c52f50fb",
+                            "src": "hda",
+                            "uuid": "420a94e9-6d66-4001-9d6c-197d19f10472"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "conf_out": {
+                            "id": "28b0620ee553cd77",
+                            "src": "hda",
+                            "uuid": "6cd98f9b-99cc-4f14-8df5-65128035f915"
+                        },
+                        "embeded_protein": {
+                            "id": "ad12fe8cda265615",
+                            "src": "hda",
+                            "uuid": "bc90dcaa-d143-4726-9d3c-0c51964fdb6d"
+                        },
+                        "log_file": {
+                            "id": "7ad3f144b9341bfd",
+                            "src": "hda",
+                            "uuid": "eab6a2cc-e65d-4ce5-914e-0aef7f8b4509"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "all_the_advance_options": "{\"Computational_electrophysiology\": {\"__current_case__\": 0, \"advance\": \"simple\"}, \"MEMEMBED_options\": {\"__current_case__\": 0, \"advance\": \"simple\"}, \"PACKMOL_options\": {\"__current_case__\": 1, \"advance\": \"advance\", \"input_movebadrandom\": false, \"input_notrun\": false, \"input_packall\": false}, \"__current_case__\": 1, \"advance\": \"advance\", \"others_parameters\": {\"Computational_solvate_system\": {\"__current_case__\": 0, \"advance\": \"simple\"}, \"__current_case__\": 1, \"advance\": \"advance\", \"advance_curved_2d_gaussian\": {\"__current_case__\": 0, \"advance\": \"simple\"}, \"input_apl_exp\": false, \"input_apl_offset\": \"\", \"input_channel_plug\": \"\", \"input_charmm\": false, \"input_curv_radius\": \"\", \"input_curvature\": \"\", \"input_distxy_fix\": \"\", \"input_headplane\": \"\", \"input_keep\": false, \"input_leaflet\": \"\", \"input_lip_offset\": \"\", \"input_noprogress\": true, \"input_notgridvol\": false, \"input_noxy_cen\": false, \"input_reducebuild\": false, \"input_self_assembly\": false, \"input_sirah\": false, \"input_tailplane\": \"\", \"input_vol\": false, \"translate_protein_orient_option\": {\"__current_case__\": 0, \"advance\": \"simple\"}}}",
+                        "box_dimention_advance_option": "{\"__current_case__\": 0, \"advance\": \"simple\"}",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "input_dist": "\"5\"",
+                        "input_dist_wat": "\"8\"",
+                        "input_distxy_fix": "\"85\"",
+                        "input_keepligs": "true",
+                        "input_lipids_1": "\"POPC\"",
+                        "input_nloop": "\"1\"",
+                        "input_nloop_all": "\"2\"",
+                        "input_notprotonate": "true",
+                        "input_nottrim": "true",
+                        "input_preoriented": "true",
+                        "input_prot_rad": "\"2.0\"",
+                        "input_random": "true",
+                        "input_tolerance": "\"2.5\"",
+                        "input_writeout": "\"1\"",
+                        "ligand_options": "{\"__current_case__\": 1, \"advance\": \"no\"}",
+                        "output_option": "false",
+                        "remove_cavity_lipids": "false",
+                        "salt_options": "{\"__current_case__\": 1, \"input_salt_a\": null, \"input_salt_c\": \"K+\", \"option_nocounter\": false, \"salt\": \"add\", \"salt_conc_option\": {\"__current_case__\": 1, \"advance\": \"advance\", \"input_saltcon\": \"0.296\"}, \"salt_override_option\": false}",
+                        "second_lipid_options": "{\"__current_case__\": 0, \"advance\": \"advance\", \"input_lipids_2\": \"CHL1\", \"input_ratio\": \"7:3\"}"
+                    },
+                    "state": "ok",
+                    "stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC:CHL1']\n     Lipid ratio                      = ['7:3']  \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0.296    \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \nAdding 5A padding to the sterol CHL1 components to avoid piercing in the periodic boundary\nAdding 5A padding to the sterol CHL1 components to avoid piercing in the periodic boundary\n\nRunning Packmol...\nTransforming to AMBER\nSterols were packed. Potential piercing lipid tails will be searched\nLipid piercing finder failed. Check your structure manually in case of clashing lipid tails!\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n",
+                    "stdout": "\r\nProcessing segment 2 of 9\r\nProcessing segment 3 of 9\r\nProcessing segment 4 of 9\r\nProcessing segment 5 of 9\r\nProcessing segment 6 of 9\r\nProcessing segment 7 of 9\r\nProcessing segment 8 of 9\r\nProcessing segment 9 of 9\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: ions:K+,CL-\n",
+                    "tool_id": "membrane_builder",
+                    "tool_stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC:CHL1']\n     Lipid ratio                      = ['7:3']  \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0.296    \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \nAdding 5A padding to the sterol CHL1 components to avoid piercing in the periodic boundary\nAdding 5A padding to the sterol CHL1 components to avoid piercing in the periodic boundary\n\nRunning Packmol...\nTransforming to AMBER\nSterols were packed. Potential piercing lipid tails will be searched\nLipid piercing finder failed. Check your structure manually in case of clashing lipid tails!\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n",
+                    "tool_stdout": "\r\nProcessing segment 2 of 9\r\nProcessing segment 3 of 9\r\nProcessing segment 4 of 9\r\nProcessing segment 5 of 9\r\nProcessing segment 6 of 9\r\nProcessing segment 7 of 9\r\nProcessing segment 8 of 9\r\nProcessing segment 9 of 9\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: ions:K+,CL-\n",
+                    "update_time": "2026-08-20T21:02:54.337533",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 0,
+                "time_seconds": 111.69432067871094,
+                "tool_id": "membrane_builder",
+                "tool_version": "0.1.0"
+            },
+            "has_data": true,
+            "id": "membrane_builder-0"
+        },
+        {
+            "data": {
+                "inputs": {
+                    "all_the_advance_options|advance": "simple",
+                    "input_dist": "5",
+                    "input_dist_wat": "8",
+                    "input_keepligs": true,
+                    "input_lipids_1": "POPC",
+                    "input_nloop": "1",
+                    "input_nloop_all": "2",
+                    "input_notprotonate": true,
+                    "input_nottrim": true,
+                    "input_preoriented": true,
+                    "input_prot_rad": "2.0",
+                    "input_tolerance": "2.5",
+                    "input_writeout": "1",
+                    "ligand_options|advance": "no",
+                    "pdb_file": {
+                        "id": "89919c0c232afda3",
+                        "src": "hda"
+                    },
+                    "salt_options|salt": "no",
+                    "second_lipid_options|advance": "simple"
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T21:03:08.660182",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__ambertools@24.8",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "ambertools",
+                            "version": "24.8"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "79478bba1fe505ad",
+                    "id": "6429a9b3022870dd",
+                    "inputs": {
+                        "pdb_file": {
+                            "id": "89919c0c232afda3",
+                            "src": "hda",
+                            "uuid": "440e9c53-9088-45e8-85c0-95a6a36b7d0a"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "conf_out": {
+                            "id": "ab896d672f7a204b",
+                            "src": "hda",
+                            "uuid": "02ea3fd6-8b43-4847-8efa-a2dd07f96b21"
+                        },
+                        "embeded_protein": {
+                            "id": "e66d200edc548b4f",
+                            "src": "hda",
+                            "uuid": "4910da12-b631-4896-b90c-d1872e5c7061"
+                        },
+                        "log_file": {
+                            "id": "5808ceb9119dbb11",
+                            "src": "hda",
+                            "uuid": "bc470558-8df8-426b-bda5-bea87b60a69d"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "all_the_advance_options": "{\"__current_case__\": 0, \"advance\": \"simple\"}",
+                        "box_dimention_advance_option": "{\"__current_case__\": 0, \"advance\": \"simple\"}",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "input_dist": "\"5\"",
+                        "input_dist_wat": "\"8\"",
+                        "input_distxy_fix": "\"\"",
+                        "input_keepligs": "true",
+                        "input_lipids_1": "\"POPC\"",
+                        "input_nloop": "\"1\"",
+                        "input_nloop_all": "\"2\"",
+                        "input_notprotonate": "true",
+                        "input_nottrim": "true",
+                        "input_preoriented": "true",
+                        "input_prot_rad": "\"2.0\"",
+                        "input_random": "true",
+                        "input_tolerance": "\"2.5\"",
+                        "input_writeout": "\"1\"",
+                        "ligand_options": "{\"__current_case__\": 1, \"advance\": \"no\"}",
+                        "output_option": "false",
+                        "remove_cavity_lipids": "false",
+                        "salt_options": "{\"__current_case__\": 0, \"salt\": \"no\"}",
+                        "second_lipid_options": "{\"__current_case__\": 1, \"advance\": \"simple\"}"
+                    },
+                    "state": "ok",
+                    "stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\n\r  0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:   0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:  12%|\u2588\u258e        | 1/8 [00:01<00:07,  1.00s/it]\rMolecule segment 3/7:  12%|\u2588\u258e        | 1/8 [00:06<00:07,  1.00s/it]\rMolecule segment 3/7:  25%|\u2588\u2588\u258c       | 2/8 [00:06<00:21,  3.66s/it]\rMolecule segment 4/7:  25%|\u2588\u2588\u258c       | 2/8 [00:11<00:21,  3.66s/it]\rMolecule segment 4/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:11<00:22,  4.45s/it]\rMolecule segment 5/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:17<00:22,  4.45s/it]\rMolecule segment 5/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:17<00:19,  4.93s/it]\rMolecule segment 6/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:32<00:19,  4.93s/it]\rMolecule segment 6/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:33<00:26,  8.76s/it]\rMolecule segment 7/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:33<00:26,  8.76s/it]\rMolecule segment 7/7:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:33<00:11,  5.92s/it]\rAll-together Packing:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:33<00:11,  5.92s/it]\rAll-together Packing:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 7/8 [00:33<00:04,  4.03s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [00:45<00:00,  6.54s/it]Transforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [01:15<00:00,  9.42s/it]\n",
+                    "stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "tool_id": "membrane_builder",
+                    "tool_stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\n\r  0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:   0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:  12%|\u2588\u258e        | 1/8 [00:01<00:07,  1.00s/it]\rMolecule segment 3/7:  12%|\u2588\u258e        | 1/8 [00:06<00:07,  1.00s/it]\rMolecule segment 3/7:  25%|\u2588\u2588\u258c       | 2/8 [00:06<00:21,  3.66s/it]\rMolecule segment 4/7:  25%|\u2588\u2588\u258c       | 2/8 [00:11<00:21,  3.66s/it]\rMolecule segment 4/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:11<00:22,  4.45s/it]\rMolecule segment 5/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:17<00:22,  4.45s/it]\rMolecule segment 5/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:17<00:19,  4.93s/it]\rMolecule segment 6/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:32<00:19,  4.93s/it]\rMolecule segment 6/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:33<00:26,  8.76s/it]\rMolecule segment 7/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:33<00:26,  8.76s/it]\rMolecule segment 7/7:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:33<00:11,  5.92s/it]\rAll-together Packing:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:33<00:11,  5.92s/it]\rAll-together Packing:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 7/8 [00:33<00:04,  4.03s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [00:45<00:00,  6.54s/it]Transforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [01:15<00:00,  9.42s/it]\n",
+                    "tool_stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "update_time": "2026-08-20T21:05:20.891213",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 1,
+                "time_seconds": 146.72964715957642,
+                "tool_id": "membrane_builder",
+                "tool_version": "0.1.0"
+            },
+            "has_data": true,
+            "id": "membrane_builder-1"
+        },
+        {
+            "data": {
+                "inputs": {
+                    "all_the_advance_options|advance": "simple",
+                    "input_dist": "5",
+                    "input_dist_wat": "8",
+                    "input_keepligs": true,
+                    "input_lipids_1": "POPC",
+                    "input_nloop": "1",
+                    "input_nloop_all": "2",
+                    "input_notprotonate": true,
+                    "input_nottrim": true,
+                    "input_preoriented": true,
+                    "input_prot_rad": "2.0",
+                    "input_tolerance": "2.5",
+                    "input_writeout": "1",
+                    "ligand_options|advance": "no",
+                    "pdb_file": {
+                        "id": "1e522e15898ada00",
+                        "src": "hda"
+                    },
+                    "salt_options|salt": "no",
+                    "second_lipid_options|advance": "simple"
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T21:05:35.580305",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__ambertools@24.8",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "ambertools",
+                            "version": "24.8"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "70831ac4be840f72",
+                    "id": "1eeb937b964dfc6b",
+                    "inputs": {
+                        "pdb_file": {
+                            "id": "1e522e15898ada00",
+                            "src": "hda",
+                            "uuid": "451ab143-ad5f-4af3-b8be-23b64944b067"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "conf_out": {
+                            "id": "e8ae978674ea0511",
+                            "src": "hda",
+                            "uuid": "7ff67532-9996-429a-b4ad-5aa3c73057e7"
+                        },
+                        "embeded_protein": {
+                            "id": "9c9747700153ef5b",
+                            "src": "hda",
+                            "uuid": "1d8897f5-62ae-4c04-ab02-adf425a2a38c"
+                        },
+                        "log_file": {
+                            "id": "f46c0424e6c57990",
+                            "src": "hda",
+                            "uuid": "4ae76569-636b-4eec-b3a7-5794580c684c"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "all_the_advance_options": "{\"__current_case__\": 0, \"advance\": \"simple\"}",
+                        "box_dimention_advance_option": "{\"__current_case__\": 0, \"advance\": \"simple\"}",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "input_dist": "\"5\"",
+                        "input_dist_wat": "\"8\"",
+                        "input_distxy_fix": "\"\"",
+                        "input_keepligs": "true",
+                        "input_lipids_1": "\"POPC\"",
+                        "input_nloop": "\"1\"",
+                        "input_nloop_all": "\"2\"",
+                        "input_notprotonate": "true",
+                        "input_nottrim": "true",
+                        "input_preoriented": "true",
+                        "input_prot_rad": "\"2.0\"",
+                        "input_random": "true",
+                        "input_tolerance": "\"2.5\"",
+                        "input_writeout": "\"1\"",
+                        "ligand_options": "{\"__current_case__\": 1, \"advance\": \"no\"}",
+                        "output_option": "false",
+                        "remove_cavity_lipids": "false",
+                        "salt_options": "{\"__current_case__\": 0, \"salt\": \"no\"}",
+                        "second_lipid_options": "{\"__current_case__\": 1, \"advance\": \"simple\"}"
+                    },
+                    "state": "ok",
+                    "stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\n\r  0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:   0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:  12%|\u2588\u258e        | 1/8 [00:01<00:07,  1.04s/it]\rMolecule segment 3/7:  12%|\u2588\u258e        | 1/8 [00:06<00:07,  1.04s/it]\rMolecule segment 3/7:  25%|\u2588\u2588\u258c       | 2/8 [00:06<00:21,  3.62s/it]\rMolecule segment 4/7:  25%|\u2588\u2588\u258c       | 2/8 [00:11<00:21,  3.62s/it]\rMolecule segment 4/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:11<00:21,  4.31s/it]\rMolecule segment 5/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:16<00:21,  4.31s/it]\rMolecule segment 5/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:16<00:18,  4.65s/it]\rMolecule segment 6/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:31<00:18,  4.65s/it]\rMolecule segment 6/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:32<00:25,  8.50s/it]\rMolecule segment 7/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:32<00:25,  8.50s/it]\rMolecule segment 7/7:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:32<00:11,  5.75s/it]\rAll-together Packing:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:32<00:11,  5.75s/it]\rAll-together Packing:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 7/8 [00:32<00:03,  3.92s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [00:45<00:00,  6.88s/it]Transforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [01:16<00:00,  9.57s/it]\n",
+                    "stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "tool_id": "membrane_builder",
+                    "tool_stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\n\r  0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:   0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:  12%|\u2588\u258e        | 1/8 [00:01<00:07,  1.04s/it]\rMolecule segment 3/7:  12%|\u2588\u258e        | 1/8 [00:06<00:07,  1.04s/it]\rMolecule segment 3/7:  25%|\u2588\u2588\u258c       | 2/8 [00:06<00:21,  3.62s/it]\rMolecule segment 4/7:  25%|\u2588\u2588\u258c       | 2/8 [00:11<00:21,  3.62s/it]\rMolecule segment 4/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:11<00:21,  4.31s/it]\rMolecule segment 5/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:16<00:21,  4.31s/it]\rMolecule segment 5/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:16<00:18,  4.65s/it]\rMolecule segment 6/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:31<00:18,  4.65s/it]\rMolecule segment 6/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:32<00:25,  8.50s/it]\rMolecule segment 7/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:32<00:25,  8.50s/it]\rMolecule segment 7/7:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:32<00:11,  5.75s/it]\rAll-together Packing:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:32<00:11,  5.75s/it]\rAll-together Packing:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 7/8 [00:32<00:03,  3.92s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [00:45<00:00,  6.88s/it]Transforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [01:16<00:00,  9.57s/it]\n",
+                    "tool_stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "update_time": "2026-08-20T21:07:45.801972",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 2,
+                "time_seconds": 144.74549221992493,
+                "tool_id": "membrane_builder",
+                "tool_version": "0.1.0"
+            },
+            "has_data": true,
+            "id": "membrane_builder-2"
+        },
+        {
+            "data": {
+                "inputs": {
+                    "all_the_advance_options|advance": "simple",
+                    "input_dist": "5",
+                    "input_dist_wat": "8",
+                    "input_keepligs": true,
+                    "input_lipids_1": "POPC",
+                    "input_nloop": "1",
+                    "input_nloop_all": "2",
+                    "input_notprotonate": true,
+                    "input_nottrim": true,
+                    "input_preoriented": true,
+                    "input_prot_rad": "2.0",
+                    "input_tolerance": "2.5",
+                    "input_writeout": "1",
+                    "ligand_options|advance": "yes",
+                    "ligand_options|ligand_name": "CAU",
+                    "output_option": true,
+                    "pdb_file": {
+                        "id": "e6b5771e3d247c46",
+                        "src": "hda"
+                    },
+                    "salt_options|salt": "no",
+                    "second_lipid_options|advance": "simple"
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T21:08:00.034726",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__ambertools@24.8",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "ambertools",
+                            "version": "24.8"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "127bd17bb4ba8d86",
+                    "id": "0dbb359f81906c4d",
+                    "inputs": {
+                        "pdb_file": {
+                            "id": "e6b5771e3d247c46",
+                            "src": "hda",
+                            "uuid": "3a0caf85-d443-4025-b0c2-470de6ba92fe"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "conf_out": {
+                            "id": "2946d157871d481c",
+                            "src": "hda",
+                            "uuid": "5db2cdd5-a802-445f-bb5c-ec896188f8e0"
+                        },
+                        "embeded_protein": {
+                            "id": "6fc1e6703ff4ca89",
+                            "src": "hda",
+                            "uuid": "6df9c315-ef91-4721-bca9-008f3c52b85b"
+                        },
+                        "ligand": {
+                            "id": "c739c666d7aa1092",
+                            "src": "hda",
+                            "uuid": "f84635d4-5eca-4dcc-a453-e44e56662b6d"
+                        },
+                        "log_file": {
+                            "id": "e11945902d407ea8",
+                            "src": "hda",
+                            "uuid": "5b00702d-81f0-48de-b9bf-8247fae72781"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"pqr\"",
+                        "all_the_advance_options": "{\"__current_case__\": 0, \"advance\": \"simple\"}",
+                        "box_dimention_advance_option": "{\"__current_case__\": 0, \"advance\": \"simple\"}",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "input_dist": "\"5\"",
+                        "input_dist_wat": "\"8\"",
+                        "input_distxy_fix": "\"\"",
+                        "input_keepligs": "true",
+                        "input_lipids_1": "\"POPC\"",
+                        "input_nloop": "\"1\"",
+                        "input_nloop_all": "\"2\"",
+                        "input_notprotonate": "true",
+                        "input_nottrim": "true",
+                        "input_preoriented": "true",
+                        "input_prot_rad": "\"2.0\"",
+                        "input_random": "true",
+                        "input_tolerance": "\"2.5\"",
+                        "input_writeout": "\"1\"",
+                        "ligand_options": "{\"__current_case__\": 0, \"advance\": \"yes\", \"ligand_name\": \"CAU\"}",
+                        "output_option": "true",
+                        "remove_cavity_lipids": "false",
+                        "salt_options": "{\"__current_case__\": 0, \"salt\": \"no\"}",
+                        "second_lipid_options": "{\"__current_case__\": 1, \"advance\": \"simple\"}"
+                    },
+                    "state": "ok",
+                    "stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\n\r  0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:   0%|          | 0/8 [00:01<?, ?it/s]\rMolecule segment 2/7:  12%|\u2588\u258e        | 1/8 [00:01<00:07,  1.11s/it]\rMolecule segment 3/7:  12%|\u2588\u258e        | 1/8 [00:04<00:07,  1.11s/it]\rMolecule segment 3/7:  25%|\u2588\u2588\u258c       | 2/8 [00:04<00:16,  2.74s/it]\rMolecule segment 4/7:  25%|\u2588\u2588\u258c       | 2/8 [00:10<00:16,  2.74s/it]\rMolecule segment 4/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:10<00:20,  4.13s/it]\rMolecule segment 5/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:17<00:20,  4.13s/it]\rMolecule segment 5/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:17<00:20,  5.08s/it]\rMolecule segment 6/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:33<00:20,  5.08s/it]\rMolecule segment 6/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:34<00:28,  9.35s/it]\rMolecule segment 7/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:34<00:28,  9.35s/it]\rMolecule segment 7/7:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:34<00:12,  6.33s/it]\rAll-together Packing:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:34<00:12,  6.33s/it]\rAll-together Packing:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 7/8 [00:34<00:04,  4.32s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [00:47<00:00,  6.99s/it]Transforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [01:21<00:00, 10.24s/it]\n",
+                    "stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "tool_id": "membrane_builder",
+                    "tool_stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\n\r  0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:   0%|          | 0/8 [00:01<?, ?it/s]\rMolecule segment 2/7:  12%|\u2588\u258e        | 1/8 [00:01<00:07,  1.11s/it]\rMolecule segment 3/7:  12%|\u2588\u258e        | 1/8 [00:04<00:07,  1.11s/it]\rMolecule segment 3/7:  25%|\u2588\u2588\u258c       | 2/8 [00:04<00:16,  2.74s/it]\rMolecule segment 4/7:  25%|\u2588\u2588\u258c       | 2/8 [00:10<00:16,  2.74s/it]\rMolecule segment 4/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:10<00:20,  4.13s/it]\rMolecule segment 5/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:17<00:20,  4.13s/it]\rMolecule segment 5/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:17<00:20,  5.08s/it]\rMolecule segment 6/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:33<00:20,  5.08s/it]\rMolecule segment 6/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:34<00:28,  9.35s/it]\rMolecule segment 7/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:34<00:28,  9.35s/it]\rMolecule segment 7/7:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:34<00:12,  6.33s/it]\rAll-together Packing:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:34<00:12,  6.33s/it]\rAll-together Packing:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 7/8 [00:34<00:04,  4.32s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [00:47<00:00,  6.99s/it]Transforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [01:21<00:00, 10.24s/it]\n",
+                    "tool_stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "update_time": "2026-08-20T21:10:14.453165",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 3,
+                "time_seconds": 148.89512515068054,
+                "tool_id": "membrane_builder",
+                "tool_version": "0.1.0"
+            },
+            "has_data": true,
+            "id": "membrane_builder-3"
+        },
+        {
+            "data": {
+                "inputs": {
+                    "all_the_advance_options|advance": "simple",
+                    "input_dist": "5",
+                    "input_dist_wat": "8",
+                    "input_keepligs": true,
+                    "input_lipids_1": "POPC",
+                    "input_nloop": "1",
+                    "input_nloop_all": "2",
+                    "input_notprotonate": true,
+                    "input_nottrim": true,
+                    "input_preoriented": true,
+                    "input_prot_rad": "2.0",
+                    "input_tolerance": "2.5",
+                    "input_writeout": "1",
+                    "ligand_options|advance": "no",
+                    "pdb_file": {
+                        "id": "3badd5a587343410",
+                        "src": "hda"
+                    },
+                    "salt_options|salt": "no",
+                    "second_lipid_options|advance": "advance",
+                    "second_lipid_options|input_lipids_2": "CHL1",
+                    "second_lipid_options|input_ratio": "9:1"
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T21:10:28.829241",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__ambertools@24.8",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "ambertools",
+                            "version": "24.8"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "71bc976f7c8818ec",
+                    "id": "0bc16f4b26ac2e68",
+                    "inputs": {
+                        "pdb_file": {
+                            "id": "3badd5a587343410",
+                            "src": "hda",
+                            "uuid": "f82b651b-5103-4029-91b1-79d3da897eb6"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "conf_out": {
+                            "id": "b89640b0b4a3b1bd",
+                            "src": "hda",
+                            "uuid": "053453c6-a3fb-4a2a-b3fa-0d9fd8a11e3c"
+                        },
+                        "embeded_protein": {
+                            "id": "684763057dfb2de3",
+                            "src": "hda",
+                            "uuid": "0ee3278b-bbc2-41bb-8e6a-d76543fee313"
+                        },
+                        "log_file": {
+                            "id": "f0730c87318dd967",
+                            "src": "hda",
+                            "uuid": "467e0e52-337d-4d49-9eb8-490f0a0cb88e"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "all_the_advance_options": "{\"__current_case__\": 0, \"advance\": \"simple\"}",
+                        "box_dimention_advance_option": "{\"__current_case__\": 0, \"advance\": \"simple\"}",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "input_dist": "\"5\"",
+                        "input_dist_wat": "\"8\"",
+                        "input_distxy_fix": "\"\"",
+                        "input_keepligs": "true",
+                        "input_lipids_1": "\"POPC\"",
+                        "input_nloop": "\"1\"",
+                        "input_nloop_all": "\"2\"",
+                        "input_notprotonate": "true",
+                        "input_nottrim": "true",
+                        "input_preoriented": "true",
+                        "input_prot_rad": "\"2.0\"",
+                        "input_random": "true",
+                        "input_tolerance": "\"2.5\"",
+                        "input_writeout": "\"1\"",
+                        "ligand_options": "{\"__current_case__\": 1, \"advance\": \"no\"}",
+                        "output_option": "false",
+                        "remove_cavity_lipids": "false",
+                        "salt_options": "{\"__current_case__\": 0, \"salt\": \"no\"}",
+                        "second_lipid_options": "{\"__current_case__\": 0, \"advance\": \"advance\", \"input_lipids_2\": \"CHL1\", \"input_ratio\": \"9:1\"}"
+                    },
+                    "state": "ok",
+                    "stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC:CHL1']\n     Lipid ratio                      = ['9:1']  \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \nAdding 5A padding to the sterol CHL1 components to avoid piercing in the periodic boundary\nAdding 5A padding to the sterol CHL1 components to avoid piercing in the periodic boundary\n\nRunning Packmol...\n\r  0%|          | 0/10 [00:00<?, ?it/s]\rMolecule segment 2/9:   0%|          | 0/10 [00:01<?, ?it/s]\rMolecule segment 2/9:  10%|\u2588         | 1/10 [00:01<00:10,  1.18s/it]\rMolecule segment 3/9:  10%|\u2588         | 1/10 [00:06<00:10,  1.18s/it]\rMolecule segment 3/9:  20%|\u2588\u2588        | 2/10 [00:06<00:28,  3.54s/it]\rMolecule segment 4/9:  20%|\u2588\u2588        | 2/10 [00:07<00:28,  3.54s/it]\rMolecule segment 4/9:  30%|\u2588\u2588\u2588       | 3/10 [00:07<00:16,  2.39s/it]\rMolecule segment 5/9:  30%|\u2588\u2588\u2588       | 3/10 [00:11<00:16,  2.39s/it]\rMolecule segment 5/9:  40%|\u2588\u2588\u2588\u2588      | 4/10 [00:11<00:18,  3.04s/it]\rMolecule segment 6/9:  40%|\u2588\u2588\u2588\u2588      | 4/10 [00:12<00:18,  3.04s/it]\rMolecule segment 6/9:  50%|\u2588\u2588\u2588\u2588\u2588     | 5/10 [00:12<00:11,  2.31s/it]\rMolecule segment 7/9:  50%|\u2588\u2588\u2588\u2588\u2588     | 5/10 [00:17<00:11,  2.31s/it]\rMolecule segment 7/9:  60%|\u2588\u2588\u2588\u2588\u2588\u2588    | 6/10 [00:17<00:13,  3.41s/it]\rMolecule segment 8/9:  60%|\u2588\u2588\u2588\u2588\u2588\u2588    | 6/10 [00:32<00:13,  3.41s/it]\rMolecule segment 8/9:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588   | 7/10 [00:33<00:21,  7.23s/it]\rMolecule segment 9/9:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588   | 7/10 [00:33<00:21,  7.23s/it]\rMolecule segment 9/9:  80%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588  | 8/10 [00:33<00:10,  5.06s/it]\rAll-together Packing:  80%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588  | 8/10 [00:33<00:10,  5.06s/it]\rAll-together Packing:  90%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 | 9/10 [00:33<00:03,  3.53s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 10/10 [00:45<00:00,  6.06s/it]Transforming to AMBER\nSterols were packed. Potential piercing lipid tails will be searched\nLipid piercing finder failed. Check your structure manually in case of clashing lipid tails!\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 10/10 [01:17<00:00,  7.74s/it]\n",
+                    "stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "tool_id": "membrane_builder",
+                    "tool_stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC:CHL1']\n     Lipid ratio                      = ['9:1']  \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \nAdding 5A padding to the sterol CHL1 components to avoid piercing in the periodic boundary\nAdding 5A padding to the sterol CHL1 components to avoid piercing in the periodic boundary\n\nRunning Packmol...\n\r  0%|          | 0/10 [00:00<?, ?it/s]\rMolecule segment 2/9:   0%|          | 0/10 [00:01<?, ?it/s]\rMolecule segment 2/9:  10%|\u2588         | 1/10 [00:01<00:10,  1.18s/it]\rMolecule segment 3/9:  10%|\u2588         | 1/10 [00:06<00:10,  1.18s/it]\rMolecule segment 3/9:  20%|\u2588\u2588        | 2/10 [00:06<00:28,  3.54s/it]\rMolecule segment 4/9:  20%|\u2588\u2588        | 2/10 [00:07<00:28,  3.54s/it]\rMolecule segment 4/9:  30%|\u2588\u2588\u2588       | 3/10 [00:07<00:16,  2.39s/it]\rMolecule segment 5/9:  30%|\u2588\u2588\u2588       | 3/10 [00:11<00:16,  2.39s/it]\rMolecule segment 5/9:  40%|\u2588\u2588\u2588\u2588      | 4/10 [00:11<00:18,  3.04s/it]\rMolecule segment 6/9:  40%|\u2588\u2588\u2588\u2588      | 4/10 [00:12<00:18,  3.04s/it]\rMolecule segment 6/9:  50%|\u2588\u2588\u2588\u2588\u2588     | 5/10 [00:12<00:11,  2.31s/it]\rMolecule segment 7/9:  50%|\u2588\u2588\u2588\u2588\u2588     | 5/10 [00:17<00:11,  2.31s/it]\rMolecule segment 7/9:  60%|\u2588\u2588\u2588\u2588\u2588\u2588    | 6/10 [00:17<00:13,  3.41s/it]\rMolecule segment 8/9:  60%|\u2588\u2588\u2588\u2588\u2588\u2588    | 6/10 [00:32<00:13,  3.41s/it]\rMolecule segment 8/9:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588   | 7/10 [00:33<00:21,  7.23s/it]\rMolecule segment 9/9:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588   | 7/10 [00:33<00:21,  7.23s/it]\rMolecule segment 9/9:  80%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588  | 8/10 [00:33<00:10,  5.06s/it]\rAll-together Packing:  80%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588  | 8/10 [00:33<00:10,  5.06s/it]\rAll-together Packing:  90%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 | 9/10 [00:33<00:03,  3.53s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 10/10 [00:45<00:00,  6.06s/it]Transforming to AMBER\nSterols were packed. Potential piercing lipid tails will be searched\nLipid piercing finder failed. Check your structure manually in case of clashing lipid tails!\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 10/10 [01:17<00:00,  7.74s/it]\n",
+                    "tool_stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "update_time": "2026-08-20T21:12:40.030234",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 4,
+                "time_seconds": 145.13563227653503,
+                "tool_id": "membrane_builder",
+                "tool_version": "0.1.0"
+            },
+            "has_data": true,
+            "id": "membrane_builder-4"
+        },
+        {
+            "data": {
+                "inputs": {
+                    "all_the_advance_options|advance": "simple",
+                    "input_dist": "5",
+                    "input_dist_wat": "8",
+                    "input_keepligs": true,
+                    "input_lipids_1": "POPC",
+                    "input_nloop": "1",
+                    "input_nloop_all": "2",
+                    "input_notprotonate": true,
+                    "input_nottrim": true,
+                    "input_preoriented": true,
+                    "input_prot_rad": "2.0",
+                    "input_tolerance": "2.5",
+                    "input_writeout": "1",
+                    "ligand_options|advance": "no",
+                    "pdb_file": {
+                        "id": "58d1e1622d359a51",
+                        "src": "hda"
+                    },
+                    "salt_options|input_salt_a": "Cl-",
+                    "salt_options|input_salt_c": "Na+",
+                    "salt_options|salt": "add",
+                    "salt_options|salt_conc_option|advance": "advance",
+                    "salt_options|salt_conc_option|input_saltcon": "0.15",
+                    "second_lipid_options|advance": "simple"
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T21:12:54.783124",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__ambertools@24.8",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "ambertools",
+                            "version": "24.8"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "e4456a2df36b0e3c",
+                    "id": "f46d1ee679e9d7ce",
+                    "inputs": {
+                        "pdb_file": {
+                            "id": "58d1e1622d359a51",
+                            "src": "hda",
+                            "uuid": "e17f8254-8a06-496c-a4d0-fb4b09ecdf94"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "conf_out": {
+                            "id": "1b6874ecdd630c07",
+                            "src": "hda",
+                            "uuid": "42dbd88d-304f-4c7f-b897-8c0c1f134408"
+                        },
+                        "embeded_protein": {
+                            "id": "feebb9c2281480f1",
+                            "src": "hda",
+                            "uuid": "1fc39593-9d0f-4266-9506-85300d08567c"
+                        },
+                        "log_file": {
+                            "id": "165f4de4751e9c2b",
+                            "src": "hda",
+                            "uuid": "49c969f4-1504-403d-82b9-f031a021cd54"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "all_the_advance_options": "{\"__current_case__\": 0, \"advance\": \"simple\"}",
+                        "box_dimention_advance_option": "{\"__current_case__\": 0, \"advance\": \"simple\"}",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "input_dist": "\"5\"",
+                        "input_dist_wat": "\"8\"",
+                        "input_distxy_fix": "\"\"",
+                        "input_keepligs": "true",
+                        "input_lipids_1": "\"POPC\"",
+                        "input_nloop": "\"1\"",
+                        "input_nloop_all": "\"2\"",
+                        "input_notprotonate": "true",
+                        "input_nottrim": "true",
+                        "input_preoriented": "true",
+                        "input_prot_rad": "\"2.0\"",
+                        "input_random": "true",
+                        "input_tolerance": "\"2.5\"",
+                        "input_writeout": "\"1\"",
+                        "ligand_options": "{\"__current_case__\": 1, \"advance\": \"no\"}",
+                        "output_option": "false",
+                        "remove_cavity_lipids": "false",
+                        "salt_options": "{\"__current_case__\": 1, \"input_salt_a\": \"Cl-\", \"input_salt_c\": \"Na+\", \"option_nocounter\": false, \"salt\": \"add\", \"salt_conc_option\": {\"__current_case__\": 1, \"advance\": \"advance\", \"input_saltcon\": \"0.15\"}, \"salt_override_option\": false}",
+                        "second_lipid_options": "{\"__current_case__\": 1, \"advance\": \"simple\"}"
+                    },
+                    "state": "ok",
+                    "stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0.15     \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\n\r  0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:   0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:  12%|\u2588\u258e        | 1/8 [00:01<00:07,  1.00s/it]\rMolecule segment 3/7:  12%|\u2588\u258e        | 1/8 [00:06<00:07,  1.00s/it]\rMolecule segment 3/7:  25%|\u2588\u2588\u258c       | 2/8 [00:06<00:20,  3.49s/it]\rMolecule segment 4/7:  25%|\u2588\u2588\u258c       | 2/8 [00:12<00:20,  3.49s/it]\rMolecule segment 4/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:12<00:22,  4.55s/it]\rMolecule segment 5/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:17<00:22,  4.55s/it]\rMolecule segment 5/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:17<00:19,  4.76s/it]\rMolecule segment 6/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:31<00:19,  4.76s/it]\rMolecule segment 6/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:32<00:25,  8.49s/it]\rMolecule segment 7/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:32<00:25,  8.49s/it]\rMolecule segment 7/7:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:32<00:11,  5.74s/it]\rAll-together Packing:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:32<00:11,  5.74s/it]\rAll-together Packing:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 7/8 [00:32<00:03,  3.91s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [00:45<00:00,  6.68s/it]Transforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [01:14<00:00,  9.36s/it]\n",
+                    "stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: ions:NA+,CL-\n",
+                    "tool_id": "membrane_builder",
+                    "tool_stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0.15     \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\n\r  0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:   0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:  12%|\u2588\u258e        | 1/8 [00:01<00:07,  1.00s/it]\rMolecule segment 3/7:  12%|\u2588\u258e        | 1/8 [00:06<00:07,  1.00s/it]\rMolecule segment 3/7:  25%|\u2588\u2588\u258c       | 2/8 [00:06<00:20,  3.49s/it]\rMolecule segment 4/7:  25%|\u2588\u2588\u258c       | 2/8 [00:12<00:20,  3.49s/it]\rMolecule segment 4/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:12<00:22,  4.55s/it]\rMolecule segment 5/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:17<00:22,  4.55s/it]\rMolecule segment 5/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:17<00:19,  4.76s/it]\rMolecule segment 6/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:31<00:19,  4.76s/it]\rMolecule segment 6/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:32<00:25,  8.49s/it]\rMolecule segment 7/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:32<00:25,  8.49s/it]\rMolecule segment 7/7:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:32<00:11,  5.74s/it]\rAll-together Packing:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:32<00:11,  5.74s/it]\rAll-together Packing:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 7/8 [00:32<00:03,  3.91s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [00:45<00:00,  6.68s/it]Transforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [01:14<00:00,  9.36s/it]\n",
+                    "tool_stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: ions:NA+,CL-\n",
+                    "update_time": "2026-08-20T21:15:02.447697",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 5,
+                "time_seconds": 142.5569577217102,
+                "tool_id": "membrane_builder",
+                "tool_version": "0.1.0"
+            },
+            "has_data": true,
+            "id": "membrane_builder-5"
+        },
+        {
+            "data": {
+                "inputs": {
+                    "all_the_advance_options|advance": "simple",
+                    "box_dimention_advance_option|advance": "advance",
+                    "box_dimention_advance_option|input_dims_x": "80",
+                    "box_dimention_advance_option|input_dims_y": "80",
+                    "box_dimention_advance_option|input_dims_z": "100",
+                    "input_dist": "5",
+                    "input_dist_wat": "8",
+                    "input_keepligs": true,
+                    "input_lipids_1": "POPC",
+                    "input_nloop": "1",
+                    "input_nloop_all": "2",
+                    "input_notprotonate": true,
+                    "input_nottrim": true,
+                    "input_preoriented": true,
+                    "input_prot_rad": "2.0",
+                    "input_tolerance": "2.5",
+                    "input_writeout": "1",
+                    "ligand_options|advance": "no",
+                    "pdb_file": {
+                        "id": "28dabd1d9235067b",
+                        "src": "hda"
+                    },
+                    "salt_options|salt": "no",
+                    "second_lipid_options|advance": "simple"
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T21:15:17.730405",
+                    "dependencies": [],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "2d83f137e3015847",
+                    "id": "a967af8e8067558d",
+                    "inputs": {
+                        "pdb_file": {
+                            "id": "28dabd1d9235067b",
+                            "src": "hda",
+                            "uuid": "cd6aa907-1fb0-4695-b3a9-9c7a8c3e5fde"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "conf_out": {
+                            "id": "12bec61bec2cbd7e",
+                            "src": "hda",
+                            "uuid": "8a72065a-7787-4da4-9b47-29ed2de625a8"
+                        },
+                        "embeded_protein": {
+                            "id": "49d04a07d195fe92",
+                            "src": "hda",
+                            "uuid": "382dc1a9-9093-486b-8b56-b122b78b298a"
+                        },
+                        "log_file": {
+                            "id": "422a0faaacdbdaa6",
+                            "src": "hda",
+                            "uuid": "2ff9f899-ec56-4c59-b6a8-614ef7176093"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "all_the_advance_options": "{\"__current_case__\": 0, \"advance\": \"simple\"}",
+                        "box_dimention_advance_option": "{\"__current_case__\": 1, \"advance\": \"advance\", \"input_dims_x\": \"80\", \"input_dims_y\": \"80\", \"input_dims_z\": \"100\"}",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "input_dist": "\"5\"",
+                        "input_dist_wat": "\"8\"",
+                        "input_distxy_fix": "\"\"",
+                        "input_keepligs": "true",
+                        "input_lipids_1": "\"POPC\"",
+                        "input_nloop": "\"1\"",
+                        "input_nloop_all": "\"2\"",
+                        "input_notprotonate": "true",
+                        "input_nottrim": "true",
+                        "input_preoriented": "true",
+                        "input_prot_rad": "\"2.0\"",
+                        "input_random": "true",
+                        "input_tolerance": "\"2.5\"",
+                        "input_writeout": "\"1\"",
+                        "ligand_options": "{\"__current_case__\": 1, \"advance\": \"no\"}",
+                        "output_option": "false",
+                        "remove_cavity_lipids": "false",
+                        "salt_options": "{\"__current_case__\": 0, \"salt\": \"no\"}",
+                        "second_lipid_options": "{\"__current_case__\": 1, \"advance\": \"simple\"}"
+                    },
+                    "state": "ok",
+                    "stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\n\r  0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:   0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:  12%|\u2588\u258e        | 1/8 [00:01<00:07,  1.00s/it]\rMolecule segment 3/7:  12%|\u2588\u258e        | 1/8 [00:06<00:07,  1.00s/it]\rMolecule segment 3/7:  25%|\u2588\u2588\u258c       | 2/8 [00:06<00:20,  3.43s/it]\rMolecule segment 4/7:  25%|\u2588\u2588\u258c       | 2/8 [00:10<00:20,  3.43s/it]\rMolecule segment 4/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:10<00:20,  4.02s/it]\rMolecule segment 5/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:14<00:20,  4.02s/it]\rMolecule segment 5/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:14<00:15,  3.81s/it]\rMolecule segment 6/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:27<00:15,  3.81s/it]\rMolecule segment 6/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:27<00:22,  7.34s/it]\rMolecule segment 7/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:27<00:22,  7.34s/it]\rMolecule segment 7/7:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:28<00:09,  4.96s/it]\rAll-together Packing:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:28<00:09,  4.96s/it]\rAll-together Packing:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 7/8 [00:28<00:03,  3.38s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [00:38<00:00,  5.55s/it]Transforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [01:05<00:00,  8.19s/it]\n",
+                    "stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "tool_id": "membrane_builder",
+                    "tool_stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\n\r  0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:   0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:  12%|\u2588\u258e        | 1/8 [00:01<00:07,  1.00s/it]\rMolecule segment 3/7:  12%|\u2588\u258e        | 1/8 [00:06<00:07,  1.00s/it]\rMolecule segment 3/7:  25%|\u2588\u2588\u258c       | 2/8 [00:06<00:20,  3.43s/it]\rMolecule segment 4/7:  25%|\u2588\u2588\u258c       | 2/8 [00:10<00:20,  3.43s/it]\rMolecule segment 4/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:10<00:20,  4.02s/it]\rMolecule segment 5/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:14<00:20,  4.02s/it]\rMolecule segment 5/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:14<00:15,  3.81s/it]\rMolecule segment 6/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:27<00:15,  3.81s/it]\rMolecule segment 6/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:27<00:22,  7.34s/it]\rMolecule segment 7/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:27<00:22,  7.34s/it]\rMolecule segment 7/7:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:28<00:09,  4.96s/it]\rAll-together Packing:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:28<00:09,  4.96s/it]\rAll-together Packing:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 7/8 [00:28<00:03,  3.38s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [00:38<00:00,  5.55s/it]Transforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [01:05<00:00,  8.19s/it]\n",
+                    "tool_stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "update_time": "2026-08-20T21:17:17.333702",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 6,
+                "time_seconds": 134.40855193138123,
+                "tool_id": "membrane_builder",
+                "tool_version": "0.1.0"
+            },
+            "has_data": true,
+            "id": "membrane_builder-6"
+        },
+        {
+            "data": {
+                "inputs": {
+                    "all_the_advance_options|Computational_electrophysiology|advance": "simple",
+                    "all_the_advance_options|MEMEMBED_options|advance": "advance",
+                    "all_the_advance_options|MEMEMBED_options|input_barrel": false,
+                    "all_the_advance_options|MEMEMBED_options|input_mem_opt": "2",
+                    "all_the_advance_options|MEMEMBED_options|input_n_ter": "in",
+                    "all_the_advance_options|PACKMOL_options|advance": "simple",
+                    "all_the_advance_options|advance": "advance",
+                    "all_the_advance_options|others_parameters|advance": "simple",
+                    "input_dist": "5",
+                    "input_dist_wat": "8",
+                    "input_keepligs": true,
+                    "input_lipids_1": "POPC",
+                    "input_nloop": "1",
+                    "input_nloop_all": "2",
+                    "input_notprotonate": true,
+                    "input_nottrim": true,
+                    "input_preoriented": true,
+                    "input_prot_rad": "2.0",
+                    "input_tolerance": "2.5",
+                    "input_writeout": "1",
+                    "ligand_options|advance": "no",
+                    "pdb_file": {
+                        "id": "3ff92ee8ef9ba521",
+                        "src": "hda"
+                    },
+                    "salt_options|salt": "no",
+                    "second_lipid_options|advance": "simple"
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T21:17:31.942925",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__ambertools@24.8",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "ambertools",
+                            "version": "24.8"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "ea75e9c4bb8b62f7",
+                    "id": "2ceaa3b8b0523771",
+                    "inputs": {
+                        "pdb_file": {
+                            "id": "3ff92ee8ef9ba521",
+                            "src": "hda",
+                            "uuid": "9a601d3f-99a0-408e-afbb-5b8e8f064a71"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "conf_out": {
+                            "id": "1a3571eee78d2be1",
+                            "src": "hda",
+                            "uuid": "d93519b7-514e-4559-915a-75b742e39aba"
+                        },
+                        "embeded_protein": {
+                            "id": "10f21a2fd6c6bfc2",
+                            "src": "hda",
+                            "uuid": "89453b7d-064d-4184-a4b2-bf380767b89c"
+                        },
+                        "log_file": {
+                            "id": "48d2100d9fb4c730",
+                            "src": "hda",
+                            "uuid": "c1bd57dd-a781-49e5-bb67-874666cc35df"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "all_the_advance_options": "{\"Computational_electrophysiology\": {\"__current_case__\": 0, \"advance\": \"simple\"}, \"MEMEMBED_options\": {\"__current_case__\": 1, \"advance\": \"advance\", \"input_barrel\": false, \"input_mem_opt\": \"2\", \"input_n_ter\": \"in\"}, \"PACKMOL_options\": {\"__current_case__\": 0, \"advance\": \"simple\"}, \"__current_case__\": 1, \"advance\": \"advance\", \"others_parameters\": {\"__current_case__\": 0, \"advance\": \"simple\"}}",
+                        "box_dimention_advance_option": "{\"__current_case__\": 0, \"advance\": \"simple\"}",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "input_dist": "\"5\"",
+                        "input_dist_wat": "\"8\"",
+                        "input_distxy_fix": "\"\"",
+                        "input_keepligs": "true",
+                        "input_lipids_1": "\"POPC\"",
+                        "input_nloop": "\"1\"",
+                        "input_nloop_all": "\"2\"",
+                        "input_notprotonate": "true",
+                        "input_nottrim": "true",
+                        "input_preoriented": "true",
+                        "input_prot_rad": "\"2.0\"",
+                        "input_random": "true",
+                        "input_tolerance": "\"2.5\"",
+                        "input_writeout": "\"1\"",
+                        "ligand_options": "{\"__current_case__\": 1, \"advance\": \"no\"}",
+                        "output_option": "false",
+                        "remove_cavity_lipids": "false",
+                        "salt_options": "{\"__current_case__\": 0, \"salt\": \"no\"}",
+                        "second_lipid_options": "{\"__current_case__\": 1, \"advance\": \"simple\"}"
+                    },
+                    "state": "ok",
+                    "stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\n\r  0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:   0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:  12%|\u2588\u258e        | 1/8 [00:00<00:06,  1.08it/s]\rMolecule segment 3/7:  12%|\u2588\u258e        | 1/8 [00:04<00:06,  1.08it/s]\rMolecule segment 3/7:  25%|\u2588\u2588\u258c       | 2/8 [00:04<00:15,  2.65s/it]\rMolecule segment 4/7:  25%|\u2588\u2588\u258c       | 2/8 [00:09<00:15,  2.65s/it]\rMolecule segment 4/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:09<00:18,  3.78s/it]\rMolecule segment 5/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:14<00:18,  3.78s/it]\rMolecule segment 5/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:14<00:16,  4.15s/it]\rMolecule segment 6/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:28<00:16,  4.15s/it]\rMolecule segment 6/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:29<00:23,  7.91s/it]\rMolecule segment 7/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:29<00:23,  7.91s/it]\rMolecule segment 7/7:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:29<00:10,  5.35s/it]\rAll-together Packing:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:29<00:10,  5.35s/it]\rAll-together Packing:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 7/8 [00:29<00:03,  3.65s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [00:42<00:00,  6.55s/it]Transforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [01:12<00:00,  9.12s/it]\n",
+                    "stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "tool_id": "membrane_builder",
+                    "tool_stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\n\r  0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:   0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:  12%|\u2588\u258e        | 1/8 [00:00<00:06,  1.08it/s]\rMolecule segment 3/7:  12%|\u2588\u258e        | 1/8 [00:04<00:06,  1.08it/s]\rMolecule segment 3/7:  25%|\u2588\u2588\u258c       | 2/8 [00:04<00:15,  2.65s/it]\rMolecule segment 4/7:  25%|\u2588\u2588\u258c       | 2/8 [00:09<00:15,  2.65s/it]\rMolecule segment 4/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:09<00:18,  3.78s/it]\rMolecule segment 5/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:14<00:18,  3.78s/it]\rMolecule segment 5/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:14<00:16,  4.15s/it]\rMolecule segment 6/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:28<00:16,  4.15s/it]\rMolecule segment 6/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:29<00:23,  7.91s/it]\rMolecule segment 7/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:29<00:23,  7.91s/it]\rMolecule segment 7/7:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:29<00:10,  5.35s/it]\rAll-together Packing:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:29<00:10,  5.35s/it]\rAll-together Packing:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 7/8 [00:29<00:03,  3.65s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [00:42<00:00,  6.55s/it]Transforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [01:12<00:00,  9.12s/it]\n",
+                    "tool_stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "update_time": "2026-08-20T21:19:06.926396",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 7,
+                "time_seconds": 109.52154088020325,
+                "tool_id": "membrane_builder",
+                "tool_version": "0.1.0"
+            },
+            "has_data": true,
+            "id": "membrane_builder-7"
+        },
+        {
+            "data": {
+                "inputs": {
+                    "all_the_advance_options|Computational_electrophysiology|advance": "simple",
+                    "all_the_advance_options|MEMEMBED_options|advance": "simple",
+                    "all_the_advance_options|PACKMOL_options|advance": "advance",
+                    "all_the_advance_options|PACKMOL_options|input_movebadrandom": true,
+                    "all_the_advance_options|PACKMOL_options|input_notrun": false,
+                    "all_the_advance_options|PACKMOL_options|input_packall": false,
+                    "all_the_advance_options|advance": "advance",
+                    "all_the_advance_options|others_parameters|advance": "simple",
+                    "input_dist": "5",
+                    "input_dist_wat": "8",
+                    "input_keepligs": true,
+                    "input_lipids_1": "POPC",
+                    "input_nloop": "1",
+                    "input_nloop_all": "2",
+                    "input_notprotonate": true,
+                    "input_nottrim": true,
+                    "input_preoriented": true,
+                    "input_prot_rad": "2.0",
+                    "input_tolerance": "2.5",
+                    "input_writeout": "1",
+                    "ligand_options|advance": "no",
+                    "pdb_file": {
+                        "id": "263641851a6ed513",
+                        "src": "hda"
+                    },
+                    "salt_options|salt": "no",
+                    "second_lipid_options|advance": "simple"
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T21:19:22.182368",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__ambertools@24.8",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "ambertools",
+                            "version": "24.8"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "57469db5b698a8ea",
+                    "id": "8992100e8cbaae25",
+                    "inputs": {
+                        "pdb_file": {
+                            "id": "263641851a6ed513",
+                            "src": "hda",
+                            "uuid": "b762c4d3-024e-4b03-92c8-1c6309610ea6"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "conf_out": {
+                            "id": "e8388ce1459008b3",
+                            "src": "hda",
+                            "uuid": "7b233939-f90d-4171-af87-8d9a5dbdf083"
+                        },
+                        "embeded_protein": {
+                            "id": "87adba0ca4251e59",
+                            "src": "hda",
+                            "uuid": "a8db1e54-8099-425b-ae99-ae916df287a7"
+                        },
+                        "log_file": {
+                            "id": "00e74af2fd085080",
+                            "src": "hda",
+                            "uuid": "ea8df894-9db9-4679-8ca9-cb8309b669af"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "all_the_advance_options": "{\"Computational_electrophysiology\": {\"__current_case__\": 0, \"advance\": \"simple\"}, \"MEMEMBED_options\": {\"__current_case__\": 0, \"advance\": \"simple\"}, \"PACKMOL_options\": {\"__current_case__\": 1, \"advance\": \"advance\", \"input_movebadrandom\": true, \"input_notrun\": false, \"input_packall\": false}, \"__current_case__\": 1, \"advance\": \"advance\", \"others_parameters\": {\"__current_case__\": 0, \"advance\": \"simple\"}}",
+                        "box_dimention_advance_option": "{\"__current_case__\": 0, \"advance\": \"simple\"}",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "input_dist": "\"5\"",
+                        "input_dist_wat": "\"8\"",
+                        "input_distxy_fix": "\"\"",
+                        "input_keepligs": "true",
+                        "input_lipids_1": "\"POPC\"",
+                        "input_nloop": "\"1\"",
+                        "input_nloop_all": "\"2\"",
+                        "input_notprotonate": "true",
+                        "input_nottrim": "true",
+                        "input_preoriented": "true",
+                        "input_prot_rad": "\"2.0\"",
+                        "input_random": "true",
+                        "input_tolerance": "\"2.5\"",
+                        "input_writeout": "\"1\"",
+                        "ligand_options": "{\"__current_case__\": 1, \"advance\": \"no\"}",
+                        "output_option": "false",
+                        "remove_cavity_lipids": "false",
+                        "salt_options": "{\"__current_case__\": 0, \"salt\": \"no\"}",
+                        "second_lipid_options": "{\"__current_case__\": 1, \"advance\": \"simple\"}"
+                    },
+                    "state": "ok",
+                    "stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\n\r  0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:   0%|          | 0/8 [00:01<?, ?it/s]\rMolecule segment 2/7:  12%|\u2588\u258e        | 1/8 [00:01<00:09,  1.33s/it]\rMolecule segment 3/7:  12%|\u2588\u258e        | 1/8 [00:06<00:09,  1.33s/it]\rMolecule segment 3/7:  25%|\u2588\u2588\u258c       | 2/8 [00:06<00:22,  3.73s/it]\rMolecule segment 4/7:  25%|\u2588\u2588\u258c       | 2/8 [00:11<00:22,  3.73s/it]\rMolecule segment 4/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:11<00:21,  4.31s/it]\rMolecule segment 5/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:16<00:21,  4.31s/it]\rMolecule segment 5/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:16<00:18,  4.51s/it]\rMolecule segment 6/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:31<00:18,  4.51s/it]\rMolecule segment 6/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:31<00:25,  8.45s/it]\rMolecule segment 7/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:31<00:25,  8.45s/it]\rMolecule segment 7/7:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:32<00:11,  5.71s/it]\rAll-together Packing:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:32<00:11,  5.71s/it]\rAll-together Packing:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 7/8 [00:32<00:03,  3.89s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [00:44<00:00,  6.57s/it]Transforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [01:15<00:00,  9.45s/it]\n",
+                    "stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "tool_id": "membrane_builder",
+                    "tool_stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\n\r  0%|          | 0/8 [00:00<?, ?it/s]\rMolecule segment 2/7:   0%|          | 0/8 [00:01<?, ?it/s]\rMolecule segment 2/7:  12%|\u2588\u258e        | 1/8 [00:01<00:09,  1.33s/it]\rMolecule segment 3/7:  12%|\u2588\u258e        | 1/8 [00:06<00:09,  1.33s/it]\rMolecule segment 3/7:  25%|\u2588\u2588\u258c       | 2/8 [00:06<00:22,  3.73s/it]\rMolecule segment 4/7:  25%|\u2588\u2588\u258c       | 2/8 [00:11<00:22,  3.73s/it]\rMolecule segment 4/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:11<00:21,  4.31s/it]\rMolecule segment 5/7:  38%|\u2588\u2588\u2588\u258a      | 3/8 [00:16<00:21,  4.31s/it]\rMolecule segment 5/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:16<00:18,  4.51s/it]\rMolecule segment 6/7:  50%|\u2588\u2588\u2588\u2588\u2588     | 4/8 [00:31<00:18,  4.51s/it]\rMolecule segment 6/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:31<00:25,  8.45s/it]\rMolecule segment 7/7:  62%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 5/8 [00:31<00:25,  8.45s/it]\rMolecule segment 7/7:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:32<00:11,  5.71s/it]\rAll-together Packing:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 6/8 [00:32<00:11,  5.71s/it]\rAll-together Packing:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 7/8 [00:32<00:03,  3.89s/it]\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [00:44<00:00,  6.57s/it]Transforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n\rAll-together Packing: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 8/8 [01:15<00:00,  9.45s/it]\n",
+                    "tool_stdout": "\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "update_time": "2026-08-20T21:21:29.916767",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 8,
+                "time_seconds": 142.98466181755066,
+                "tool_id": "membrane_builder",
+                "tool_version": "0.1.0"
+            },
+            "has_data": true,
+            "id": "membrane_builder-8"
+        },
+        {
+            "data": {
+                "inputs": {
+                    "all_the_advance_options|Computational_electrophysiology|advance": "simple",
+                    "all_the_advance_options|MEMEMBED_options|advance": "simple",
+                    "all_the_advance_options|PACKMOL_options|advance": "simple",
+                    "all_the_advance_options|advance": "advance",
+                    "all_the_advance_options|others_parameters|Computational_solvate_system|advance": "simple",
+                    "all_the_advance_options|others_parameters|advance": "advance",
+                    "all_the_advance_options|others_parameters|advance_curved_2d_gaussian|advance": "simple",
+                    "all_the_advance_options|others_parameters|input_apl_exp": false,
+                    "all_the_advance_options|others_parameters|input_charmm": false,
+                    "all_the_advance_options|others_parameters|input_distxy_fix": "90.0",
+                    "all_the_advance_options|others_parameters|input_keep": false,
+                    "all_the_advance_options|others_parameters|input_leaflet": "23",
+                    "all_the_advance_options|others_parameters|input_noprogress": true,
+                    "all_the_advance_options|others_parameters|input_notgridvol": false,
+                    "all_the_advance_options|others_parameters|input_noxy_cen": false,
+                    "all_the_advance_options|others_parameters|input_reducebuild": false,
+                    "all_the_advance_options|others_parameters|input_self_assembly": false,
+                    "all_the_advance_options|others_parameters|input_sirah": false,
+                    "all_the_advance_options|others_parameters|input_vol": false,
+                    "all_the_advance_options|others_parameters|translate_protein_orient_option|advance": "simple",
+                    "input_dist": "5",
+                    "input_dist_wat": "8",
+                    "input_keepligs": true,
+                    "input_lipids_1": "POPC",
+                    "input_nloop": "1",
+                    "input_nloop_all": "2",
+                    "input_notprotonate": true,
+                    "input_nottrim": true,
+                    "input_preoriented": true,
+                    "input_prot_rad": "2.0",
+                    "input_tolerance": "2.5",
+                    "input_writeout": "1",
+                    "ligand_options|advance": "no",
+                    "pdb_file": {
+                        "id": "d50684ddb07d3d09",
+                        "src": "hda"
+                    },
+                    "salt_options|salt": "no",
+                    "second_lipid_options|advance": "simple"
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T21:21:44.006404",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__ambertools@24.8",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "ambertools",
+                            "version": "24.8"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "e0d9a771c733e086",
+                    "id": "69d25faa3423bcd8",
+                    "inputs": {
+                        "pdb_file": {
+                            "id": "d50684ddb07d3d09",
+                            "src": "hda",
+                            "uuid": "bd8f10b8-c519-4e3b-a260-3f28ca115859"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "conf_out": {
+                            "id": "bf3c42a900c8f3a5",
+                            "src": "hda",
+                            "uuid": "90d5526b-dbfa-4414-b0f7-51e725e0c8c1"
+                        },
+                        "embeded_protein": {
+                            "id": "76e4c74150b7d958",
+                            "src": "hda",
+                            "uuid": "95d473f3-4d7f-462e-9225-f88d6367680f"
+                        },
+                        "log_file": {
+                            "id": "36ce10376dc28a7e",
+                            "src": "hda",
+                            "uuid": "8c2edb85-053b-4b73-866d-f08f3e1968ed"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "all_the_advance_options": "{\"Computational_electrophysiology\": {\"__current_case__\": 0, \"advance\": \"simple\"}, \"MEMEMBED_options\": {\"__current_case__\": 0, \"advance\": \"simple\"}, \"PACKMOL_options\": {\"__current_case__\": 0, \"advance\": \"simple\"}, \"__current_case__\": 1, \"advance\": \"advance\", \"others_parameters\": {\"Computational_solvate_system\": {\"__current_case__\": 0, \"advance\": \"simple\"}, \"__current_case__\": 1, \"advance\": \"advance\", \"advance_curved_2d_gaussian\": {\"__current_case__\": 0, \"advance\": \"simple\"}, \"input_apl_exp\": false, \"input_apl_offset\": \"\", \"input_channel_plug\": \"\", \"input_charmm\": false, \"input_curv_radius\": \"\", \"input_curvature\": \"\", \"input_distxy_fix\": \"90.0\", \"input_headplane\": \"\", \"input_keep\": false, \"input_leaflet\": \"23\", \"input_lip_offset\": \"\", \"input_noprogress\": true, \"input_notgridvol\": false, \"input_noxy_cen\": false, \"input_reducebuild\": false, \"input_self_assembly\": false, \"input_sirah\": false, \"input_tailplane\": \"\", \"input_vol\": false, \"translate_protein_orient_option\": {\"__current_case__\": 0, \"advance\": \"simple\"}}}",
+                        "box_dimention_advance_option": "{\"__current_case__\": 0, \"advance\": \"simple\"}",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "input_dist": "\"5\"",
+                        "input_dist_wat": "\"8\"",
+                        "input_distxy_fix": "\"\"",
+                        "input_keepligs": "true",
+                        "input_lipids_1": "\"POPC\"",
+                        "input_nloop": "\"1\"",
+                        "input_nloop_all": "\"2\"",
+                        "input_notprotonate": "true",
+                        "input_nottrim": "true",
+                        "input_preoriented": "true",
+                        "input_prot_rad": "\"2.0\"",
+                        "input_random": "true",
+                        "input_tolerance": "\"2.5\"",
+                        "input_writeout": "\"1\"",
+                        "ligand_options": "{\"__current_case__\": 1, \"advance\": \"no\"}",
+                        "output_option": "false",
+                        "remove_cavity_lipids": "false",
+                        "salt_options": "{\"__current_case__\": 0, \"salt\": \"no\"}",
+                        "second_lipid_options": "{\"__current_case__\": 1, \"advance\": \"simple\"}"
+                    },
+                    "state": "ok",
+                    "stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\nTransforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n",
+                    "stdout": "\r\nProcessing segment 2 of 7\r\nProcessing segment 3 of 7\r\nProcessing segment 4 of 7\r\nProcessing segment 5 of 7\r\nProcessing segment 6 of 7\r\nProcessing segment 7 of 7\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "tool_id": "membrane_builder",
+                    "tool_stderr": "PMEMD not found. Setting path to SANDER\nParmed could not be loaded. Some functions will be disabled\n\n\n _____           _                    _\n|  __ \\         | |                  | |\n| |__) |_ _  ___| | ___ __ ___   ___ | |\n|  ___/ _` |/ __| |/ / '_ ` _ \\ / _ \\| |\n| |  | (_| | (__|   <| | | | | | (_) | |\n|_|   \\__,_|\\___|_|\\_\\_| |_| |_|\\___/|_|\n                                         ___\n                  /\\/\\   ___ _ __ ___   / _ \\___ _ __\n                 /    \\ / _ \\ '_ ` _ \\ / /_\\/ _ \\ '_ \\ \n                / /\\/\\ \\  __/ | | | | / /_ \\  __/ | | |\n                \\/    \\/\\___|_| |_| |_\\____/\\___|_| |_| \n\n\n###############################################################\nStephan Schott-Verdugo 2016-11-07        VERSION: 2025.1.29\nGenerated at CPCLab at Heinrich Heine University Duesseldorf\n      &      CBCLab at Forschungszentrum Juelich\n###############################################################\n\n--verbose for details of the packing process\nPreprocessing inputfile.pdb. This might take a minute.\n\n     Information for packing:\n    \n     Input PDB(s)                     = ['inputfile.pdb']\n     Output PDB                       = out.pdb  \n     Packmol output and log prefix    = packmol  \n     Lipids                           = ['POPC'] \n     Lipid ratio                      = ['1']    \n     Solvents                         = WAT      \n     Solvent ratio                    = 1        \n     Salt concentration            (M)= 0        \n     Distance to boundaries        (A)= 5.0      \n     Minimum water distance        (A)= 8.0      \n     Packmol loops                    = 1        \n     Packmol loops for All-together   = 2        \n\nRunning Packmol...\nTransforming to AMBER\n#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#\n",
+                    "tool_stdout": "\r\nProcessing segment 2 of 7\r\nProcessing segment 3 of 7\r\nProcessing segment 4 of 7\r\nProcessing segment 5 of 7\r\nProcessing segment 6 of 7\r\nProcessing segment 7 of 7\u001b[F\r\nAll-together Packing\n########################################################################################################################################\n########################################################################################################################################\nDONE!\nFinal ion line: None\n",
+                    "update_time": "2026-08-20T21:23:24.060179",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 9,
+                "time_seconds": 114.21881794929504,
+                "tool_id": "membrane_builder",
+                "tool_version": "0.1.0"
+            },
+            "has_data": true,
+            "id": "membrane_builder-9"
+        }
+    ],
+    "version": "0.1"
+}

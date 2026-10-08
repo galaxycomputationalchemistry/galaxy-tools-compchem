@@ -1,0 +1,539 @@
+
+          -------------------------------------------------------
+          Amber 26 SANDER                              2026
+          -------------------------------------------------------
+
+| Run on 08/21/2026 at 14:03:52
+
+|   Executable path: sander
+| Working directory: /data/home/joshij/software/galaxy_25_1/database/jobs_directory/005/5027/working
+|          Hostname: Unknown
+  [-O]verwriting output
+
+File Assignments:
+|  MDIN: input.rism                                                            
+| MDOUT: out.kh.r3d                                                            
+|INPCRD: input.rst7                                                            
+|  PARM: input.parm7                                                           
+|RESTRT: restrt                                                                
+|  REFC: refc                                                                  
+| MDVEL: mdvel                                                                 
+| MDFRC: mdfrc                                                                 
+|  MDEN: mden                                                                  
+| MDCRD: mdcrd                                                                 
+|MDINFO: mdinfo                                                                
+|  MTMD: mtmd                                                                  
+|INPDIP: inpdip                                                                
+|RSTDIP: rstdip                                                                
+|INPTRA: inptraj                                                               
+
+|   Xvv: cSPCE_kh.xvv
+|   Guv: out.kh
+
+ Here is the input file:
+
+single-point nonperiodic 3D-RISM calculation using the sander interface        
+&cntrl                                                                         
+   ntx=1,                                                                      
+   nstlim=0,                                                                   
+   irism=1,                                                                    
+/                                                                              
+&rism                                                                          
+   periodic='pmen',                                                            
+   closure='kh',                                                               
+   tolerance=1e-6,                                                             
+                                                                               
+   grdspc=0.35,0.35,0.35,                                                      
+                                                                               
+   buffer=10.0,                                                                
+   centering=1,                                                                
+                                                                               
+   mdiis_del=0.4,                                                              
+   mdiis_nvec=20,                                                              
+   maxstep=5000,                                                               
+   mdiis_restart=50,                                                           
+                                                                               
+   solvcut=9.0,                                                                
+                                                                               
+   verbose=2,                                                                  
+   npropagate=0,                                                               
+   apply_rism_force=0,                                                         
+                                                                               
+   volfmt='dx',                                                                
+   ntwrism=1,                                                                  
+/                                                                              
+|periodic 3D-RISM Forcing igb=0
+
+--------------------------------------------------------------------------------
+   1.  RESOURCE   USE: 
+--------------------------------------------------------------------------------
+
+| Flags:                                                                        
+ getting new box info from bottom of inpcrd
+|  INFO: Old style inpcrd file read
+
+| peek_ewald_inpcrd: Box info found
+|Largest sphere to fit in unit cell has radius =    10.716
+| New format PARM file being parsed.
+| Version =    1.000 Date = 08/21/26 Time = 13:17:58
+ NATOM  =     127 NTYPES =      14 NBONH =      59 MBONA  =      69
+ NTHETH =     132 MTHETA =      93 NPHIH =     276 MPHIA  =     279
+ NHPARM =       0 NPARM  =       0 NNB   =     680 NRES   =       8
+ NBONA  =      69 NTHETA =      93 NPHIA =     279 NUMBND =      41
+ NUMANG =      84 NPTRA  =     117 NATYP =      27 NPHB   =       0
+ IFBOX  =       1 NMXRS  =      22 IFCAP =       0 NEXTRA =       0
+ NCOPY  =       0
+
+
+|     Memory Use     Allocated
+|     Real              595126
+|     Hollerith            391
+|     Integer            49735
+|     Max Pairs           8001
+|     nblistReal          1524
+|     nblist Int         25464
+|       Total             4987 kbytes
+
+| Note: 1-4 EEL scale factors are being read from the topology file.
+
+| Note: 1-4 VDW scale factors are being read from the topology file.
+| Duplicated    0 dihedrals
+| Duplicated    0 dihedrals
+
+     BOX TYPE: RECTILINEAR
+
+--------------------------------------------------------------------------------
+   2.  CONTROL  DATA  FOR  THE  RUN
+--------------------------------------------------------------------------------
+
+default_name                                                                    
+
+General flags:
+     imin    =       0, nmropt  =       0
+
+Nature and format of input:
+     ntx     =       1, irest   =       0, ntrx    =       1
+
+Nature and format of output:
+     ntxo    =       2, ntpr    =      50, ntrx    =       1, ntwr    =       1
+     iwrap   =       0, ntwx    =       0, ntwv    =       0, ntwe    =       0
+     ioutfm  =       1, ntwprt  =       0, idecomp =       0, rbornstat=      0
+
+Potential function:
+     ntf     =       1, ntb     =       1, igb     =       0, nsnb    =      25
+     ipol    =       0, gbsa    =       0, iesp    =       0
+     dielc   =   1.00000, cut     =   8.00000, intdiel =   1.00000
+
+Frozen or restrained atoms:
+     ibelly  =       0, ntr     =       0
+
+Molecular dynamics:
+     nstlim  =         0, nscm    =      1000, nrespa  =         1
+     t       =   0.00000, dt      =   0.00100, vlimit  =  20.00000
+
+Ewald parameters:
+     verbose =       0, ew_type =       0, nbflag  =       1, use_pme =       1
+     vdwmeth =       1, eedmeth =       1, netfrc  =       1
+     Box X =   21.433   Box Y =   21.957   Box Z =   22.972
+     Alpha =   90.000   Beta  =   90.000   Gamma =   90.000
+     NFFT1 =   24       NFFT2 =   24       NFFT3 =   24
+     Cutoff=    8.000   Tol   =0.100E-04
+     Ewald Coefficient =  0.34864
+     Interpolation order =    4
+3D-RISM:
+     closure   =  KH      
+     uccoeff   =  0.00000E+00  0.00000E+00  0.00000E+00  0.00000E+00
+     solvcut   =   9.00000, buffer  =  10.00000
+     grd_spc   =   0.35000    0.35000    0.35000
+     ng3       =        -1         -1         -1
+     solvbox   =  -1.00000   -1.00000   -1.00000
+     tolerance =  1.00E-06
+     mdiis_del =   0.40000, mdiis_nv=        20
+     mdiis_meth=         2, mdiis_re=  5.00E+01
+     maxstep   =      5000, npropaga=         0
+     centering =         1, zerofrc =         1
+     apply_rism=         0, asympcorr=         F
+     rismnrespa=         1, fcestrid=         0, fcecut  =9999.00000
+     fcenbasis =        20, fcenbase=        20, fcecrd  =         0
+|     fceweigh =         0, fcetrans     =         0  , fcesort    =         0
+|     fceifreq =         1, fceenormsw=  0.00D+00, fcentfrcor=         0
+|     fcewrite =    0         , fceread  =    0
+     polarDecomp         =         0, entropicDecomp    =         0
+     gfCorrection        =         0, pcplusCorrection  =         0
+     periodic            = pmen    
+     write_ther=         1, volfmt  =  dx      
+     saveprogre=         0, ntwrism =         1, verbose =         2
+     stoponfail     =    T
+     molReconstruct =    F
+     progress  =         1
+     treeDCF        =    T, treeTCF      =    T, treeCoulomb      =    F
+     treeDCFMAC     = 0.100, treeTCFMAC   = 0.100, treeCoulombMAC   = 0.100
+     treeDCFOrder   =    2, treeTCFOrder =    2, treeCoulombOrder =    2
+     treeDCFN0      =  500, treeTCFN0    =  500, treeCoulombN0    =  500
+     asympKSpaceTolerance = -1.00E+00, chargeSmear = 1.000
+     ljToleranc= -1.00E+00
+     biasPotent=   0.00000
+
+--------------------------------------------------------------------------------
+   3.  ATOMIC COORDINATES AND VELOCITIES
+--------------------------------------------------------------------------------
+
+                                                                                
+ begin time read from input coords =     0.000 ps
+
+ Number of triangulated 3-point waters found:        0
+
+     Sum of charges from parm topology file =  -1.00000001
+     Assuming uniform neutralizing plasma
+
+--------------------------------------------------------------------------------
+   4.  RESULTS
+--------------------------------------------------------------------------------
+
+|  # of SOLUTE  degrees of freedom (RNDFP):     381.
+|  # of SOLVENT degrees of freedom (RNDFS):       0.
+|  NDFMIN =     378.     NUM_NOSHAKE =      0     CORRECTED RNDFP =     378.
+|  TOTAL # of degrees of freedom (RNDF) =     378.
+ ---------------------------------------------------
+ APPROXIMATING switch and d/dx switch using CUBIC SPLINE INTERPOLATION
+ using   5000.0 points per unit in tabled values
+ TESTING RELATIVE ERROR over r ranging from 0.0 to cutoff
+| CHECK switch(x): max rel err =   0.2738E-14   at   2.422500
+| CHECK d/dx switch(x): max rel err =   0.8332E-11   at   2.782960
+ ---------------------------------------------------
+| Local SIZE OF NONBOND LIST =       6345
+| TOTAL SIZE OF NONBOND LIST =       6345
+|FULL RISM!!!
+||Setting solvation box to
+|grid size:         64 X         64 X         70
+|box size [A]:      21.433 X     21.957 X     22.972
+|grid spacing [A]:      0.335 X      0.343 X      0.328
+|internal angles [°]:      90.000,     90.000,     90.000
+|inscribed sphere radius [A]:     10.716
+|Switching to KH closure
+ Step=    1     Resid=  15.8         IS=  1
+ Step=    2     Resid=  9.70         IS=  2
+ Step=    3     Resid=  2.89         IS=  3
+ Step=    4     Resid=  2.11         IS=  4
+ Step=    5     Resid=  1.75         IS=  5
+ Step=    6     Resid=  1.47         IS=  6
+ Step=    7     Resid=  1.23         IS=  7
+ Step=    8     Resid=  1.10         IS=  8
+ Step=    9     Resid=  1.01         IS=  9
+ Step=   10     Resid= 0.922         IS= 10
+ Step=   11     Resid=  2.09         IS= 11
+ Step=   12     Resid=  2.01         IS= 12
+ Step=   13     Resid=  1.99         IS= 13
+ Step=   14     Resid=  1.83         IS= 14
+ Step=   15     Resid=  1.50         IS= 15
+ Step=   16     Resid=  1.36         IS= 16
+ Step=   17     Resid= 0.977         IS= 17
+ Step=   18     Resid= 0.912         IS= 18
+ Step=   19     Resid= 0.494         IS= 19
+ Step=   20     Resid= 0.354         IS= 20
+ Step=   21     Resid= 0.389         IS= 20
+ Step=   22     Resid= 0.286         IS= 20
+ Step=   23     Resid= 0.348         IS= 20
+ Step=   24     Resid= 0.269         IS= 20
+ Step=   25     Resid= 0.244         IS= 20
+ Step=   26     Resid= 0.150         IS= 20
+ Step=   27     Resid= 0.134         IS= 20
+ Step=   28     Resid= 0.108         IS= 20
+ Step=   29     Resid= 0.112         IS= 20
+ Step=   30     Resid= 0.105         IS= 20
+ Step=   31     Resid= 9.230E-02     IS= 20
+ Step=   32     Resid= 8.486E-02     IS= 20
+ Step=   33     Resid= 7.669E-02     IS= 20
+ Step=   34     Resid= 7.071E-02     IS= 20
+ Step=   35     Resid= 6.626E-02     IS= 20
+ Step=   36     Resid= 5.999E-02     IS= 20
+ Step=   37     Resid= 5.459E-02     IS= 20
+ Step=   38     Resid= 4.902E-02     IS= 20
+ Step=   39     Resid= 4.565E-02     IS= 20
+ Step=   40     Resid= 4.187E-02     IS= 20
+ Step=   41     Resid= 3.876E-02     IS= 20
+ Step=   42     Resid= 3.559E-02     IS= 20
+ Step=   43     Resid= 3.269E-02     IS= 20
+ Step=   44     Resid= 3.036E-02     IS= 20
+ Step=   45     Resid= 2.804E-02     IS= 20
+ Step=   46     Resid= 2.623E-02     IS= 20
+ Step=   47     Resid= 2.434E-02     IS= 20
+ Step=   48     Resid= 2.267E-02     IS= 20
+ Step=   49     Resid= 2.114E-02     IS= 20
+ Step=   50     Resid= 1.954E-02     IS= 20
+ Step=   51     Resid= 1.838E-02     IS= 20
+ Step=   52     Resid= 1.702E-02     IS= 20
+ Step=   53     Resid= 1.604E-02     IS= 20
+ Step=   54     Resid= 1.495E-02     IS= 20
+ Step=   55     Resid= 1.410E-02     IS= 20
+ Step=   56     Resid= 1.334E-02     IS= 20
+ Step=   57     Resid= 1.256E-02     IS= 20
+ Step=   58     Resid= 1.193E-02     IS= 20
+ Step=   59     Resid= 1.131E-02     IS= 20
+ Step=   60     Resid= 1.058E-02     IS= 20
+ Step=   61     Resid= 9.949E-03     IS= 20
+ Step=   62     Resid= 9.295E-03     IS= 20
+ Step=   63     Resid= 8.829E-03     IS= 20
+ Step=   64     Resid= 8.366E-03     IS= 20
+ Step=   65     Resid= 7.749E-03     IS= 20
+ Step=   66     Resid= 7.268E-03     IS= 20
+ Step=   67     Resid= 6.917E-03     IS= 20
+ Step=   68     Resid= 6.600E-03     IS= 20
+ Step=   69     Resid= 6.241E-03     IS= 20
+ Step=   70     Resid= 5.920E-03     IS= 20
+ Step=   71     Resid= 5.606E-03     IS= 20
+ Step=   72     Resid= 5.363E-03     IS= 20
+ Step=   73     Resid= 5.106E-03     IS= 20
+ Step=   74     Resid= 4.839E-03     IS= 20
+ Step=   75     Resid= 4.516E-03     IS= 20
+ Step=   76     Resid= 4.288E-03     IS= 20
+ Step=   77     Resid= 4.007E-03     IS= 20
+ Step=   78     Resid= 3.788E-03     IS= 20
+ Step=   79     Resid= 3.556E-03     IS= 20
+ Step=   80     Resid= 3.355E-03     IS= 20
+ Step=   81     Resid= 3.104E-03     IS= 20
+ Step=   82     Resid= 2.875E-03     IS= 20
+ Step=   83     Resid= 2.683E-03     IS= 20
+ Step=   84     Resid= 2.541E-03     IS= 20
+ Step=   85     Resid= 2.379E-03     IS= 20
+ Step=   86     Resid= 2.204E-03     IS= 20
+ Step=   87     Resid= 2.045E-03     IS= 20
+ Step=   88     Resid= 1.870E-03     IS= 20
+ Step=   89     Resid= 1.739E-03     IS= 20
+ Step=   90     Resid= 1.635E-03     IS= 20
+ Step=   91     Resid= 1.554E-03     IS= 20
+ Step=   92     Resid= 1.429E-03     IS= 20
+ Step=   93     Resid= 1.342E-03     IS= 20
+ Step=   94     Resid= 1.248E-03     IS= 20
+ Step=   95     Resid= 1.168E-03     IS= 20
+ Step=   96     Resid= 1.111E-03     IS= 20
+ Step=   97     Resid= 1.069E-03     IS= 20
+ Step=   98     Resid= 1.034E-03     IS= 20
+ Step=   99     Resid= 9.562E-04     IS= 20
+ Step=  100     Resid= 9.013E-04     IS= 20
+ Step=  101     Resid= 8.386E-04     IS= 20
+ Step=  102     Resid= 7.860E-04     IS= 20
+ Step=  103     Resid= 6.937E-04     IS= 20
+ Step=  104     Resid= 6.531E-04     IS= 20
+ Step=  105     Resid= 6.147E-04     IS= 20
+ Step=  106     Resid= 5.877E-04     IS= 20
+ Step=  107     Resid= 5.603E-04     IS= 20
+ Step=  108     Resid= 5.394E-04     IS= 20
+ Step=  109     Resid= 5.233E-04     IS= 20
+ Step=  110     Resid= 5.042E-04     IS= 20
+ Step=  111     Resid= 4.744E-04     IS= 20
+ Step=  112     Resid= 4.243E-04     IS= 20
+ Step=  113     Resid= 4.066E-04     IS= 20
+ Step=  114     Resid= 3.895E-04     IS= 20
+ Step=  115     Resid= 3.735E-04     IS= 20
+ Step=  116     Resid= 3.461E-04     IS= 20
+ Step=  117     Resid= 3.241E-04     IS= 20
+ Step=  118     Resid= 3.062E-04     IS= 20
+ Step=  119     Resid= 2.965E-04     IS= 20
+ Step=  120     Resid= 2.872E-04     IS= 20
+ Step=  121     Resid= 2.775E-04     IS= 20
+ Step=  122     Resid= 2.683E-04     IS= 20
+ Step=  123     Resid= 2.573E-04     IS= 20
+ Step=  124     Resid= 2.495E-04     IS= 20
+ Step=  125     Resid= 2.350E-04     IS= 20
+ Step=  126     Resid= 2.212E-04     IS= 20
+ Step=  127     Resid= 2.080E-04     IS= 20
+ Step=  128     Resid= 2.008E-04     IS= 20
+ Step=  129     Resid= 1.950E-04     IS= 20
+ Step=  130     Resid= 1.893E-04     IS= 20
+ Step=  131     Resid= 1.860E-04     IS= 20
+ Step=  132     Resid= 1.745E-04     IS= 20
+ Step=  133     Resid= 1.624E-04     IS= 20
+ Step=  134     Resid= 1.564E-04     IS= 20
+ Step=  135     Resid= 1.503E-04     IS= 20
+ Step=  136     Resid= 1.471E-04     IS= 20
+ Step=  137     Resid= 1.419E-04     IS= 20
+ Step=  138     Resid= 1.368E-04     IS= 20
+ Step=  139     Resid= 1.327E-04     IS= 20
+ Step=  140     Resid= 1.299E-04     IS= 20
+ Step=  141     Resid= 1.265E-04     IS= 20
+ Step=  142     Resid= 1.241E-04     IS= 20
+ Step=  143     Resid= 1.215E-04     IS= 20
+ Step=  144     Resid= 1.182E-04     IS= 20
+ Step=  145     Resid= 1.147E-04     IS= 20
+ Step=  146     Resid= 1.117E-04     IS= 20
+ Step=  147     Resid= 1.073E-04     IS= 20
+ Step=  148     Resid= 1.029E-04     IS= 20
+ Step=  149     Resid= 1.002E-04     IS= 20
+ Step=  150     Resid= 9.802E-05     IS= 20
+ Step=  151     Resid= 9.326E-05     IS= 20
+ Step=  152     Resid= 9.010E-05     IS= 20
+ Step=  153     Resid= 8.463E-05     IS= 20
+ Step=  154     Resid= 7.875E-05     IS= 20
+ Step=  155     Resid= 7.453E-05     IS= 20
+ Step=  156     Resid= 7.145E-05     IS= 20
+ Step=  157     Resid= 6.701E-05     IS= 20
+ Step=  158     Resid= 6.441E-05     IS= 20
+ Step=  159     Resid= 6.103E-05     IS= 20
+ Step=  160     Resid= 5.824E-05     IS= 20
+ Step=  161     Resid= 5.631E-05     IS= 20
+ Step=  162     Resid= 5.419E-05     IS= 20
+ Step=  163     Resid= 5.264E-05     IS= 20
+ Step=  164     Resid= 5.089E-05     IS= 20
+ Step=  165     Resid= 4.939E-05     IS= 20
+ Step=  166     Resid= 4.806E-05     IS= 20
+ Step=  167     Resid= 4.703E-05     IS= 20
+ Step=  168     Resid= 4.465E-05     IS= 20
+ Step=  169     Resid= 4.268E-05     IS= 20
+ Step=  170     Resid= 4.107E-05     IS= 20
+ Step=  171     Resid= 3.973E-05     IS= 20
+ Step=  172     Resid= 3.711E-05     IS= 20
+ Step=  173     Resid= 3.530E-05     IS= 20
+ Step=  174     Resid= 3.350E-05     IS= 20
+ Step=  175     Resid= 3.134E-05     IS= 20
+ Step=  176     Resid= 2.958E-05     IS= 20
+ Step=  177     Resid= 2.838E-05     IS= 20
+ Step=  178     Resid= 2.695E-05     IS= 20
+ Step=  179     Resid= 2.563E-05     IS= 20
+ Step=  180     Resid= 2.421E-05     IS= 20
+ Step=  181     Resid= 2.303E-05     IS= 20
+ Step=  182     Resid= 2.205E-05     IS= 20
+ Step=  183     Resid= 2.105E-05     IS= 20
+ Step=  184     Resid= 2.023E-05     IS= 20
+ Step=  185     Resid= 1.940E-05     IS= 20
+ Step=  186     Resid= 1.848E-05     IS= 20
+ Step=  187     Resid= 1.776E-05     IS= 20
+ Step=  188     Resid= 1.715E-05     IS= 20
+ Step=  189     Resid= 1.615E-05     IS= 20
+ Step=  190     Resid= 1.514E-05     IS= 20
+ Step=  191     Resid= 1.424E-05     IS= 20
+ Step=  192     Resid= 1.337E-05     IS= 20
+ Step=  193     Resid= 1.237E-05     IS= 20
+ Step=  194     Resid= 1.170E-05     IS= 20
+ Step=  195     Resid= 1.113E-05     IS= 20
+ Step=  196     Resid= 1.038E-05     IS= 20
+ Step=  197     Resid= 9.714E-06     IS= 20
+ Step=  198     Resid= 9.287E-06     IS= 20
+ Step=  199     Resid= 8.881E-06     IS= 20
+ Step=  200     Resid= 8.412E-06     IS= 20
+ Step=  201     Resid= 7.927E-06     IS= 20
+ Step=  202     Resid= 7.548E-06     IS= 20
+ Step=  203     Resid= 7.218E-06     IS= 20
+ Step=  204     Resid= 6.781E-06     IS= 20
+ Step=  205     Resid= 6.374E-06     IS= 20
+ Step=  206     Resid= 6.043E-06     IS= 20
+ Step=  207     Resid= 5.670E-06     IS= 20
+ Step=  208     Resid= 5.319E-06     IS= 20
+ Step=  209     Resid= 5.007E-06     IS= 20
+ Step=  210     Resid= 4.707E-06     IS= 20
+ Step=  211     Resid= 4.328E-06     IS= 20
+ Step=  212     Resid= 4.005E-06     IS= 20
+ Step=  213     Resid= 3.749E-06     IS= 20
+ Step=  214     Resid= 3.552E-06     IS= 20
+ Step=  215     Resid= 3.377E-06     IS= 20
+ Step=  216     Resid= 3.204E-06     IS= 20
+ Step=  217     Resid= 3.002E-06     IS= 20
+ Step=  218     Resid= 2.841E-06     IS= 20
+ Step=  219     Resid= 2.727E-06     IS= 20
+ Step=  220     Resid= 2.623E-06     IS= 20
+ Step=  221     Resid= 2.506E-06     IS= 20
+ Step=  222     Resid= 2.394E-06     IS= 20
+ Step=  223     Resid= 2.279E-06     IS= 20
+ Step=  224     Resid= 2.156E-06     IS= 20
+ Step=  225     Resid= 2.045E-06     IS= 20
+ Step=  226     Resid= 1.961E-06     IS= 20
+ Step=  227     Resid= 1.895E-06     IS= 20
+ Step=  228     Resid= 1.819E-06     IS= 20
+ Step=  229     Resid= 1.733E-06     IS= 20
+ Step=  230     Resid= 1.684E-06     IS= 20
+ Step=  231     Resid= 1.629E-06     IS= 20
+ Step=  232     Resid= 1.568E-06     IS= 20
+ Step=  233     Resid= 1.500E-06     IS= 20
+ Step=  234     Resid= 1.451E-06     IS= 20
+ Step=  235     Resid= 1.401E-06     IS= 20
+ Step=  236     Resid= 1.337E-06     IS= 20
+ Step=  237     Resid= 1.262E-06     IS= 20
+ Step=  238     Resid= 1.186E-06     IS= 20
+ Step=  239     Resid= 1.101E-06     IS= 20
+ Step=  240     Resid= 1.038E-06     IS= 20
+ Step=  241     Resid= 9.734E-07     IS= 20
+|RXRISM converged in   241 steps
+
+ NSTEP =        0   TIME(PS) =       0.000  TEMP(K) =     0.00  PRESS =     0.0
+ Etot   =      -178.4733  EKtot   =         0.0000  EPtot      =      -178.4733
+ BOND   =         6.0498  ANGLE   =        35.1125  DIHED      =        90.9072
+ 1-4 NB =        29.2238  1-4 EEL =       397.8989  VDWAALS    =       -34.6786
+ EELEC  =      -623.1854  ERISM   =       -79.8015  RESTRAINT  =         0.0000
+ Ewald error estimate:   0.1672E-02
+ ------------------------------------------------------------------------------
+
+solutePotentialEnergy                     -1.7847325729350132E+002  -3.4678567386686389E+001  -6.2318542276232608E+002   6.0498277799563569E+000   3.5112481920693625E+001   9.0907195450625892E+001   0.0000000000000000E+000   2.9223789012793620E+001   3.9789890462579109E+002   0.0000000000000000E+000  -7.9801465934349423E+001
+rism_excessChemicalPotential              -7.9801465934349409E+001   1.5634847395464567E+002  -2.3614993988899508E+002
+rism_solventPotentialEnergy               -5.8473796380472936E+002  -3.8817044649891733E+002  -1.9656751730581206E+002
+rism_partialMolarVolume                    1.0916507979474168E+003
+rism_totalParticlesBox                                               3.2399664115725102E+002   6.4799328256989838E+002
+rism_totalChargeBox                        1.0823695140105378E-007  -2.7461955328195569E+002   2.7461955339019261E+002
+rism_excessParticlesBox                                             -3.6319547360443273E+001  -7.2639094465490174E+001
+rism_excessChargeBox                       1.0823698020694655E-007   3.0784448369286881E+001  -3.0784448261049903E+001
+rism_KirkwoodBuff                                                   -1.0897112287263485E+003  -1.0897112248949641E+003
+rism_DCFintegral                                                    -3.3608460019170379E+004   8.3772973776307736E+003
+
+--------------------------------------------------------------------------------
+   5.  TIMINGS
+--------------------------------------------------------------------------------
+
+|                Build the list             0.00 ( 4.38% of List )
+|                Other                      0.01 (95.62% of List )
+|             List time                  0.01 ( 0.06% of Nonbo)
+|                   Short_ene time             0.00 (97.56% of Direc)
+|                   Other                      0.00 ( 2.44% of Direc)
+|                Direct Ewald time          0.00 (22.19% of Ewald)
+|                Adjust Ewald time          0.00 ( 2.81% of Ewald)
+|                Self Ewald time            0.00 ( 0.20% of Ewald)
+|                   Fill Bspline coeffs        0.00 ( 6.71% of Recip)
+|                   Fill charge grid           0.00 ( 7.06% of Recip)
+|                   Scalar sum                 0.00 (22.74% of Recip)
+|                   Grad sum                   0.00 ( 3.26% of Recip)
+|                   FFT time                   0.00 (59.60% of Recip)
+|                   Other                      0.00 ( 0.63% of Recip)
+|                Recip Ewald time           0.00 (73.80% of Ewald)
+|                Force Adjust               0.00 ( 0.06% of Ewald)
+|                Virial junk                0.00 ( 0.14% of Ewald)
+|                Other                      0.00 ( 0.80% of Ewald)
+|             Ewald time                 0.00 ( 0.01% of Nonbo)
+|                LJ Grid time               1.64 (13.36% of 3D-RI)
+|                Ewald Grid time            0.02 ( 0.14% of 3D-RI)
+|                Asymptotics time           0.00 ( 0.01% of 3D-RI)
+|                      FFT time                   3.56 (35.07% of R1RIS)
+|                         LAPACK time                0.01 ( 0.42% of MDIIS)
+|                         DATA time                  0.81 (37.29% of MDIIS)
+|                         Other                      1.36 (62.29% of MDIIS)
+|                      MDIIS time                 2.18 (21.51% of R1RIS)
+|                      Other                      4.40 (43.42% of R1RIS)
+|                   R1RISM time               10.14 (100.0% of RXRIS)
+|                   Other                      0.00 ( 0.02% of RXRIS)
+|                RXRISM time               10.15 (82.58% of 3D-RI)
+|                EXCESSCHEMICALPOTENT       0.00 ( 0.02% of 3D-RI)
+|                Resize Solvent Box t       0.47 ( 3.85% of 3D-RI)
+|                Solution Propagation       0.00 ( 0.01% of 3D-RI)
+|                Other                      0.00 ( 0.03% of 3D-RI)
+|             3D-RISM time              12.29 (100.0% of Nonbo)
+|          Nonbond force             12.29 (100.0% of Force)
+|       Force time                12.29 (95.61% of Runmd)
+|       Other                      0.56 ( 4.39% of Runmd)
+|    Runmd Time                12.86 (98.88% of Total)
+|    Other                      0.15 ( 1.12% of Total)
+| Total time                13.00 (100.0% of ALL  )
+
+| Number of list builds   :          1
+
+| Highest rstack allocated:      37867
+| Highest istack allocated:        127
+|           Job began  at 14:03:52.847  on 08/21/2026
+|           Setup done at 14:03:52.993  on 08/21/2026
+|           Run   done at 14:04:05.852  on 08/21/2026
+|     wallclock() was called    2483 times
+
+|3D-RISM memory allocation summary
+|Type          Maximum        Current   
+|Integer       0.00227 GB     0.00000 GB
+|Real          0.20436 GB     0.00000 GB
+|Logical       0.00000 GB     0.00000 GB
+|Character     0.00000 GB     0.00000 GB
+|---------------------------------------
+|Total         0.20553 GB     0.00000 GB

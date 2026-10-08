@@ -1,0 +1,112 @@
+{
+    "summary": {
+        "num_errors": 0,
+        "num_failures": 0,
+        "num_skips": 0,
+        "num_tests": 1
+    },
+    "tests": [
+        {
+            "data": {
+                "inputs": {
+                    "residue_name": "HOH",
+                    "residue_numbers": "477 478",
+                    "system_pdb": {
+                        "id": "9d6924cd54be60ee",
+                        "src": "hda"
+                    },
+                    "water_pdb": {
+                        "id": "484e5a0dfb4e9b88",
+                        "src": "hda"
+                    }
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T20:47:12.900843",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": true
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__python@_uv_",
+                            "exact": false,
+                            "model_class": "MergedCondaDependency",
+                            "name": "python",
+                            "version": "3.10"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "dd556073bbe312b8",
+                    "id": "ab7ef7fd8912e530",
+                    "inputs": {
+                        "system_pdb": {
+                            "id": "9d6924cd54be60ee",
+                            "src": "hda",
+                            "uuid": "b7259bda-479d-414f-8d70-1f4fe9513adb"
+                        },
+                        "water_pdb": {
+                            "id": "484e5a0dfb4e9b88",
+                            "src": "hda",
+                            "uuid": "b138446d-b1c7-42a9-93cc-608ba7b86ce6"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "output_pdb": {
+                            "id": "de55c9d5c858d86c",
+                            "src": "hda",
+                            "uuid": "4dc93677-bcbf-466e-ab77-61150adbd527"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\"",
+                        "residue_name": "\"HOH\"",
+                        "residue_numbers": "\"477 478\""
+                    },
+                    "state": "ok",
+                    "stderr": "",
+                    "stdout": "Extracting from water file: /data/home/joshij/software/galaxy_25_1/database/objects/b/1/3/dataset_b138446d-b1c7-42a9-93cc-608ba7b86ce6.dat\nSearching for residues: [477, 478] with names: ['HOH']\nReading system file: /data/home/joshij/software/galaxy_25_1/database/objects/b/7/2/dataset_b7259bda-479d-414f-8d70-1f4fe9513adb.dat\n\u2713 Matched: Res 477 (HOH) - O\n\u2713 Matched: Res 477 (HOH) - H1\n\u2713 Matched: Res 477 (HOH) - H2\n\u2713 Matched: Res 478 (HOH) - O\n\u2713 Matched: Res 478 (HOH) - H1\n\u2713 Matched: Res 478 (HOH) - H2\n\n\u2713 Extracted 6 matching atoms\n\u2713 Saved to: /data/home/joshij/software/galaxy_25_1/database/objects/4/d/c/dataset_4dc93677-bcbf-466e-ab77-61150adbd527.dat\n",
+                    "tool_id": "merge_extract_residues",
+                    "tool_stderr": "",
+                    "tool_stdout": "Extracting from water file: /data/home/joshij/software/galaxy_25_1/database/objects/b/1/3/dataset_b138446d-b1c7-42a9-93cc-608ba7b86ce6.dat\nSearching for residues: [477, 478] with names: ['HOH']\nReading system file: /data/home/joshij/software/galaxy_25_1/database/objects/b/7/2/dataset_b7259bda-479d-414f-8d70-1f4fe9513adb.dat\n\u2713 Matched: Res 477 (HOH) - O\n\u2713 Matched: Res 477 (HOH) - H1\n\u2713 Matched: Res 477 (HOH) - H2\n\u2713 Matched: Res 478 (HOH) - O\n\u2713 Matched: Res 478 (HOH) - H1\n\u2713 Matched: Res 478 (HOH) - H2\n\n\u2713 Extracted 6 matching atoms\n\u2713 Saved to: /data/home/joshij/software/galaxy_25_1/database/objects/4/d/c/dataset_4dc93677-bcbf-466e-ab77-61150adbd527.dat\n",
+                    "update_time": "2026-08-20T20:47:20.510380",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 0,
+                "time_seconds": 21.34139609336853,
+                "tool_id": "merge_extract_residues",
+                "tool_version": "1.0"
+            },
+            "has_data": true,
+            "id": "merge_extract_residues-0"
+        }
+    ],
+    "version": "0.1"
+}
