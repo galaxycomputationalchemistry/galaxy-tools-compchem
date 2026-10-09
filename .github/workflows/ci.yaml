@@ -8,6 +8,7 @@ on:
 env:
   GALAXY_FORK: galaxyproject
   GALAXY_BRANCH: dev
+  GALAXY_BRANCH: release_26.1
   MAX_CHUNKS: 40
 jobs:
   setup:

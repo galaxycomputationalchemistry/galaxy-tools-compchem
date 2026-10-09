@@ -16,6 +16,7 @@ on:
 env:
   GALAXY_FORK: galaxyproject
   GALAXY_BRANCH: dev
+  GALAXY_BRANCH: release_26.1
   MAX_CHUNKS: 4
   MAX_FILE_SIZE: 1M
 concurrency:
