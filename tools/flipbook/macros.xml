@@ -1,0 +1,24 @@
+<macros>
+    <token name="@TOOL_VERSION@">0.1.0</token>
+    <token name="@RMSX_SOURCE_REF@">v0.2.3</token>
+    <token name="@VERSION_SUFFIX@">1</token>
+    <token name="@CONTAINER_IMAGE@">ghcr.io/antuneslab/flipbook-galaxy:0.2.3-galaxy0</token>
+
+    <xml name="requirements">
+        <requirements>
+            <!--
+            This is intentionally container-only until RMSX has a Bioconda recipe.
+            The image is built from Git tag @RMSX_SOURCE_REF@; that tag's Python
+            package metadata reports rmsx==@TOOL_VERSION@.
+            -->
+            <container type="docker">@CONTAINER_IMAGE@</container>
+        </requirements>
+    </xml>
+
+    <xml name="citations">
+        <citations>
+            <citation type="doi">10.1038/s41598-026-39869-7</citation>
+            <citation type="doi">10.25080/majora-629e541a-00e</citation>
+        </citations>
+    </xml>
+</macros>

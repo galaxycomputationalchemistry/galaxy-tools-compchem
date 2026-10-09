@@ -1,0 +1,463 @@
+<tool id="flipbook" name="Flipbook trajectory analysis" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="26.0">
+    <description>time-sliced residue fluctuation analysis</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <xrefs>
+        <xref type="bio.tools">rmsx_and_flipbook</xref>
+    </xrefs>
+    <expand macro="requirements"/>
+    <required_files>
+        <include path="rmsx_preflight.py"/>
+        <include path="rmsx_multichain.py"/>
+        <include path="rmsx_static_plots.py"/>
+        <include path="flipbook_molstar_report.py"/>
+        <include path="flipbook_report_common.py"/>
+        <include path="test-data/1UBQ.pdb"/>
+        <include path="test-data/mon_sys.xtc"/>
+    </required_files>
+    <version_command><![CDATA[python3 -c "import importlib.metadata; print(importlib.metadata.version('rmsx'))"]]></version_command>
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p rmsx_output galaxy_outputs &&
+        #if str($input_source.source) == "example"
+            ln -s '$__tool_directory__/test-data/1UBQ.pdb' input_topology.pdb &&
+            ln -s '$__tool_directory__/test-data/mon_sys.xtc' input_trajectory.xtc &&
+            topology_path='input_topology.pdb' &&
+            trajectory_path='input_trajectory.xtc' &&
+        #else
+            ln -s '$input_source.topology' 'input_topology.$input_source.topology.ext' &&
+            ln -s '$input_source.trajectory' 'input_trajectory.$input_source.trajectory.ext' &&
+            topology_path='input_topology.$input_source.topology.ext' &&
+            trajectory_path='input_trajectory.$input_source.trajectory.ext' &&
+        #end if
+        #if str($input_source.chain_scope.mode) == "all"
+            chain_selector='all' &&
+        #else
+            chain_selector='$input_source.chain_scope.chain' &&
+        #end if
+        python3 '$__tool_directory__/rmsx_preflight.py'
+            --topology "\${topology_path}"
+            --trajectory "\${trajectory_path}"
+            --selector "\${chain_selector}"
+            --num-slices '$input_source.num_slices'
+            --start-frame '$analysis.start_frame'
+            #if str($analysis.end_frame).strip() not in ("", "None")
+                --end-frame '$analysis.end_frame'
+            #end if
+            --analysis-type '$analysis.analysis_type'
+            > '$log' 2>&1 &&
+        RMSX_NO_CITATION=1 python3 '$__tool_directory__/rmsx_multichain.py'
+            --topology "\${topology_path}"
+            --trajectory "\${trajectory_path}"
+            --output-dir rmsx_output
+            --galaxy-output-dir galaxy_outputs
+            --chain-mode '$input_source.chain_scope.mode'
+            #if str($input_source.chain_scope.mode) == "selected"
+                --chains '$input_source.chain_scope.chain'
+            #end if
+            --num-slices '$input_source.num_slices'
+            --start-frame '$analysis.start_frame'
+            #if str($analysis.end_frame).strip() not in ("", "None")
+                --end-frame '$analysis.end_frame'
+            #end if
+            --analysis-type '$analysis.analysis_type'
+            --summary-n '$analysis.summary_n'
+            --palette '$palette'
+            #if str($analysis.interpolate) == "--interpolate"
+                --interpolate
+            #end if
+            --plot-helper '$__tool_directory__/rmsx_static_plots.py'
+            >> '$log' 2>&1 &&
+        python3 '$__tool_directory__/flipbook_molstar_report.py'
+            --pdb-dir galaxy_outputs/pdb_slices
+            --rmsx-table galaxy_outputs/combined_rmsx.csv
+            --mask-table galaxy_outputs/combined_mask.csv
+            --rmsd-dir galaxy_outputs/rmsd_tables
+            --rmsf-dir galaxy_outputs/rmsf_tables
+            --chain-index galaxy_outputs/viewer_chain_index.json
+            --palette '$palette'
+            --manifest-output '$viewer_manifest'
+            --title 'RMSX Flipbook viewer'
+    ]]></command>
+    <inputs>
+        <conditional name="input_source">
+            <param name="source" type="select" display="radio" label="Input source">
+                <option value="history">Use datasets from history</option>
+                <option value="example" selected="true">Load example data: 1UBQ plus mon_sys</option>
+            </param>
+            <when value="history">
+                <param name="topology" type="data" format="pdb" label="Topology or structure file" help="The current wrapper supports PDB topology/structure input. Broader MDAnalysis-readable topology formats are tracked as follow-up work."/>
+                <param name="trajectory" type="data" format="dcd,xtc" label="Trajectory file" help="The current wrapper supports DCD and XTC trajectory input. Broader MDAnalysis-readable trajectory formats are tracked as follow-up work."/>
+                <conditional name="chain_scope">
+                    <param name="mode" type="select" label="Chains to analyze">
+                        <option value="all" selected="true">All valid chains</option>
+                        <option value="selected">Selected chains or segments</option>
+                    </param>
+                    <when value="all"/>
+                    <when value="selected">
+                        <param argument="--chain" type="text" value="A" label="Chain/segment selectors" help="Enter one or more comma-separated chain or segment IDs, such as A,B. The preflight check reports the available IDs.">
+                            <validator type="regex" message="Use comma-separated letters, numbers, underscores, hyphens, or periods.">^[A-Za-z0-9_.-]+(,[A-Za-z0-9_.-]+)*$</validator>
+                        </param>
+                    </when>
+                </conditional>
+                <param argument="--num_slices" type="integer" value="9" min="1" label="Number of trajectory slices"/>
+            </when>
+            <when value="example">
+                <conditional name="chain_scope">
+                    <param name="mode" type="select" label="Chains to analyze">
+                        <option value="all" selected="true">All valid chains</option>
+                        <option value="selected">Selected chains or segments</option>
+                    </param>
+                    <when value="all"/>
+                    <when value="selected">
+                        <param argument="--chain" type="text" value="7" label="Chain/segment selectors" help="The bundled 1UBQ/mon_sys example uses segment ID 7.">
+                            <validator type="regex" message="Use comma-separated letters, numbers, underscores, hyphens, or periods.">^[A-Za-z0-9_.-]+(,[A-Za-z0-9_.-]+)*$</validator>
+                        </param>
+                    </when>
+                </conditional>
+                <param argument="--num_slices" type="integer" value="9" min="1" label="Number of trajectory slices"/>
+            </when>
+        </conditional>
+        <section name="analysis" title="RMSX analysis options" expanded="false">
+            <param argument="--start_frame" type="integer" value="0" min="0" label="Start frame" help="Zero-based first trajectory frame to include."/>
+            <param argument="--end_frame" type="integer" optional="true" min="0" label="End frame" help="Optional zero-based last trajectory frame to include. Leave blank to analyze through the final frame."/>
+            <param argument="--analysis_type" type="select" label="Analysis type" help="Passed to RMSX with --analysis_type. The default protein mode matches the current RMSX/Flipbook path.">
+                <option value="protein" selected="true">Protein</option>
+                <option value="dna">DNA</option>
+                <option value="rna">RNA</option>
+                <option value="generic">Generic</option>
+            </param>
+            <param argument="--summary_n" type="integer" value="3" min="1" label="Summary residue count" help="Number of top-changing residues RMSX should include in its summary outputs."/>
+            <param argument="--interpolate" type="boolean" checked="false" truevalue="--interpolate" falsevalue="--no-interpolate" label="Interpolate RMSX slice values" help="Disabled by default to preserve the current validated wrapper behavior."/>
+        </section>
+        <param argument="--palette" type="select" label="Molstar and plot color palette" help="Initial color ramp used by the native Galaxy Molstar Flipbook visualization and the static RMSX heatmap/triple plots.">
+            <option value="viridis" selected="true">Viridis</option>
+            <option value="magma">Magma</option>
+            <option value="inferno">Inferno</option>
+            <option value="plasma">Plasma</option>
+            <option value="cividis">Cividis</option>
+            <option value="rocket">Rocket</option>
+            <option value="mako">Mako</option>
+            <option value="turbo">Turbo</option>
+        </param>
+    </inputs>
+    <outputs>
+        <collection type="list" name="rmsx_tables" label="${tool.name} on ${on_string}: per-chain RMSX tables">
+            <discover_datasets directory="galaxy_outputs/rmsx_tables" pattern="(?P&lt;designation&gt;chain_.+)\.csv" ext="csv"/>
+        </collection>
+        <collection type="list" name="rmsd_tables" label="${tool.name} on ${on_string}: per-chain RMSD tables">
+            <discover_datasets directory="galaxy_outputs/rmsd_tables" pattern="(?P&lt;designation&gt;chain_.+)\.csv" ext="csv"/>
+        </collection>
+        <collection type="list" name="rmsf_tables" label="${tool.name} on ${on_string}: per-chain RMSF tables">
+            <discover_datasets directory="galaxy_outputs/rmsf_tables" pattern="(?P&lt;designation&gt;chain_.+)\.csv" ext="csv"/>
+        </collection>
+        <collection type="list" name="mask_tables" label="${tool.name} on ${on_string}: per-chain mask metadata">
+            <discover_datasets directory="galaxy_outputs/mask_tables" pattern="(?P&lt;designation&gt;chain_.+)\.csv" ext="csv"/>
+        </collection>
+        <collection type="list" name="pdb_slices" label="${tool.name} on ${on_string}: PDB slices">
+            <discover_datasets directory="galaxy_outputs/pdb_slices" pattern="(?P&lt;designation&gt;slice_[0-9]+_first_frame)\.pdb" ext="pdb"/>
+        </collection>
+        <collection type="list" name="heatmap_plots" label="${tool.name} on ${on_string}: per-chain RMSX heatmaps">
+            <discover_datasets directory="galaxy_outputs/heatmap_plots" pattern="(?P&lt;designation&gt;chain_.+)\.png" ext="png"/>
+        </collection>
+        <collection type="list" name="triple_plots" label="${tool.name} on ${on_string}: per-chain RMSX triple plots">
+            <discover_datasets directory="galaxy_outputs/triple_plots" pattern="(?P&lt;designation&gt;chain_.+)\.png" ext="png"/>
+        </collection>
+        <data name="log" format="txt" label="${tool.name} on ${on_string}: execution log"/>
+        <data name="viewer_manifest" format="rmsx.json" label="${tool.name} on ${on_string}: RMSX Flipbook viewer manifest - open with Visualize"/>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="9">
+            <param name="input_source|source" value="history"/>
+            <param name="input_source|topology" value="1UBQ.pdb" ftype="pdb"/>
+            <param name="input_source|trajectory" value="mon_sys.xtc" ftype="xtc"/>
+            <param name="input_source|chain_scope|mode" value="all"/>
+            <param name="input_source|num_slices" value="3"/>
+            <param name="palette" value="viridis"/>
+            <output_collection name="rmsx_tables" type="list" count="1">
+                <element name="chain_7" ftype="csv">
+                    <assert_contents>
+                        <has_line line="ResidueID,ChainID,slice_1.dcd,slice_2.dcd,slice_3.dcd"/>
+                        <has_line_matching expression="1,7,[0-9.]+,[0-9.]+,[0-9.]+"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="rmsd_tables" type="list" count="1">
+                <element name="chain_7" ftype="csv">
+                    <assert_contents>
+                        <has_line line="Frame,Time,RMSD"/>
+                        <has_line_matching expression="0\.0,0\.0,[0-9.eE+-]+"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="rmsf_tables" type="list" count="1">
+                <element name="chain_7" ftype="csv">
+                    <assert_contents>
+                        <has_line line="ResidueID,RMSF"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="mask_tables" type="list" count="1">
+                <element name="chain_7" ftype="csv">
+                    <assert_contents>
+                        <has_line line="ResidueID,ChainID,Masked"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="pdb_slices" type="list" count="3">
+                <element name="slice_1_first_frame" ftype="pdb">
+                    <assert_contents>
+                        <has_text text="ATOM"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output name="log">
+                <assert_contents>
+                    <has_text text="Flipbook Galaxy preflight"/>
+                    <has_text text="analysis type: protein"/>
+                    <has_text text="preflight status: ok"/>
+                    <has_text text="RMSX static plots written"/>
+                </assert_contents>
+            </output>
+            <output_collection name="heatmap_plots" type="list" count="1">
+                <element name="chain_7" ftype="png">
+                    <assert_contents>
+                        <has_size min="1000"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="triple_plots" type="list" count="1">
+                <element name="chain_7" ftype="png">
+                    <assert_contents>
+                        <has_size min="1000"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output name="viewer_manifest" ftype="rmsx.json">
+                <assert_contents>
+                    <has_text text="&quot;schemaVersion&quot;: &quot;flipbook-molstar-viewer/v1&quot;"/>
+                    <has_text text="&quot;title&quot;: &quot;RMSX Flipbook viewer&quot;"/>
+                    <has_text text="&quot;slices&quot;"/>
+                    <has_text text="&quot;residues&quot;"/>
+                    <has_text text="&quot;summaries&quot;"/>
+                    <has_text text="&quot;domain&quot;"/>
+                    <has_text text="&quot;maskSummary&quot;"/>
+                    <has_text text="&quot;presentation&quot;"/>
+                    <has_text text="&quot;visualMapping&quot;"/>
+                    <has_text text="&quot;rotationModel&quot;"/>
+                    <has_text text="&quot;molstarRenderStyle&quot;"/>
+                    <has_text text="&quot;analysis&quot;"/>
+                    <has_text text="&quot;rmsdPointLimit&quot;: 2048"/>
+                    <has_text text="&quot;timeUnit&quot;: &quot;ns&quot;"/>
+                    <has_text text="&quot;chainAtomRanges&quot;"/>
+                    <has_text text="&quot;filename&quot;: &quot;slice_1_first_frame.pdb&quot;"/>
+                    <has_text text="&quot;rmsxColumn&quot;: &quot;slice_1.dcd&quot;"/>
+                    <has_text text="ATOM"/>
+                    <has_text text="&quot;name&quot;: &quot;viridis&quot;"/>
+                    <has_text text="&quot;mako&quot;"/>
+                    <has_text text="&quot;turbo&quot;"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="9">
+            <param name="input_source|source" value="example"/>
+            <param name="input_source|chain_scope|mode" value="all"/>
+            <param name="input_source|num_slices" value="3"/>
+            <param name="palette" value="turbo"/>
+            <output_collection name="rmsx_tables" type="list" count="1">
+                <element name="chain_7" ftype="csv">
+                    <assert_contents>
+                        <has_line line="ResidueID,ChainID,slice_1.dcd,slice_2.dcd,slice_3.dcd"/>
+                        <has_line_matching expression="1,7,[0-9.]+,[0-9.]+,[0-9.]+"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="pdb_slices" type="list" count="3">
+                <element name="slice_1_first_frame" ftype="pdb">
+                    <assert_contents>
+                        <has_text text="ATOM"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output name="log">
+                <assert_contents>
+                    <has_text text="Flipbook Galaxy preflight"/>
+                    <has_text text="matched segment IDs: 7"/>
+                    <has_text text="preflight status: ok"/>
+                    <has_text text="RMSX static plots written"/>
+                </assert_contents>
+            </output>
+            <output_collection name="heatmap_plots" type="list" count="1">
+                <element name="chain_7" ftype="png">
+                    <assert_contents>
+                        <has_size min="1000"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="triple_plots" type="list" count="1">
+                <element name="chain_7" ftype="png">
+                    <assert_contents>
+                        <has_size min="1000"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output name="viewer_manifest" ftype="rmsx.json">
+                <assert_contents>
+                    <has_text text="&quot;schemaVersion&quot;: &quot;flipbook-molstar-viewer/v1&quot;"/>
+                    <has_text text="&quot;filename&quot;: &quot;slice_1_first_frame.pdb&quot;"/>
+                    <has_text text="&quot;name&quot;: &quot;turbo&quot;"/>
+                    <has_text text="#30123B"/>
+                    <has_text text="#7A0403"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="9">
+            <param name="input_source|source" value="history"/>
+            <param name="input_source|topology" value="protease_backbone.pdb" ftype="pdb"/>
+            <param name="input_source|trajectory" value="protease_compact.xtc" ftype="xtc"/>
+            <param name="input_source|chain_scope|mode" value="all"/>
+            <param name="input_source|num_slices" value="9"/>
+            <param name="palette" value="viridis"/>
+            <output_collection name="rmsx_tables" type="list" count="2">
+                <element name="chain_A" ftype="csv">
+                    <assert_contents>
+                        <has_line_matching expression="1,A,[0-9.]+(?:,[0-9.]+){8}"/>
+                    </assert_contents>
+                </element>
+                <element name="chain_B" ftype="csv">
+                    <assert_contents>
+                        <has_line_matching expression="1,B,[0-9.]+(?:,[0-9.]+){8}"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="rmsd_tables" type="list" count="2"/>
+            <output_collection name="rmsf_tables" type="list" count="2"/>
+            <output_collection name="mask_tables" type="list" count="2"/>
+            <output_collection name="pdb_slices" type="list" count="9">
+                <element name="slice_1_first_frame" ftype="pdb">
+                    <assert_contents>
+                        <has_text text=" A   1"/>
+                        <has_text text=" B   1"/>
+                        <has_n_lines n="201"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="heatmap_plots" type="list" count="2">
+                <element name="chain_A" ftype="png">
+                    <assert_contents>
+                        <has_size min="1000"/>
+                    </assert_contents>
+                </element>
+                <element name="chain_B" ftype="png">
+                    <assert_contents>
+                        <has_size min="1000"/>
+                    </assert_contents>
+                </element>
+            </output_collection>
+            <output_collection name="triple_plots" type="list" count="2"/>
+            <output name="log">
+                <assert_contents>
+                    <has_text text="Resolved RMSX segment IDs: A, B"/>
+                    <has_text text="Galaxy outputs staged for 2 chain(s)."/>
+                </assert_contents>
+            </output>
+            <output name="viewer_manifest" ftype="rmsx.json">
+                <assert_contents>
+                    <has_text text="&quot;key&quot;: &quot;A:1&quot;"/>
+                    <has_text text="&quot;key&quot;: &quot;B:1&quot;"/>
+                    <has_text text="&quot;id&quot;: &quot;A&quot;"/>
+                    <has_text text="&quot;id&quot;: &quot;B&quot;"/>
+                    <has_text text="&quot;chainAtomRanges&quot;"/>
+                    <has_text text="&quot;sourcePointCount&quot;"/>
+                    <has_text text=" A   1"/>
+                    <has_text text=" B   1"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="9">
+            <param name="input_source|source" value="history"/>
+            <param name="input_source|topology" value="protease_backbone.pdb" ftype="pdb"/>
+            <param name="input_source|trajectory" value="protease_compact.xtc" ftype="xtc"/>
+            <param name="input_source|chain_scope|mode" value="selected"/>
+            <param name="input_source|chain_scope|chain" value="B"/>
+            <param name="input_source|num_slices" value="3"/>
+            <param name="analysis|start_frame" value="2"/>
+            <param name="analysis|end_frame" value="18"/>
+            <output_collection name="rmsx_tables" type="list" count="1">
+                <element name="chain_B" ftype="csv"><assert_contents>
+                    <has_line_matching expression="1,B,[0-9.]+,[0-9.]+,[0-9.]+"/>
+                </assert_contents></element>
+            </output_collection>
+            <output_collection name="rmsd_tables" type="list" count="1"/>
+            <output_collection name="rmsf_tables" type="list" count="1"/>
+            <output_collection name="heatmap_plots" type="list" count="1"/>
+            <output_collection name="triple_plots" type="list" count="1"/>
+            <output name="viewer_manifest" ftype="rmsx.json"><assert_contents>
+                <has_text text="&quot;key&quot;: &quot;B:1&quot;"/>
+                <not_has_text text="&quot;key&quot;: &quot;A:1&quot;"/>
+                <has_text text="&quot;startFrame&quot;: 2"/>
+                <has_text text="&quot;endFrame&quot;: 16"/>
+            </assert_contents></output>
+        </test>
+        <test expect_failure="true">
+            <param name="input_source|source" value="example"/>
+            <param name="input_source|chain_scope|mode" value="selected"/>
+            <param name="input_source|chain_scope|chain" value="missing_segment"/>
+            <param name="input_source|num_slices" value="3"/>
+            <param name="palette" value="viridis"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. image:: $PATH_TO_IMAGES/flipbook_logo.png
+   :alt: RMSX Flipbook logo
+   :width: 280px
+   :align: center
+
+.. class:: infomark
+
+**What it does**
+
+RMSX Flipbook runs RMSX on a molecular dynamics trajectory, divides the selected
+frame window into time slices, and reports residue-level fluctuation for each
+slice. It also creates a typed ``rmsx.json`` viewer manifest, which renders the
+generated PDB slices with Molstar through Galaxy's Visualize action.
+
+_____
+
+.. class:: infomark
+
+**Inputs**
+
+Use either the bundled 1UBQ example or datasets from the current history. The
+current wrapper supports PDB topology/structure input with DCD or XTC trajectory
+input. All valid protein chains are analyzed by default. To limit the run, choose
+selected chains or segments and enter comma-separated selectors such as ``A,B``.
+
+RMSX divides the requested frame window into equal-sized slices and discards
+trailing remainder frames. The manifest records the actual first and last frame
+and time of each analyzed slice.
+
+Before RMSX runs, a preflight check reports available chain and segment IDs and
+catches common load, selector, frame-window, and slice-count problems.
+
+The RMSX options control the frame window, analysis type, summary residue count,
+interpolation, and shared color palette. The palette is used by both the static
+plots and the interactive viewer.
+
+_____
+
+.. class:: infomark
+
+**Outputs**
+
+The tool produces per-chain collections of RMSX, RMSD, RMSF, and mask metadata
+tables; one combined PDB slice collection with RMSX values written into the
+B-factor column; per-chain static RMSX heatmap and triple-panel PNG collections;
+an execution log; and one combined viewer manifest.
+
+Open the manifest with Galaxy's Visualize action and choose ``RMSX Flipbook``.
+The manifest uses schema version ``flipbook-molstar-viewer/v1`` and is emitted
+as typed Galaxy ``rmsx.json`` data for the native RMSX Flipbook visualization.
+    ]]></help>
+    <expand macro="citations"/>
+</tool>

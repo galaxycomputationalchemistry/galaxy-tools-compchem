@@ -15,7 +15,8 @@ on:
       - '*'
 env:
   GALAXY_FORK: galaxyproject
-  GALAXY_BRANCH: release_25.0
+  GALAXY_BRANCH: dev
+  GALAXY_BRANCH: release_26.1
   MAX_CHUNKS: 4
   MAX_FILE_SIZE: 1M
 concurrency:
@@ -25,7 +26,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   # the setup job does two things:
-  # 1. cache the pip cache and .planemo
+  # 1. cache downloaded Python dependencies
   # 2. determine the list of changed repositories
   # it produces one artifact which contains
   # - a file with the latest SHA from the chosen branch of the Galaxy repo
@@ -46,17 +47,27 @@ jobs:
         python-version: ['3.11']
     steps:
     - name: Print github context properties
+      env:
+        EVENT_HEAD_REF: ${{ github.head_ref }}
       run: |
         echo 'event: ${{ github.event_name }}'
         echo 'sha: ${{ github.sha }}'
         echo 'ref: ${{ github.ref }}'
-        echo 'head_ref: ${{ github.head_ref }}'
+        echo "head_ref: $EVENT_HEAD_REF"
         echo 'base_ref: ${{ github.base_ref }}'
         echo 'event.before: ${{ github.event.before }}'
         echo 'event.after: ${{ github.event.after }}'
     - name: Determine latest commit in the Galaxy repo
       id: get-galaxy-sha
-      run: echo "galaxy-head-sha=$(git ls-remote https://github.com/${{ env.GALAXY_FORK }}/galaxy refs/heads/${{ env.GALAXY_BRANCH }} | cut -f1)" >> $GITHUB_OUTPUT
+      env:
+        RESOLVE_GALAXY_FORK: ${{ env.GALAXY_FORK }}
+        RESOLVE_GALAXY_BRANCH: ${{ env.GALAXY_BRANCH }}
+      run: |
+        set -euo pipefail
+        galaxy_sha=$(git ls-remote "https://github.com/$RESOLVE_GALAXY_FORK/galaxy" "refs/heads/$RESOLVE_GALAXY_BRANCH" | cut -f1)
+        [[ "$galaxy_sha" =~ ^[0-9a-f]{40}$ ]]
+        echo "galaxy-head-sha=$galaxy_sha" >> "$GITHUB_OUTPUT"
+        echo "Galaxy commit: $galaxy_sha" >> "$GITHUB_STEP_SUMMARY"
     - uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
@@ -66,12 +77,6 @@ jobs:
       with:
         path: ~/.cache/pip
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ steps.get-galaxy-sha.outputs.galaxy-head-sha }}
-    - name: Cache .planemo
-      uses: actions/cache@v4
-      id: cache-planemo
-      with:
-        path: ~/.planemo
-        key: planemo_cache_py_${{ matrix.python-version }}_gxy_${{ steps.get-galaxy-sha.outputs.galaxy-head-sha }}
     # Install the `wheel` package so that when installing other packages which
     # are not available as wheels, pip will build a wheel for them, which can be cached.
     - name: Install wheel
@@ -85,13 +90,16 @@ jobs:
       uses: galaxyproject/planemo-ci-action@v1
       id: discover
       with:
-        create-cache: ${{ steps.cache-pip.outputs.cache-hit != 'true' || steps.cache-planemo.outputs.cache-hit != 'true' }}
+        # Cached git clones require a branch name; tests download the resolved SHA.
+        create-cache: false
         galaxy-fork: ${{ env.GALAXY_FORK }}
-        galaxy-branch: ${{ env.GALAXY_BRANCH }}
+        galaxy-branch: ${{ steps.get-galaxy-sha.outputs.galaxy-head-sha }}
         max-chunks: ${{ env.MAX_CHUNKS }}
         python-version: ${{ matrix.python-version }}
     - name: Show commit range
       run: echo '${{ steps.discover.outputs.commit-range }}'
+    - name: Validate CI report completeness checks
+      run: python -m unittest discover -s .github -p 'test_check_test_reports.py' -v
     - name: Show repository list
       run: echo '${{ steps.discover.outputs.repository-list }}'
     - name: Show tool list
@@ -132,6 +140,13 @@ jobs:
       if: ${{ github.event_name != 'pull_request' }}
       run:
         echo "FAIL_LEVEL=error" >> "$GITHUB_ENV"
+    - name: Load upstream Galaxy datatype registry
+      env:
+        REGISTRY_GALAXY_FORK: ${{ env.GALAXY_FORK }}
+        REGISTRY_GALAXY_SHA: ${{ needs.setup.outputs.galaxy-head-sha }}
+      run: |
+        bash .github/prepare_datatypes.sh "$REGISTRY_GALAXY_FORK" "$REGISTRY_GALAXY_SHA" "$RUNNER_TEMP/datatypes_conf.xml"
+        echo "DATATYPES_CONF=$RUNNER_TEMP/datatypes_conf.xml" >> "$GITHUB_ENV"
     - name: Planemo lint
       uses: galaxyproject/planemo-ci-action@v1
       id: lint
@@ -186,7 +201,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04]
+        os: [ubuntu-24.04]
         r-version: ['release']
     steps:
     - uses: actions/checkout@v4
@@ -231,7 +246,7 @@ jobs:
       run: |
         touch file_size_report.txt
         git diff --diff-filter=d --name-only ${{ needs.setup.outputs.commit-range }} > git.diff
-        while read line; do
+        while IFS= read -r line; do
           find "$line" -type f -size +${{ env.MAX_FILE_SIZE }} >> file_size_report.txt
         done < git.diff
         if [[ -s file_size_report.txt ]]; then
@@ -279,12 +294,6 @@ jobs:
       with:
         path: ~/.cache/pip
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}
-    - name: Cache .planemo
-      uses: actions/cache@v4
-      id: cache-planemo
-      with:
-        path: ~/.planemo
-        key: planemo_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}
     - name: Get number of CPU cores
       uses: SimenB/github-actions-cpu-cores@v2
       id: cpu-cores
@@ -297,13 +306,21 @@ jobs:
         mode: test
         repository-list: ${{ needs.setup.outputs.repository-list }}
         galaxy-fork: ${{ env.GALAXY_FORK }}
-        galaxy-branch: ${{ env.GALAXY_BRANCH }}
+        galaxy-branch: ${{ needs.setup.outputs.galaxy-head-sha }}
+        additional-planemo-options: --no_cache_galaxy
         chunk: ${{ matrix.chunk }}
         chunk-count: ${{ needs.setup.outputs.chunk-count }}
         galaxy-slots: ${{ steps.cpu-cores.outputs.count }}
         # Limit each test to 15 minutes
         test_timeout: 1800
+    - name: Preserve and validate each tool-group report
+      run: |
+        mkdir -p upload/raw-reports
+        cp tool_list_chunk.txt upload/tool-groups.txt
+        cp json_output/*.json upload/raw-reports/
+        python .github/check_test_reports.py chunk upload
     - uses: actions/upload-artifact@v4
+      if: ${{ always() }}
       with:
         name: 'Tool test output ${{ matrix.chunk }}'
         path: upload
@@ -322,6 +339,9 @@ jobs:
       matrix:
         python-version: ['3.11']
     steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
     - uses: actions/download-artifact@v4
       with:
         path: artifacts
@@ -341,11 +361,19 @@ jobs:
         mode: combine
         html-report: true
         markdown-report: true
+    - name: Require every selected tool test and chunk report
+      env:
+        EXPECTED_REPOSITORIES: ${{ needs.setup.outputs.repository-list }}
+        EXPECTED_CHUNKS: ${{ needs.setup.outputs.chunk-count }}
+      run: |
+        printf '%s\n' "$EXPECTED_REPOSITORIES" > expected-repositories.txt
+        python .github/check_test_reports.py combined --repositories expected-repositories.txt --artifacts artifacts --report upload/tool_test_output.json --chunks "$EXPECTED_CHUNKS"
     - uses: actions/upload-artifact@v4
+      if: ${{ always() }}
       with:
         name: 'All tool test results'
         path: upload
-    - run: cat upload/tool_test_output.md >> $GITHUB_STEP_SUMMARY
+    - run: cat upload/tool_test_output.md >> "$GITHUB_STEP_SUMMARY"
     - name: Check outputs
       uses: galaxyproject/planemo-ci-action@v1
       id: check
@@ -353,7 +381,9 @@ jobs:
         mode: check
     - name: Check if all test chunks succeeded
       run: |
-        NFILES=$(ls artifacts/ | grep "Tool test output" | wc -l)
+        shopt -s nullglob
+        reports=(artifacts/"Tool test output "*)
+        NFILES=${#reports[@]}
         if [[ "${{ needs.setup.outputs.chunk-count }}" != "$NFILES" ]]; then
           exit 1
         fi
@@ -361,7 +391,7 @@ jobs:
   # deploy the tools to the toolsheds (first TTS for testing)
   deploy:
     name: Deploy
-    needs: [setup, lint, combine_outputs]
+    needs: [setup, lint, lintr, test, combine_outputs]
     if: ${{ (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' ) && github.repository_owner == 'galaxycomputationalchemistry' }}
     runs-on: ubuntu-latest
     strategy:
@@ -420,22 +450,25 @@ jobs:
 
   determine-success:
     name: Check workflow success
-    needs: [setup, lint, flake8, lintr, file_sizes, combine_outputs]
+    needs: [setup, lint, flake8, lintr, file_sizes, test, combine_outputs]
     if: ${{ always() && github.ref != 'refs/heads/master' && github.ref != 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
+    - name: Check setup status
+      if: ${{ needs.setup.result != 'success' }}
+      run: exit 1
     - name: Check tool lint status
-      if: ${{ needs.lint.result != 'success' && needs.flake8.result != 'skipped' }}
+      if: ${{ (needs.setup.outputs.repository-list != '' || needs.setup.outputs.tool-list != '') && needs.lint.result != 'success' }}
       run: exit 1
     - name: Indicate Python script lint status
-      if: ${{ needs.flake8.result != 'success' && needs.flake8.result != 'skipped' }}
+      if: ${{ github.event_name == 'pull_request' && needs.setup.outputs.repository-list != '' && needs.flake8.result != 'success' }}
       run: exit 1
     - name: Indicate R script lint status
-      if: ${{ needs.lintr.result != 'success' && needs.lintr.result != 'skipped' }}
+      if: ${{ needs.setup.outputs.repository-list != '' && needs.lintr.result != 'success' }}
       run: exit 1
     - name: Indicate file size check status
-      if: ${{ needs.file_sizes.result != 'success' && needs.file_sizes.result != 'skipped' }}
+      if: ${{ github.event_name == 'pull_request' && needs.setup.outputs.repository-list != '' && needs.file_sizes.result != 'success' }}
       run: exit 1
     - name: Check tool test status
-      if: ${{ needs.combine_outputs.result != 'success' && needs.combine_outputs.result != 'skipped' }}
+      if: ${{ needs.setup.outputs.repository-list != '' && (needs.test.result != 'success' || needs.combine_outputs.result != 'success') }}
       run: exit 1
