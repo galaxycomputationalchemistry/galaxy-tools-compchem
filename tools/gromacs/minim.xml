@@ -95,18 +95,20 @@
         <expand macro="log_outputs" />
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="2">
             <param name="gro_input" value="str_ions.gro" />
             <param name="top_input" value="topol_md.top" />
-            <param name="mdpfile" value="default" />
-            <param name="integrator" value="steep" />
-            <param name="cutoffscheme" value="Verlet" />
-            <param name="coulombtype" value="PME" />
-            <param name="rcoulomb" value="1.0" />
-            <param name="rlist" value="1.0" />
-            <param name="md_steps" value="50000" />
-            <param name="emtol" value="1000.0" />
-            <param name="emstep" value="0.01" />
+            <conditional name="mdp">
+                <param name="mdpfile" value="default" />
+                <param name="integrator" value="steep" />
+                <param name="cutoffscheme" value="Verlet" />
+                <param name="coulombtype" value="PME" />
+                <param name="rcoulomb" value="1.0" />
+                <param name="rlist" value="1.0" />
+                <param name="md_steps" value="50000" />
+                <param name="emtol" value="1000.0" />
+                <param name="emstep" value="0.01" />
+            </conditional>
             <output name="output1" file="minim.gro" ftype="gro" lines_diff="20" />
             <output name="output2" ftype="edr" >
                 <assert_contents>
@@ -114,11 +116,13 @@
                 </assert_contents>
             </output>
         </test>
-        <test>
+        <test expect_num_outputs="2">
             <param name="gro_input" value="str_ions.gro" />
             <param name="top_input" value="topol_md.top" />
-            <param name="mdpfile" value="custom" />
-            <param name="mdp_input" value="minim.mdp" />
+            <conditional name="mdp">
+                <param name="mdpfile" value="custom" />
+                <param name="mdp_input" value="minim.mdp" />
+            </conditional>
             <output name="output1" file="minim.gro" ftype="gro" lines_diff="20" />
             <output name="output2" ftype="edr" >
                 <assert_contents>
