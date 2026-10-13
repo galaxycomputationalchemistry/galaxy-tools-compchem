@@ -2,7 +2,7 @@
      <description>interactively build and run tLEaP files to set up systems with AmberTools</description>
      <macros>
           <import>macros.xml</import>
-          <token name="@GALAXY_VERSION@">0</token>
+          <token name="@GALAXY_VERSION@">1</token>
      </macros>
      <expand macro="requirements" />
      <version_command>tleap -h</version_command>
@@ -518,7 +518,7 @@ quit
                     </when>
                     <when value="loadMol3">
                          <param name="loadMol3_assign" label="Assign to variable named" type="text" value="" help="This is the molecule's residue name as it appears in the mol2 file."/>
-                         <expand macro="loadfile" data_format="mol3"/>
+                         <expand macro="loadfile" data_format="txt"/>
                     </when>
                     <when value="loadOff">
                          <expand macro="loadfile" />
@@ -651,7 +651,6 @@ quit
                     </when>
                     <when value="solvateDontClip">
                          <expand macro="solvateparams" />
-                         <param name="arg_closeness" label="closeness value" type="text" value="" help="NUMBER"/>
                     </when>
                     <when value="solvateOct">
                          <expand macro="solvateparams" />
@@ -702,8 +701,8 @@ quit
           <collection name="output_mol2" type="list" label="Collection of mol2" format="mol2">
                <discover_datasets pattern="(?P&lt;designation&gt;.+)\.mol2" directory="out" format="mol2"/>
           </collection>
-          <collection name="output_mol3" type="list" label="Collection of mol3" format="mol3">
-               <discover_datasets pattern="(?P&lt;designation&gt;.+)\.mol3" directory="out" format="mol3"/>
+          <collection name="output_mol3" type="list" label="Collection of mol3" format="txt">
+               <discover_datasets pattern="(?P&lt;designation&gt;.+)\.mol3" directory="out" format="txt"/>
           </collection>
      </outputs>
      <tests>

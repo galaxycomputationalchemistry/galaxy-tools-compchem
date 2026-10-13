@@ -2,7 +2,7 @@
   <description>to AMBER prmtop in preparation for MMGBSA/MMPBSA</description>
   <macros>
     <import>macros.xml</import>
-    <token name="@GALAXY_VERSION@">0</token>
+    <token name="@GALAXY_VERSION@">1</token>
   </macros>
   <expand macro="requirements">
     <requirement type="package" version="3.4.3">parmed</requirement>
@@ -192,8 +192,8 @@ for system in systems:
   <tests>
     <test>
       <!--example in this test is not solvated but sufficient -->
-      <param name="fmt" value="AMBER"/>
       <conditional name="param_inputs">
+        <param name="fmt" value="AMBER"/>
         <param name="top_in" value="complex.prmtop"/>
       </conditional>
       <param name="stripmask_ligand" value="!:RAL"/>
@@ -225,8 +225,8 @@ for system in systems:
     </test>
     <test>
       <!--example in this test is from @sbrays' gromacs tests. It has no ligand but is sufficient and will not take extra space in the repo! -->
-      <param name="fmt" value="GROMACS"/>
       <conditional name="param_inputs">
+        <param name="fmt" value="GROMACS"/>
         <param name="top_in" value="topol_solv.top"/>
         <param name="str_in" value="solv_ions.gro"/>
       </conditional>
@@ -263,14 +263,18 @@ for system in systems:
     </test>
     <test>
       <!-- test with removing dihedrals and periodicity -->
-      <param name="fmt" value="GROMACS"/>
       <conditional name="param_inputs">
+        <param name="fmt" value="GROMACS"/>
         <param name="top_in" value="topol_solv.top"/>
         <param name="str_in" value="solv_ions.gro"/>
       </conditional>
       <!-- dihedrals and periodicity -->
-      <param name="removedihe" value="--removedihe"/>
-      <param name="removebox" value="--removebox"/>
+      <conditional name="param_inputs">
+        <section name="modbehaviour">
+          <param name="removedihe" value="true"/>
+          <param name="removebox" value="true"/>
+        </section>
+      </conditional>
       <!-- pretending CL is a ligand -->
       <param name="stripmask_ligand" value="!:CL"/>
       <param name="stripmask_receptor" value=":NA,CL,SOL,WAT"/>

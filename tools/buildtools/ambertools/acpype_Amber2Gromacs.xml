@@ -2,7 +2,7 @@
     <description>using acpype</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
     <expand macro="requirements">
         <requirement type="package" version="2021.02.05.22.15">acpype</requirement>

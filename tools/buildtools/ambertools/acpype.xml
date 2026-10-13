@@ -2,7 +2,7 @@
     <description>using acpype</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
     <expand macro="requirements">
         <requirement type="package" version="2021.02.05.22.15">acpype</requirement>
@@ -41,7 +41,7 @@
         </data>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="2">
             <param name="input1" value="JZ4.mol2"/>
             <param name="save_gro" value="True"/>
             <param name="charge_method" value="bcc"/>
@@ -54,7 +54,7 @@
             </output>
             <output name="gro_output" file="base_GMX.gro" lines_diff="2"/>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="input1" value="LigA_output.mol2"/>
             <param name="save_gro" value="false"/>
             <param name="charge_method" value="user"/>

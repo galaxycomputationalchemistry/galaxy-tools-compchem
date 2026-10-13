@@ -2,7 +2,7 @@
     <description>tool for estimating ligand binding affinities</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
     <expand macro="requirements">
         <requirement type="package" version="3.0.1">jinja2</requirement>
@@ -153,23 +153,30 @@ with open("$parameteroutfile",'w+') as f:
         </collection>
     </outputs>
     <tests>
-        <test>
-            <param name="ligand" value="ligand.prmtop" ftype="txt"/>
-            <param name="receptor" value="receptor.prmtop" ftype="txt"/>
-            <param name="complex" value="complex.prmtop" ftype="txt"/>
-            <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
+        <test expect_num_outputs="3">
+            <section name="input">
+                <conditional name="simulation">
+                <param name="simtype" value="single"/>
+                <param name="ligand" value="ligand.prmtop" ftype="txt"/>
+                <param name="receptor" value="receptor.prmtop" ftype="txt"/>
+                <param name="complex" value="complex.prmtop" ftype="txt"/>
+                <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
+                </conditional>
+            </section>
             <conditional name="allparams">
                 <param name="entropy" value="0"/>
                 <param name="keep_files" value="1"/>
             </conditional>
+            <section name="calcdetails">
             <conditional name="gb_pb_calc">
                 <param name="calctype" value="gb"/>
                 <param name="igb" value="2"/>
                 <param name="saltcon" value="0.100"/>
             </conditional>
-            <conditional name="">
+            <conditional name="decomposition">
                 <param name="decomposition" value="no"/>
             </conditional>
+            </section>
             <output name="resultoutfile">
                 <assert_contents>
                 <has_text text="GENERALIZED BORN:"/>
@@ -177,16 +184,22 @@ with open("$parameteroutfile",'w+') as f:
                 </assert_contents>
             </output>
         </test>
-        <test>
-            <param name="ligand" value="ligand.prmtop" ftype="txt"/>
-            <param name="receptor" value="receptor.prmtop" ftype="txt"/>
-            <param name="complex" value="complex.prmtop" ftype="txt"/>
-            <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
+        <test expect_num_outputs="3">
+            <section name="input">
+                <conditional name="simulation">
+                <param name="simtype" value="single"/>
+                <param name="ligand" value="ligand.prmtop" ftype="txt"/>
+                <param name="receptor" value="receptor.prmtop" ftype="txt"/>
+                <param name="complex" value="complex.prmtop" ftype="txt"/>
+                <param name="trajcomplex" value="1err_desolvated_mini.nc" ftype="netcdf"/>
+                </conditional>
+            </section>
             <conditional name="allparams">
                 <param name="startframe" value="1"/>
                 <param name="endframe" value="1"/>
                 <param name="entropy" value="0"/>
             </conditional>
+            <section name="calcdetails">
             <conditional name="gb_pb_calc">
                 <param name="calctype" value="pb"/>
                 <param name="istrng" value="0.100"/>
@@ -194,6 +207,7 @@ with open("$parameteroutfile",'w+') as f:
             <conditional name="decomposition">
                 <param name="decomposition" value="yes"/>
             </conditional>
+            </section>
             <output name="resultoutfile">
                 <assert_contents>
                 <has_text text="POISSON BOLTZMANN:"/>
