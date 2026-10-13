@@ -2,7 +2,7 @@
     <description>of molecular structures</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
     <expand macro="requirements"/>
     <command detect_errors="exit_code"><![CDATA[
@@ -105,8 +105,10 @@
             <param name="structure_input" value="npt.tpr" ftype="tpr"/>
             <param name="ndx_input" value="index.ndx" ftype="ndx"/>
             <param name="index_rmsdgroup" value="3"/>
-            <param name="index_refgroup" value="3"/>
-            <param name="fit_type" value="rot+trans"/>
+            <conditional name="fit">
+                <param name="fit_type" value="rot+trans"/>
+                <param name="index_refgroup" value="3"/>
+            </conditional>
             <param name="mir" value="true"/>
             <param name="outputformat" value="none"/>
             <output name="rmsdmirror_output" ftype="xvg">
@@ -126,13 +128,20 @@
         </test>
         <test expect_num_outputs="2">
             <param name="traj_input" value="npt.xtc"/>
-            <param name="traj2select" value="true"/>
-            <param name="traj_input2" value="nvt.xtc"/>
+            <conditional name="traj2">
+                <param name="traj2select" value="true"/>
+                <param name="traj_input2" value="nvt.xtc"/>
+                <param name="skip" value="1"/>
+                <param name="maxlevel" value="-1"/>
+                <param name="minlevel" value="-1"/>
+            </conditional>
             <param name="structure_input" value="npt.tpr" ftype="tpr"/>
             <param name="ndx_input" value="index.ndx" ftype="ndx"/>
             <param name="index_rmsdgroup" value="3"/>
-            <param name="index_refgroup" value="3"/>
-            <param name="fit_type" value="rot+trans"/>
+            <conditional name="fit">
+                <param name="fit_type" value="rot+trans"/>
+                <param name="index_refgroup" value="3"/>
+            </conditional>
             <param name="mir" value="false"/>
             <param name="outputformat" value="none"/>
             <output name="xpm_output" ftype="xpm">

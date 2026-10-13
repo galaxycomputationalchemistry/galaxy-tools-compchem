@@ -85,10 +85,10 @@
     </xml>
 
     <xml name="xvg_or_tab_outputs" token_name="" token_label="">
-        <data name="output1" format="xvg" from_work_dir="@NAME@.xvg" label="@LABEL@">
+        <data name="output1" format="xvg" from_work_dir="@NAME@.xvg" label="@LABEL@ (XVG)">
             <filter>fmt == 'xvg'</filter>
         </data>
-        <data name="output2" format="tabular" from_work_dir="@NAME@.tabular" label="@LABEL@">
+        <data name="output2" format="tabular" from_work_dir="@NAME@.tabular" label="@LABEL@ (tabular)">
             <filter>fmt == 'tabular'</filter>
         </data>
     </xml>

@@ -2,7 +2,7 @@
     <description>using trjconv and trjcat</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">2</token>
+        <token name="@GALAXY_VERSION@">3</token>
         <xml name="fit_when" token_option="none">
             <when value="@OPTION@">
                 <param name="index_fit" type="text" label="Index of group to use for fitting" help="Index of group to use for fitting - i.e. the group's position in the ndx file (using zero-based numbering, so the first group has index 0).">
@@ -190,91 +190,76 @@
                 <when input="output_format" value="pdb" format="pdb"/>
             </change_format>
         </data>
-        <collection type="list" name="gro_frames" label="Trajectory frames">
+        <collection type="list" name="gro_frames" label="GRO trajectory frames">
             <filter>trj.get("sep") and output_format == "gro"</filter>
             <discover_datasets pattern="(?P&lt;designation&gt;^output[0-9]{9}\.gro$)" ext="gro"/>
         </collection>
-        <collection type="list" name="pdb_frames" label="Trajectory frames">
+        <collection type="list" name="pdb_frames" label="PDB trajectory frames">
             <filter>trj.get("sep") and output_format == 'pdb'</filter>
             <discover_datasets pattern="(?P&lt;designation&gt;^output[0-9]{9}\.pdb$)" ext="pdb"/>
         </collection>
         <expand macro="log_outputs"/>
     </outputs>
     <tests>
-        <test>
-            <!-- gmx trjcat -f npt.xtc nvt.xtc -cat -o test.xtc -->
-            <param name="trj_op" value="trjcat"/>
-            <param name="trj_input" value="npt.xtc,nvt.xtc"/>
-            <param name="b" value="0"/>
-            <param name="e" value="-1"/>
-            <param name="dt" value="0"/>
-            <param name="cat" value="true"/>
+        <test expect_num_outputs="1">
+            <conditional name="trj">
+                <param name="trj_op" value="trjcat"/>
+                <param name="trj_input" value="npt.xtc,nvt.xtc"/>
+                <param name="cat" value="true"/>
+            </conditional>
+            <section name="time"><param name="b" value="0"/><param name="e" value="-1"/><param name="dt" value="0"/></section>
+            <param name="output_format" value="xtc"/>
             <output name="output" file="trjcat.xtc" ftype="xtc"/>
         </test>
-        <test>
-            <!-- gmx trjcat -f npt.xtc nvt.xtc -cat -o test.xtc -->
+        <test expect_num_outputs="1">
             <conditional name="trj">
                 <param name="trj_op" value="trjcat"/>
                 <param name="trj_input" value="npt.xtc"/>
-                <repeat name="inputtrajs">
-                    <param name="trj_input" value="nvt.xtc"/>
-                </repeat>
+                <repeat name="inputtrajs"><param name="trj_input" value="nvt.xtc"/></repeat>
                 <param name="cat" value="true"/>
             </conditional>
+            <section name="time"><param name="b" value="0"/><param name="e" value="-1"/><param name="dt" value="0"/></section>
             <param name="output_format" value="xtc"/>
-            <section name="time">
-                <param name="b" value="0"/>
-                <param name="e" value="-1"/>
-                <param name="dt" value="0"/>
-            </section>
             <output name="output" file="trjcat.xtc" ftype="xtc"/>
         </test>
-        <test>
-            <!-- echo '1 1' | gmx trjconv -f npt.xtc -s npt.tpr -n -center -pbc mol -ur compact -o npt_c.xtc -->
-            <!-- <param name="trj_op" value="trjconv" /> -->
-            <param name="trj_input" value="npt.xtc"/>
-            <param name="str_input" value="npt.tpr" ftype="tpr"/>
-            <param name="ndx_input" value="index.ndx"/>
-            <param name="b" value="0"/>
-            <param name="e" value="-1"/>
-            <param name="dt" value="0"/>
-            <param name="index_output" value="1"/>
-            <param name="index_center" value="1"/>
-            <param name="pbc" value="mol"/>
-            <param name="ur" value="tric"/>
+        <test expect_num_outputs="1">
+            <conditional name="trj">
+                <param name="trj_op" value="trjconv"/>
+                <param name="trj_input" value="npt.xtc"/>
+                <param name="str_input" value="npt.tpr" ftype="tpr"/>
+                <param name="ndx_input" value="index.ndx"/>
+                <param name="index_output" value="1"/><param name="index_center" value="1"/>
+                <conditional name="pbc"><param name="pbc" value="mol"/></conditional>
+                <param name="ur" value="tric"/><param name="skip" value="1"/>
+                <param name="sep" value=""/>
+            </conditional>
+            <section name="time"><param name="b" value="0"/><param name="e" value="-1"/><param name="dt" value="0"/></section>
+            <param name="output_format" value="xtc"/>
             <output name="output" file="trjconv.xtc" ftype="xtc"/>
         </test>
-        <test>
-            <!-- testing skip -->
-            <!-- echo '1 1' | gmx trjconv -f npt.xtc -s npt.tpr -n -center -pbc mol -ur compact -skip 2 -o npt_c.xtc -->
-            <!-- <param name="trj_op" value="trjconv" /> -->
-            <param name="trj_input" value="npt.xtc"/>
-            <param name="str_input" value="npt.tpr" ftype="tpr"/>
-            <param name="ndx_input" value="index.ndx"/>
-            <param name="b" value="0"/>
-            <param name="e" value="-1"/>
-            <param name="dt" value="0"/>
-            <param name="index_output" value="1"/>
-            <param name="index_center" value="1"/>
-            <param name="pbc" value="mol"/>
-            <param name="ur" value="compact"/>
-            <param name="skip" value="2"/>
+        <test expect_num_outputs="1">
+            <conditional name="trj">
+                <param name="trj_op" value="trjconv"/>
+                <param name="trj_input" value="npt.xtc"/><param name="str_input" value="npt.tpr" ftype="tpr"/>
+                <param name="ndx_input" value="index.ndx"/><param name="index_output" value="1"/><param name="index_center" value="1"/>
+                <conditional name="pbc"><param name="pbc" value="mol"/></conditional>
+                <param name="ur" value="compact"/><param name="skip" value="2"/><param name="sep" value=""/>
+            </conditional>
+            <section name="time"><param name="b" value="0"/><param name="e" value="-1"/><param name="dt" value="0"/></section>
+            <param name="output_format" value="xtc"/>
             <output name="output" file="trjconv_skip2.xtc" ftype="xtc"/>
         </test>
-        <test>
-            <!-- test sep flag -->
-            <param name="trj_input" value="npt.xtc"/>
-            <param name="str_input" value="npt.tpr" ftype="tpr"/>
-            <param name="ndx_input" value="index.ndx"/>
-            <param name="b" value="0"/>
-            <param name="e" value="-1"/>
-            <param name="dt" value="0"/>
-            <param name="index_output" value="0"/>
-            <param name="sep" value="sep"/>
+        <test expect_num_outputs="1">
+            <conditional name="trj">
+                <param name="trj_op" value="trjconv"/><param name="trj_input" value="npt.xtc"/>
+                <param name="str_input" value="npt.tpr" ftype="tpr"/><param name="ndx_input" value="index.ndx"/>
+                <param name="index_output" value="0"/><param name="sep" value="sep"/>
+                <conditional name="pbc"><param name="pbc" value="none"/></conditional>
+                <param name="ur" value="tric"/><param name="skip" value="1"/>
+            </conditional>
+            <section name="time"><param name="b" value="0"/><param name="e" value="-1"/><param name="dt" value="0"/></section>
             <param name="output_format" value="pdb"/>
-            <output_collection name="pdb_frames" type="list">
-                <element name="output000000007.pdb" ftype="pdb" file="frame7.pdb"/>
-            </output_collection>
+            <output_collection name="pdb_frames" type="list"><element name="output000000007.pdb" ftype="pdb" file="frame7.pdb"/></output_collection>
         </test>
     </tests>
     <help><![CDATA[
