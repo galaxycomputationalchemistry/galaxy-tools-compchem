@@ -2,7 +2,7 @@
     <description>using genrestr</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
 
     <expand macro="requirements" />
@@ -33,7 +33,7 @@
         <expand macro="log_outputs" />
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="1">
             <param name="gro_input" value="str_ions.gro" />
             <param name="ndx_input" value="index.ndx" />
             <param name="fc" value="500 600 700" />

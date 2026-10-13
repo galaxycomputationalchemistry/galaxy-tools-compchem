@@ -1,7 +1,7 @@
 <tool id="gmx_check" name="GROMACS check" version="@TOOL_VERSION@+galaxy@GALAXY_VERSION@" profile="@PROFILE@">
     <description>to provide information about GROMACS input files</description>
     <macros>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
         <token name="@PROFILE@">21.05</token>
         <import>macros.xml</import>
     </macros>
@@ -72,17 +72,17 @@
                 <option value="compare_ener">Compare two energy files</option>
             </param>
             <when value="info_traj">
-                <param name="traj_file" type="data" format="xtc, trr, cpt, gro, pdb" label="Trajectory file" help="Enter the trajectory file. Accepted formats: xtc, trr, cpt, gro, pdb."/>
+                <param name="traj_file" type="data" format="xtc,trr,cpt,gro,pdb" label="Trajectory file" help="Enter the trajectory file. Accepted formats: xtc,trr,cpt,gro,pdb."/>
             </when>
             <when value="compare_traj">
-                <param name="traj_file" type="data" format="xtc, trr, cpt, gro, pdb" label="Trajectory file 1" help="Enter the first trajectory file. Accepted formats: xtc, trr, cpt, gro, pdb."/>
-                <param name="traj_file2" type="data" format="xtc, trr, cpt, gro, pdb" label="Trajectory file 2" help="Enter the second trajectory file. Accepted formats: xtc, trr, cpt, gro, pdb."/>
+                <param name="traj_file" type="data" format="xtc,trr,cpt,gro,pdb" label="Trajectory file 1" help="Enter the first trajectory file. Accepted formats: xtc,trr,cpt,gro,pdb."/>
+                <param name="traj_file2" type="data" format="xtc,trr,cpt,gro,pdb" label="Trajectory file 2" help="Enter the second trajectory file. Accepted formats: xtc,trr,cpt,gro,pdb."/>
                 <param name="rmsd" type="boolean" truevalue="-rmsd" falsevalue="" label="Do you want to display the RMSD?"/>
                 <param name="rel_tol" type="float" max="1.0" value="0.001" label="Enter relative tolerance" help="Relative tolerance for comparing real values defined as 2*(a-b)/(|a|+|b|)."/>
                 <param name="abs_tol" type="float" max="1.0" value="0.001" optional="True" label="Enter absolute tolerance" help="Absolute tolerance, useful when sums are close to zero."/>
             </when>
             <when value="info_struc">
-                <param name="struc_file" type="data" format="tpr, gro, pdb, brk, ent" label="Structure file" help="Enter the structure file. Accepted formats: tpr, gro, pdb, brk, ent.">
+                <param name="struc_file" type="data" format="tpr,gro,pdb" label="Structure file" help="Enter the structure file. Accepted formats: tpr,gro,pdb.">
                     <validator type="expression" message="Wrong file format">value.extension != 'edr' and value.extension != 'xtc'</validator>
                 </param>
                 <param name="vdwfac" type="float" max="1.0" value="0.8" label="Enter the fraction of sum of VdW radii sum"/>
@@ -137,14 +137,14 @@
         </data>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="1">
             <conditional name="input_file">
                 <param name="calculate_select" value="info_traj"/>
                 <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
             </conditional>
             <output name="out_info_traj" file="check_info_traj.txt" ftype="txt" lines_diff="8"/>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <conditional name="input_file">
                 <param name="calculate_select" value="compare_traj"/>
                 <param name="traj_file" value="nvt.xtc" ftype="xtc"/>
@@ -155,7 +155,7 @@
             </conditional>
             <output name="out_compare_traj" file="check_compare_traj.txt" ftype="txt" lines_diff="8"/>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <conditional name="input_file">
                 <param name="calculate_select" value="info_struc"/>
                 <param name="struc_file" value="minim.gro" ftype="gro"/>
@@ -165,21 +165,21 @@
             </conditional>
             <output name="out_info_struc" file="check_info_structure.txt" ftype="txt" lines_diff="10"/>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <conditional name="input_file">
                 <param name="calculate_select" value="info_ener"/>
                 <param name="ener_file" value="minim.edr" ftype="edr"/>
             </conditional>
             <output name="out_info_ener" file="check_info_energy.txt" ftype="txt" lines_diff="8"/>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <conditional name="input_file">
                 <param name="calculate_select" value="info_ind"/>
                 <param name="ind_file" value="index.ndx" ftype="ndx"/>
             </conditional>
             <output name="out_info_ind" file="check_info_index.txt" ftype="txt" lines_diff="8"/>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <conditional name="input_file">
                 <param name="calculate_select" value="compare_top"/>
                 <param name="top_file" value="npt.tpr" ftype="tpr"/>
@@ -188,7 +188,7 @@
             </conditional>
             <output name="out_compare_topol" file="check_compare_topology.txt" ftype="txt" lines_diff="8"/>
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <conditional name="input_file">
                 <param name="calculate_select" value="compare_ener"/>
                 <param name="ener_file" value="minim.edr" ftype="edr"/>
