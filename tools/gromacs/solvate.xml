@@ -90,7 +90,7 @@ pbc            = xyz
                 </assert_contents>
             </output>
         </test>
-        <test expect_num_outputs="1">
+        <test expect_num_outputs="2">
             <param name="gro_input" value="newbox.gro" />
             <param name="neutralise" value="" />
             <param name="top_input" value="topol.top"/>
