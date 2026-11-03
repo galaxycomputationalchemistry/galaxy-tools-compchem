@@ -2,7 +2,7 @@
     <description>of a molecular structure</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
 
     <expand macro="requirements" />
@@ -32,11 +32,11 @@
         <expand macro="log" />
     </inputs>
     <outputs>
-        <expand macro="xvg_or_tab_outputs" name="rg" label="Radius of Gyration on ${on_string}" />
+        <expand macro="xvg_or_tab_outputs" name="rg" label="Radius of Gyration (${fmt}) on ${on_string}" />
         <expand macro="log_outputs" />
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="1">
             <param name="traj_input" value="npt.xtc" />
             <param name="structure_input" value="npt.tpr" />
             <param name="ndx_input" value="index.ndx" />

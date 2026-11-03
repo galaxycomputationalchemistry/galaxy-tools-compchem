@@ -2,7 +2,7 @@
     <description>using make_ndx</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
 
     <expand macro="requirements" />
@@ -35,7 +35,7 @@
         <expand macro="log_outputs" />
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="1">
             <param name="input_file" value="str_ions.gro" ftype="gro"/>
             <param name="sel" value="! 1 &amp; 13" />
             <output name="ndx">
