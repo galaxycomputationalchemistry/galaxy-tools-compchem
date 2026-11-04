@@ -38,8 +38,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--num-slices", type=int, required=True)
     parser.add_argument("--start-frame", type=int, required=True)
     parser.add_argument("--end-frame", type=int)
-    parser.add_argument("--analysis-type", choices=("protein", "dna", "rna", "generic"), required=True)
-    parser.add_argument("--summary-n", type=int, required=True)
+    parser.add_argument("--analysis-type", choices=("protein",), required=True)
     parser.add_argument("--palette", required=True)
     parser.add_argument("--interpolate", action="store_true")
     parser.add_argument("--plot-helper", required=True)
@@ -82,6 +81,25 @@ def chain_id_to_segids(universe, chain_id: str) -> list[str]:
 
 
 def resolve_chains(universe, mode: str, selector: str, analysis_type: str, selection_builder) -> list[str]:
+    if analysis_type != "protein":
+        raise ValueError("The Galaxy wrapper supports protein analysis only.")
+    # RMSX selects by segment, so a shared segment cannot safely isolate chains.
+    try:
+        chain_ids = universe.atoms.chainIDs
+    except AttributeError:
+        chain_ids = [""] * len(universe.atoms)
+    segment_chains = {}
+    for segment, chain in zip(universe.atoms.segids, chain_ids):
+        segment = str(segment).strip()
+        chain = str(chain).strip()
+        if chain:
+            segment_chains.setdefault(segment, set()).add(chain)
+    ambiguous = sorted(segment for segment, chains in segment_chains.items() if len(chains) > 1)
+    if ambiguous:
+        raise ValueError(
+            "Distinct chains share segment ID(s): " + ", ".join(ambiguous)
+            + ". Assign a unique segment ID to each chain before analysis."
+        )
     available_segids = unique_values(universe.atoms.segids)
     if not available_segids:
         raise ValueError("The topology does not contain any usable segment IDs.")
@@ -393,7 +411,6 @@ def main() -> None:
             "start_frame": args.start_frame,
             "make_plot": False,
             "analysis_type": args.analysis_type,
-            "summary_n": args.summary_n,
         }
         if args.end_frame is not None:
             options["end_frame"] = args.end_frame

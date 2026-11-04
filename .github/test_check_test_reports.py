@@ -191,7 +191,7 @@ class CompletenessTests(unittest.TestCase):
                     "repositories.txt", second.parent, merged, 2
                 )
 
-    def test_real_flipbook_xml_requires_all_five_cases(self):
+    def test_real_flipbook_xml_requires_all_seven_cases(self):
         selected = self.root / "selected.txt"
         wrapper = (
             Path(__file__).resolve().parents[1] / "tools/flipbook/flipbook.xml"
@@ -201,7 +201,7 @@ class CompletenessTests(unittest.TestCase):
         self.assertEqual(
             expected[0]["cases"],
             frozenset(
-                ("flipbook", "0.1.0+galaxy1", index) for index in range(5)
+                ("flipbook", "0.1.0+galaxy1", index) for index in range(7)
             ),
         )
 

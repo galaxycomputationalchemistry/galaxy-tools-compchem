@@ -119,3 +119,13 @@ python tools/flipbook/test-data/create_multichain_rmsx_fixture.py \
 
 The generator retains the source chain identities, coordinates, dimensions, and
 chronological timestamps; XTC uses precision 3. Both output files are below 1 MB.
+
+## Shared-segment rejection regression
+
+`protease_shared_segment.pdb` derives from `protease_backbone.pdb` by replacing
+only PDB segment columns 73–76 with `PROT` for every atom. It retains chains A/B,
+overlapping residues 1–99, atom order and coordinates, and uses the existing
+`protease_compact.xtc`. Original protease provenance and redistribution terms
+apply. Both all-chain and selected-B Galaxy tests must reject this topology.
+The direct regression `.github/test_flipbook_chain_identity.py` additionally
+checks the error reason, unchanged coordinates, and original chain selections.

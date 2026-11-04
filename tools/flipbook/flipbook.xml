@@ -44,7 +44,7 @@
             #if str($analysis.end_frame).strip() not in ("", "None")
                 --end-frame '$analysis.end_frame'
             #end if
-            --analysis-type '$analysis.analysis_type'
+            --analysis-type protein
             > '$log' 2>&1 &&
         RMSX_NO_CITATION=1 python3 '$__tool_directory__/rmsx_multichain.py'
             --topology "\${topology_path}"
@@ -60,8 +60,7 @@
             #if str($analysis.end_frame).strip() not in ("", "None")
                 --end-frame '$analysis.end_frame'
             #end if
-            --analysis-type '$analysis.analysis_type'
-            --summary-n '$analysis.summary_n'
+            --analysis-type protein
             --palette '$palette'
             #if str($analysis.interpolate) == "--interpolate"
                 --interpolate
@@ -121,13 +120,6 @@
         <section name="analysis" title="RMSX analysis options" expanded="false">
             <param argument="--start_frame" type="integer" value="0" min="0" label="Start frame" help="Zero-based first trajectory frame to include."/>
             <param argument="--end_frame" type="integer" optional="true" min="0" label="End frame" help="Optional zero-based last trajectory frame to include. Leave blank to analyze through the final frame."/>
-            <param argument="--analysis_type" type="select" label="Analysis type" help="Passed to RMSX with --analysis_type. The default protein mode matches the current RMSX/Flipbook path.">
-                <option value="protein" selected="true">Protein</option>
-                <option value="dna">DNA</option>
-                <option value="rna">RNA</option>
-                <option value="generic">Generic</option>
-            </param>
-            <param argument="--summary_n" type="integer" value="3" min="1" label="Summary residue count" help="Number of top-changing residues RMSX should include in its summary outputs."/>
             <param argument="--interpolate" type="boolean" checked="false" truevalue="--interpolate" falsevalue="--no-interpolate" label="Interpolate RMSX slice values" help="Disabled by default to preserve the current validated wrapper behavior."/>
         </section>
         <param argument="--palette" type="select" label="Molstar and plot color palette" help="Initial color ramp used by the native Galaxy Molstar Flipbook visualization and the static RMSX heatmap/triple plots.">
@@ -406,6 +398,19 @@
             <param name="input_source|num_slices" value="3"/>
             <param name="palette" value="viridis"/>
         </test>
+        <test expect_failure="true">
+            <param name="input_source|source" value="history"/>
+            <param name="input_source|topology" value="protease_shared_segment.pdb" ftype="pdb"/>
+            <param name="input_source|trajectory" value="protease_compact.xtc" ftype="xtc"/>
+            <param name="input_source|chain_scope|mode" value="all"/>
+        </test>
+        <test expect_failure="true">
+            <param name="input_source|source" value="history"/>
+            <param name="input_source|topology" value="protease_shared_segment.pdb" ftype="pdb"/>
+            <param name="input_source|trajectory" value="protease_compact.xtc" ftype="xtc"/>
+            <param name="input_source|chain_scope|mode" value="selected"/>
+            <param name="input_source|chain_scope|chain" value="B"/>
+        </test>
     </tests>
     <help><![CDATA[
 .. image:: $PATH_TO_IMAGES/flipbook_logo.png
@@ -416,6 +421,9 @@
 .. class:: infomark
 
 **What it does**
+
+This release supports protein analysis only. Distinct chains must have distinct
+segment IDs; shared-segment topologies are rejected before RMSX analysis.
 
 RMSX Flipbook runs RMSX on a molecular dynamics trajectory, divides the selected
 frame window into time slices, and reports residue-level fluctuation for each
@@ -440,7 +448,7 @@ and time of each analyzed slice.
 Before RMSX runs, a preflight check reports available chain and segment IDs and
 catches common load, selector, frame-window, and slice-count problems.
 
-The RMSX options control the frame window, analysis type, summary residue count,
+The RMSX options control the frame window,
 interpolation, and shared color palette. The palette is used by both the static
 plots and the interactive viewer.
 
