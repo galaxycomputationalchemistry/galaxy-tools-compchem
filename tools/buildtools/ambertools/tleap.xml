@@ -62,7 +62,7 @@ clearPdbResMap
 clearVariables { ${cmd.tleap_cond.arg_list} }
 #elif $cmd.tleap_cond.tleap_cmd == "combine":
 #if $cmd.tleap_cond.combine_assign:
-${cmd.tleap_cond.combine_assign} = combine { ${cmd.tleap_cond.arg_list} }h
+${cmd.tleap_cond.combine_assign} = combine { ${cmd.tleap_cond.arg_list} }
 #else:
 combine ${cmd.tleap_cond.arg_list}
 #end if
@@ -213,7 +213,7 @@ ${cmd.tleap_cond.sequence_assign} = sequence { ${cmd.tleap_cond.arg_list} }
 sequence { ${cmd.tleap_cond.arg_list} }
 #end if
 #elif $cmd.tleap_cond.tleap_cmd == "set":
-set ${cmd.tleap_cond.arg_variable} ${cmd.tleap_cond.arg_container} ${cmd.tleap_cond.arg_dim}
+set ${cmd.tleap_cond.arg_variable} ${cmd.tleap_cond.arg_container} {${cmd.tleap_cond.arg_dim}}
 #elif $cmd.tleap_cond.tleap_cmd == "set_default":
 #for $setdefaultsvar in $cmd.tleap_cond.defaults:
 set default ${setdefaultsvar.settingsvariable} ${setdefaultsvar.usersetting}
