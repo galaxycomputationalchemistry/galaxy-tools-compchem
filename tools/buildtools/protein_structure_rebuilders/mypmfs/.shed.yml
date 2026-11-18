@@ -1,0 +1,15 @@
+name: mypmfs_matrix_generator
+owner: chemteam
+description: "scoring function generator for protein structure prediction"
+homepage_url: https://github.com/alexhold5/mypmfs-galaxy-tool
+long description: | 
+  This is a Galaxy tool for the MyPMFs package, which is used to generate statistical potentials for scoring functions in protein structure prediction algorithms.  The tool is currently designed to generate potentials for reduced representations of proteins (alpha carbon only). 
+remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/
+type: unrestricted
+categories:
+  - Computational chemistry
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for MyPMFs package"
+maintainers:
+  - alexhold5
