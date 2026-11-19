@@ -1,0 +1,97 @@
+<tool id="relieve_overlaps" name="Relieve atom overlaps" version="0.1.0+galaxy0" profile="22.01">
+    <description>push apart near-coincident atoms before energy minimization</description>
+    <requirements>
+        <requirement type="package" version="3.10">python</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        python '$__tool_directory__/relieve_overlaps.py'
+            --input '$gro_input'
+            --output '$gro_output'
+            --report '$report'
+            --min-distance $min_distance
+    ]]></command>
+    <inputs>
+        <param name="gro_input" type="data" format="gro" label="Structure (GRO)"/>
+        <param name="min_distance" type="float" value="0.5" min="0.01" max="1.0" label="Minimum distance between atoms of different residues (Angstrom)"
+            help="Pairs closer than this are pushed apart to this distance. At most 1.0 A, which is below the shortest bond between residues (about 1.33 A)."/>
+    </inputs>
+    <outputs>
+        <data name="gro_output" format="gro" label="${tool.name} on ${on_string}: structure"/>
+        <data name="report" format="txt" label="${tool.name} on ${on_string}: report"/>
+    </outputs>
+    <tests>
+        <test expect_num_outputs="2">
+            <!-- a water moved so that its oxygen coincides with a lipid carbon: GROMACS minimization crashes on it -->
+            <param name="gro_input" value="mini_popc_overlap.gro"/>
+            <output name="gro_output" file="mini_popc_overlap_relieved.gro"/>
+            <output name="report">
+                <assert_contents>
+                    <has_text text="3 pairs closer than 0.5 A in the input"/>
+                    <has_text text="0.000 A  5PA:C14(82) -- 13WAT:O(384)"/>
+                    <has_text text="3 pair moves in 1 pass(es), 6 atoms moved, largest displacement 0.25 A"/>
+                    <has_text text="Closest pair of atoms of different residues now: 0.50 A"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="2">
+            <!-- smaller distance: only the exact overlap and the 0.29 A pair are moved -->
+            <param name="gro_input" value="mini_popc_overlap.gro"/>
+            <param name="min_distance" value="0.3"/>
+            <output name="report">
+                <assert_contents>
+                    <has_text text="2 pairs closer than 0.3 A in the input"/>
+                    <has_text text="Closest pair of atoms of different residues now: 0.30 A"/>
+                </assert_contents>
+            </output>
+        </test>
+        <test expect_num_outputs="2">
+            <!-- nothing closer than 0.4 A: structure unchanged -->
+            <param name="gro_input" value="mini_popc.gro"/>
+            <param name="min_distance" value="0.4"/>
+            <output name="gro_output" file="mini_popc.gro"/>
+            <output name="report">
+                <assert_contents>
+                    <has_text text="No overlapping atoms found; structure unchanged."/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Pushes apart atoms that (almost) coincide, so that energy minimization can start.
+
+Packed systems, such as membranes built with packmol-memgen, solvent boxes or molecules inserted
+into a solvated system, sometimes contain atoms of different residues that sit on top of each
+other (e.g. a hydrogen of one lipid tail 0.05 A from a carbon of another). The forces between
+them are not finite in single precision, and GROMACS minimization stops after a few steps
+("the force on at least one atom is not finite") or crashes.
+
+Every pair of atoms from **different residues** closer than the set distance (default 0.5 A) is
+pushed apart symmetrically along the line joining them to that distance; this is repeated until
+no such pair is left. Coincident atoms are separated along x. Typically a handful of atoms move
+by a few tenths of an Angstrom; minimization then removes the remaining strain.
+
+Run it directly before energy minimization (and use its output as the reference structure of
+any position restraints that follow).
+
+**What it does not change**
+
+- Atoms of the same residue are never moved against each other, and bonded atoms of
+  neighbouring residues are at least ~1.33 A apart, above the largest allowed distance (1.0 A).
+- Only the coordinates of moved atoms are rewritten; every other character of the file is kept.
+
+**Outputs**
+
+- The structure with overlaps relieved (GRO).
+- A report listing the overlapping pairs found (residue number, residue name, atom name and atom
+  number), how many atoms moved and by how much, and the closest remaining pair.
+
+.. class:: warningmark
+
+This does not detect or fix *ring piercing* (e.g. a lipid tail threaded through a sterol or
+aromatic ring): there the atoms do not overlap, and minimization cannot untangle it.
+    ]]></help>
+</tool>

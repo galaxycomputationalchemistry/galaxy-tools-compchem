@@ -1,0 +1,25 @@
+name: relieve_overlaps
+owner: chemteam
+description: "Push apart near-coincident atoms in a structure before energy minimization"
+long_description: |
+    Energy minimization fails when two atoms of different residues sit on top of one another,
+    as can happen after a membrane or solvent box is assembled: the Lennard-Jones term diverges
+    and the minimizer reports an infinite or NaN force before it can take a step.
+
+    This tool finds pairs of atoms from different residues that are closer than a given
+    distance and pushes them apart along the vector between them until they reach it. Atoms
+    within the same residue are left alone, so bond lengths and internal geometry are preserved.
+    The default minimum distance is 0.5 A, well below the shortest bond between residues
+    (about 1.33 A), so the correction is local and does not perturb the structure.
+
+    A report lists every pair that was moved and by how much.
+remote_repository_url: https://github.com/galaxycomputationalchemistry/galaxy-tools-compchem/
+type: unrestricted
+categories:
+  - Computational chemistry
+  - Molecular Dynamics
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "{{ tool_name }}"
+maintainers:
+  - thepineapplepirate
