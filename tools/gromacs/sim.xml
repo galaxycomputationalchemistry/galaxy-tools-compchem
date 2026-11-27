@@ -43,16 +43,18 @@
             -p ./top_input.top 
             -o outp.tpr @MAXWARN_CMD@ &>> verbose.txt &&
 
-        #if "\${GPU_AVAILABLE:-0}" == 1:
+        if [ "\${GPU_AVAILABLE:-0}" = "1" ]; then
             gmx_gpu mdrun
                 -ntmpi 1
                 -nb gpu
                 -pme gpu
-        #else:
+                -nt "\${GALAXY_SLOTS:-4}"
+                -deffnm outp &>> verbose.txt
+        else
             gmx mdrun
-        #end if
-            -nt "\${GALAXY_SLOTS:-4}"
-            -deffnm outp &>> verbose.txt
+                -nt "\${GALAXY_SLOTS:-4}"
+                -deffnm outp &>> verbose.txt
+        fi
 
         #if $outps.str == 'pdb' or $outps.str == 'both'
             && gmx editconf -f outp.gro -o outp.pdb &>> verbose.txt
