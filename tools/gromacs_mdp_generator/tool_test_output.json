@@ -1,0 +1,247 @@
+{
+    "summary": {
+        "num_errors": 0,
+        "num_failures": 0,
+        "num_skips": 0,
+        "num_tests": 2
+    },
+    "tests": [
+        {
+            "data": {
+                "inputs": {
+                    "advance_md_file_options|advance_md_file": "wf",
+                    "advance_md_file_options|conf_file": {
+                        "id": "87d1965401c63aed",
+                        "src": "hda"
+                    },
+                    "advance_md_file_options|gro_file": {
+                        "id": "9dea485dc32aa210",
+                        "src": "hda"
+                    },
+                    "advance_md_file_options|npt1_conditional|npt1_mode": "default",
+                    "advance_md_file_options|npt2_conditional|npt2_mode": "default",
+                    "advance_md_file_options|npt3_conditional|npt3_mode": "default",
+                    "advance_md_file_options|npt4_conditional|npt4_mode": "default",
+                    "advance_md_file_options|nvt1_conditional|nvt1_mode": "default",
+                    "advance_md_file_options|nvt2_conditional|nvt2_mode": "default",
+                    "advance_md_file_options|production_conditional|production_mode": "default"
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T20:45:45.565689",
+                    "dependencies": [],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "1b65034869916c70",
+                    "id": "2c8076f1a6631cf1",
+                    "inputs": {
+                        "advance_md_file_options|conf_file": {
+                            "id": "87d1965401c63aed",
+                            "src": "hda",
+                            "uuid": "9f9953eb-cca8-4d17-bf9a-c0915ea38ad9"
+                        },
+                        "advance_md_file_options|gro_file": {
+                            "id": "9dea485dc32aa210",
+                            "src": "hda",
+                            "uuid": "5ab290da-5bae-4e75-8de3-fd3b236a9c7c"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "groups_out": {
+                            "id": "051d7c9c6457a3ff",
+                            "src": "hda",
+                            "uuid": "921bb24f-8703-43f6-8398-c2e8ec3b28cf"
+                        },
+                        "index_out": {
+                            "id": "a60262d8650279e5",
+                            "src": "hda",
+                            "uuid": "4c3f5b9b-5d35-4cbf-bb4c-5fc570559498"
+                        },
+                        "npt1_out": {
+                            "id": "10f29db52ce7089e",
+                            "src": "hda",
+                            "uuid": "427ba14a-2960-42e0-9f75-2211ea7d4e1a"
+                        },
+                        "npt2_out": {
+                            "id": "78be264f60dac403",
+                            "src": "hda",
+                            "uuid": "62a1868c-b557-4abf-ad36-30a6becdd963"
+                        },
+                        "npt3_out": {
+                            "id": "2b48e41434df8b41",
+                            "src": "hda",
+                            "uuid": "67740054-63dc-4d61-96aa-d94e61b3f5f5"
+                        },
+                        "npt4_out": {
+                            "id": "c014d47a27338357",
+                            "src": "hda",
+                            "uuid": "9f72a1bd-c2d0-4b06-a47c-71c717a3dd77"
+                        },
+                        "nvt1_out": {
+                            "id": "e5172f82ef8fcce3",
+                            "src": "hda",
+                            "uuid": "db709b5b-b484-421e-9c3c-49dc57639315"
+                        },
+                        "nvt2_out": {
+                            "id": "962f48844ac090db",
+                            "src": "hda",
+                            "uuid": "20fd9441-c9b4-4ca5-85d1-7e3df1b5fc5e"
+                        },
+                        "prod_out": {
+                            "id": "3bf9d3589a2178f2",
+                            "src": "hda",
+                            "uuid": "e21a03c3-2d2a-4a7d-9a97-3d01218a7970"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"input\"",
+                        "advance_md_file_options": "{\"__current_case__\": 1, \"advance_md_file\": \"wf\", \"conf_file\": {\"values\": [{\"id\": 11534, \"src\": \"hda\"}]}, \"gro_file\": {\"values\": [{\"id\": 11535, \"src\": \"hda\"}]}, \"npt1_conditional\": {\"__current_case__\": 0, \"npt1_mode\": \"default\"}, \"npt2_conditional\": {\"__current_case__\": 0, \"npt2_mode\": \"default\"}, \"npt3_conditional\": {\"__current_case__\": 0, \"npt3_mode\": \"default\"}, \"npt4_conditional\": {\"__current_case__\": 0, \"npt4_mode\": \"default\"}, \"nvt1_conditional\": {\"__current_case__\": 0, \"nvt1_mode\": \"default\"}, \"nvt2_conditional\": {\"__current_case__\": 0, \"nvt2_mode\": \"default\"}, \"production_conditional\": {\"__current_case__\": 0, \"production_mode\": \"default\"}}",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\""
+                    },
+                    "state": "ok",
+                    "stderr": "               :-) GROMACS - gmx make_ndx, 2024.5-conda_forge (-:\n\nExecutable:   /data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__gromacs@2024/bin.AVX2_256/gmx\nData prefix:  /data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__gromacs@2024\nWorking dir:  /data/home/joshij/software/galaxy_25_1/database/jobs_directory/004/4944/working\nCommand line:\n  gmx make_ndx -f system.gro -o ndx.ndx\n\n\nReading structure file\n\nGROMACS reminds you: \"A programmer's spouse says 'While you're at the grocery store, buy some eggs.' The programmer never comes back.\" (Anonymous)\n\n",
+                    "stdout": "Going to read 0 old index file(s)\nAnalysing residue names:\nThere are:   277    Protein residues\nThere are:   588      Other residues\nThere are:    65        Ion residues\nThere are: 17704      Water residues\nAnalysing Protein...\nAnalysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...\n\n  0 System              : 83782 atoms\n  1 Protein             :  4341 atoms\n  2 Protein-H           :  2299 atoms\n  3 C-alpha             :   277 atoms\n  4 Backbone            :   831 atoms\n  5 MainChain           :  1109 atoms\n  6 MainChain+Cb        :  1359 atoms\n  7 MainChain+H         :  1380 atoms\n  8 SideChain           :  2961 atoms\n  9 SideChain-H         :  1190 atoms\n 10 Prot-Masses         :  4341 atoms\n 11 non-Protein         : 79441 atoms\n 12 Other               : 26264 atoms\n 13 PA                  :  9016 atoms\n 14 PC                  :  7448 atoms\n 15 OL                  :  9800 atoms\n 16 NA+                 :    46 atoms\n 17 CL-                 :    19 atoms\n 18 Ion                 :    65 atoms\n 19 Water               : 53112 atoms\n 20 SOL                 : 53112 atoms\n 21 non-Water           : 30670 atoms\n 22 Water_and_ions      : 53177 atoms\n\n nr : group      '!': not  'name' nr name   'splitch' nr    Enter: list groups\n 'a': atom       '&': and  'del' nr         'splitres' nr   'l': list residues\n 't': atom type  '|': or   'keep' nr        'splitat' nr    'h': help\n 'r': residue              'res' nr         'chain' char\n \"name\": group             'case': case sensitive           'q': save and quit\n 'ri': residue index\n\n> \nCopied index group 13 'PA'\nCopied index group 14 'PC'\nMerged two groups with OR: 9016 7448 -> 16464\nCopied index group 15 'OL'\nMerged two groups with OR: 16464 9800 -> 26264\n\n> \nCopied index group 1 'Protein'\nCopied index group 23 'PA_PC_OL'\nMerged two groups with OR: 4341 26264 -> 30605\n\n> \nCopied index group 16 'NA+'\nCopied index group 17 'CL-'\nMerged two groups with OR: 46 19 -> 65\n\n> \nCopied index group 19 'Water'\nCopied index group 25 'NA+_CL-'\nMerged two groups with OR: 53112 65 -> 53177\n\n> \n\nIndex file successfully created: ndx.ndx\nGenerated: npt1.mdp\nGenerated: npt2.mdp\nGenerated: npt3.mdp\nGenerated: npt4.mdp\nGenerated: nvt1.mdp\nGenerated: nvt2.mdp\nGenerated: production.mdp\n",
+                    "tool_id": "gromacs_generate_mdp_v2",
+                    "tool_stderr": "               :-) GROMACS - gmx make_ndx, 2024.5-conda_forge (-:\n\nExecutable:   /data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__gromacs@2024/bin.AVX2_256/gmx\nData prefix:  /data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__gromacs@2024\nWorking dir:  /data/home/joshij/software/galaxy_25_1/database/jobs_directory/004/4944/working\nCommand line:\n  gmx make_ndx -f system.gro -o ndx.ndx\n\n\nReading structure file\n\nGROMACS reminds you: \"A programmer's spouse says 'While you're at the grocery store, buy some eggs.' The programmer never comes back.\" (Anonymous)\n\n",
+                    "tool_stdout": "Going to read 0 old index file(s)\nAnalysing residue names:\nThere are:   277    Protein residues\nThere are:   588      Other residues\nThere are:    65        Ion residues\nThere are: 17704      Water residues\nAnalysing Protein...\nAnalysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...\n\n  0 System              : 83782 atoms\n  1 Protein             :  4341 atoms\n  2 Protein-H           :  2299 atoms\n  3 C-alpha             :   277 atoms\n  4 Backbone            :   831 atoms\n  5 MainChain           :  1109 atoms\n  6 MainChain+Cb        :  1359 atoms\n  7 MainChain+H         :  1380 atoms\n  8 SideChain           :  2961 atoms\n  9 SideChain-H         :  1190 atoms\n 10 Prot-Masses         :  4341 atoms\n 11 non-Protein         : 79441 atoms\n 12 Other               : 26264 atoms\n 13 PA                  :  9016 atoms\n 14 PC                  :  7448 atoms\n 15 OL                  :  9800 atoms\n 16 NA+                 :    46 atoms\n 17 CL-                 :    19 atoms\n 18 Ion                 :    65 atoms\n 19 Water               : 53112 atoms\n 20 SOL                 : 53112 atoms\n 21 non-Water           : 30670 atoms\n 22 Water_and_ions      : 53177 atoms\n\n nr : group      '!': not  'name' nr name   'splitch' nr    Enter: list groups\n 'a': atom       '&': and  'del' nr         'splitres' nr   'l': list residues\n 't': atom type  '|': or   'keep' nr        'splitat' nr    'h': help\n 'r': residue              'res' nr         'chain' char\n \"name\": group             'case': case sensitive           'q': save and quit\n 'ri': residue index\n\n> \nCopied index group 13 'PA'\nCopied index group 14 'PC'\nMerged two groups with OR: 9016 7448 -> 16464\nCopied index group 15 'OL'\nMerged two groups with OR: 16464 9800 -> 26264\n\n> \nCopied index group 1 'Protein'\nCopied index group 23 'PA_PC_OL'\nMerged two groups with OR: 4341 26264 -> 30605\n\n> \nCopied index group 16 'NA+'\nCopied index group 17 'CL-'\nMerged two groups with OR: 46 19 -> 65\n\n> \nCopied index group 19 'Water'\nCopied index group 25 'NA+_CL-'\nMerged two groups with OR: 53112 65 -> 53177\n\n> \n\nIndex file successfully created: ndx.ndx\nGenerated: npt1.mdp\nGenerated: npt2.mdp\nGenerated: npt3.mdp\nGenerated: npt4.mdp\nGenerated: nvt1.mdp\nGenerated: nvt2.mdp\nGenerated: production.mdp\n",
+                    "update_time": "2026-08-20T20:45:53.552114",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 0,
+                "time_seconds": 21.421740770339966,
+                "tool_id": "gromacs_generate_mdp_v2",
+                "tool_version": "0.0.1"
+            },
+            "has_data": true,
+            "id": "gromacs_generate_mdp_v2-0"
+        },
+        {
+            "data": {
+                "inputs": {
+                    "advance_md_file_options|advance_md_file": "custom",
+                    "advance_md_file_options|barostat|compressibility": "4.5e-5",
+                    "advance_md_file_options|barostat|nstpcouple": "-1",
+                    "advance_md_file_options|barostat|ref_p": "1.0",
+                    "advance_md_file_options|barostat|tau_p": "5.0",
+                    "advance_md_file_options|constraints_sec|lincs_iter": "1",
+                    "advance_md_file_options|constraints_sec|lincs_order": "4",
+                    "advance_md_file_options|constraints_sec|shake_tol": "0.0001",
+                    "advance_md_file_options|electrostatics|ewald_rtol": "1e-5",
+                    "advance_md_file_options|electrostatics|fourierspacing": "0.12",
+                    "advance_md_file_options|electrostatics|pme_order": "4",
+                    "advance_md_file_options|nonbonded|nstlist": "20",
+                    "advance_md_file_options|nonbonded|rcoulomb": "1.0",
+                    "advance_md_file_options|nonbonded|rlist": "1.0",
+                    "advance_md_file_options|nonbonded|rvdw": "1.0",
+                    "advance_md_file_options|nonbonded|verlet_buffer_tolerance": "0.005",
+                    "advance_md_file_options|output|compressed_x_precision": "1000",
+                    "advance_md_file_options|output|nstenergy": "1000",
+                    "advance_md_file_options|output|nstlog": "1000",
+                    "advance_md_file_options|output|nstxout_compressed": "1000",
+                    "advance_md_file_options|presets|dt": "0.002",
+                    "advance_md_file_options|presets|nsteps": "50000",
+                    "advance_md_file_options|pulling|pull_coord1_dim": "Y Y Y",
+                    "advance_md_file_options|pulling|pull_coord1_geometry": "distance",
+                    "advance_md_file_options|pulling|pull_coord1_vec": "0.0 0.0 1.0",
+                    "advance_md_file_options|pulling|pull_groups": "1 2",
+                    "advance_md_file_options|pulling|pull_ncoords": "1",
+                    "advance_md_file_options|pulling|pull_ngroups": "1",
+                    "advance_md_file_options|thermostat|gen_seed": "-1",
+                    "advance_md_file_options|thermostat|gen_temp": "300",
+                    "advance_md_file_options|thermostat|nsttcouple": "-1",
+                    "advance_md_file_options|thermostat|ref_t": "300",
+                    "advance_md_file_options|thermostat|tau_t": "0.1",
+                    "advance_md_file_options|thermostat|tc_grps": "System"
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T20:45:54.910862",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__gromacs@2024",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "gromacs",
+                            "version": "2024"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "4758bcb5e6921b84",
+                    "id": "36139df9ed4fa04a",
+                    "inputs": {},
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "custom_out": {
+                            "id": "9fbd46a0a9fc2c1e",
+                            "src": "hda",
+                            "uuid": "00d08525-3977-4fc5-8826-14317f717e8f"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"input\"",
+                        "advance_md_file_options": "{\"__current_case__\": 0, \"advance_md_file\": \"custom\", \"barostat\": {\"compressibility\": \"4.5e-5\", \"nstpcouple\": \"-1\", \"pcoupl\": \"blank\", \"pcoupltype\": \"blank\", \"ref_p\": \"1.0\", \"tau_p\": \"5.0\"}, \"constraints_sec\": {\"constraint_algorithm\": \"blank\", \"constraints\": \"blank\", \"lincs_iter\": \"1\", \"lincs_order\": \"4\", \"shake_tol\": \"0.0001\"}, \"electrostatics\": {\"coulomb_modifier\": \"blank\", \"coulombtype\": \"blank\", \"ewald_rtol\": \"1e-05\", \"fourierspacing\": \"0.12\", \"pme_order\": \"4\"}, \"expert\": {\"extra_mdp\": \"\"}, \"nonbonded\": {\"cutoff_scheme\": \"blank\", \"nstlist\": \"20\", \"pbc\": \"blank\", \"rcoulomb\": \"1.0\", \"rlist\": \"1.0\", \"rvdw\": \"1.0\", \"verlet_buffer_tolerance\": \"0.005\"}, \"output\": {\"compressed_x_precision\": \"1000\", \"nstenergy\": \"1000\", \"nstfout\": \"0\", \"nstlog\": \"1000\", \"nstvout\": \"0\", \"nstxout\": \"0\", \"nstxout_compressed\": \"1000\"}, \"presets\": {\"continuation\": \"blank\", \"dt\": \"0.002\", \"init_step\": \"0\", \"integrator\": \"blank\", \"nsteps\": \"50000\", \"preset\": \"blank\", \"tinit\": \"0.0\"}, \"pulling\": {\"pull\": \"blank\", \"pull_coord1_dim\": \"Y Y Y\", \"pull_coord1_geometry\": \"distance\", \"pull_coord1_init\": \"0.0\", \"pull_coord1_k\": \"0.0\", \"pull_coord1_rate\": \"0.0\", \"pull_coord1_type\": \"blank\", \"pull_coord1_vec\": \"0.0 0.0 1.0\", \"pull_groups\": \"1 2\", \"pull_ncoords\": \"1\", \"pull_ngroups\": \"1\"}, \"thermostat\": {\"gen_seed\": \"-1\", \"gen_temp\": \"300.0\", \"gen_vel\": \"blank\", \"nsttcouple\": \"-1\", \"ref_t\": \"300\", \"tau_t\": \"0.1\", \"tc_grps\": \"System\", \"tcoupl\": \"blank\"}, \"vdw\": {\"dispcorr\": \"blank\", \"vdw_modifier\": \"blank\", \"vdwtype\": \"blank\"}}",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\""
+                    },
+                    "state": "ok",
+                    "stderr": "",
+                    "stdout": "Generated: custom.mdp\n",
+                    "tool_id": "gromacs_generate_mdp_v2",
+                    "tool_stderr": "",
+                    "tool_stdout": "Generated: custom.mdp\n",
+                    "update_time": "2026-08-20T20:46:02.049590",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 1,
+                "time_seconds": 7.370037317276001,
+                "tool_id": "gromacs_generate_mdp_v2",
+                "tool_version": "0.0.1"
+            },
+            "has_data": true,
+            "id": "gromacs_generate_mdp_v2-1"
+        }
+    ],
+    "version": "0.1"
+}

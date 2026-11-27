@@ -1,0 +1,147 @@
+{
+    "summary": {
+        "num_errors": 0,
+        "num_failures": 0,
+        "num_skips": 0,
+        "num_tests": 1
+    },
+    "tests": [
+        {
+            "data": {
+                "inputs": {
+                    "parm_file": {
+                        "id": "61cbce0bc93703fc",
+                        "src": "hda"
+                    },
+                    "rism_file": {
+                        "id": "2f98e6255f02389d",
+                        "src": "hda"
+                    },
+                    "rst_file": {
+                        "id": "b36320c925abf132",
+                        "src": "hda"
+                    },
+                    "xvv_file": {
+                        "id": "57a4615e9ea13564",
+                        "src": "hda"
+                    }
+                },
+                "job": {
+                    "command_line": "ln -s '/data/home/joshij/software/galaxy_25_1/database/objects/b/9/f/dataset_b9f3b5ef-9c09-4bcb-9d2b-1eba2defbce7.dat' input.parm7 && ln -s '/data/home/joshij/software/galaxy_25_1/database/objects/5/9/6/dataset_5966b026-33cc-48c5-a82b-fadaee0ac931.dat' input.rst7 && ln -s '/data/home/joshij/software/galaxy_25_1/database/objects/f/6/2/dataset_f6253f11-900c-43e2-8489-25b7c2d91404.dat' input.rism && ln -s '/data/home/joshij/software/galaxy_25_1/database/objects/b/1/6/dataset_b1688b68-7a81-4271-b450-56c1c4673681.dat' cSPCE_kh.xvv &&   sander -O -i input.rism -o out.kh.r3d -p input.parm7 -c input.rst7 -xvv cSPCE_kh.xvv -guv out.kh && mv mdinfo '/data/home/joshij/software/galaxy_25_1/database/objects/2/6/3/dataset_26370cee-fc29-40ba-b03c-006cd9713aa8.dat' && mv out.kh.r3d '/data/home/joshij/software/galaxy_25_1/database/objects/5/8/5/dataset_58560dd1-84eb-4c7a-a07a-816ffdde382f.dat' && mv out.kh.H1.0.dx '/data/home/joshij/software/galaxy_25_1/database/objects/a/2/9/dataset_a29f4db4-2657-487e-b841-a4c9aebfb631.dat' && mv out.kh.O.0.dx '/data/home/joshij/software/galaxy_25_1/database/objects/3/5/1/dataset_3513c68a-d466-41f0-8998-438ff7b0ccd9.dat'",
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-21T18:03:52.113453",
+                    "dependencies": [],
+                    "exit_code": 0,
+                    "external_id": "3197068",
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "822aeedf25d30c76",
+                    "id": "fc1f58ecfbd01024",
+                    "inputs": {
+                        "parm_file": {
+                            "id": "61cbce0bc93703fc",
+                            "src": "hda",
+                            "uuid": "b9f3b5ef-9c09-4bcb-9d2b-1eba2defbce7"
+                        },
+                        "rism_file": {
+                            "id": "2f98e6255f02389d",
+                            "src": "hda",
+                            "uuid": "f6253f11-900c-43e2-8489-25b7c2d91404"
+                        },
+                        "rst_file": {
+                            "id": "b36320c925abf132",
+                            "src": "hda",
+                            "uuid": "5966b026-33cc-48c5-a82b-fadaee0ac931"
+                        },
+                        "xvv_file": {
+                            "id": "57a4615e9ea13564",
+                            "src": "hda",
+                            "uuid": "b1688b68-7a81-4271-b450-56c1c4673681"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": [
+                        {
+                            "name": "galaxy_slots",
+                            "plugin": "core",
+                            "raw_value": "32.0000000",
+                            "title": "Cores Allocated",
+                            "value": "32"
+                        },
+                        {
+                            "name": "start_epoch",
+                            "plugin": "core",
+                            "raw_value": "1787335432.0000000",
+                            "title": "Job Start Time",
+                            "value": "2026-08-21 14:03:52"
+                        },
+                        {
+                            "name": "end_epoch",
+                            "plugin": "core",
+                            "raw_value": "1787335452.0000000",
+                            "title": "Job End Time",
+                            "value": "2026-08-21 14:04:12"
+                        },
+                        {
+                            "name": "runtime_seconds",
+                            "plugin": "core",
+                            "raw_value": "20.0000000",
+                            "title": "Job Runtime (Wall Clock)",
+                            "value": "20 seconds"
+                        }
+                    ],
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "mdinfo": {
+                            "id": "fdbf1de4d281ce19",
+                            "src": "hda",
+                            "uuid": "26370cee-fc29-40ba-b03c-006cd9713aa8"
+                        },
+                        "out_kh_H1_0_dx": {
+                            "id": "bd1b98af96f0e767",
+                            "src": "hda",
+                            "uuid": "a29f4db4-2657-487e-b841-a4c9aebfb631"
+                        },
+                        "out_kh_O_0_dx": {
+                            "id": "b64c1c0aeca5d74b",
+                            "src": "hda",
+                            "uuid": "3513c68a-d466-41f0-8998-438ff7b0ccd9"
+                        },
+                        "r_three_d_file": {
+                            "id": "5a02d495eb1f255f",
+                            "src": "hda",
+                            "uuid": "58560dd1-84eb-4c7a-a07a-816ffdde382f"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\""
+                    },
+                    "state": "ok",
+                    "stderr": "",
+                    "stdout": "",
+                    "tool_id": "solv_dens_calculator",
+                    "tool_stderr": "",
+                    "tool_stdout": "",
+                    "update_time": "2026-08-21T18:04:12.538180",
+                    "user_email": "jaidev53ster@gmail.com",
+                    "user_id": "f2db41e1fa331b3e"
+                },
+                "status": "success",
+                "test_index": 0,
+                "time_seconds": 35.508275747299194,
+                "tool_id": "solv_dens_calculator",
+                "tool_version": "0.1.0"
+            },
+            "has_data": true,
+            "id": "solv_dens_calculator-0"
+        }
+    ],
+    "version": "0.1"
+}

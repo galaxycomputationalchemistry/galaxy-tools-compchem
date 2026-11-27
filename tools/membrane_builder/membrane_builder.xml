@@ -1,0 +1,1244 @@
+<tool id="membrane_builder" name="Membrane Builder" version="0.1.0" python_template_version="3.10">
+	<description>Embed a protein into a lipid membrane using</description>
+  
+    <macros>
+        <import>macro.xml</import>
+    </macros>
+
+    <requirements>
+        <requirement type="package" version="24.8">ambertools</requirement>
+
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+
+            ln -s $pdb_file inputfile.pdb
+            &&
+
+            packmol-memgen --pdb inputfile.pdb   $input_preoriented   $input_keepligs
+            #if $ligand_options.advance == 'yes'
+                --keepligs
+            #end if
+            --nloop $input_nloop --nloop_all $input_nloop_all --writeout $input_writeout $input_random --tolerance $input_tolerance --prot_rad $input_prot_rad
+
+            #if $second_lipid_options.advance == 'advance'
+                --lipids $input_lipids_1:$second_lipid_options.input_lipids_2
+                --ratio $second_lipid_options.input_ratio
+            #else 
+
+            --lipids $input_lipids_1
+            --ratio 1
+
+            #end if
+
+            #if $box_dimention_advance_option.advance == 'advance'
+                --dims $box_dimention_advance_option.input_dims_x $box_dimention_advance_option.input_dims_y $box_dimention_advance_option.input_dims_z 
+            #end if 
+
+            #if $salt_options.salt == 'add'
+
+                --salt
+                
+                #if $salt_options.input_salt_c != ''
+                    --salt_c $salt_options.input_salt_c
+                #end if 
+
+                #if  $salt_options.input_salt_a != ''
+                    --salt_a $salt_options.input_salt_a
+                #end if 
+                
+                $salt_options.salt_override_option
+                $salt_options.option_nocounter
+
+                #if $salt_options.salt_conc_option.advance == 'advance':
+                    --saltcon $salt_options.salt_conc_option.input_saltcon
+                #end if
+            #end if 
+
+            #if $all_the_advance_options.advance == 'advance'
+        
+                #if $all_the_advance_options.MEMEMBED_options.advance == 'advance'
+                    $all_the_advance_options.MEMEMBED_options.input_barrel
+
+                    #if $all_the_advance_options.MEMEMBED_options.input_n_ter != ''
+                        --n_ter $all_the_advance_options.MEMEMBED_options.input_n_ter
+                    #end if
+
+                    #if $all_the_advance_options.MEMEMBED_options.input_mem_opt != ''
+                        --mem_opt $all_the_advance_options.MEMEMBED_options.input_mem_opt
+                    #end if   
+                #end if
+
+                #if $all_the_advance_options.PACKMOL_options.advance == 'advance'
+                    $all_the_advance_options.PACKMOL_options.input_notrun
+                    $all_the_advance_options.PACKMOL_options.input_packall
+                    $all_the_advance_options.PACKMOL_options.input_movebadrandom
+                #end if
+
+                #if $all_the_advance_options.Computational_electrophysiology.advance == 'advance'
+                    $all_the_advance_options.Computational_electrophysiology.input_double
+                    #if $all_the_advance_options.Computational_electrophysiology.input_charge_imbalance != ''
+                        --charge_imbalance $all_the_advance_options.Computational_electrophysiology.input_charge_imbalance
+                    #end if 
+                    --imbalance_ion $all_the_advance_options.Computational_electrophysiology.input_imbalance_ion
+                #end if 
+
+                #if $all_the_advance_options.others_parameters.advance == 'advance'
+                    #if $all_the_advance_options.others_parameters.input_distxy_fix != ''
+                        --distxy_fix $all_the_advance_options.others_parameters.input_distxy_fix
+                    #end if 
+
+                    #if $all_the_advance_options.others_parameters.input_noxy_cen != ''
+                        --noxy_cen $all_the_advance_options.others_parameters.input_noxy_cen
+                    #end if
+
+                    #if $all_the_advance_options.others_parameters.input_channel_plug != ''
+                        --channel_plug $all_the_advance_options.others_parameters.input_channel_plug
+                    #end if 
+
+                    $all_the_advance_options.others_parameters.input_self_assembly
+
+                    #if $all_the_advance_options.others_parameters.advance_curved_2d_gaussian.advance == 'advance'
+                        --xygauss $all_the_advance_options.others_parameters.advance_curved_2d_gaussian.input_xygauss_x $all_the_advance_options.others_parameters.advance_curved_2d_gaussian.input_xygauss_y $all_the_advance_options.others_parameters.advance_curved_2d_gaussian.input_xygauss_h
+                    #end if 
+                    
+                    #if  $all_the_advance_options.others_parameters.input_curvature != ''
+                        --curvature $all_the_advance_options.others_parameters.input_curvature 
+                    #end if 
+
+                    #if $all_the_advance_options.others_parameters.input_curv_radius != ''
+                        --curv_radius $all_the_advance_options.others_parameters.input_curv_radius
+                    #end if 
+
+                    $all_the_advance_options.others_parameters.input_vol  
+                 
+                    #if $all_the_advance_options.others_parameters.Computational_solvate_system.advance == '--solvate'
+                        --solvate $all_the_advance_options.others_parameters.Computational_solvate_system.input_cubic
+                    #end if 
+
+                    #if  $all_the_advance_options.others_parameters.input_leaflet  != ''
+                        --leaflet $all_the_advance_options.others_parameters.input_leaflet
+                    #end if 
+
+                    #if $all_the_advance_options.others_parameters.input_lip_offset != ''
+                        --lip_offset $all_the_advance_options.others_parameters.input_lip_offset
+                    #end if
+
+                    #if $all_the_advance_options.others_parameters.input_apl_offset != ''
+                        --apl_offset $all_the_advance_options.others_parameters.input_apl_offset
+                    #end if
+
+                    #if $all_the_advance_options.others_parameters.input_tailplane  != '' 
+                        --tailplane $all_the_advance_options.others_parameters.input_tailplane
+                    #end if
+
+                    #if $all_the_advance_options.others_parameters.input_headplane != '' 
+                        --headplane $all_the_advance_options.others_parameters.input_headplane
+                    #end if
+
+                    $all_the_advance_options.others_parameters.input_notgridvol
+                    
+                    $all_the_advance_options.others_parameters.input_reducebuild
+                    $all_the_advance_options.others_parameters.input_keep
+                    $all_the_advance_options.others_parameters.input_noprogress
+                    $all_the_advance_options.others_parameters.input_apl_exp
+                
+                    $all_the_advance_options.others_parameters.input_charmm
+                    $all_the_advance_options.others_parameters.input_sirah
+
+                    #if $all_the_advance_options.others_parameters.translate_protein_orient_option.advance == 'advance'
+                        --translate $all_the_advance_options.others_parameters.translate_protein_orient_option.input_translate_x 
+                        $all_the_advance_options.others_parameters.translate_protein_orient_option.input_translate_y 
+                        $all_the_advance_options.others_parameters.translate_protein_orient_option.input_translate_z
+                    #end if 
+                #end if 
+            #end if
+    
+            --dist $input_dist
+            --dist_wat $input_dist_wat
+
+            #if $input_distxy_fix:
+                --distxy_fix $input_distxy_fix
+            #end if
+
+            $input_notprotonate
+            $input_nottrim
+
+            --output "out.pdb"
+            --log $log_file
+
+            #if $remove_cavity_lipids
+                && python '$__tool_directory__/remove_cavity_lipids.py' out.pdb out_cleaned.pdb
+                && mv out_cleaned.pdb out.pdb
+            #end if
+
+            #if $output_option == 'true' and $ligand_options.advance == 'yes'
+                && python '$__tool_directory__/separate.py' --input-file  "out.pdb" -l $ligand_options.ligand_name --output-ligand ligand.pdb
+            #end if
+
+           
+            ##python conf.py --lipids "DOPC,DOPA,AOPC" --ligand LIG -c "NA+" -a "CL-" -o config.txt
+            && python '$__tool_directory__/conf.py' 
+
+            #if $second_lipid_options.advance == 'advance'
+                --lipids $input_lipids_1,$second_lipid_options.input_lipids_2
+            #elif  $second_lipid_options.advance == 'simple'
+                --lipids $input_lipids_1
+            #end if 
+
+            #if $ligand_options.advance == 'yes'
+                --ligand $ligand_options.ligand_name
+            #end if 
+
+            #if $salt_options.salt == 'add'
+                #if $salt_options.input_salt_c != '' 
+                    --ions $salt_options.input_salt_c,Cl-
+                #end if
+                #if  $salt_options.input_salt_a != ''
+                    --ions $salt_options.input_salt_c,$salt_options.input_salt_a
+                #end if 
+            #end if 
+
+            --output $conf_out
+    ]]></command>
+
+    <inputs>
+        <param type="data" name="pdb_file" format="pdb" argument="--pdb" label="Input PDB file" help="Select the PDB file of the protein to embed in the membrane." optional="false"/>
+        <param type="select" name="input_lipids_1" optional="false" label="Primary lipid type" argument="--lipids" help="Choose the main lipid molecule for membrane construction.">
+            <option value="DPPC" selected="true" >DPPC (1,2-dipalmitoyl-sn-glycero-3-phosphocholine), Charge 0</option>
+            <option value="PAPC">PAPC (1-palmitoyl-2-arachidonoyl-sn-glycero-3-phosphocholine), Charge 0</option>
+            <option value="CHL1">CHL1 (cholesterol), Charge 0</option>
+            <option value="DAPC">DAPC (1,2-diarachidonoyl-sn-glycero-3-phosphocholine), Charge 0</option>
+            <option value="PAPG">PAPG (1-palmitoyl-2-arachidonoyl-sn-glycero-3-phosphoglycerol), Charge -1</option>
+            <option value="POPC">POPC (1-palmitoyl-2-oleoyl-sn-glycero-3-phosphocholine), Charge 0</option>
+            <expand macro="lipid_options"/>
+        </param>
+
+        <conditional name="second_lipid_options">
+            <param name="advance" type="select" label="Add a second lipid type?" help="Select 'Yes' to add a second lipid type to the membrane.">
+                <option value="simple" selected="true">No, use only one lipid type</option>
+                <option value="advance">Yes, add a second lipid type</option>
+            </param>
+
+            <when value="advance">
+                <param type="select" name="input_lipids_2" optional="false" label="Secondary lipid type" argument="--lipids" help="Choose the second lipid molecule for membrane construction (for mixtures).">
+                    <option value="DPPC"> DPPC (1,2-dipalmitoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+                    <option value="PAPC"> PAPC (1-palmitoyl-2-arachidonoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+                    <option value="CHL1" selected="true" > CHL1 (cholesterol), Charge 0 </option>
+                    <option value="DAPC"> DAPC (1,2-diarachidonoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+                    <option value="PAPG"> PAPG (1-palmitoyl-2-arachidonoyl-sn-glycero-3-phosphoglycerol), Charge -1 </option>
+                    <option value="POPC"> POPC (1-palmitoyl-2-oleoyl-sn-glycero-3-phosphocholine), Charge 0 </option>
+                    <expand macro="lipid_options"/>
+                </param>
+                <param type="text" name="input_ratio" optional="false" label="Lipid mixture ratio" argument="--ratio" value="9:1" help="Enter the ratio for the two lipid types (e.g., 9:1 for 90% LIP1, 10% LIP2)."/>
+            </when>
+
+            <when value="simple">
+            </when>
+        </conditional>  
+
+        <conditional name="ligand_options">
+            <param name="advance" type="select" label="Does the file contain a ligand?" help="Select 'Yes' to separate ligands from the protein after embedding.">
+                <option value="yes" selected="true">Yes, ligand is present</option>
+                <option value="no">No, ligand is not present</option>
+            </param>
+
+            <when value="yes">
+                <param type="text" name="ligand_name" optional="false" label="Ligand residue name" help="Enter the three-letter residue name of the ligand to be separated (e.g., DRG for drug)." />        
+            </when>
+            <when value="no">   
+            </when>
+        </conditional>
+
+        <conditional name='salt_options' >
+            <param name="salt" type="select" label="Salt option" argument="" help="Choose whether to add salt to the system.">
+                <option value="no">No salt</option>
+                <option value="add">Add salt</option>
+            </param>
+
+            <when value="no">          
+            </when>
+
+            <when value="add">          
+                <param type="text" name="input_salt_c" argument="--salt_c" optional="true"  label="Cation type" help="Cation to add (K+, Na+, Ca2+, Mg2+). Default is K+."/>
+                <param type="text" name="input_salt_a"  optional="true"  label="Anion type" help="Anion to add. Default is Cl-."/>
+                
+                <conditional name='salt_conc_option' >
+                    <param name="advance" type="select" label="Salt concentration option" help="Choose to use the default or specify a custom salt concentration.">
+                        <option value="simple" selected="true">Use default salt concentration</option>
+                        <option value="advance">Specify custom salt concentration</option>
+                    </param>
+
+                    <when value="simple">
+                    </when>
+
+                    <when value="advance"> 
+                        <param type="text" name="input_saltcon" argument="--saltcon" optional="false"  label="Salt concentration (M)" help="Specify the salt concentration in molar (M). Overrides the default KCl value."/>
+                    </when>
+                </conditional>
+
+                <param name="salt_override_option" type="boolean" argument="--salt_override" truevalue="--salt_override" falsevalue="" label="Override salt warning" help="Continue even if the salt concentration is less than required for neutralization."/>
+                <param name="option_nocounter" type="boolean" argument="--nocounter" truevalue=" --nocounter" falsevalue=""  label="No counterions" help="Do not add counterions. Relies on pmemd 'plasma' neutralization."/>
+            </when>
+        </conditional>
+
+        <param type="boolean" name="input_preoriented"  truevalue="" falsevalue="--preoriented" argument="--preoriented" optional="false"  label="Do you need to orient the protein during the embedding process?" help="Leave this off if the protein has been previosuly oriented and you want to avoid running MEMEMBED (i.e. if your protein was obtained from a database like OPM, you may not need to do this)"/>
+        <param type="text" value="15" name="input_dist" optional="false"  label="Minimum distance to box boundaries (Å)" argument="--dist" help="Set the minimum distance between the protein and the box boundaries in x, y, and z. Default: 15 Å. The actual distance may be larger in some cases."/>
+        <param type="text" value="" name="input_distxy_fix" optional="true" label="Membrane lengths along XY plane edges (Å)" argument="--distxy_fix" help="Set the distance along the XY plane edges of the membrane. Use 80-90 (small), 110-140 (moderate), 150-180 (large) for desired membrane size."/>
+        <param type="text" value="15" name="input_dist_wat" optional="false" label="Water layer width (z axis, Å)" argument="--dist_wat" help="Set the width of the water layer above the membrane or protein along the z axis. Default: 17.5 Å."/>
+        <param type="boolean"  name="input_notprotonate"  truevalue="--notprotonate" falsevalue="" optional="false"  label="Skip protonation" help="Do not perform protonation using Reduce."/>
+        <param type="boolean"  truevalue="--nottrim" falsevalue="" argument="--nottrim" name="input_nottrim" optional="false"  label="Keep existing hydrogens" help="Do not trim preexisting hydrogens in the structure."/>
+        <param type="boolean" name="input_keepligs" argument="--keepligs" truevalue="--keepligs" falsevalue=""  label="Keep ligands from original PDB" help="Keep ligands present in the original PDB file. By default, ligands are removed."/>
+        <param type="boolean" checked="true" name="input_random" argument="--random" label="Enable PACKMOL random seed" truevalue="--random" falsevalue=""  help="Enable PACKMOL random seed generator. If previous packing failed, enabling this may help solve minimization issues."/>
+        <param type="integer" name="input_nloop" argument="--nloop" optional="false" label="Number of nloops for GENCAN routine in PACKMOL" value='20' help="number of nloops for GENCAN routine in PACKMOL. PACKMOL MEMGEN uses 20 by default; you might consider increasing the number to improve packing. Increasing the number of components requires more GENCAN loops."/>
+        <param type="integer" name="input_nloop_all" argument="--nloop_all" optional="false" label="Number of nloops for all-together packing." value='100' help="NLOOP_ALL number of nloops for all-together packing. PACKMOL MEMGEN uses 100 by default."/>
+        <param type="integer" name="input_writeout" argument="--writeout" optional="false" label="Frequency for writing intermediate results." value='10' help="WRITEOUT   frequency for writing intermediate results. PACKMOL  uses 10 by default."/>
+        <param type="float" name="input_tolerance" argument="--tolerance" optional="false" label="Tolerance for detecting clashes between molecules in PACKMOL" value='2.0' help="TOLERANCE tolerance for detecting clashes between molecules in PACKMOL (defined as radius1+radius2). PACKMOL uses 2.0  by default."/>
+        <param type="float" name="input_prot_rad" argument="--prot_rad" optional="false" label="Radius for detecting clashes" value='1.5' help="PROT_RAD   radius considered for protein atoms to establish the tolerance for detecting clashes. PACKMOL MEMGEN uses 1.5 by default."/>
+
+        <conditional name='box_dimention_advance_option'>   
+            <param name="advance" type="select" label="Set box dimensions manually.">
+                <option value="simple" selected="true">No, use program defaults.</option>
+                <option value="advance">Yes, set box dimensions manually.</option>
+            </param>
+            <when value="simple">
+            </when>
+
+            <when value="advance"> 
+                <param type="text" name="input_dims_x" optional="false" label="Box dimensions vector for the x axes."  help="X  box dimensions vector for the x axes. Be sure to use dimensions that cover the complete protein to be packed!!"/>
+                <param type="text" name="input_dims_y" optional="false"  label="Box dimensions vector for the y  axes."  help="Y  box dimensions vector for the y axes. Be sure to use dimensions that cover the complete protein to be packed!!"/>
+                <param type="text" name="input_dims_z" optional="false"  label="Box dimensions vector for the z axes."  help="Z box dimensions vector for the z axes. Be sure to use dimensions that cover the complete protein to be packed!!"/>
+            </when>     
+        </conditional>
+
+        <conditional name='all_the_advance_options'>
+            <param name="advance" type="select" label="Advanced options" help="Choose 'Advanced options' to customize additional simulation parameters. Default is 'System defaults'.">
+                <option value="simple" selected="true">System defaults</option>
+                <option value="advance">Advanced options</option>
+            </param>
+
+            <when value="simple">
+            </when>
+
+            <when value="advance">
+
+
+                <conditional name='MEMEMBED_options' >
+                    <param name="advance" type="select" label="MEMEMBED advanced options" help="Select 'Yes' to configure MEMEMBED-specific parameters. Default uses program settings.">
+                        <option value="simple" selected="true">No, use program defaults.</option>
+                        <option value="advance">Yes, show all MEMEMBED parameters</option>
+                    </param>
+                    <when value="simple">
+                    </when>
+
+                    <when value="advance">  
+                        <param type="boolean" name="input_barrel" argument="--barrel" truevalue="--barrel" falsevalue=""  label="Enable beta barrel mode" help="Use MEMEMBED in beta barrel mode."/>
+                        <param type="select" name="input_n_ter" argument="--n_ter" optional="false"  label="--n_ter" help="'in' or 'out'. By default proteins are oriented with the n_ter oriented 'in' (or 'down'). relevant for multi layer system. If defined for one protein, it has to be defined for all of them, following previous order">
+                            <option value="" selected="true" >Default orientation</option>
+                            <option value="in">Orient N-terminus inward (down)</option>
+                            <option value="out">Orient N-terminus outward (up)</option>
+                        </param>
+
+                        <param type="select" name="input_mem_opt" argument="--mem_opt" optional="false"  label="--mem_opt" help="'in' or 'out'. By default proteins are oriented with the n_ter oriented 'in' (or 'down'). relevant for multi layer system. If defined for one protein, it has to be defined for all of them, following previous order">
+                            <option value="" selected="true" >Default</option>
+                            <option value="0"  >Genetic algorithm (GA)</option>
+                            <option value="1" >Grid</option>
+                            <option value="2" selected="true" >Direct</option>
+                            <option value="2" >GA (five times)</option>
+                        </param>
+                    </when>
+                </conditional>
+
+                <conditional name='PACKMOL_options' >
+                    <param name="advance" type="select" label="PACKMOL advanced options" help="Select 'Yes' to configure PACKMOL-specific parameters. Default uses program settings.">
+                        <option value="simple" selected="true">No, use program defaults.</option>
+                        <option value="advance">Yes, show all PACKMOL parameters</option>
+                    </param>
+                    <when value="simple">
+                    </when>
+
+                    <when value="advance"> 
+                        <param type="boolean" checked="false" name="input_notrun" argument="--notrun" label="Skip PACKMOL execution" truevalue="--notrun" falsevalue=""  help="Do not run PACKMOL, even if available."/>
+                        <param type="boolean" checked="false" name="input_packall" argument="--packall" label="Skip initial individual packing steps" truevalue="--packall" falsevalue=""  help="Skip initial individual packing steps."/>
+                        <param type="boolean" checked="false" name="input_movebadrandom" argument="--movebadrandom" label="Randomize badly placed molecules" truevalue="--movebadrandom" falsevalue=""  help="Randomize positions of badly placed molecules in the initial guess."/>
+                    </when>
+                </conditional>
+
+
+                <conditional name='Computational_electrophysiology'>
+                    <param name="advance" type="select" label="Computational electrophysiology advanced options" help="Select 'Yes' to configure computational electrophysiology parameters. Default uses program settings.">
+                        <option value="simple" selected="true">No, use program defaults.</option>
+                        <option value="advance">Yes, show all electrophysiology parameters</option>
+                    </param>
+                    <when value="simple">
+                    </when>
+
+                    <when value="advance"> 
+                        <param type="boolean" name="input_double" argument="--double" truevalue="--double" falsevalue="" label="Enable double bilayer system (CompEL)" help="Assume a stacked double bilayer system for CompEL. The --lipids composition will be used for both bilayers, flipping the leaflets."/>
+                        <param type="integer" optional='true'  name="input_charge_imbalance" argument="--charge_imbalance" label="Charge imbalance between compartments" help="Set a charge imbalance between compartments (in electron charge units). Positive values increase cations (or decrease anions) in the central compartment." />
+
+                        <param type="select" name="input_imbalance_ion" argument="--imbalance_ion" optional="false"  label="Ion type for charge imbalance" help="Select whether cations or anions are used to imbalance the system charges. Default is 'Cations'.">
+                            <option value="cat" selected="true">Cations</option> 
+                            <option value="an">Anions</option>
+                        </param>
+                    </when>
+                </conditional>
+
+                <conditional name='others_parameters' >
+
+                    <param name="advance" type="select" label="Other advanced options" help="Select 'Yes' to configure additional advanced parameters. Default uses program settings.">
+                        <option value="simple" selected="true">No, use program defaults.</option>
+                        <option value="advance">Yes, show all other advanced parameters</option>
+                    </param>
+
+                    <when value="simple">
+                    </when>
+
+                    <when value="advance">   
+                
+                        <param type="float" optional='true'  name="input_distxy_fix" argument="--distxy_fix" label="Specify the membrane patch side length in the x and y axis." help="DISTXY_FIX specify the membrane patch side length in the x and y axis. Useful when only lipids are packed! By default is calculated flexibly depending on the protein"/>
+                        <param type="boolean" optional='true'  name="input_noxy_cen" truevalue="--noxy_cen" falsevalue=""   argument="--noxy_cen" label="Disable default centering in the xy plane" help="disable default centering in the xy plane that ensures symmetric membrane building. Not recommended!"/>
+                        <param type="float" optional='true' name="input_channel_plug" label="Establishes a cylindrical restraint on the lipids using the protein z height and the input value as xy radius." argument="--channel_plug" help="CHANNEL_PLUG establishes a cylindrical restraint on the lipids using the protein z height and the input value as xy  radius. A value of 0 will use half of the protein radius. By default, no restraint is imposed."/>
+                        <param type="boolean" name="input_self_assembly"  truevalue="--self_assembly" falsevalue="" label="Places lipids all over the packed box, and not in a bilayer."  argument="--self_assembly " help="places lipids all over the packed box, and not in a bilayer."/>
+                        
+                        <conditional name='advance_curved_2d_gaussian' >
+                            <param name="advance" type="select" label="Set parameters for a curved 2d gaussian in the xy plane.">
+                                <option value="simple" selected="true">Defaults</option>
+                                <option value="advance">Set parameters</option>
+                            </param>
+
+                            <when value="simple">
+                            </when>
+                
+                            <when value="advance"> 
+                                <param type="integer" name="input_xygauss_x" argument="--xygauss" label="uncertainty in x" help="C set parameters for a curved 2d gaussian in the xy plane. Parameters are uncertainty in x."/>
+                                <param type="integer" name="input_xygauss_y" argument="--xygauss" label="uncertainty in y" help="D set parameters for a curved 2d gaussian in the y plane. Parameters are uncertainty in y."/>
+                                <param type="integer" name="input_xygauss_h" argument="--xygauss" label="gaussian height" help="H set parameters for a curved 2d gaussian gaussian height. By default, membranes are flat."/>
+                            </when>
+                        </conditional>
+
+                        <param type="float" optional='true'  name="input_curvature" label="Set the curvature of the membrane patch. By default, membranes are flat." argument="--curvature" help="CURVATURE set the curvature of the membrane patch. By default, membranes are flat."/>
+                        <param type="float" optional='true'  name="input_curv_radius"  label="Inverse of curvature. Set the curvature as if on a vesicle with the provided radius." argument="--curv_radius" help="CURV_RADIUS inverse of curvature. Set the curvature as if on a vesicle with the provided radius."/>
+
+                        <conditional name='Computational_solvate_system'>
+                            <param name="advance" type="select" label="Solvate the system without adding lipids.">
+                                <option value="simple" selected="true">Don't Solvate</option>
+                                <option value="--solvate">Solvate</option>
+                            </param>
+                            <when value="simple">
+                            </when>
+                
+                            <when value="--solvate"> 
+                                <param type="boolean" truevalue="--cubic" argument="--cubic" label="Cube shaped box. Only works with"  falsevalue=""  name="input_cubic" help="Cube shaped box. Only works with --solvate"/>
+                            </when>
+                        </conditional>
+
+                        <param type="boolean" falsevalue="" truevalue="--vol" name="input_vol" argument="--vol" label="Do the lipid number estimation based on the volume occupied by the leaflet instead of APL" help="do the lipid number estimation based on the volume occupied by the leaflet instead of APL. This might cause a great overestimation of the number of lipid molecules!" />
+                        <param type="integer" optional='true' name="input_leaflet" argument="--leaflet"  label="Set desired leaflet width." help="LEAFLET set desired leaflet width. 23 by default." />
+                        <param type="float" name="input_lip_offset" optional='true' argument="--lip_offset" label="Factor that multiplies the x/y sizes for the lipid membrane segment." help="LIP_OFFSET factor that multiplies the x/y sizes for the lipid membrane segment. Might improve packing and handling  by AMBER" />
+                        <param type="float" optional='true' name="input_apl_offset" argument="--apl_offset" label="Factor that multiplies the default APL values." help="APL_OFFSET factor that multiplies the default APL values. Helpful if packing stretched membranes." />
+                        <param type="float" name="input_tailplane" optional='true' argument="--tailplane" label="Sets the position BELOW which the CH3 carbon atoms in the tail should be." help="TAILPLANE sets the position BELOW which the CH3 carbon atoms in the tail should be. By default defined in parameter file." />
+                        <param type="float" name="input_headplane" optional='true' argument="--headplane" label="Sets the position ABOVE which the PO4 phosphorus and N atoms in the polar head group should be" help="HEADPLANE sets the position ABOVE which the PO4 phosphorus and N atoms in the polar head group should be.By default defined in parameter file" />
+                        <param type="boolean" name="input_notgridvol" truevalue="--notgridvol" falsevalue="" label="Skips grid building for volume estimation" argument="--notgridvol" help="skips grid building for volume estimation, and the calculation is done just by estimating density" />
+                        <param type="boolean" name="input_reducebuild" falsevalue=""  truevalue="--reducebuild" argument="--reducebuild" label="Build step by reduce (protonation of His and side-chain flips)." help="build step by reduce (protonation of His and side-chain flips). Use with care if parametrizing with the script!" />
+                        <param type="boolean" name="input_keep" truevalue="--keep" falsevalue="" argument="--keep"  label="Skips deleting temporary files." help="skips deleting temporary files"/>
+                        <param type="boolean" name="input_noprogress" truevalue="--noprogress" falsevalue="" argument="--noprogress" label="Avoids the printing of progress bar with time estimation in the final stage." help="avoids the printing of progress bar with time estimation in the final stage. Recommended if the job is piped into a file" />
+                        <param type="boolean" name="input_apl_exp" truevalue="--apl_exp" falsevalue="" argument="--apl_exp" label="Use experimental APL" help="use experimental APL where available, like  AmberTools18 release. Kept for consistency with older versions. By default, terms estimated with Lipid17 are used" />
+                        <param type="boolean" name="input_charmm" truevalue="--charmm" falsevalue="" argument="--charmm" label="The output will be in CHARMM format instead of AMBER." help=" the output will be in CHARMM format instead of AMBER. Works only for small subset of lipids (see --available_lipids)" />
+
+                        <conditional name='translate_protein_orient_option'>
+                            <param name="advance" type="select" label="Pass a vector as x y z to translate the oriented pdb">
+                                <option value="simple" selected="true">No vector </option>
+                                <option value="advance">Add a vector</option>
+                            </param>
+                            <when value="simple">
+                            </when>
+                
+                            <when value="advance"> 
+                                <param type="text" optional="false" name="input_translate_x" argument="--translate" label="--translate" help="TRANSLATE TRANSLATE TRANSLATE pass a vector as x to translate the oriented pdb. Ex. 10 " />
+                                <param type="text" optional="false" name="input_translate_y" argument="--translate" label="--translate" help="TRANSLATE TRANSLATE TRANSLATE pass a vector as y to translate the oriented pdb. Ex. 4 " />
+                                <param type="text" optional="false" name="input_translate_z" argument="--translate" label="--translate" help="TRANSLATE TRANSLATE TRANSLATE pass a vector as z to translate the oriented pdb. Ex. 14 " />
+                            </when>
+                        </conditional>
+
+                        <param type="boolean" name="input_sirah" truevalue="--sirah" falsevalue="" argument="--sirah" label="Use SIRAH lipids, and corase-grain protein input." help="use SIRAH lipids, and corase-grain protein input. Will adapt tolerance accordingly. Only small subset of lipids available!" />
+                    </when>
+                </conditional>
+            </when>
+        </conditional>
+
+        <param type="boolean"  name="output_option"  truevalue="true" falsevalue="" optional="false"  label="Generates additional Ligand file" help="Make sure that you have selected correction option for 'Does the file contain a ligand?' parameter and entered a valid ligand name. for the 'Ligand residue name' parameter.   "/>
+
+        <param type="boolean" name="remove_cavity_lipids" truevalue="true" falsevalue="" label="Remove misplaced lipids from protein cavity" help="Automatically detect and remove lipids that packmol-memgen incorrectly placed inside beta barrel or ion channel cavities."/>
+    </inputs>
+
+   <outputs>   
+        <data name="embeded_protein" format='pdb' label="${tool.name} on $on_string - System (pdb)" from_work_dir="out.pdb"/>
+        
+        <data name="ligand" format='pdb' label="${tool.name} on $on_string - Ligand (pdb)" from_work_dir="ligand.pdb">
+            <filter>  ligand_options['advance'] == 'yes' and output_option</filter>
+        </data>
+        
+        <data name="log_file" format="txt" label="${tool.name} on $on_string - (log)" from_work_dir="out.txt"/>
+        <data name="conf_out" format="txt" label="${tool.name} on $on_string - (conf_out)" from_work_dir="conf_out.txt">
+        </data>
+    </outputs>
+
+    <tests>
+        <!-- Test 10: Comprehensive test with multiple advanced options -->
+        <test expect_num_outputs="3">
+            <param name="pdb_file" value="m1.pdb"/>
+            <param name="input_lipids_1" value="POPC"/>
+            <param name="input_preoriented" value="true"/>
+            <param name="input_dist" value="5"/>
+            <param name="input_dist_wat" value="8"/>
+            <param name="input_distxy_fix" value="85"/>
+            <param name="input_nloop" value="1"/>
+            <param name="input_nloop_all" value="2"/>
+            <param name="input_writeout" value="1"/>
+            <param name="input_notprotonate" value="true"/>
+            <param name="input_nottrim" value="true"/>
+            <param name="input_keepligs" value="true"/>
+            <param name="input_tolerance" value="2.5"/>
+            <param name="input_prot_rad" value="2.0"/>
+            <param name="input_random" value="true"/>
+            
+            <conditional name="second_lipid_options">
+                <param name="advance" value="advance"/>
+                <param name="input_lipids_2" value="CHL1"/>
+                <param name="input_ratio" value="7:3"/>
+            </conditional>
+            
+            <conditional name="ligand_options">
+                <param name="advance" value="no"/>
+            </conditional>
+            
+            <conditional name="salt_options">
+                <param name="salt" value="add"/>
+                <param name="input_salt_c" value="K+"/>
+                <conditional name="salt_conc_option">
+                    <param name="advance" value="advance"/>
+                    <param name="input_saltcon" value="0.296"/>
+                </conditional>
+            </conditional>
+
+            <conditional name="all_the_advance_options">
+                <param name="advance" value="advance"/>
+                <conditional name="MEMEMBED_options">
+                    <param name="advance" value="simple"/>
+                </conditional>
+                <conditional name="PACKMOL_options">
+                    <param name="advance" value="advance"/>
+                    <param name="input_notrun" value="false"/>
+                    <param name="input_packall" value="false"/>
+                    <param name="input_movebadrandom" value="false"/>
+                </conditional>
+                <conditional name="Computational_electrophysiology">
+                    <param name="advance" value="simple"/>
+                </conditional>
+                <conditional name="others_parameters">
+                    <param name="advance" value="advance"/>
+                    <param name="input_noprogress" value="true"/>
+                    <param name="input_keep" value="false"/>
+                    <conditional name="advance_curved_2d_gaussian">
+                        <param name="advance" value="simple"/>
+                    </conditional>
+                    <conditional name="Computational_solvate_system">
+                        <param name="advance" value="simple"/>
+                    </conditional>
+                    <conditional name="translate_protein_orient_option">
+                        <param name="advance" value="simple"/>
+                    </conditional>
+                </conditional>
+            </conditional>
+
+            <output name="embeded_protein" file="out_10.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM      1  N   LYS A" />
+                </assert_contents>
+            </output>
+
+            <output name="log_file" file="out_10.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="Preprocessing inputfile.pdb"/>
+                </assert_contents>
+            </output>
+
+            <output name="conf_out" file="conf_out_10.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="lipid:"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <test expect_num_outputs="3">
+            <param name="pdb_file" value="m1.pdb"/>
+            <param name="input_lipids_1" value="POPC"/>
+            <param name="input_preoriented" value="true"/>
+            <param name="input_dist" value="5"/>
+            <param name="input_dist_wat" value="8"/>
+            <param name="input_notprotonate" value="true"/>
+            <param name="input_nottrim" value="true"/>
+            <param name="input_keepligs" value="true"/>
+            <param name="input_tolerance" value="2.5"/>
+            <param name="input_prot_rad" value="2.0"/>
+            <param name="input_nloop" value="1"/>
+            <param name="input_nloop_all" value="2"/>
+            <param name="input_writeout" value="1"/>
+            
+            <conditional name="second_lipid_options">
+                <param name="advance" value="simple"/>
+            </conditional>
+            
+            <conditional name="ligand_options">
+                <param name="advance" value="no"/>
+            </conditional>
+            
+            <conditional name="salt_options">
+                <param name="salt" value="no"/>
+            </conditional>
+
+            <conditional name="all_the_advance_options">
+                <param name="advance" value="simple"/>
+            </conditional>
+
+            <output name="embeded_protein" file="bilayer_2rh1.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="REMARK"/>
+                </assert_contents>
+            </output>
+
+            <output name="log_file" file="log.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="#Packing"/>
+                </assert_contents>
+            </output>
+
+            <output name="conf_out" file="conf_out.txt" ftype="txt"/>
+        </test>
+
+        <test expect_num_outputs="3">
+            <param name="pdb_file" value="m1.pdb"/>
+            <param name="input_lipids_1" value="POPC"/>
+            <param name="input_preoriented" value="true"/>
+            <param name="input_dist" value="5"/>
+            <param name="input_dist_wat" value="8"/>
+            <param name="input_nloop" value="1"/>
+            <param name="input_nloop_all" value="2"/>
+            <param name="input_writeout" value="1"/>
+            <param name="input_notprotonate" value="true"/>
+            <param name="input_nottrim" value="true"/>
+            <param name="input_keepligs" value="true"/>
+            <param name="input_tolerance" value="2.5"/>
+            <param name="input_prot_rad" value="2.0"/>
+            
+            <conditional name="second_lipid_options">
+                <param name="advance" value="simple"/>
+            </conditional>
+            
+            <conditional name="ligand_options">
+                <param name="advance" value="no"/>
+            </conditional>
+            
+            <conditional name="salt_options">
+                <param name="salt" value="no"/>
+            </conditional>
+
+            <conditional name="all_the_advance_options">
+                <param name="advance" value="simple"/>
+            </conditional>
+
+            <output name="embeded_protein" file="bilayer_2rh1.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="REMARK"/>
+                </assert_contents>
+            </output>
+
+            <output name="log_file" file="log.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="#Packing"/>
+                </assert_contents>
+            </output>
+
+            <output name="conf_out" file="conf_out.txt" ftype="txt"/>
+        </test>
+
+        <test expect_num_outputs="4">
+            <param name="pdb_file" value="test_4.pdb"/>
+            <param name="input_lipids_1" value="POPC"/>
+            <param name="input_preoriented" value="true"/>
+            <param name="input_dist" value="5"/>
+            <param name="input_dist_wat" value="8"/>
+            <param name="input_nloop" value="1"/>
+            <param name="input_nloop_all" value="2"/>
+            <param name="input_writeout" value="1"/>
+            <param name="input_notprotonate" value="true"/>
+            <param name="input_nottrim" value="true"/>
+            <param name="input_keepligs" value="true"/>
+            <param name="input_tolerance" value="2.5"/>
+            <param name="input_prot_rad" value="2.0"/>
+            <param name="output_option" value="true"/>
+            
+            <conditional name="second_lipid_options">
+                <param name="advance" value="simple"/>
+            </conditional>
+            
+            <conditional name="ligand_options">
+                <param name="advance" value="yes"/>
+                <param name="ligand_name" value="CAU"/>
+            </conditional>
+            
+            <conditional name="salt_options">
+                <param name="salt" value="no"/>
+            </conditional>
+
+            <conditional name="all_the_advance_options">
+                <param name="advance" value="simple"/>
+            </conditional>
+
+            <output name="embeded_protein" file="out_4.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="REMARK"/>
+                </assert_contents>
+            </output>
+
+            <output name="ligand" file="ligand_4.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="CAU"/>
+                </assert_contents>
+            </output>
+
+            <output name="log_file" file="log_4.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="#Packing"/>
+                </assert_contents>
+            </output>
+
+            <output name="conf_out" file="conf_out_4.txt" ftype="txt"/>
+        </test>
+
+        <!-- Test 4: Mixed lipid membrane with two lipid types -->
+        <test expect_num_outputs="3">
+            <param name="pdb_file" value="m1.pdb"/>
+            <param name="input_lipids_1" value="POPC"/>
+            <param name="input_preoriented" value="true"/>
+            <param name="input_dist" value="5"/>
+            <param name="input_dist_wat" value="8"/>
+            <param name="input_nloop" value="1"/>
+            <param name="input_nloop_all" value="2"/>
+            <param name="input_writeout" value="1"/>
+            <param name="input_notprotonate" value="true"/>
+            <param name="input_nottrim" value="true"/>
+            <param name="input_keepligs" value="true"/>
+            <param name="input_tolerance" value="2.5"/>
+            <param name="input_prot_rad" value="2.0"/>
+            
+            <conditional name="second_lipid_options">
+                <param name="advance" value="advance"/>
+                <param name="input_lipids_2" value="CHL1"/>
+                <param name="input_ratio" value="9:1"/>
+            </conditional>
+            
+            <conditional name="ligand_options">
+                <param name="advance" value="no"/>
+            </conditional>
+            
+            <conditional name="salt_options">
+                <param name="salt" value="no"/>
+            </conditional>
+
+            <conditional name="all_the_advance_options">
+                <param name="advance" value="simple"/>
+            </conditional>
+
+            <output name="embeded_protein" file="out_4.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM      1  N   LYS A" />
+                </assert_contents>
+            </output>
+
+            <output name="log_file" file="out_4.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="Preprocessing inputfile.pdb"/>
+                </assert_contents>
+            </output>
+
+            <output name="conf_out" file="conf_out_4.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="lipid:"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <!-- Test 5: Salt options with custom cation -->
+        <test expect_num_outputs="3">
+            <param name="pdb_file" value="m1.pdb"/>
+            <param name="input_lipids_1" value="POPC"/>
+            <param name="input_preoriented" value="true"/>
+            <param name="input_dist" value="5"/>
+            <param name="input_dist_wat" value="8"/>
+            <param name="input_nloop" value="1"/>
+            <param name="input_nloop_all" value="2"/>
+            <param name="input_writeout" value="1"/>
+            <param name="input_notprotonate" value="true"/>
+            <param name="input_nottrim" value="true"/>
+            <param name="input_keepligs" value="true"/>
+            <param name="input_tolerance" value="2.5"/>
+            <param name="input_prot_rad" value="2.0"/>
+            
+            <conditional name="second_lipid_options">
+                <param name="advance" value="simple"/>
+            </conditional>
+            
+            <conditional name="ligand_options">
+                <param name="advance" value="no"/>
+            </conditional>
+            
+            <conditional name="salt_options">
+                <param name="salt" value="add"/>
+                <param name="input_salt_c" value="Na+"/>
+                <param name="input_salt_a" value="Cl-"/>
+                <conditional name="salt_conc_option">
+                    <param name="advance" value="advance"/>
+                    <param name="input_saltcon" value="0.15"/>
+                </conditional>
+            </conditional>
+
+            <conditional name="all_the_advance_options">
+                <param name="advance" value="simple"/>
+            </conditional>
+
+            <output name="embeded_protein" file="out_5.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM      1  N   LYS A" />
+                </assert_contents>
+            </output>
+
+            <output name="log_file" file="out_5.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="Preprocessing inputfile.pdb"/>
+                </assert_contents>
+            </output>
+
+            <output name="conf_out" file="conf_out_5.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="lipid:"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <!-- Test 6: Manual box dimensions -->
+        <test expect_num_outputs="3">
+            <param name="pdb_file" value="m1.pdb"/>
+            <param name="input_lipids_1" value="POPC"/>
+            <param name="input_preoriented" value="true"/>
+            <param name="input_dist" value="5"/>
+            <param name="input_dist_wat" value="8"/>
+            <param name="input_nloop" value="1"/>
+            <param name="input_nloop_all" value="2"/>
+            <param name="input_writeout" value="1"/>
+            <param name="input_notprotonate" value="true"/>
+            <param name="input_nottrim" value="true"/>
+            <param name="input_keepligs" value="true"/>
+            <param name="input_tolerance" value="2.5"/>
+            <param name="input_prot_rad" value="2.0"/>
+            
+            <conditional name="second_lipid_options">
+                <param name="advance" value="simple"/>
+            </conditional>
+            
+            <conditional name="ligand_options">
+                <param name="advance" value="no"/>
+            </conditional>
+            
+            <conditional name="salt_options">
+                <param name="salt" value="no"/>
+            </conditional>
+
+            <conditional name="box_dimention_advance_option">
+                <param name="advance" value="advance"/>
+                <param name="input_dims_x" value="80"/>
+                <param name="input_dims_y" value="80"/>
+                <param name="input_dims_z" value="100"/>
+            </conditional>
+
+            <conditional name="all_the_advance_options">
+                <param name="advance" value="simple"/>
+            </conditional>
+
+            <output name="embeded_protein" file="out_6.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM      1  N   LYS A" />
+                </assert_contents>
+            </output>
+
+            <output name="log_file" file="out_6.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="Preprocessing inputfile.pdb"/>
+                </assert_contents>
+            </output>
+
+            <output name="conf_out" file="conf_out_6.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="lipid:"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <!-- Test 7: MEMEMBED advanced options -->
+        <test expect_num_outputs="3">
+            <param name="pdb_file" value="m1.pdb"/>
+            <param name="input_lipids_1" value="POPC"/>
+            <param name="input_preoriented" value="true"/>
+            <param name="input_dist" value="5"/>
+            <param name="input_dist_wat" value="8"/>
+            <param name="input_nloop" value="1"/>
+            <param name="input_nloop_all" value="2"/>
+            <param name="input_writeout" value="1"/>
+            <param name="input_notprotonate" value="true"/>
+            <param name="input_nottrim" value="true"/>
+            <param name="input_keepligs" value="true"/>
+            <param name="input_tolerance" value="2.5"/>
+            <param name="input_prot_rad" value="2.0"/>
+            
+            <conditional name="second_lipid_options">
+                <param name="advance" value="simple"/>
+            </conditional>
+            
+            <conditional name="ligand_options">
+                <param name="advance" value="no"/>
+            </conditional>
+            
+            <conditional name="salt_options">
+                <param name="salt" value="no"/>
+            </conditional>
+
+            <conditional name="all_the_advance_options">
+                <param name="advance" value="advance"/>
+                <conditional name="MEMEMBED_options">
+                    <param name="advance" value="advance"/>
+                    <param name="input_barrel" value="false"/>
+                    <param name="input_n_ter" value="in"/>
+                    <param name="input_mem_opt" value="2"/>
+                </conditional>
+                <conditional name="PACKMOL_options">
+                    <param name="advance" value="simple"/>
+                </conditional>
+                <conditional name="Computational_electrophysiology">
+                    <param name="advance" value="simple"/>
+                </conditional>
+                <conditional name="others_parameters">
+                    <param name="advance" value="simple"/>
+                </conditional>
+            </conditional>
+
+            <output name="embeded_protein" file="out_7.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM      1  N   LYS A" />
+                </assert_contents>
+            </output>
+
+            <output name="log_file" file="out_7.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="Preprocessing inputfile.pdb"/>
+                </assert_contents>
+            </output>
+
+            <output name="conf_out" file="conf_out_7.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="lipid:"/>
+                </assert_contents>
+            </output>
+        </test>
+
+        <!-- Test 8: PACKMOL advanced options -->
+        <test expect_num_outputs="3">
+            <param name="pdb_file" value="m1.pdb"/>
+            <param name="input_lipids_1" value="POPC"/>
+            <param name="input_preoriented" value="true"/>
+            <param name="input_dist" value="5"/>
+            <param name="input_dist_wat" value="8"/>
+            <param name="input_nloop" value="1"/>
+            <param name="input_nloop_all" value="2"/>
+            <param name="input_writeout" value="1"/>
+            <param name="input_notprotonate" value="true"/>
+            <param name="input_nottrim" value="true"/>
+            <param name="input_keepligs" value="true"/>
+            <param name="input_tolerance" value="2.5"/>
+            <param name="input_prot_rad" value="2.0"/>
+            
+            <conditional name="second_lipid_options">
+                <param name="advance" value="simple"/>
+            </conditional>
+            
+            <conditional name="ligand_options">
+                <param name="advance" value="no"/>
+            </conditional>
+            
+            <conditional name="salt_options">
+                <param name="salt" value="no"/>
+            </conditional>
+
+            <conditional name="all_the_advance_options">
+                <param name="advance" value="advance"/>
+                <conditional name="MEMEMBED_options">
+                    <param name="advance" value="simple"/>
+                </conditional>
+                <conditional name="PACKMOL_options">
+                    <param name="advance" value="advance"/>
+                    <param name="input_notrun" value="false"/>
+                    <param name="input_packall" value="false"/>
+                    <param name="input_movebadrandom" value="true"/>
+                </conditional>
+                <conditional name="Computational_electrophysiology">
+                    <param name="advance" value="simple"/>
+                </conditional>
+                <conditional name="others_parameters">
+                    <param name="advance" value="simple"/>
+                </conditional>
+            </conditional>
+
+            <output name="embeded_protein" file="out_8.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM      1  N   LYS A" />
+                </assert_contents>
+            </output>
+
+            <output name="log_file" file="out_8.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="Preprocessing inputfile.pdb"/>
+                </assert_contents>
+            </output>
+
+            <output name="conf_out" file="conf_out_8.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="lipid:"/>
+                </assert_contents>
+            </output>
+            
+        </test>
+            <!-- Test 9: Other advanced parameters (membrane geometry) -->
+        <test expect_num_outputs="3">
+            <param name="pdb_file" value="m1.pdb"/>
+            <param name="input_lipids_1" value="POPC"/>
+            <param name="input_preoriented" value="true"/>
+            <param name="input_dist" value="5"/>
+            <param name="input_dist_wat" value="8"/>
+            <param name="input_nloop" value="1"/>
+            <param name="input_nloop_all" value="2"/>
+            <param name="input_writeout" value="1"/>
+            <param name="input_notprotonate" value="true"/>
+            <param name="input_nottrim" value="true"/>
+            <param name="input_keepligs" value="true"/>
+            <param name="input_tolerance" value="2.5"/>
+            <param name="input_prot_rad" value="2.0"/>
+            
+            <conditional name="second_lipid_options">
+                <param name="advance" value="simple"/>
+            </conditional>
+            
+            <conditional name="ligand_options">
+                <param name="advance" value="no"/>
+            </conditional>
+            
+            <conditional name="salt_options">
+                <param name="salt" value="no"/>
+            </conditional>
+
+            <conditional name="all_the_advance_options">
+                <param name="advance" value="advance"/>
+                <conditional name="MEMEMBED_options">
+                    <param name="advance" value="simple"/>
+                </conditional>
+                <conditional name="PACKMOL_options">
+                    <param name="advance" value="simple"/>
+                </conditional>
+                <conditional name="Computational_electrophysiology">
+                    <param name="advance" value="simple"/>
+                </conditional>
+                <conditional name="others_parameters">
+                    <param name="advance" value="advance"/>
+                    <param name="input_distxy_fix" value="90.0"/>
+                    <param name="input_noxy_cen" value="false"/>
+                    <param name="input_self_assembly" value="false"/>
+                    <param name="input_vol" value="false"/>
+                    <param name="input_leaflet" value="23"/>
+                    <param name="input_notgridvol" value="false"/>
+                    <param name="input_reducebuild" value="false"/>
+                    <param name="input_keep" value="false"/>
+                    <param name="input_noprogress" value="true"/>
+                    <param name="input_apl_exp" value="false"/>
+                    <param name="input_charmm" value="false"/>
+                    <param name="input_sirah" value="false"/>
+                    <conditional name="advance_curved_2d_gaussian">
+                        <param name="advance" value="simple"/>
+                    </conditional>
+                    <conditional name="Computational_solvate_system">
+                        <param name="advance" value="simple"/>
+                    </conditional>
+                    <conditional name="translate_protein_orient_option">
+                        <param name="advance" value="simple"/>
+                    </conditional>
+                </conditional>
+            </conditional>
+
+            <output name="embeded_protein" file="out_9.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM      1  N   LYS A" />
+                </assert_contents>
+            </output>
+
+            <output name="log_file" file="out_9.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="Preprocessing inputfile.pdb"/>
+                </assert_contents>
+            </output>
+
+            <output name="conf_out" file="conf_out_9.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="lipid:"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+ 
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Membrane Builder embeds proteins into lipid bilayer membranes for molecular dynamics (MD) simulations. This tool automates the complex process of building membrane-protein systems with customizable lipid compositions, salt concentrations, and simulation box parameters using the PACKMOL-Memgen backend.
+
+It is designed for high-throughput studies of membrane proteins such as GPCRs, ion channels, transporters, and other membrane-embedded proteins. The tool supports single and mixed lipid compositions, automatic system neutralization with ions, and optional advanced features for computational electrophysiology and coarse-grain simulations.
+
+-----
+
+**Key Features**
+
+- **Automated protein embedding** into lipid bilayers with PACKMOL
+- **Mixed lipid membranes** with custom composition ratios (e.g., POPC:CHL1 at 9:1)
+- **Ion addition** with customizable cation/anion types and concentrations
+- **Ligand handling** and separation from protein structures
+- **Beta barrel protein support** via MEMEMBED orientation mode
+- **Curved membrane generation** with Gaussian height profiles
+- **Computational electrophysiology** (CompEL) double bilayer systems
+- **CHARMM and SIRAH** coarse-grain format support
+- **Automatic cavity lipid detection** for ion channels and beta barrels
+
+-----
+
+**Inputs**
+
+- **Input PDB file** *(required)*: Protein structure file in PDB format to embed in the membrane.
+  
+- **Primary lipid type** *(required)*: Main lipid molecule for membrane construction. Options include:
+    - DPPC (1,2-dipalmitoyl-sn-glycero-3-phosphocholine)
+    - POPC (1-palmitoyl-2-oleoyl-sn-glycero-3-phosphocholine)
+    - CHL1 (cholesterol)
+    - DAPC, PAPC, PAPG, and others
+  
+- **Secondary lipid type** *(optional)*: Second lipid for mixed membranes with specified molar ratio (e.g., 9:1, 7:3).
+
+- **Ligand residue name** *(optional)*: Three-letter residue code (e.g., DRG) to separate from the system after embedding.
+
+- **Salt options** *(optional)*: 
+    - Salt type: No salt, or add custom cation/anion pairs (Na+, K+, Ca2+, Cl-, etc.)
+    - Concentration: Custom molar concentration (e.g., 0.15M) or default physiological
+
+-----
+
+**Outputs**
+
+- **System (PDB)**: Complete membrane-protein system with lipids, water, and ions in AMBER format.
+- **Ligand (PDB)** *(optional)*: Separated ligand structure if ligand extraction is enabled.
+- **Log file**: PACKMOL-Memgen execution log with packing details and diagnostics.
+- **Configuration file (conf_out)**: Component definitions for downstream GROMACS MD index generation.
+
+
+**Advanced Options**
+
+*MEMEMBED Options*
+    Configure protein orientation and membrane embedding:
+    
+    - Beta barrel mode for outer membrane proteins
+    - N-terminus orientation (inward/outward)
+    - Optimization method (Direct, Grid, Genetic Algorithm)
+
+*PACKMOL Options*
+    Fine-tune molecular packing behavior:
+    
+    - Skip PACKMOL execution (notrun)
+    - Skip initial individual packing (packall)
+    - Randomize badly placed molecules (movebadrandom)
+
+*Computational Electrophysiology*
+    Double bilayer systems for ion channel simulations:
+    
+    - Enable double bilayer mode
+    - Set charge imbalance between compartments
+    - Select ion type for charge compensation
+
+*Membrane Geometry*
+    Customize membrane structure and shape:
+    
+    - Fixed XY membrane dimensions (distxy_fix)
+    - Curved membranes with Gaussian height profiles
+    - Membrane curvature radius for vesicles
+    - Leaflet width and APL offset parameters
+
+*Other Advanced Parameters*
+    System customization options:
+    
+    - Enable/disable system solvation
+    - Set translation vectors for protein positioning
+    - Toggle progress reporting and temporary file cleanup
+    - Specify CHARMM or SIRAH force field output
+
+-----
+
+**Tips and Best Practices**
+
+- **Pre-oriented proteins**: If your protein is already oriented (e.g., from OPM database), disable "Orient protein during embedding" to skip MEMEMBED.
+
+- **Failed packing**: If packing fails, try enabling the random seed option, increasing PACKMOL nloop values, or increasing membrane dimensions with distxy_fix parameter.
+
+- **Ion channels and beta barrels**: Use the "Remove misplaced lipids" option to automatically detect and remove lipids incorrectly placed inside cavities.
+
+- **Large systems**: Increase PACKMOL nloop values (default 20) for systems with many lipids or complex protein geometries.
+
+- **Computational efficiency**: Use "Skip PACKMOL execution" option if you only want the system setup without molecular packing.
+
+- **Force field compatibility**: Select appropriate output format (CHARMM, SIRAH) if not using AMBER force fields.
+
+-----
+
+**References**
+
+- **PACKMOL-Memgen**: Schott-Verdugo S, Gohlke H. *PACKMOL-Memgen: A Python Wrapper for Packmol to Build Molecular Systems*. J Chem Inf Model. 2019;59(6):2522-2528. doi:10.1021/acs.jcim.9b00066
+
+- **AmberTools**: Case DA, et al. *AmberTools Reference Manual*. 2023. University of California, San Francisco.
+
+- **MEMEMBED**: Nugent T, Jones DT. *Transmembrane protein topology prediction using support vector machines*. BMC Bioinformatics. 2013;14:276. doi:10.1186/1471-2105-14-276
+
+- **GROMACS**: Abraham MJ, et al. *GROMACS: High performance molecular simulations through multi-level parallelism from laptops to supercomputers*. SoftwareX. 2015;1-2:19-25. doi:10.1016/j.softx.2015.06.001
+
+    ]]></help>
+<citations>
+  <citation type="bibtex">
+    @article{Case2023,
+        title = {AmberTools},
+        volume = {63},
+        ISSN = {1549-960X},
+        url = {http://dx.doi.org/10.1021/acs.jcim.3c01153},
+        DOI = {10.1021/acs.jcim.3c01153},
+        number = {20},
+        journal = {Journal of Chemical Information and Modeling},
+        publisher = {American Chemical Society (ACS)},
+        author = {Case,  David A. and Aktulga,  Hasan Metin and Belfon,  Kellon and Cerutti,  David S. and Cisneros,  G. Andrés and Cruzeiro,  Vinícius Wilian D. and Forouzesh,  Negin and Giese,  Timothy J. and G\"{o}tz,  Andreas W. and Gohlke,  Holger and Izadi,  Saeed and Kasavajhala,  Koushik and Kaymak,  Mehmet C. and King,  Edward and Kurtzman,  Tom and Lee,  Tai-Sung and Li,  Pengfei and Liu,  Jian and Luchko,  Tyler and Luo,  Ray and Manathunga,  Madushanka and Machado,  Matias R. and Nguyen,  Hai Minh and O’Hearn,  Kurt A. and Onufriev,  Alexey V. and Pan,  Feng and Pantano,  Sergio and Qi,  Ruxi and Rahnamoun,  Ali and Risheh,  Ali and Schott-Verdugo,  Stephan and Shajan,  Akhil and Swails,  Jason and Wang,  Junmei and Wei,  Haixin and Wu,  Xiongwu and Wu,  Yongxian and Zhang,  Shi and Zhao,  Shiji and Zhu,  Qiang and Cheatham,  Thomas E. and Roe,  Daniel R. and Roitberg,  Adrian and Simmerling,  Carlos and York,  Darrin M. and Nagan,  Maria C. and Merz,  Kenneth M.},
+        year = {2023},
+        month = oct,
+        pages = {6183–6191}
+      }
+  </citation>
+</citations>
+</tool>

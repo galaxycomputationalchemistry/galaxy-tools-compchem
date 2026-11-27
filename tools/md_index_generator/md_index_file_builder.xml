@@ -1,0 +1,121 @@
+<tool id="md_index_generator" name="Automate MD and Index File Generation" version="2022+galaxy0" profile="22.01">
+    <description>Generate GROMACS index files with custom groups for analysis and simulation</description>
+    <macros/>
+    <requirements>
+        <requirement type="package" version="2024">gromacs</requirement>
+    </requirements>
+   <command detect_errors="exit_code"><![CDATA[
+
+         ln -s $gro_file system.gro &&
+         ln -s $group_conf index_groups.txt &&
+
+        python '$__tool_directory__/md_index_file_builder.py'  -c 'index_groups.txt' -f 'system.gro'  &>> verbose.txt 
+
+        &&
+
+        mv ndx.ndx '$ndx' &&
+        mv verbose.txt '$log_file'
+
+     ]]></command>
+
+    <inputs>
+        <param name="group_conf" type="data" format="txt" label="Index group configuration file" help="Text file containing definitions of lipids, ligands, ions, and other molecular components"/>
+        <param name="gro_file" type="data" format="gro" label="GROMACS structure file" help="GROMACS coordinate file (.gro format) defining the molecular system structure"/>
+    </inputs>
+    <outputs>
+        <data name="ndx" format="ndx" label="${tool.name}: Index file (.ndx)"/>
+        <data name="log_file" format="txt" label="${tool.name}: Log file (.txt)"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="group_conf" value="test_config.txt" />
+            <param name="gro_file" value="test_system.gro" />
+            <output name="ndx" file="test_output.ndx" />
+            <output name="log_file" file="test_output.log" ftype="txt">
+                <assert_contents>
+                    <has_text text="Protein_PA_PC_OL_CHL_CAU"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Generates GROMACS index files (.ndx format) with custom atom groups for molecular dynamics analysis and simulation control. Index files define atom selections used for temperature coupling, pressure coupling, output groups, and trajectory analysis.
+
+-----
+
+**Key Features**
+
+- **Automatic group creation**: Generates index groups from molecular component definitions
+- **Flexible configuration**: Supports lipids, ligands, ions, and protein components
+- **Integration with GROMACS**: Creates standard .ndx files compatible with all GROMACS tools
+- **Verbose logging**: Provides detailed information about generated groups
+- **Component-aware**: Properly handles complex systems with multiple components
+
+-----
+
+**Inputs**
+
+- **Structure file (.gro)**: GROMACS coordinate file defining the molecular system
+- **Configuration file**: Text file with component definitions (lipids, ligands, ions, protein)
+
+**Configuration file format:**
+    - Defines molecular components in the system
+    - Specifies residues and atom names for each component
+    - Example: lipid definitions (POPC, DOPC, etc.), ligand names, ion types
+
+-----
+
+**Outputs**
+
+- **Index file (.ndx)**: GROMACS index file containing all atom groups
+- **Log file**: Detailed information about index group creation and atom counts
+
+-----
+
+**Index groups created:**
+
+Standard GROMACS groups plus custom groups from configuration:
+
+- **System**: All atoms
+- **Protein**: Protein atoms (if present)
+- **Membrane components**: Separate groups for each lipid type
+- **Solvent/Ions**: Water and ion groups
+- **Combined groups**: User-defined combinations (e.g., Protein_Membrane)
+
+-----
+
+**Notes**
+
+- Configuration file must match the system composition in the structure file
+- Index groups are used in GROMACS for: temperature coupling, pressure coupling, restraints, output control
+- Output can be viewed/edited with tools like: `gmx make_ndx`, text editors, or visualization software
+- Proper index file generation is critical for correct MD simulation behavior
+
+    ]]></help>
+    <citations>
+        <citation type="doi">
+            @misc{GROMACS2024_source,
+                  author       = {Abraham, Mark and Alekseenko, Andrey and Basov, Vladimir and
+                  Bergh, Cathrine and Briand, Eliane and Brown, Ania and
+                  Doijade, Mahesh and Fiorin, Giacomo and Fleischmann, Stefan and
+                  Gorelov, Sergey and Gouaillardet, Gilles and Gray, Alan and
+                  Irrgang, M. Eric and Jalalypour, Farzaneh and Jordan, Joe and
+                  Kutzner, Carsten and Lemkul, Justin A. and Lundborg, Magnus and
+                  Merz, Pascal and Miletic, Vedran and Morozov, Dmitry and
+                  Nabet, Julien and Pall, Szilard and Pasquadibisceglie, Andrea and
+                  Pellegrino, Michele and Santuz, Hubert and Schulz, Roland and
+                  Shugaeva, Tatiana and Shvetsov, Alexey and Villa, Alessandra and
+                  Wingbermuehle, Sebastian and Hess, Berk and Lindahl, Erik},
+                 title        = {{GROMACS} 2024 Source code},
+                 year         = {2024},
+                 publisher    = {Zenodo},
+                 doi          = {10.5281/zenodo.10589643},
+                 url          = {https://doi.org/10.5281/zenodo.10589643},
+            }
+        </citation>
+    </citations>
+</tool>

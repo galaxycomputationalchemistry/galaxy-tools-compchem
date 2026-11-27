@@ -1,0 +1,113 @@
+{
+    "summary": {
+        "num_errors": 0,
+        "num_failures": 0,
+        "num_skips": 0,
+        "num_tests": 1
+    },
+    "tests": [
+        {
+            "data": {
+                "inputs": {
+                    "gro_file": {
+                        "id": "3621b09fd6246f69",
+                        "src": "hda"
+                    },
+                    "group_conf": {
+                        "id": "e2712b0c9127fdf1",
+                        "src": "hda"
+                    }
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T20:46:34.342992",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__gromacs@2024",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "gromacs",
+                            "version": "2024"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "067ff85fccf28736",
+                    "id": "ca80ce2d808b99d8",
+                    "inputs": {
+                        "gro_file": {
+                            "id": "3621b09fd6246f69",
+                            "src": "hda",
+                            "uuid": "9dbb9cd8-7958-4fc7-b275-6717e48976d1"
+                        },
+                        "group_conf": {
+                            "id": "e2712b0c9127fdf1",
+                            "src": "hda",
+                            "uuid": "24477e7f-5142-4909-a52a-2de85e3584ac"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "log_file": {
+                            "id": "02de78afbe90e472",
+                            "src": "hda",
+                            "uuid": "a0f7fb56-c758-4cea-b834-cb597956cb4f"
+                        },
+                        "ndx": {
+                            "id": "fc9c4d32ae6fcb54",
+                            "src": "hda",
+                            "uuid": "b32349ce-3d89-4628-bd8e-55889921b651"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"input\"",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\""
+                    },
+                    "state": "ok",
+                    "stderr": "",
+                    "stdout": "",
+                    "tool_id": "md_index_generator",
+                    "tool_stderr": "",
+                    "tool_stdout": "",
+                    "update_time": "2026-08-20T20:46:42.245192",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 0,
+                "time_seconds": 21.426252126693726,
+                "tool_id": "md_index_generator",
+                "tool_version": "2022+galaxy0"
+            },
+            "has_data": true,
+            "id": "md_index_generator-0"
+        }
+    ],
+    "version": "0.1"
+}

@@ -1,0 +1,1051 @@
+<?xml version="1.0"?>
+<tool id="gromacs_generate_mdp_v2" name="Generate GROMACS MDP File" version="0.0.1" profile="22.01">
+    <description>Generate a GROMACS .mdp file with presets + advanced controls</description>
+
+    <requirements>
+        <requirement type="package" version="2024">gromacs</requirement>
+    </requirements>
+
+    <command><![CDATA[
+
+            #if $advance_md_file_options.advance_md_file == 'wf'
+                ln -s $advance_md_file_options.gro_file system.gro &&
+                (echo 'q') |  gmx make_ndx -f system.gro > index_log.txt 2>&1 &&
+            #end if
+        
+            python '$__tool_directory__/md_template.py' 
+
+            #if $advance_md_file_options.advance_md_file == 'wf'
+
+                index --config $advance_md_file_options.conf_file --index_log index_log.txt --gro-file system.gro --output ndx.ndx
+                
+                npt1
+                #if $advance_md_file_options.npt1_conditional.npt1_mode == 'custom'
+                    --dt '$advance_md_file_options.npt1_conditional.npt1_dt'
+                    --nsteps '$advance_md_file_options.npt1_conditional.npt1_nsteps'
+                    --nstxtcout '$advance_md_file_options.npt1_conditional.npt1_nstxtcout'
+                    --nstvout '$advance_md_file_options.npt1_conditional.npt1_nstvout'
+                    --nstfout '$advance_md_file_options.npt1_conditional.npt1_nstfout'
+                    --nstcalcenergy '$advance_md_file_options.npt1_conditional.npt1_nstcalcenergy'
+                    --nstenergy '$advance_md_file_options.npt1_conditional.npt1_nstenergy'
+                    --nstlog '$advance_md_file_options.npt1_conditional.npt1_nstlog'
+
+                    #if $advance_md_file_options.npt1_conditional.npt1_tc_grps_conditional.npt1_tc_grps_option == 'custom'
+                        --tc_grps '$advance_md_file_options.npt1_conditional.npt1_tc_grps_conditional.npt1_tc_grps'
+                        --comm_grps '$advance_md_file_options.npt1_conditional.npt1_tc_grps_conditional.npt1_comm_grps'
+                    #end if
+                #end if
+                
+                npt2
+                #if $advance_md_file_options.npt2_conditional.npt2_mode == 'custom'
+                    --dt '$advance_md_file_options.npt2_conditional.npt2_dt'
+                    --nsteps '$advance_md_file_options.npt2_conditional.npt2_nsteps'
+                    --nstxtcout '$advance_md_file_options.npt2_conditional.npt2_nstxtcout'
+                    --nstvout '$advance_md_file_options.npt2_conditional.npt2_nstvout'
+                    --nstfout '$advance_md_file_options.npt2_conditional.npt2_nstfout'
+                    --nstcalcenergy '$advance_md_file_options.npt2_conditional.npt2_nstcalcenergy'
+                    --nstenergy '$advance_md_file_options.npt2_conditional.npt2_nstenergy'
+                    --nstlog '$advance_md_file_options.npt2_conditional.npt2_nstlog'
+
+                    #if $advance_md_file_options.npt2_conditional.npt2_tc_grps_conditional.npt2_tc_grps_option == 'custom'
+                        --tc_grps '$advance_md_file_options.npt2_conditional.npt2_tc_grps_conditional.npt2_tc_grps'
+                        --comm_grps '$advance_md_file_options.npt2_conditional.npt2_tc_grps_conditional.npt2_comm_grps'
+                    #end if 
+                #end if
+                
+                npt3
+                #if $advance_md_file_options.npt3_conditional.npt3_mode == 'custom'
+                    --dt '$advance_md_file_options.npt3_conditional.npt3_dt'
+                    --nsteps '$advance_md_file_options.npt3_conditional.npt3_nsteps'
+                    --nstxtcout '$advance_md_file_options.npt3_conditional.npt3_nstxtcout'
+                    --nstvout '$advance_md_file_options.npt3_conditional.npt3_nstvout'
+                    --nstfout '$advance_md_file_options.npt3_conditional.npt3_nstfout'
+                    --nstcalcenergy '$advance_md_file_options.npt3_conditional.npt3_nstcalcenergy'
+                    --nstenergy '$advance_md_file_options.npt3_conditional.npt3_nstenergy'
+                    --nstlog '$advance_md_file_options.npt3_conditional.npt3_nstlog'
+
+                    #if $advance_md_file_options.npt3_conditional.npt3_tc_grps_conditional.npt3_tc_grps_option == 'custom'
+                        --tc_grps '$advance_md_file_options.npt3_conditional.npt3_tc_grps_conditional.npt3_tc_grps'
+                        --comm_grps '$advance_md_file_options.npt3_conditional.npt3_tc_grps_conditional.npt3_comm_grps'
+                    #end if
+                #end if
+
+                npt4
+                #if $advance_md_file_options.npt4_conditional.npt4_mode == 'custom'
+                    --dt '$advance_md_file_options.npt4_conditional.npt4_dt'
+                    --nsteps '$advance_md_file_options.npt4_conditional.npt4_nsteps'
+                    --nstxtcout '$advance_md_file_options.npt4_conditional.npt4_nstxtcout'
+                    --nstvout '$advance_md_file_options.npt4_conditional.npt4_nstvout'
+                    --nstfout '$advance_md_file_options.npt4_conditional.npt4_nstfout'
+                    --nstcalcenergy '$advance_md_file_options.npt4_conditional.npt4_nstcalcenergy'
+                    --nstenergy '$advance_md_file_options.npt4_conditional.npt4_nstenergy'
+                    --nstlog '$advance_md_file_options.npt4_conditional.npt4_nstlog'
+
+                    #if $advance_md_file_options.npt4_conditional.npt4_tc_grps_conditional.npt4_tc_grps_option == 'custom'
+                        --tc_grps '$advance_md_file_options.npt4_conditional.npt4_tc_grps_conditional.npt4_tc_grps'
+                        --comm_grps '$advance_md_file_options.npt4_conditional.npt4_tc_grps_conditional.npt4_comm_grps'
+                    #end if
+                #end if
+                
+                nvt1
+                #if $advance_md_file_options.nvt1_conditional.nvt1_mode == 'custom'
+                    --dt '$advance_md_file_options.nvt1_conditional.nvt1_dt'
+                    --nsteps '$advance_md_file_options.nvt1_conditional.nvt1_nsteps'
+                    --nstxtcout '$advance_md_file_options.nvt1_conditional.nvt1_nstxtcout'
+                    --nstvout '$advance_md_file_options.nvt1_conditional.nvt1_nstvout'
+                    --nstfout '$advance_md_file_options.nvt1_conditional.nvt1_nstfout'
+                    --nstcalcenergy '$advance_md_file_options.nvt1_conditional.nvt1_nstcalcenergy'
+                    --nstenergy '$advance_md_file_options.nvt1_conditional.nvt1_nstenergy'
+                    --nstlog '$advance_md_file_options.nvt1_conditional.nvt1_nstlog'
+
+                    #if $advance_md_file_options.nvt1_conditional.nvt1_tc_grps_conditional.nvt1_tc_grps_option == 'custom'
+                        --tc_grps '$advance_md_file_options.nvt1_conditional.nvt1_tc_grps_conditional.nvt1_tc_grps'
+                        --comm_grps '$advance_md_file_options.nvt1_conditional.nvt1_tc_grps_conditional.nvt1_comm_grps'
+                    #end if
+                #end if
+                
+                nvt2
+                #if $advance_md_file_options.nvt2_conditional.nvt2_mode == 'custom'
+                    --dt '$advance_md_file_options.nvt2_conditional.nvt2_dt'
+                    --nsteps '$advance_md_file_options.nvt2_conditional.nvt2_nsteps'
+                    --nstxtcout '$advance_md_file_options.nvt2_conditional.nvt2_nstxtcout'
+                    --nstvout '$advance_md_file_options.nvt2_conditional.nvt2_nstvout'
+                    --nstfout '$advance_md_file_options.nvt2_conditional.nvt2_nstfout'
+                    --nstcalcenergy '$advance_md_file_options.nvt2_conditional.nvt2_nstcalcenergy'
+                    --nstenergy '$advance_md_file_options.nvt2_conditional.nvt2_nstenergy'
+                    --nstlog '$advance_md_file_options.nvt2_conditional.nvt2_nstlog'
+
+                    #if $advance_md_file_options.nvt2_conditional.nvt2_tc_grps_conditional.nvt2_tc_grps_option == 'custom'
+                        --tc_grps '$advance_md_file_options.nvt2_conditional.nvt2_tc_grps_conditional.nvt2_tc_grps'
+                        --comm_grps '$advance_md_file_options.nvt2_conditional.nvt2_tc_grps_conditional.nvt2_comm_grps'
+                    #end if
+                #end if
+                
+                production
+                #if $advance_md_file_options.production_conditional.production_mode == 'custom'
+                    --dt '$advance_md_file_options.production_conditional.prod_dt'
+                    --nsteps '$advance_md_file_options.production_conditional.prod_nsteps'
+                    --nstxout '$advance_md_file_options.production_conditional.prod_nstxout'
+                    --nstvout '$advance_md_file_options.production_conditional.prod_nstvout'
+                    --nstfout '$advance_md_file_options.production_conditional.prod_nstfout'
+                    --nstxout_compressed '$advance_md_file_options.production_conditional.prod_nstxout_compressed'
+                    --nstcalcenergy '$advance_md_file_options.production_conditional.prod_nstcalcenergy'
+                    --nstenergy '$advance_md_file_options.production_conditional.prod_nstenergy'
+                    --nstlog '$advance_md_file_options.production_conditional.prod_nstlog'
+
+                    #if $advance_md_file_options.production_conditional.prod_tc_grps_conditional.prod_tc_grps_option == 'custom'
+                        --tc_grps '$advance_md_file_options.production_conditional.prod_tc_grps_conditional.prod_tc_grps'
+                        --comm_grps '$advance_md_file_options.production_conditional.prod_tc_grps_conditional.prod_comm_grps'
+                    #end if
+                #end if
+            #end if   
+
+
+            #if $advance_md_file_options.advance_md_file == 'custom'
+                custom
+
+                ##if $advance_md_file_options.presets.preset != 'blank'
+                ##    --preset '$advance_md_file_options.presets.preset'
+                ##end if
+
+                #if $advance_md_file_options.presets.integrator != 'blank'
+                    --integrator '$advance_md_file_options.presets.integrator'
+                #end if
+                #if $advance_md_file_options.presets.dt
+                    --dt '$advance_md_file_options.presets.dt'
+                #end if
+
+                #if $advance_md_file_options.presets.nsteps
+                    --nsteps '$advance_md_file_options.presets.nsteps'
+                #end if
+                #if $advance_md_file_options.presets.tinit
+                    --tinit '$advance_md_file_options.presets.tinit'
+                #end if
+                #if $advance_md_file_options.presets.init_step
+                    --init_step '$advance_md_file_options.presets.init_step'
+                #end if
+                #if $advance_md_file_options.presets.continuation  != 'blank'
+                    --continuation '$advance_md_file_options.presets.continuation'
+                #end if
+                #if $advance_md_file_options.nonbonded.cutoff_scheme != 'blank'
+                    --cutoff_scheme '$advance_md_file_options.nonbonded.cutoff_scheme'
+                #end if
+                #if $advance_md_file_options.nonbonded.nstlist
+                    --nstlist '$advance_md_file_options.nonbonded.nstlist'
+                #end if
+                #if $advance_md_file_options.nonbonded.pbc  != 'blank'
+                    --pbc '$advance_md_file_options.nonbonded.pbc'
+                #end if
+                #if $advance_md_file_options.nonbonded.verlet_buffer_tolerance
+                    --verlet_buffer_tolerance '$advance_md_file_options.nonbonded.verlet_buffer_tolerance'
+                #end if
+                #if $advance_md_file_options.nonbonded.rlist
+                    --rlist '$advance_md_file_options.nonbonded.rlist'
+                #end if
+                #if $advance_md_file_options.nonbonded.rcoulomb
+                    --rcoulomb '$advance_md_file_options.nonbonded.rcoulomb'
+                #end if
+                #if $advance_md_file_options.nonbonded.rvdw
+                    --rvdw '$advance_md_file_options.nonbonded.rvdw'
+                #end if
+                #if $advance_md_file_options.electrostatics.coulombtype  != 'blank'
+                    --coulombtype '$advance_md_file_options.electrostatics.coulombtype'
+                #end if
+                #if $advance_md_file_options.electrostatics.coulomb_modifier  != 'blank'
+                    --coulomb_modifier '$advance_md_file_options.electrostatics.coulomb_modifier'
+                #end if
+                #if $advance_md_file_options.electrostatics.fourierspacing
+                    --fourierspacing '$advance_md_file_options.electrostatics.fourierspacing'
+                #end if
+
+                #if $advance_md_file_options.electrostatics.pme_order
+                    --pme_order '$advance_md_file_options.electrostatics.pme_order'
+                #end if
+
+                #if $advance_md_file_options.electrostatics.ewald_rtol
+                    --ewald_rtol '$advance_md_file_options.electrostatics.ewald_rtol'
+                #end if
+
+                #if $advance_md_file_options.vdw.vdwtype  != 'blank'
+                    --vdwtype '$advance_md_file_options.vdw.vdwtype'
+                #end if
+
+                #if $advance_md_file_options.vdw.vdw_modifier  != 'blank'
+                    --vdw_modifier '$advance_md_file_options.vdw.vdw_modifier'
+                #end if
+
+                #if $advance_md_file_options.vdw.dispcorr  != 'blank'
+                    --dispcorr '$advance_md_file_options.vdw.dispcorr'
+                #end if
+          
+                #if $advance_md_file_options.thermostat.tcoupl  != 'blank'
+                    --tcoupl '$advance_md_file_options.thermostat.tcoupl'
+                #end if
+                #if $advance_md_file_options.thermostat.tc_grps
+                    --tc_grps '$advance_md_file_options.thermostat.tc_grps'
+                #end if
+                #if $advance_md_file_options.thermostat.tau_t
+                    --tau_t '$advance_md_file_options.thermostat.tau_t'
+                #end if
+                #if $advance_md_file_options.thermostat.ref_t
+                    --ref_t '$advance_md_file_options.thermostat.ref_t'
+                #end if
+                #if $advance_md_file_options.thermostat.nsttcouple
+                    --nsttcouple '$advance_md_file_options.thermostat.nsttcouple'
+                #end if
+                #if $advance_md_file_options.thermostat.gen_vel  != 'blank'
+                    --gen_vel '$advance_md_file_options.thermostat.gen_vel'
+                #end if
+                #if $advance_md_file_options.thermostat.gen_temp
+                    --gen_temp '$advance_md_file_options.thermostat.gen_temp'
+                #end if
+                #if $advance_md_file_options.thermostat.gen_seed
+                    --gen_seed '$advance_md_file_options.thermostat.gen_seed'
+                #end if
+
+                #if $advance_md_file_options.barostat.pcoupl  != 'blank'
+                    --pcoupl '$advance_md_file_options.barostat.pcoupl'
+                #end if
+                
+                #if $advance_md_file_options.barostat.pcoupltype  != 'blank'
+                    --pcoupltype '$advance_md_file_options.barostat.pcoupltype'
+                #end if
+
+                #if $advance_md_file_options.barostat.tau_p
+                    --tau_p '$advance_md_file_options.barostat.tau_p'
+                #end if
+                #if $advance_md_file_options.barostat.ref_p
+                    --ref_p '$advance_md_file_options.barostat.ref_p'
+                #end if
+                #if $advance_md_file_options.barostat.compressibility
+                    --compressibility '$advance_md_file_options.barostat.compressibility'
+                #end if
+                #if $advance_md_file_options.barostat.nstpcouple
+                    --nstpcouple '$advance_md_file_options.barostat.nstpcouple'
+                #end if
+
+                #if $advance_md_file_options.constraints_sec.constraints  != 'blank'
+                    --constraints '$advance_md_file_options.constraints_sec.constraints'
+                #end if
+                #if $advance_md_file_options.constraints_sec.constraint_algorithm  != 'blank'
+                    --constraint_algorithm '$advance_md_file_options.constraints_sec.constraint_algorithm'
+                #end if
+                #if $advance_md_file_options.constraints_sec.lincs_order
+                    --lincs_order '$advance_md_file_options.constraints_sec.lincs_order'
+                #end if
+                #if $advance_md_file_options.constraints_sec.lincs_iter
+                    --lincs_iter '$advance_md_file_options.constraints_sec.lincs_iter'
+                #end if
+                #if $advance_md_file_options.constraints_sec.shake_tol
+                    --shake_tol '$advance_md_file_options.constraints_sec.shake_tol'
+                #end if
+
+                #if $advance_md_file_options.output.nstxout
+                    --nstxout '$advance_md_file_options.output.nstxout'
+                #end if
+                #if $advance_md_file_options.output.nstvout
+                    --nstvout '$advance_md_file_options.output.nstvout'
+                #end if
+                #if $advance_md_file_options.output.nstfout
+                    --nstfout '$advance_md_file_options.output.nstfout'
+                #end if
+                #if $advance_md_file_options.output.nstlog
+                    --nstlog '$advance_md_file_options.output.nstlog'
+                #end if
+                #if $advance_md_file_options.output.nstenergy
+                    --nstenergy '$advance_md_file_options.output.nstenergy'
+                #end if
+                #if $advance_md_file_options.output.nstxout_compressed
+                    --nstxout_compressed '$advance_md_file_options.output.nstxout_compressed'
+                #end if
+                #if $advance_md_file_options.output.compressed_x_precision
+                    --compressed_x_precision '$advance_md_file_options.output.compressed_x_precision'
+                #end if
+
+
+                #if $advance_md_file_options.pulling.pull  != 'blank'
+                    --pull '$advance_md_file_options.pulling.pull'
+                #end if
+                #if $advance_md_file_options.pulling.pull_ngroups
+                    --pull_ngroups '$advance_md_file_options.pulling.pull_ngroups'
+                #end if
+                #if $advance_md_file_options.pulling.pull_ncoords
+                    --pull_ncoords '$advance_md_file_options.pulling.pull_ncoords'
+                #end if
+                #if $advance_md_file_options.pulling.pull_groups
+                    --pull_groups '$advance_md_file_options.pulling.pull_groups'
+                #end if
+                #if $advance_md_file_options.pulling.pull_coord1_type  != 'blank'
+                    --pull_coord1_type '$advance_md_file_options.pulling.pull_coord1_type'
+                #end if
+                #if $advance_md_file_options.pulling.pull_coord1_geometry  != 'blank'
+                    --pull_coord1_geometry '$advance_md_file_options.pulling.pull_coord1_geometry'
+                #end if
+                #if $advance_md_file_options.pulling.pull_coord1_dim
+                    --pull_coord1_dim '$advance_md_file_options.pulling.pull_coord1_dim'
+                #end if
+                #if $advance_md_file_options.pulling.pull_coord1_vec
+                    --pull_coord1_vec '$advance_md_file_options.pulling.pull_coord1_vec'
+                #end if
+                #if $advance_md_file_options.pulling.pull_coord1_init
+                    --pull_coord1_init '$advance_md_file_options.pulling.pull_coord1_init'
+                #end if
+                #if $advance_md_file_options.pulling.pull_coord1_rate
+                    --pull_coord1_rate '$advance_md_file_options.pulling.pull_coord1_rate'
+                #end if
+                #if $advance_md_file_options.pulling.pull_coord1_k
+                    --pull_coord1_k '$advance_md_file_options.pulling.pull_coord1_k'
+                #end if
+                #if $advance_md_file_options.expert.extra_mdp
+                    --extra_mdp '$advance_md_file_options.expert.extra_mdp'
+                #end if
+                --output custom.mdp
+            #end if 
+
+            &&
+
+            #if $advance_md_file_options.advance_md_file == 'wf'
+                mv npt1.mdp '$npt1_out' &&
+                mv npt2.mdp '$npt2_out' &&
+                mv npt3.mdp '$npt3_out' &&
+                mv npt4.mdp '$npt4_out' &&
+                mv nvt1.mdp '$nvt1_out' &&
+                mv nvt2.mdp '$nvt2_out' &&
+                mv production.mdp '$prod_out' &&
+               (echo 'q') |  gmx make_ndx -n ndx.ndx > '$groups_out' 2>&1 &&
+                mv ndx.ndx '$index_out'
+               
+            #elif $advance_md_file_options.advance_md_file == 'custom'
+                mv custom.mdp '$custom_out'
+            #end if 
+
+
+    ]]></command>
+
+    <inputs> 
+        <conditional name='advance_md_file_options'> 
+            <param name="advance_md_file" type="select" label="MDP file generation mode" help="Choose whether to generate a complete simulation workflow or a single custom MDP file.">
+                <option value="wf">Generate workflow MDP and index files (equilibration + production)</option>
+                <option value="custom">Generate a single custom MDP file</option>
+            </param>
+
+            <when value='custom'>
+
+                <section name="presets" title="Simulation Presets" expanded="true">
+                    <param name="preset" type="select" label="Preset configuration" help="Select a preset to auto-populate common parameter values for specific simulation types.">
+                        <option value="blank">No preset (start from scratch)</option>
+                        <option value="em">Energy Minimization (EM)</option>
+                        <option value="nvt">NVT Equilibration</option>
+                        <option value="npt">NPT Equilibration</option>
+                        <option value="md">Production MD</option>
+                    
+                    </param>
+                    <param name="integrator" type="select" label="Integrator algorithm" help="Select the molecular dynamics integrator. Overrides preset value if specified.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="md">md</option>
+                        <option value="md-vv">md-vv</option>
+                        <option value="md-vv-avek">md-vv-avek</option>
+                        <option value="sd">sd</option>
+                        <option value="bd">bd</option>
+                        <option value="steep">steep</option>
+                        <option value="cg">cg</option>
+                        <option value="l-bfgs">l-bfgs</option>
+                    </param>
+
+                    <param name="dt" type="float" label="Integration time step (dt)" value="0.002" help="Time step in picoseconds. Typical values: 0.001-0.002 ps for all-atom simulations."/>
+                    <param name="nsteps" type="integer" label="Total simulation steps (nsteps)" value="50000" help="Total number of simulation steps. Total time = dt × nsteps."/>
+                    <param name="tinit" type="float" label="Initial simulation time (tinit)" value="0.0" help="Starting time for the simulation in picoseconds. Usually 0.0."/>
+                    <param name="init_step" type="integer" label="Initial step number (init-step)" value="0" help="Starting step number. Used when restarting simulations."/>
+                    <param name="continuation" type="select" label="Continuation from checkpoint" help="Set to 'yes' when continuing from a previous simulation checkpoint.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="no">no</option>
+                        <option value="yes">yes</option>
+                    </param>
+                </section>
+
+                <section name="nonbonded" title="Neighbor Searching / Nonbonded Interactions" expanded="true">
+                    <param name="cutoff_scheme" type="select" label="Cut-off scheme" help="Neighbor list algorithm. Verlet is required for GPU acceleration.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="Verlet">Verlet</option>
+                    </param>
+                    <param name="nstlist" type="integer" label="Neighbor list update frequency (nstlist)" value="20" help="Frequency (in steps) for updating the neighbor list. Set to 10-20 for Verlet scheme."/>
+                    <param name="pbc" type="select" label="Periodic boundary conditions (pbc)" help="Type of periodic boundary conditions applied to the system.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="xyz">xyz (3D periodic)</option>
+                        <option value="xy">xy (2D periodic, membrane systems)</option>
+                        <option value="no">no (non-periodic)</option>
+                    </param>
+                    <param name="verlet_buffer_tolerance" type="float" label="Verlet buffer tolerance" value="0.005" help="Maximum allowed error in pair list for Verlet scheme (kJ/mol/ps)."/>
+                    <param name="rlist" type="float" label="Neighbor list cut-off radius (rlist)" value="1.0" help="Cut-off distance for the neighbor list in nanometers."/>
+                    <param name="rcoulomb" type="float" label="Coulomb interaction cut-off (rcoulomb)" value="1.0" help="Cut-off distance for Coulomb interactions in nanometers."/>
+                    <param name="rvdw" type="float" label="Van der Waals cut-off (rvdw)" value="1.0" help="Cut-off distance for van der Waals interactions in nanometers."/>
+                </section>
+
+                <section name="electrostatics" title="Electrostatics / PME Settings" expanded="false">
+                    <param name="coulombtype" type="select" label="Coulomb interaction type" help="Method for calculating long-range electrostatic interactions. PME is recommended for most simulations.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="PME">PME (Particle Mesh Ewald)</option>
+                        <option value="Cut-off">Cut-off (simple truncation)</option>
+                        <option value="Ewald">Ewald (traditional Ewald sum)</option>
+                        <option value="Reaction-Field">Reaction-Field</option>
+                    </param>
+                    <param name="coulomb_modifier" type="select" label="Coulomb modifier" help="Modification applied to electrostatic interactions at the cut-off.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="Potential-shift">Potential-shift</option>
+                        <option value="None">None</option>
+                    </param>
+                    <param name="fourierspacing" type="float" label="Fourier grid spacing" value="0.12" help="Grid spacing for PME FFT in nanometers. Smaller values increase accuracy but cost more."/>
+                    <param name="pme_order" type="integer" label="PME interpolation order" value="4" help="Interpolation order for PME. 4 (cubic) is standard; 6 gives higher accuracy."/>
+                    <param name="ewald_rtol" type="float" label="Ewald tolerance (ewald-rtol)" value="1e-5" help="Relative strength of the Ewald-shifted direct potential at the cut-off."/>
+                </section>
+
+                <section name="vdw" title="Van der Waals Interactions" expanded="false">
+                    <param name="vdwtype" type="select" label="Van der Waals interaction type" help="Method for calculating van der Waals interactions.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="Cut-off">Cut-off (standard truncation)</option>
+                        <option value="PME">PME (long-range dispersion correction)</option>
+                    </param>
+                    <param name="vdw_modifier" type="select" label="Van der Waals modifier" help="Modification applied to VdW interactions at the cut-off to improve energy conservation.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="Potential-shift">Potential-shift</option>
+                        <option value="None">None</option>
+                        <option value="Force-switch">Force-switch</option>
+                        <option value="Potential-switch">Potential-switch</option>
+                    </param>
+                    <param name="dispcorr" type="select" label="Dispersion correction" help="Long-range dispersion correction for energy and/or pressure.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="no">No correction</option>
+                        <option value="EnerPres">Energy and pressure correction</option>
+                        <option value="Ener">Energy correction only</option>
+                    </param>
+                </section>
+
+                <section name="thermostat" title="Temperature Coupling / Velocity Generation" expanded="true">
+                    <param name="tcoupl" type="select" label="Temperature coupling algorithm" help="Thermostat algorithm for temperature control. V-rescale is recommended for equilibration; Nose-Hoover for production.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="no">No temperature coupling</option>
+                        <option value="v-rescale">V-rescale (velocity rescaling with stochastic term)</option>
+                        <option value="nose-hoover">Nose-Hoover (canonical ensemble)</option>
+                        <option value="berendsen">Berendsen (weak coupling, equilibration only)</option>
+                        <option value="andersen">Andersen (stochastic)</option>
+                        <option value="andersen-massive">Andersen-massive (massive stochastic)</option>
+                    </param>
+                    <param name="tc_grps" type="text" label="Temperature coupling groups (tc-grps)" value="System"
+                        help="Space-separated list of atom groups for temperature coupling. Example: 'System' or 'Protein SOL'. Groups must match those defined in the index file."/>
+                    <param name="tau_t" type="text" label="Temperature coupling time constant (tau-t)" value="0.1"
+                        help="Time constant for temperature coupling in picoseconds. Provide one value per group. Example: '0.1 0.1'"/>
+                    <param name="ref_t" type="text" label="Reference temperature (ref-t)" value="300"
+                        help="Reference temperature in Kelvin for each coupling group. Example: '300 300'"/>
+                    <param name="nsttcouple" type="integer" label="Temperature coupling frequency (nsttcouple)" value="-1" help="Frequency for temperature coupling. -1 means automatic selection based on tau-t."/>
+
+                    <param name="gen_vel" type="select" label="Generate initial velocities" help="Generate velocities from Maxwell distribution at the start of the simulation.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="no">No (use velocities from input)</option>
+                        <option value="yes">Yes (generate new velocities)</option>
+                    </param>
+                    <param name="gen_temp" type="float" label="Initial velocity temperature (K)" value="300" help="Temperature in Kelvin for generating initial velocities."/>
+                    <param name="gen_seed" type="integer" label="Random seed for velocity generation" value="-1" help="Random seed for velocity generation. -1 uses a pseudo-random seed."/>
+                </section>
+
+                <section name="barostat" title="Pressure Coupling (Barostat)" expanded="false">
+                    <param name="pcoupl" type="select" label="Pressure coupling algorithm" help="Barostat algorithm for pressure control. Parrinello-Rahman is recommended for production; Berendsen or C-rescale for equilibration.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="no">No pressure coupling (NVT ensemble)</option>
+                        <option value="C-rescale">C-rescale (stochastic cell rescaling)</option>
+                        <option value="Parrinello-Rahman">Parrinello-Rahman (production)</option>
+                        <option value="Berendsen">Berendsen (equilibration only)</option>
+                    </param>
+                    <param name="pcoupltype" type="select" label="Pressure coupling type" help="Type of pressure scaling. Use semiisotropic for membrane systems.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="isotropic">Isotropic (uniform in all directions)</option>
+                        <option value="semiisotropic">Semiisotropic (xy coupled, z independent - for membranes)</option>
+                        <option value="anisotropic">Anisotropic (independent in x, y, z)</option>
+                    </param>
+                    <param name="tau_p" type="float" label="Pressure coupling time constant (tau-p)" value="5.0" help="Time constant for pressure coupling in picoseconds. Typical values: 1.0-5.0 ps."/>
+                    <param name="ref_p" type="text" label="Reference pressure (ref-p)" value="1.0" help="Reference pressure in bar. For semiisotropic coupling, provide two values (e.g., '1.0 1.0')."/>
+                    <param name="compressibility" type="text" label="Compressibility (bar^-1)" value="4.5e-5"
+                        help="System compressibility. For water at 300K use 4.5e-5. For semiisotropic, provide two values (e.g., '4.5e-5 4.5e-5')."/>
+                    <param name="nstpcouple" type="integer" label="Pressure coupling frequency (nstpcouple)" value="-1" help="Frequency for pressure coupling. -1 means automatic selection based on tau-p."/>
+                </section>
+
+                <section name="constraints_sec" title="Bond Constraints" expanded="false">
+                    <param name="constraints" type="select" label="Constraint type" help="Type of bond constraints to apply. H-bonds allows 2 fs timestep; all-bonds allows up to 4 fs.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="none">None (no constraints)</option>
+                        <option value="h-bonds">H-bonds only (constrain bonds with hydrogen)</option>
+                        <option value="all-bonds">All bonds (constrain all bond lengths)</option>
+                    </param>
+                    <param name="constraint_algorithm" type="select" label="Constraint algorithm" help="Algorithm for applying constraints. LINCS is faster and parallelizes better; SHAKE is more accurate.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="LINCS">LINCS (Linear Constraint Solver)</option>
+                        <option value="SHAKE">SHAKE</option>
+                    </param>
+                    <param name="lincs_order" type="integer" label="LINCS expansion order" value="4" help="Order of the LINCS expansion. Higher values increase accuracy but cost more. Default: 4."/>
+                    <param name="lincs_iter" type="integer" label="LINCS iteration number" value="1" help="Number of iterations to correct for rotational lengthening. Increase for large molecules."/>
+                    <param name="shake_tol" type="float" label="SHAKE tolerance" value="0.0001" help="Relative tolerance for SHAKE algorithm."/>
+                </section>
+
+                <section name="output" title="Output Control" expanded="false">
+                    <param name="nstxout" type="integer" label="Full-precision coordinate output frequency (nstxout)" value="0" help="Frequency (in steps) for writing full-precision coordinates to .trr file. 0 disables output."/>
+                    <param name="nstvout" type="integer" label="Velocity output frequency (nstvout)" value="0" help="Frequency (in steps) for writing velocities to .trr file. 0 disables output."/>
+                    <param name="nstfout" type="integer" label="Force output frequency (nstfout)" value="0" help="Frequency (in steps) for writing forces to .trr file. 0 disables output."/>
+                    <param name="nstlog" type="integer" label="Log file output frequency (nstlog)" value="1000" help="Frequency (in steps) for writing to the log file."/>
+                    <param name="nstenergy" type="integer" label="Energy output frequency (nstenergy)" value="1000" help="Frequency (in steps) for writing energies to the energy file (.edr)."/>
+                    <param name="nstxout_compressed" type="integer" label="Compressed trajectory output frequency (nstxout-compressed)" value="1000" help="Frequency (in steps) for writing coordinates to compressed trajectory (.xtc file)."/>
+                    <param name="compressed_x_precision" type="integer" label="Compressed trajectory precision" value="1000" help="Precision for compressed trajectory output. Higher values = more precision."/>
+                </section>
+
+                <section name="pulling" title="Center-of-Mass (COM) Pulling" expanded="false">
+                    <param name="pull" type="select" label="Enable COM pulling" help="Enable center-of-mass pulling for steered MD, umbrella sampling, or constraint simulations.">
+                        <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="no">No pulling</option>
+                        <option value="yes">Enable pulling</option>
+                    </param>
+                    <param name="pull_ngroups" type="integer" label="Number of pull groups" value="1" help="Total number of groups involved in pulling."/>
+                    <param name="pull_ncoords" type="integer" label="Number of pull coordinates" value="1" help="Number of pull coordinates (reaction coordinates)."/>
+                    <param name="pull_groups" type="text" label="Pull coordinate groups (pull-coord1-groups)" value="1 2"
+                        help="Space-separated group indices for coordinate 1. Example: '1 2' (reference group, pulled group)."/>
+                    <param name="pull_coord1_type" type="select" label="Pull coordinate type" help="Type of pulling to apply.">
+                    <option value="blank">Omit this parameter from MDP file</option>
+                        <option value="umbrella">umbrella</option>
+                        <option value="constraint">constraint</option>
+                        <option value="constant-force">constant-force</option>
+                        <option value="flat-bottom">flat-bottom</option>
+                    
+                    </param>
+                    <param name="pull_coord1_geometry" type="select" label="Pull coordinate geometry" help="Geometry of the pull coordinate.">
+                        <option value="distance">Distance (scalar distance between groups)</option>
+                        <option value="direction">Direction (projection along a vector)</option>
+                        <option value="cylinder">Cylinder (radial distance from axis)</option>
+                        <option value="angle">Angle (angle between groups)</option>
+                        <option value="dihedral">Dihedral (dihedral angle)</option>
+                        <option value="blank">Omit this parameter from MDP file</option>
+                    </param>
+                    <param name="pull_coord1_dim" type="text" label="Pull coordinate dimensions (pull-coord1-dim)" value="Y Y Y"
+                        help="Which dimensions to include. Example: 'Y Y N' to pull only in the x-y plane."/>
+                    <param name="pull_coord1_vec" type="text" label="Pull vector (pull-coord1-vec)" value="0.0 0.0 1.0" help="Direction vector for pulling. Example: '0.0 0.0 1.0' for z-direction."/>
+                    <param name="pull_coord1_init" type="float" label="Initial pull coordinate value" value="0.0" help="Initial value of the pull coordinate (reference distance/angle)."/>
+                    <param name="pull_coord1_rate" type="float" label="Pull rate (nm/ps or deg/ps)" value="0.0" help="Rate of change of the reference value. 0 for umbrella sampling."/>
+                    <param name="pull_coord1_k" type="float" label="Pull force constant (k)" value="0.0" help="Force constant for umbrella potential (kJ/mol/nm² or kJ/mol/rad²)."/>
+                </section>
+
+                <section name="expert" title="Expert Overrides" expanded="false">
+                    <param name="extra_mdp" type="text" area="true" label="Additional MDP parameters (verbatim)"
+                        help="Add any extra GROMACS MDP parameters here as 'key = value' lines. These override all settings above if keys conflict."
+                        value=""/>
+                </section>
+            </when>
+
+            <when value="wf">
+                <param name="conf_file" type="data" format="txt" label="Configuration file" help="Configuration file from the Membrane Builder tool or created manually. Contains lipid, ligand, and ion group definitions." />
+                <param name="gro_file" type="data" format="gro" label="GROMACS structure file (.gro)" help="System structure file in GROMACS format containing atom coordinates and box dimensions." />
+
+                <!-- NPT1 Template -->
+                <conditional name="npt1_conditional">
+                    <param name="npt1_mode" type="select" label="NPT1 equilibration phase" help="First NPT equilibration stage with position restraints.">
+                        <option value="default" selected="true">Use default parameters</option>
+                        <option value="custom">Customize parameters</option>
+                    </param>
+                    <when value="default">
+                    </when>
+                    <when value="custom">
+                        <param name="npt1_dt" type="float" value="0.001" label="Integration time step (ps)" help="Time step in picoseconds."/>
+                        <param name="npt1_nsteps" type="integer" value="125000" label="Total simulation steps" help="Number of MD steps to run."/>
+                        <param name="npt1_nstxtcout" type="integer" value="5000" label="Compressed trajectory output frequency" help="Steps between writing to .xtc file."/>
+                        <param name="npt1_nstvout" type="integer" value="5000" label="Velocity output frequency" help="Steps between writing velocities."/>
+                        <param name="npt1_nstfout" type="integer" value="5000" label="Force output frequency" help="Steps between writing forces."/>
+                        <param name="npt1_nstcalcenergy" type="integer" value="100" label="Energy calculation frequency" help="Steps between energy calculations."/>
+                        <param name="npt1_nstenergy" type="integer" value="1000" label="Energy output frequency" help="Steps between writing to energy file."/>
+                        <param name="npt1_nstlog" type="integer" value="1000" label="Log output frequency" help="Steps between writing to log file."/>
+                        <conditional name="npt1_tc_grps_conditional">
+                            <param name="npt1_tc_grps_option" type="select" label="Temperature coupling groups" help="Define custom temperature coupling groups.">
+                                <option value="default" selected="true">Use automatic groups</option>
+                                <option value="custom">Specify custom groups</option>
+                            </param>
+                            <when value="custom">
+                                <param name="npt1_tc_grps" type="text" value="Protein Water" label="Temperature coupling groups" help="Space-separated list of groups for temperature coupling."/>
+                                <param name="npt1_comm_grps" type="text" value="Protein Water" label="COM motion removal groups" help="Groups for center-of-mass motion removal."/>
+                            </when>
+                            <when value="default">
+                            </when>
+                        </conditional>
+                    </when>
+                </conditional>
+
+                <!-- NPT2 Template -->
+                <conditional name="npt2_conditional">
+                    <param name="npt2_mode" type="select" label="NPT2 equilibration phase" help="Second NPT equilibration stage with reduced restraints.">
+                        <option value="default" selected="true">Use default parameters</option>
+                        <option value="custom">Customize parameters</option>
+                    </param>
+                    <when value="default">
+                    </when>
+                    <when value="custom">
+                        <param name="npt2_dt" type="float" value="0.002" label="Integration time step (ps)" help="Time step in picoseconds."/>
+                        <param name="npt2_nsteps" type="integer" value="250000" label="Total simulation steps" help="Number of MD steps to run."/>
+                        <param name="npt2_nstxtcout" type="integer" value="5000" label="Compressed trajectory output frequency" help="Steps between writing to .xtc file."/>
+                        <param name="npt2_nstvout" type="integer" value="5000" label="Velocity output frequency" help="Steps between writing velocities."/>
+                        <param name="npt2_nstfout" type="integer" value="5000" label="Force output frequency" help="Steps between writing forces."/>
+                        <param name="npt2_nstcalcenergy" type="integer" value="100" label="Energy calculation frequency" help="Steps between energy calculations."/>
+                        <param name="npt2_nstenergy" type="integer" value="1000" label="Energy output frequency" help="Steps between writing to energy file."/>
+                        <param name="npt2_nstlog" type="integer" value="1000" label="Log output frequency" help="Steps between writing to log file."/>
+                        <conditional name="npt2_tc_grps_conditional">
+                            <param name="npt2_tc_grps_option" type="select" label="Temperature coupling groups" help="Define custom temperature coupling groups.">
+                                <option value="default" selected="true">Use automatic groups</option>
+                                <option value="custom">Specify custom groups</option>
+                            </param>
+                            <when value="custom">
+                                <param name="npt2_tc_grps" type="text" value="Protein Water" label="Temperature coupling groups" help="Space-separated list of groups for temperature coupling."/>
+                                <param name="npt2_comm_grps" type="text" value="Protein Water" label="COM motion removal groups" help="Groups for center-of-mass motion removal."/>
+                            </when>
+                            <when value="default">
+                            </when>
+                        </conditional>
+                    </when>
+                </conditional>
+
+                <!-- NPT3 Template -->
+                <conditional name="npt3_conditional">
+                    <param name="npt3_mode" type="select" label="NPT3 equilibration phase" help="Third NPT equilibration stage with further reduced restraints.">
+                        <option value="default" selected="true">Use default parameters</option>
+                        <option value="custom">Customize parameters</option>
+                    </param>
+                    <when value="default">
+                    </when>
+                    <when value="custom">
+                        <param name="npt3_dt" type="float" value="0.002" label="Integration time step (ps)" help="Time step in picoseconds."/>
+                        <param name="npt3_nsteps" type="integer" value="250000" label="Total simulation steps" help="Number of MD steps to run."/>
+                        <param name="npt3_nstxtcout" type="integer" value="5000" label="Compressed trajectory output frequency" help="Steps between writing to .xtc file."/>
+                        <param name="npt3_nstvout" type="integer" value="5000" label="Velocity output frequency" help="Steps between writing velocities."/>
+                        <param name="npt3_nstfout" type="integer" value="5000" label="Force output frequency" help="Steps between writing forces."/>
+                        <param name="npt3_nstcalcenergy" type="integer" value="100" label="Energy calculation frequency" help="Steps between energy calculations."/>
+                        <param name="npt3_nstenergy" type="integer" value="1000" label="Energy output frequency" help="Steps between writing to energy file."/>
+                        <param name="npt3_nstlog" type="integer" value="1000" label="Log output frequency" help="Steps between writing to log file."/>
+                        <conditional name="npt3_tc_grps_conditional">
+                            <param name="npt3_tc_grps_option" type="select" label="Temperature coupling groups" help="Define custom temperature coupling groups.">
+                                <option value="default" selected="true">Use automatic groups</option>
+                                <option value="custom">Specify custom groups</option>
+                            </param>
+                            <when value="custom">
+                                <param name="npt3_tc_grps" type="text" value="Protein Water" label="Temperature coupling groups" help="Space-separated list of groups for temperature coupling."/>
+                                <param name="npt3_comm_grps" type="text" value="Protein Water" label="COM motion removal groups" help="Groups for center-of-mass motion removal."/>
+                            </when>
+                            <when value="default">
+                            </when>
+                        </conditional>
+                    </when>
+                </conditional>
+
+                <!-- NPT4 Template -->
+                <conditional name="npt4_conditional">
+                    <param name="npt4_mode" type="select" label="NPT4 equilibration phase" help="Final NPT equilibration stage with minimal or no restraints.">
+                        <option value="default" selected="true">Use default parameters</option>
+                        <option value="custom">Customize parameters</option>
+                    </param>
+                    <when value="default">
+                    </when>
+                    <when value="custom">
+                        <param name="npt4_dt" type="float" value="0.002" label="Integration time step (ps)" help="Time step in picoseconds."/>
+                        <param name="npt4_nsteps" type="integer" value="250000" label="Total simulation steps" help="Number of MD steps to run."/>
+                        <param name="npt4_nstxtcout" type="integer" value="5000" label="Compressed trajectory output frequency" help="Steps between writing to .xtc file."/>
+                        <param name="npt4_nstvout" type="integer" value="5000" label="Velocity output frequency" help="Steps between writing velocities."/>
+                        <param name="npt4_nstfout" type="integer" value="5000" label="Force output frequency" help="Steps between writing forces."/>
+                        <param name="npt4_nstcalcenergy" type="integer" value="100" label="Energy calculation frequency" help="Steps between energy calculations."/>
+                        <param name="npt4_nstenergy" type="integer" value="1000" label="Energy output frequency" help="Steps between writing to energy file."/>
+                        <param name="npt4_nstlog" type="integer" value="1000" label="Log output frequency" help="Steps between writing to log file."/>
+                        <conditional name="npt4_tc_grps_conditional">
+                            <param name="npt4_tc_grps_option" type="select" label="Temperature coupling groups" help="Define custom temperature coupling groups.">
+                                <option value="default" selected="true">Use automatic groups</option>
+                                <option value="custom">Specify custom groups</option>
+                            </param>
+                            <when value="custom">
+                                <param name="npt4_tc_grps" type="text" value="Protein Water" label="Temperature coupling groups" help="Space-separated list of groups for temperature coupling."/>
+                                <param name="npt4_comm_grps" type="text" value="Protein Water" label="COM motion removal groups" help="Groups for center-of-mass motion removal."/>
+                            </when>
+                            <when value="default">
+                            </when>
+                        </conditional>
+                    </when>
+                </conditional>
+
+                <!-- NVT1 Template -->
+                <conditional name="nvt1_conditional">
+                    <param name="nvt1_mode" type="select" label="NVT1 equilibration phase" help="First NVT (constant volume) equilibration stage for temperature stabilization.">
+                        <option value="default" selected="true">Use default parameters</option>
+                        <option value="custom">Customize parameters</option>
+                    </param>
+                    <when value="default">
+                    </when>
+                    <when value="custom">
+                        <param name="nvt1_dt" type="float" value="0.001" label="Integration time step (ps)" help="Time step in picoseconds."/>
+                        <param name="nvt1_nsteps" type="integer" value="125000" label="Total simulation steps" help="Number of MD steps to run."/>
+                        <param name="nvt1_nstxtcout" type="integer" value="5000" label="Compressed trajectory output frequency" help="Steps between writing to .xtc file."/>
+                        <param name="nvt1_nstvout" type="integer" value="5000" label="Velocity output frequency" help="Steps between writing velocities."/>
+                        <param name="nvt1_nstfout" type="integer" value="5000" label="Force output frequency" help="Steps between writing forces."/>
+                        <param name="nvt1_nstcalcenergy" type="integer" value="100" label="Energy calculation frequency" help="Steps between energy calculations."/>
+                        <param name="nvt1_nstenergy" type="integer" value="1000" label="Energy output frequency" help="Steps between writing to energy file."/>
+                        <param name="nvt1_nstlog" type="integer" value="1000" label="Log output frequency" help="Steps between writing to log file."/>
+                        <conditional name="nvt1_tc_grps_conditional">
+                            <param name="nvt1_tc_grps_option" type="select" label="Temperature coupling groups" help="Define custom temperature coupling groups.">
+                                <option value="default" selected="true">Use automatic groups</option>
+                                <option value="custom">Specify custom groups</option>
+                            </param>
+                            <when value="custom">
+                                <param name="nvt1_tc_grps" type="text" value="Protein Water" label="Temperature coupling groups" help="Space-separated list of groups for temperature coupling."/>
+                                <param name="nvt1_comm_grps" type="text" value="Protein Water" label="COM motion removal groups" help="Groups for center-of-mass motion removal."/>
+                            </when>
+                            <when value="default">
+                            </when>
+                        </conditional>
+                    </when>
+                </conditional>
+
+                <!-- NVT2 Template -->
+                <conditional name="nvt2_conditional">
+                    <param name="nvt2_mode" type="select" label="NVT2 equilibration phase" help="Second NVT (constant volume) equilibration stage.">
+                        <option value="default" selected="true">Use default parameters</option>
+                        <option value="custom">Customize parameters</option>
+                    </param>
+                    <when value="default">
+                    </when>
+                    <when value="custom">
+                        <param name="nvt2_dt" type="float" value="0.001" label="Integration time step (ps)" help="Time step in picoseconds."/>
+                        <param name="nvt2_nsteps" type="integer" value="125000" label="Total simulation steps" help="Number of MD steps to run."/>
+                        <param name="nvt2_nstxtcout" type="integer" value="5000" label="Compressed trajectory output frequency" help="Steps between writing to .xtc file."/>
+                        <param name="nvt2_nstvout" type="integer" value="5000" label="Velocity output frequency" help="Steps between writing velocities."/>
+                        <param name="nvt2_nstfout" type="integer" value="5000" label="Force output frequency" help="Steps between writing forces."/>
+                        <param name="nvt2_nstcalcenergy" type="integer" value="100" label="Energy calculation frequency" help="Steps between energy calculations."/>
+                        <param name="nvt2_nstenergy" type="integer" value="1000" label="Energy output frequency" help="Steps between writing to energy file."/>
+                        <param name="nvt2_nstlog" type="integer" value="1000" label="Log output frequency" help="Steps between writing to log file."/>
+                        <conditional name="nvt2_tc_grps_conditional">
+                            <param name="nvt2_tc_grps_option" type="select" label="Temperature coupling groups" help="Define custom temperature coupling groups.">
+                                <option value="default" selected="true">Use automatic groups</option>
+                                <option value="custom">Specify custom groups</option>
+                            </param>
+                            <when value="custom">
+                                <param name="nvt2_tc_grps" type="text" value="Protein Water" label="Temperature coupling groups" help="Space-separated list of groups for temperature coupling."/>
+                                <param name="nvt2_comm_grps" type="text" value="Protein Water" label="COM motion removal groups" help="Groups for center-of-mass motion removal."/>
+                            </when>
+                            <when value="default">
+                            </when>
+                        </conditional>
+                    </when>
+                </conditional>
+
+                <!-- Production Template -->
+                <conditional name="production_conditional">
+                    <param name="production_mode" type="select" label="Production MD phase" help="Production molecular dynamics run for data collection.">
+                        <option value="default" selected="true">Use default parameters</option>
+                        <option value="custom">Customize parameters</option>
+                    </param>
+                    <when value="default">
+                    </when>
+                    <when value="custom">
+                        <param name="prod_dt" type="float" value="0.002" label="Integration time step (ps)" help="Time step in picoseconds."/>
+                        <param name="prod_nsteps" type="integer" value="500000000" label="Total simulation steps" help="Number of MD steps to run. Default gives 1 microsecond with 2 fs timestep."/>
+                        <param name="prod_nstxout" type="integer" value="0" label="Full-precision coordinate output frequency" help="Steps between writing full-precision coordinates. 0 disables."/>
+                        <param name="prod_nstvout" type="integer" value="0" label="Velocity output frequency" help="Steps between writing velocities. 0 disables."/>
+                        <param name="prod_nstfout" type="integer" value="0" label="Force output frequency" help="Steps between writing forces. 0 disables."/>
+                        <param name="prod_nstxout_compressed" type="integer" value="10000" label="Compressed trajectory output frequency" help="Steps between writing to compressed .xtc file."/>
+                        <param name="prod_nstcalcenergy" type="integer" value="10000" label="Energy calculation frequency" help="Steps between energy calculations."/>
+                        <param name="prod_nstenergy" type="integer" value="10000" label="Energy output frequency" help="Steps between writing to energy file."/>
+                        <param name="prod_nstlog" type="integer" value="10000" label="Log output frequency" help="Steps between writing to log file."/>
+                        <conditional name="prod_tc_grps_conditional">
+                            <param name="prod_tc_grps_option" type="select" label="Temperature coupling groups" help="Define custom temperature coupling groups.">
+                                <option value="default" selected="true">Use automatic groups</option>
+                                <option value="custom">Specify custom groups</option>
+                            </param>
+                            <when value="custom">
+                                <param name="prod_tc_grps" type="text" value="Protein Water" label="Temperature coupling groups" help="Space-separated list of groups for temperature coupling."/>
+                                <param name="prod_comm_grps" type="text" value="Protein Water" label="COM motion removal groups" help="Groups for center-of-mass motion removal."/>
+                            </when>
+                            <when value="default">
+                            </when>
+                        </conditional>
+
+                    </when>
+                </conditional>
+            </when>
+        </conditional>
+    </inputs>
+
+    <outputs>
+        <!-- Workflow mode outputs -->
+        <data name="npt1_out" format="mdp" label="${tool.name} on ${on_string}: NPT1 equilibration (npt1.mdp)">
+            <filter>advance_md_file_options['advance_md_file'] == 'wf'</filter>
+        </data>
+        <data name="npt2_out" format="mdp" label="${tool.name} on ${on_string}: NPT2 equilibration (npt2.mdp)">
+            <filter>advance_md_file_options['advance_md_file'] == 'wf'</filter>
+        </data>
+        <data name="npt3_out" format="mdp" label="${tool.name} on ${on_string}: NPT3 equilibration (npt3.mdp)">
+            <filter>advance_md_file_options['advance_md_file'] == 'wf'</filter>
+        </data>
+
+        <data name="npt4_out" format="mdp" label="${tool.name} on ${on_string}: NPT4 equilibration (npt4.mdp)">
+            <filter>advance_md_file_options['advance_md_file'] == 'wf'</filter>
+        </data>
+
+        <data name="nvt1_out" format="mdp" label="${tool.name} on ${on_string}: NVT1 equilibration (nvt1.mdp)">
+            <filter>advance_md_file_options['advance_md_file'] == 'wf'</filter>
+        </data>
+        <data name="nvt2_out" format="mdp" label="${tool.name} on ${on_string}: NVT2 equilibration (nvt2.mdp)">
+            <filter>advance_md_file_options['advance_md_file'] == 'wf'</filter>
+        </data>
+        <data name="prod_out" format="mdp" label="${tool.name} on ${on_string}: Production MD (production.mdp)">
+            <filter>advance_md_file_options['advance_md_file'] == 'wf'</filter>
+        </data>
+        <data name="index_out" format="ndx" label="${tool.name} on ${on_string}: Index file (index.ndx)">
+            <filter>advance_md_file_options['advance_md_file'] == 'wf'</filter>
+        </data>
+
+        <data name="groups_out" format="txt" label="${tool.name} on ${on_string}: Index groups (groups.txt)">
+            <filter>advance_md_file_options['advance_md_file'] == 'wf'</filter>
+        </data>
+        
+        <!-- Custom mode output -->
+        <data name="custom_out" format="mdp" label="${tool.name} on ${on_string}: Custom MDP (custom.mdp)">
+            <filter>advance_md_file_options['advance_md_file'] == 'custom'</filter>
+        </data>
+    </outputs>
+
+    <tests>
+        <test expect_num_outputs="9">
+            <param name="advance_md_file_options|advance_md_file" value="wf"/>
+            <param name="advance_md_file_options|gro_file" value="system.gro"/>
+            <param name="advance_md_file_options|conf_file" value="conf.txt"/>
+            <param name="advance_md_file_options|npt1_conditional|npt1_mode" value="default"/>
+            <param name="advance_md_file_options|npt2_conditional|npt2_mode" value="default"/>
+            <param name="advance_md_file_options|npt3_conditional|npt3_mode" value="default"/>
+            <param name="advance_md_file_options|npt4_conditional|npt4_mode" value="default"/>
+            <param name="advance_md_file_options|nvt1_conditional|nvt1_mode" value="default"/>
+            <param name="advance_md_file_options|nvt2_conditional|nvt2_mode" value="default"/>
+            <param name="advance_md_file_options|production_conditional|production_mode" value="default"/>
+
+            <output name="npt1_out" file="npt1.mdp" />
+            <output name="npt2_out" file="npt2.mdp" />
+            <output name="npt3_out" file="npt3.mdp" />
+            <output name="npt4_out" file="npt4.mdp" />
+            <output name="nvt1_out" file="nvt1.mdp" />
+            <output name="nvt2_out" file="nvt2.mdp" />
+            <output name="prod_out" file="production.mdp" />
+            <output name="index_out" file="ndx.ndx" />
+            <output name="groups_out" file="groups.txt" />
+        </test>
+
+        <test expect_num_outputs="1">
+            <param name="advance_md_file_options|advance_md_file" value="custom"/>
+            <param name="advance_md_file_options|presets|dt" value="0.002"/>
+            <param name="advance_md_file_options|presets|nsteps" value="50000"/>
+            <param name="advance_md_file_options|nonbonded|nstlist" value="20"/>
+            <param name="advance_md_file_options|nonbonded|verlet_buffer_tolerance" value="0.005"/>
+            <param name="advance_md_file_options|nonbonded|rlist" value="1.0"/>
+            <param name="advance_md_file_options|nonbonded|rcoulomb" value="1.0"/>
+            <param name="advance_md_file_options|nonbonded|rvdw" value="1.0"/>
+            <param name="advance_md_file_options|electrostatics|fourierspacing" value="0.12"/>
+            <param name="advance_md_file_options|electrostatics|pme_order" value="4"/>
+            <param name="advance_md_file_options|electrostatics|ewald_rtol" value="1e-5"/>
+            <param name="advance_md_file_options|thermostat|tc_grps" value="System"/>
+            <param name="advance_md_file_options|thermostat|tau_t" value="0.1"/>
+            <param name="advance_md_file_options|thermostat|ref_t" value="300"/>
+            <param name="advance_md_file_options|thermostat|nsttcouple" value="-1"/>
+            <param name="advance_md_file_options|thermostat|gen_temp" value="300"/>
+            <param name="advance_md_file_options|thermostat|gen_seed" value="-1"/>
+            <param name="advance_md_file_options|barostat|tau_p" value="5.0"/>
+            <param name="advance_md_file_options|barostat|ref_p" value="1.0"/>
+            <param name="advance_md_file_options|barostat|compressibility" value="4.5e-5"/>
+            <param name="advance_md_file_options|barostat|nstpcouple" value="-1"/>
+            <param name="advance_md_file_options|constraints_sec|lincs_order" value="4"/>
+            <param name="advance_md_file_options|constraints_sec|lincs_iter" value="1"/>
+            <param name="advance_md_file_options|constraints_sec|shake_tol" value="0.0001"/>
+            <param name="advance_md_file_options|output|nstlog" value="1000"/>
+            <param name="advance_md_file_options|output|nstenergy" value="1000"/>
+            <param name="advance_md_file_options|output|nstxout_compressed" value="1000"/>
+            <param name="advance_md_file_options|output|compressed_x_precision" value="1000"/>
+            <param name="advance_md_file_options|pulling|pull_ngroups" value="1"/>
+            <param name="advance_md_file_options|pulling|pull_ncoords" value="1"/>
+            <param name="advance_md_file_options|pulling|pull_groups" value="1 2"/>
+            <param name="advance_md_file_options|pulling|pull_coord1_geometry" value="distance"/>
+            <param name="advance_md_file_options|pulling|pull_coord1_dim" value="Y Y Y"/>
+            <param name="advance_md_file_options|pulling|pull_coord1_vec" value="0.0 0.0 1.0"/>
+
+            <output name="custom_out" file="custom.mdp" />
+        </test>
+    </tests>
+
+    <help><![CDATA[
+
+.. class:: infomark
+
+**What it does**
+
+This tool generates GROMACS molecular dynamics parameter (.mdp) files for running simulations. It provides two modes of operation:
+
+1. **Workflow Mode**: Generates a complete multi-stage MD simulation protocol including equilibration phases (NVT and NPT) and production run, along with a GROMACS index file (.ndx)
+2. **Custom Mode**: Creates a single .mdp file with full control over all simulation parameters
+
+-----
+
+**Input Requirements**
+
+*Workflow Mode:*
+
+- **Configuration file**: Either from the Membrane Builder tool or manually created, containing group definitions
+- **Structure file (.gro)**: GROMACS coordinate file with atom positions and box dimensions
+
+Example configuration file format::
+
+    - lipid:PA,PC,OL,CHL
+    - ligand:CAU
+    - ions:NA+,Cl-
+
+*Custom Mode:*
+
+No input files required. All parameters are configured through the interface.
+
+-----
+
+**Outputs**
+
+*Workflow Mode* produces:
+
+- **npt1.mdp - npt4.mdp**: Four-stage NPT equilibration with progressively reduced position restraints
+- **nvt1.mdp, nvt2.mdp**: NVT equilibration for temperature stabilization
+- **production.mdp**: Production MD parameters for data collection
+- **index.ndx**: GROMACS index file with atom group definitions
+- **groups.txt**: Human-readable list of available index groups
+
+*Custom Mode* produces:
+
+- **custom.mdp**: Single customized MDP file with user-specified parameters
+
+-----
+
+**Equilibration Protocol**
+
+The workflow mode implements a standard equilibration protocol for membrane protein simulations:
+
+1. **NVT1/NVT2**: Temperature equilibration at constant volume
+2. **NPT1**: Initial pressure coupling with strong position restraints
+3. **NPT2**: Intermediate stage with reduced restraints
+4. **NPT3**: Further relaxation with minimal restraints
+5. **NPT4**: Final equilibration before production
+6. **Production**: Unrestrained production MD for analysis
+
+-----
+
+**Key Parameters Explained**
+
+*Time Step (dt)*:
+    Integration time step in picoseconds. Use 0.001-0.002 ps for all-atom simulations with constrained hydrogen bonds.
+
+*Temperature Coupling*:
+    - **V-rescale**: Recommended for equilibration; produces correct canonical ensemble
+    - **Nose-Hoover**: Recommended for production; proper canonical ensemble
+    - **Berendsen**: Fast equilibration but does not produce correct ensemble; use only for initial equilibration
+
+*Pressure Coupling*:
+    - **Parrinello-Rahman**: Recommended for production MD
+    - **C-rescale**: Good for equilibration, produces correct NPT ensemble
+    - **Berendsen**: Only for initial equilibration; does not give correct ensemble
+    - Use **semiisotropic** coupling for membrane systems
+
+*Constraints*:
+    - **h-bonds**: Constrain bonds involving hydrogen; allows 2 fs timestep
+    - **all-bonds**: Constrain all bonds; allows up to 4 fs timestep
+
+-----
+
+**Multi-Group Temperature Coupling**
+
+For systems with multiple components, use separate temperature coupling groups::
+
+    tc-grps = Protein Membrane Water_and_ions
+    tau-t   = 0.1 0.1 0.1
+    ref-t   = 300 300 300
+
+Groups must match those defined in your index file.
+
+-----
+
+**Tips and Best Practices**
+
+- Always verify generated MDP files before production runs
+- Use **Energy Minimization** before any MD simulation
+- Equilibrate the system gradually before production
+- For membrane systems, use **semiisotropic** pressure coupling
+- Check that temperature coupling groups match your index file definitions
+- Use the "Additional MDP parameters" section for any GROMACS options not exposed in the interface
+
+-----
+
+**References**
+
+- `GROMACS Manual <http://manual.gromacs.org/>`_
+- `MDP Parameter Reference <http://manual.gromacs.org/documentation/current/user-guide/mdp-options.html>`_
+
+    ]]></help>
+
+    <citations>
+    <citation type="doi">
+        @misc{GROMACS2024_source,
+                author       = {Abraham, Mark and Alekseenko, Andrey and Basov, Vladimir and
+                Bergh, Cathrine and Briand, Eliane and Brown, Ania and
+                Doijade, Mahesh and Fiorin, Giacomo and Fleischmann, Stefan and
+                Gorelov, Sergey and Gouaillardet, Gilles and Gray, Alan and
+                Irrgang, M. Eric and Jalalypour, Farzaneh and Jordan, Joe and
+                Kutzner, Carsten and Lemkul, Justin A. and Lundborg, Magnus and
+                Merz, Pascal and Miletic, Vedran and Morozov, Dmitry and
+                Nabet, Julien and Pall, Szilard and Pasquadibisceglie, Andrea and
+                Pellegrino, Michele and Santuz, Hubert and Schulz, Roland and
+                Shugaeva, Tatiana and Shvetsov, Alexey and Villa, Alessandra and
+                Wingbermuehle, Sebastian and Hess, Berk and Lindahl, Erik},
+                title        = {{GROMACS} 2024 Source code},
+                year         = {2024},
+                publisher    = {Zenodo},
+                doi          = {10.5281/zenodo.10589643},
+                url          = {https://doi.org/10.5281/zenodo.10589643},
+        }
+    </citation>
+</citations>
+
+</tool>

@@ -1,0 +1,5 @@
+REMARK   Av.E = -10.802 rms =  31.931
+REMARK   Av.E =  -7.039 rms =   0.813
+REMARK   Av.E =  -7.163 rms =   0.644
+REMARK   Av.E =  -6.832 rms =   0.391
+REMARK   Av.E =  -7.110 rms =   0.260

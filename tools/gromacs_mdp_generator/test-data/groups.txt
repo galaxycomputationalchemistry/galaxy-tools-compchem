@@ -1,0 +1,52 @@
+               :-) GROMACS - gmx make_ndx, 2024.5-conda_forge (-:
+
+Executable:   /data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__gromacs@2024/bin.AVX2_256/gmx
+Data prefix:  /data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/__gromacs@2024
+Working dir:  /data/home/joshij/software/galaxy_25_1/database/jobs_directory/004/4944/working
+Command line:
+  gmx make_ndx -n ndx.ndx
+
+
+Back Off! I just backed up index.ndx to ./#index.ndx.1#
+
+GROMACS reminds you: "A programmer's spouse says 'While you're at the grocery store, buy some eggs.' The programmer never comes back." (Anonymous)
+
+Going to read 1 old index file(s)
+Deducing 83782 atoms in the system from indices in the index file
+
+  0 System              : 83782 atoms
+  1 Protein             :  4341 atoms
+  2 Protein-H           :  2299 atoms
+  3 C-alpha             :   277 atoms
+  4 Backbone            :   831 atoms
+  5 MainChain           :  1109 atoms
+  6 MainChain+Cb        :  1359 atoms
+  7 MainChain+H         :  1380 atoms
+  8 SideChain           :  2961 atoms
+  9 SideChain-H         :  1190 atoms
+ 10 Prot-Masses         :  4341 atoms
+ 11 non-Protein         : 79441 atoms
+ 12 Other               : 26264 atoms
+ 13 PA                  :  9016 atoms
+ 14 PC                  :  7448 atoms
+ 15 OL                  :  9800 atoms
+ 16 NA+                 :    46 atoms
+ 17 CL-                 :    19 atoms
+ 18 Ion                 :    65 atoms
+ 19 Water               : 53112 atoms
+ 20 SOL                 : 53112 atoms
+ 21 non-Water           : 30670 atoms
+ 22 Water_and_ions      : 53177 atoms
+ 23 PA_PC_OL            : 26264 atoms
+ 24 Protein_PA_PC_OL    : 30605 atoms
+ 25 NA+_CL-             :    65 atoms
+ 26 Water_NA+_CL-       : 53177 atoms
+
+ nr : group      '!': not  'name' nr name   'splitch' nr    Enter: list groups
+ 'a': atom       '&': and  'del' nr         'splitres' nr   'l': list residues
+ 't': atom type  '|': or   'keep' nr        'splitat' nr    'h': help
+ 'r': residue              'res' nr         'chain' char
+ "name": group             'case': case sensitive           'q': save and quit
+ 'ri': residue index
+
+> 

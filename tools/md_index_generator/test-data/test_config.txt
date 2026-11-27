@@ -1,0 +1,3 @@
+lipid:PA,PC,OL,CHL
+ligand:CAU
+

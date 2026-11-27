@@ -1,0 +1,34 @@
+
+define 			= -DPOSRES
+integrator              = md
+dt                      = 0.001 
+nsteps                  = 125000 
+nstxtcout               = 5000 
+nstvout                 = 5000 
+nstfout                 = 5000 
+nstcalcenergy           = 100 
+nstenergy               = 1000 
+nstlog                  = 1000 
+;
+cutoff-scheme           = Verlet
+nstlist                 = 20
+rlist                   = 0.9
+vdwtype                 = Cut-off
+vdw-modifier            = None
+DispCorr                = EnerPres
+rvdw                    = 0.9
+coulombtype             = PME
+rcoulomb                = 0.9
+;
+tcoupl                  = berendsen
+tc_grps                 = Protein_PA_PC_OL Water_NA+_CL- 
+tau_t                   = 1.0 1.0
+ref_t                   = 323.15 323.15
+;
+constraints             = h-bonds
+constraint_algorithm    = LINCS
+continuation            = yes
+;
+nstcomm                 = 100
+comm_mode               = linear
+comm_grps               = Protein_PA_PC_OL Water_NA+_CL- 

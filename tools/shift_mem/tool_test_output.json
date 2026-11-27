@@ -1,0 +1,130 @@
+{
+    "summary": {
+        "num_errors": 0,
+        "num_failures": 0,
+        "num_skips": 0,
+        "num_tests": 1
+    },
+    "tests": [
+        {
+            "data": {
+                "inputs": {
+                    "mem_protein": {
+                        "id": "b382b05262704aad",
+                        "src": "hda"
+                    },
+                    "protein": {
+                        "id": "59e1cccc6904a671",
+                        "src": "hda"
+                    }
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T20:51:34.787346",
+                    "dependencies": [
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/mulled-v1-03fd760867e5697aa9dbded9e5a0c9fcf766f2247ed4e4c69b21b1a5f1579774",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "python",
+                            "version": "3.10"
+                        },
+                        {
+                            "cacheable": false,
+                            "dependency_resolver": {
+                                "auto_init": true,
+                                "auto_install": false,
+                                "can_uninstall_dependencies": true,
+                                "ensure_channels": "conda-forge,bioconda",
+                                "model_class": "CondaDependencyResolver",
+                                "prefix": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda",
+                                "read_only": false,
+                                "resolver_type": "conda",
+                                "resolves_simple_dependencies": true,
+                                "use_local": false,
+                                "versionless": false
+                            },
+                            "dependency_type": "conda",
+                            "environment_path": "/data/home/joshij/software/galaxy_25_1/database/dependencies/_conda/envs/mulled-v1-03fd760867e5697aa9dbded9e5a0c9fcf766f2247ed4e4c69b21b1a5f1579774",
+                            "exact": true,
+                            "model_class": "MergedCondaDependency",
+                            "name": "numpy",
+                            "version": "2.2.5"
+                        }
+                    ],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "20366b78f7d1c046",
+                    "id": "ca0e5f9847864e06",
+                    "inputs": {
+                        "mem_protein": {
+                            "id": "b382b05262704aad",
+                            "src": "hda",
+                            "uuid": "2daf6c1b-7002-43de-90b1-66a716eb7949"
+                        },
+                        "protein": {
+                            "id": "59e1cccc6904a671",
+                            "src": "hda",
+                            "uuid": "1ec03fed-97f1-4706-b088-a6b95dce640a"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "shifted_protein": {
+                            "id": "aa652496e411eb5e",
+                            "src": "hda",
+                            "uuid": "14461b7d-d4a3-4e41-9794-b6054eed8b3d"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"pqr\"",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\""
+                    },
+                    "state": "ok",
+                    "stderr": "",
+                    "stdout": "Original protein COM: 1.734 -0.996 -2.069\n\nProtein COM in membrane system: 1.734 -0.996 -2.069\n\nWriting /data/home/joshij/software/galaxy_25_1/database/objects/1/4/4/dataset_14461b7d-d4a3-4e41-9794-b6054eed8b3d.dat (non-protein only), shifted by 0.000 0.000 0.000\n\nWater box size (from water atoms): X,Y,Z = 81.031 81.672 76.194\n\n",
+                    "tool_id": "shift_membrane",
+                    "tool_stderr": "",
+                    "tool_stdout": "Original protein COM: 1.734 -0.996 -2.069\n\nProtein COM in membrane system: 1.734 -0.996 -2.069\n\nWriting /data/home/joshij/software/galaxy_25_1/database/objects/1/4/4/dataset_14461b7d-d4a3-4e41-9794-b6054eed8b3d.dat (non-protein only), shifted by 0.000 0.000 0.000\n\nWater box size (from water atoms): X,Y,Z = 81.031 81.672 76.194\n\n",
+                    "update_time": "2026-08-20T20:51:43.091975",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 0,
+                "time_seconds": 22.757078409194946,
+                "tool_id": "shift_membrane",
+                "tool_version": "0.1.0"
+            },
+            "has_data": true,
+            "id": "shift_membrane-0"
+        }
+    ],
+    "version": "0.1"
+}

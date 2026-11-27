@@ -1,0 +1,353 @@
+<tool id="amber_vdw_bounding_box" name="Prepare AMBER System for Solvation" version="1.0.0">
+    <description>build a tleap system, size a VDW bounding box, and box the restart file with ChBox</description>
+
+    <requirements>
+        <requirement type="package" version="26.0">ambertools</requirement>
+        <requirement type="package" version="2.4.6">numpy</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        python3 '$__tool_directory__/bounding_box.py'
+            --pdb '$pdb'
+            #if $box_mode_cond.box_mode == 'auto'
+                --buffer $box_mode_cond.buffer
+            #else if $box_mode_cond.box_mode == 'manual'
+                --manual-box-x $box_mode_cond.box_x
+                --manual-box-y $box_mode_cond.box_y
+                --manual-box-z $box_mode_cond.box_z
+                --manual-box-alpha $box_mode_cond.box_alpha
+                --manual-box-beta $box_mode_cond.box_beta
+                --manual-box-gamma $box_mode_cond.box_gamma
+            #end if
+            #if $ligand_cond.ligand_select == 'yes'
+                --frcmod '$ligand_cond.frcmod'
+                --mol2 '$ligand_cond.mol2'
+            #end if
+            --clean-pdb protein_clean.pdb
+            --leap-pdb protein_leap.pdb
+            --box-rst7 protein_box.rst7
+    ]]></command>
+
+    <inputs>
+        <param name="pdb" type="data" format="pdb" label="Input PDB file"
+               help="Protein structure, optionally with a co-crystallized ligand or other hetero groups (HETATM records)." />
+
+        <conditional name="box_mode_cond">
+            <param name="box_mode" type="select" label="Bounding Box Mode"
+                   help="Choose 'Auto' to calculate box dimensions from protein coordinates, or 'Manual' to enter box dimensions directly (e.g., from crystallography data).">
+                <option value="auto" selected="true">Auto (calculate from protein)</option>
+                <option value="manual">Manual (enter X, Y, Z dimensions)</option>
+            </param>
+            <when value="auto">
+                <param name="buffer" type="float" value="10.0" min="0" label="Buffer added on each side of the VDW box (A)"
+                       help="Buffer size in Angstroms added to each side of the calculated protein bounding box." />
+            </when>
+            <when value="manual">
+                <param name="box_x" type="float" label="Box X dimension (A)"
+                       help="X dimension of the bounding box in Angstroms (from crystallography data)." />
+                <param name="box_y" type="float" label="Box Y dimension (A)"
+                       help="Y dimension of the bounding box in Angstroms (from crystallography data)." />
+                <param name="box_z" type="float" label="Box Z dimension (A)"
+                       help="Z dimension of the bounding box in Angstroms (from crystallography data)." />
+                <param name="box_alpha" type="float" value="90.0" min="0" max="180" label="Alpha angle (degrees)"
+                       help="Alpha angle of the unit cell in degrees (default: 90.0). From crystallography CRYST1 record." />
+                <param name="box_beta" type="float" value="90.0" min="0" max="180" label="Beta angle (degrees)"
+                       help="Beta angle of the unit cell in degrees (default: 90.0). From crystallography CRYST1 record." />
+                <param name="box_gamma" type="float" value="90.0" min="0" max="180" label="Gamma angle (degrees)"
+                       help="Gamma angle of the unit cell in degrees (default: 90.0). From crystallography CRYST1 record." />
+            </when>
+        </conditional>
+
+        <conditional name="ligand_cond">
+            <param name="ligand_select" type="select" label="Include a ligand?"
+                   help="Choose Yes to merge a ligand into the system from its own mol2 coordinates and frcmod parameters.">
+                <option value="no" selected="true">No (protein only)</option>
+                <option value="yes">Yes</option>
+            </param>
+            <when value="no" />
+            <when value="yes">
+                <param name="frcmod" type="data" format="txt" label="Ligand frcmod file" />
+                <param name="mol2" type="data" format="mol2" label="Ligand mol2 file" />
+            </when>
+        </conditional>
+    </inputs>
+
+    <outputs>
+        <data name="out_parm7" format="txt" from_work_dir="protein.parm7" label="${tool.name} on ${on_string}: parm7" />
+        <data name="out_box_rst7" format="txt" from_work_dir="protein_box.rst7" label="${tool.name} on ${on_string}: boxed rst7" />
+        <data name="out_leap_pdb" format="pdb" from_work_dir="protein_leap.pdb" label="${tool.name} on ${on_string}: leap pdb" />
+        <data name="out_clean_pdb" format="pdb" from_work_dir="protein_clean.pdb" label="${tool.name} on ${on_string}: protein-only cleaned pdb" />
+    </outputs>
+
+    <tests>
+            <test expect_num_outputs="4">
+            <param name="pdb" value="system.pdb" />
+            <conditional name="box_mode_cond">
+                <param name="box_mode" value="auto" />
+                <param name="buffer" value="10.0" />
+            </conditional>
+            <conditional name="ligand_cond">
+                <param name="ligand_select" value="no" />
+            </conditional>
+            <output name="out_parm7" file="1_system_parm7.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="%FLAG IPOL" />
+                </assert_contents>
+            </output>
+            <output name="out_box_rst7" file="1_system_box_rst7.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="7168" />
+                </assert_contents>
+            </output>
+            <output name="out_leap_pdb" file="1_system_leap.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM" />
+                </assert_contents>
+            </output>
+            <output name="out_clean_pdb" file="1_system_clean.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM" />
+                </assert_contents>
+            </output>
+        </test>
+        <!-- Test 2: Auto mode with larger buffer -->
+        <test expect_num_outputs="4">
+            <param name="pdb" value="system.pdb" />
+            <conditional name="box_mode_cond">
+                <param name="box_mode" value="auto" />
+                <param name="buffer" value="15.0" />
+            </conditional>
+            <conditional name="ligand_cond">
+                <param name="ligand_select" value="no" />
+            </conditional>
+            <output name="out_parm7" file="2_system_parm7.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="%FLAG IPOL" />
+                </assert_contents>
+            </output>
+            <output name="out_box_rst7" file="2_system_box_rst7.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="7168" />
+                </assert_contents>
+            </output>
+            <output name="out_leap_pdb" file="2_system_leap.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM" />
+                </assert_contents>
+            </output>
+            <output name="out_clean_pdb" file="2_system_clean.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM" />
+                </assert_contents>
+            </output>
+        </test>
+                <!-- Test 3: Auto mode with ligand -->
+        <test expect_num_outputs="4">
+            <param name="pdb" value="system.pdb" />
+            <conditional name="box_mode_cond">
+                <param name="box_mode" value="auto" />
+                <param name="buffer" value="10.0" />
+            </conditional>
+            <conditional name="ligand_cond">
+                <param name="ligand_select" value="yes" />
+                <param name="frcmod" value="ligand.frcmod" />
+                <param name="mol2" value="ligand.mol2" />
+            </conditional>
+            <output name="out_parm7" file="3_system_parm7.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="%FLAG IPOL" />
+                </assert_contents>
+            </output>
+            <output name="out_box_rst7" file="3_system_box_rst7.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="7212" />
+                </assert_contents>
+            </output>
+            <output name="out_leap_pdb" file="3_system_leap.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM" />
+                </assert_contents>
+            </output>
+            <output name="out_clean_pdb" file="3_system_clean.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM" />
+                </assert_contents>
+            </output>
+        </test>
+
+
+        <!-- Test 4: Manual mode with X, Y, Z dimensions (default angles 90°) -->
+        <test expect_num_outputs="4">
+            <param name="pdb" value="system.pdb" />
+            <conditional name="box_mode_cond">
+                <param name="box_mode" value="manual" />
+                <param name="box_x" value="50.0" />
+                <param name="box_y" value="60.0" />
+                <param name="box_z" value="70.0" />
+                <param name="box_alpha" value="90.0" />
+                <param name="box_beta" value="90.0" />
+                <param name="box_gamma" value="90.0" />
+            </conditional>
+            <conditional name="ligand_cond">
+                <param name="ligand_select" value="no" />
+            </conditional>
+            <output name="out_parm7" file="4_system_parm7.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="%FLAG IPOL" />
+                </assert_contents>
+            </output>
+            <output name="out_box_rst7" file="4_system_box_rst7.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="50.0000000  60.0000000  70.0000000  90.0000000  90.0000000  90.0000000" />
+                </assert_contents>
+            </output>
+            <output name="out_leap_pdb" file="4_system_leap.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM" />
+                </assert_contents>
+            </output>
+            <output name="out_clean_pdb" file="4_system_clean.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM" />
+                </assert_contents>
+            </output>
+        </test>
+
+                <!-- Test 5: Manual mode with custom angles (non-orthogonal box) -->
+        <test expect_num_outputs="4">
+            <param name="pdb" value="system.pdb" />
+            <conditional name="box_mode_cond">
+                <param name="box_mode" value="manual" />
+                <param name="box_x" value="106.318" />
+                <param name="box_y" value="169.240" />
+                <param name="box_z" value="40.154" />
+                <param name="box_alpha" value="90.0" />
+                <param name="box_beta" value="105.62" />
+                <param name="box_gamma" value="90.0" />
+            </conditional>
+            <conditional name="ligand_cond">
+                <param name="ligand_select" value="no" />
+            </conditional>
+            <output name="out_parm7" file="5_system_parm7.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="%FLAG IPOL" />
+                </assert_contents>
+            </output>
+            <output name="out_box_rst7" file="5_system_box_rst7.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text=" 106.3180000 169.2400000  40.1540000  90.0000000 105.6200000  90.0000000" />
+                </assert_contents>
+            </output>
+            <output name="out_leap_pdb" file="5_system_leap.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM" />
+                </assert_contents>
+            </output>
+            <output name="out_clean_pdb" file="5_system_clean.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM" />
+                </assert_contents>
+            </output>
+        </test>
+                <!-- Test 6: Manual mode with ligand -->
+        <test expect_num_outputs="4">
+            <param name="pdb" value="system.pdb" />
+            <conditional name="box_mode_cond">
+                <param name="box_mode" value="manual" />
+                <param name="box_x" value="55.0" />
+                <param name="box_y" value="65.0" />
+                <param name="box_z" value="75.0" />
+                <param name="box_alpha" value="90.0" />
+                <param name="box_beta" value="90.0" />
+                <param name="box_gamma" value="90.0" />
+            </conditional>
+            <conditional name="ligand_cond">
+                <param name="ligand_select" value="yes" />
+                <param name="frcmod" value="ligand.frcmod" />
+                <param name="mol2" value="ligand.mol2" />
+            </conditional>
+            <output name="out_parm7" file="6_system_parm7.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="%FLAG IPOL" />
+                </assert_contents>
+            </output>
+            <output name="out_box_rst7" file="6_system_box_rst7.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="55.0000000  65.0000000  75.0000000  90.0000000  90.0000000  90.0000000" />
+                </assert_contents>
+            </output>
+            <output name="out_leap_pdb" file="6_system_leap.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM" />
+                </assert_contents>
+            </output>
+            <output name="out_clean_pdb" file="6_system_clean.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM" />
+                </assert_contents>
+            </output>
+        </test>
+
+    </tests>
+
+    <help><![CDATA[
+**What it does**
+
+First strips every HETATM record from the input PDB to build a
+protein-only PDB. tleap loads that protein-only PDB, and -- if a ligand
+was given -- separately loads the ligand from its own mol2/frcmod and
+merges it into the system with tleap's ``combine``, using the ligand's
+own mol2 coordinates rather than anything from the input PDB. So the
+ligand does not need to already be present in (or match a residue name
+in) the input PDB.
+
+**Bounding Box Calculation**
+
+Choose between two modes:
+
+1. **Auto (calculate from protein)**: Computes the VDW bounding box from protein
+   coordinates with an adjustable buffer (default 10 Å). The box is calculated from
+   the *cleaned* protein-only PDB (after HETATM and non-protein residues are removed).
+   Uses default angles: alpha=90°, beta=90°, gamma=90°.
+
+2. **Manual (enter X, Y, Z dimensions)**: Directly specify box dimensions in Ångströms
+   and optionally the unit cell angles (alpha, beta, gamma in degrees). This is useful 
+   when you have box dimensions from crystallography data (e.g., PDB CRYST1 record) or 
+   want to use pre-determined dimensions. When manual mode is selected:
+   
+   - **Required**: X, Y, Z box dimensions (must all be provided)
+   - **Optional**: Alpha, Beta, Gamma angles (default: 90° each for orthogonal box)
+   
+   Example from CRYST1 record: ``106.318 169.240 40.154 90.00 105.62 90.00``
+   would give: X=106.318, Y=169.240, Z=40.154, alpha=90.00, beta=105.62, gamma=90.00
+
+If "Include a ligand?" is set to Yes, the generated tleap input loads
+the given frcmod/mol2, builds a separate ``ligand`` unit from it, and
+combines it with the protein into the final system. If set to No, only
+the protein-only PDB is loaded and saved.
+
+``ChBox`` writes the final boxed restart file using the specified (or calculated)
+box dimensions.
+
+**Outputs**
+
+- Topology (parm7)
+- Boxed restart file (rst7), sized to the input PDB's VDW extent plus the buffer
+- Combined PDB written by tleap
+- Protein-only PDB (all HETATM records removed) used to build the system
+    ]]></help>
+
+    <citations>
+        <citation type="bibtex">
+            @article{Joshi2024_GalaxyMemMD,
+                author  = {Joshi, Jayadev and Raubenolt, Bryan and Katzenmeyer, Natalie and Cumbo, Fabio and Blankenberg, Daniel},
+                title   = {GalaxyMemMD: an open-source, end-to-end Galaxy tool set and workflow for reproducible embedding, simulation, and analysis of membrane proteins},
+                journal = {Under Review},
+                year    = {2024},
+                orcid_author_1 = {0000-0001-7589-5230},
+                orcid_author_5 = {0000-0002-6833-9049}
+            }
+        </citation>
+        <citation type="doi">10.1021/ci034227x</citation>
+    </citations>
+</tool>

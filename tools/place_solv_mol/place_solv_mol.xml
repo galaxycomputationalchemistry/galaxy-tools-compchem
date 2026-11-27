@@ -1,0 +1,143 @@
+<tool id="place_solv_mol" name="Place Solvent Molecules" version="0.1.0" python_template_version="3.14">
+	<description>Identify optimal locations for solvent molecules and place them accordingly</description>
+  
+    <requirements>
+        <requirement type="package" version="26.0">ambertools</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+        ln -s $kh_O_zero_dx in.kh.O.0.dx &&
+        ln -s $kh_O_dx in.kh.O.dx &&
+        ln -s '$parm_file' in.parm7 &&
+        ln -s '$rst_file' in.rst7 &&
+
+        metatwist --dx in.kh.O.0.dx --ldx in.kh.O.dx --map '$map_value' --species '$species_value' --bulk '$bulk_value' --threshold '$threshold_value' > $blobs 
+        &&
+        grep -v TER in.kh.O.0-in.kh.O-blobs-centroid.pdb > wats.pdb
+        &&
+        python '$__tool_directory__/fixed.py' wats.pdb fixed_pdb.pdb
+        && 
+        ambpdb -p in.parm7  < in.rst7 > in.amber.pdb 
+        &&
+        sed 's/END/TER/' in.amber.pdb > in.wat.pdb 
+        &&
+        gwh -p in.parm7 -w fixed_pdb.pdb < in.amber.pdb >> in.wat.pdb 2>> out.blobs
+
+
+
+
+    ]]></command>
+
+    <inputs>
+        <param type="data" name="kh_O_zero_dx" format="data" argument="--dx" optional="false" label="Initial KH potential map (kh.O.0.dx)" help="Upload the initial KH potential map file for oxygen atoms (e.g., 1aho.kh.O.0.dx)."/>
+        <param type="data" name="kh_O_dx" format="data"  argument="--ldx" optional="false" label="Refined KH potential map (kh.O.dx)" help="Upload the refined/evolved KH potential map file for oxygen atoms (e.g., 1aho.kh.O.dx)."/>
+
+        <param type="data" name="parm_file" format="data" argument="--parm" optional="false" label="AMBER Parm7 topology file" help="Upload the AMBER Parm7 topology file defining the force field and molecular structure."/>
+        <param type="data" name="rst_file" format="data" argument="--rst" optional="false" label="AMBER Rst7 coordinate file" help="Upload the AMBER Rst7 restart file containing atomic coordinates."/>
+
+        <param type="text" name="map_value" argument="--map" value='blobsper' optional="false" label="Map type" help="Specify the map type to use (e.g., blobsper)."/>
+        <param type="text" name="species_value" argument="--species" value='O WAT' optional="false" label="Species" help="Specify the species to be placed (e.g., O WAT for water oxygens)."/>
+        <param type="float" name="bulk_value" value='55.55' argument="--bulk" optional="false"  label="Bulk concentration (mol/L)" help="Set the bulk concentration for the species (default: 55.55 for water)."/>
+        <param type="float" name="threshold_value" value='0.5' argument="--threshold" optional="false"  label="Placement threshold" help="Set the threshold value for placing solvent molecules (default: 0.5)."/>
+    </inputs>
+
+    <outputs>   
+        <data name="blobs" format='txt' label="${tool.name}: Placement information file (.blobs)" from_work_dir="out.blobs"/>
+        <data name="out_pdb" format='pdb' label="${tool.name}: Placed solvent molecules (.pdb)" from_work_dir="fixed_pdb.pdb"/>
+        <data name="in_wat_pdb" format='pdb' label="${tool.name}: Initial water PDB file (in.wat.pdb)" from_work_dir="in.wat.pdb"/>
+    </outputs>
+ 
+    <tests>
+        <test expect_num_outputs="3" >
+            <param name="kh_O_zero_dx" value="test_kh.O.0.dx.txt" />
+            <param name="kh_O_dx" value="out.kh.O.dx.txt" />
+            <param name="parm_file" value="1AHO.parm7" />
+            <param name="rst_file" value="1AHO.rst7" />
+            <param name="map_value" value="blobsper" />
+            <param name="species_value" value="O WAT" />
+            <param name="bulk_value" value="55.55" />
+            <param name="threshold_value" value="0.5" />
+            <output name="out_pdb" file="wats.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM"/>
+                </assert_contents>
+            </output>
+            <output name="blobs" file="out.blobs.txt" ftype="txt">
+                <assert_contents>
+                    <has_text text="REMARK"/>
+                </assert_contents>
+            </output>
+            <output name="in_wat_pdb" file="in_wat.pdb" ftype="pdb">
+                <assert_contents>
+                    <has_text text="ATOM"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+ 
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Identifies optimal locations for placing solvent molecules around a protein using KH (Kovalenko-Hirata) potential maps and places them at identified favorable sites. This tool is useful for understanding hydration patterns and placing water or other solvent molecules for molecular dynamics simulations.
+
+-----
+
+**Key Features**
+
+- **Multi-map analysis**: Uses both initial and refined KH potential maps for accurate site identification
+- **Blob detection**: Identifies high-density regions where solvent molecules cluster
+- **Threshold-based filtering**: Customizable threshold for site selection
+- **Species specification**: Support for different solvent species (water, ions, etc.)
+- **Concentration-aware**: Accounts for bulk solvent concentration in calculations
+
+-----
+
+**Inputs**
+
+- **Initial KH potential map (kh.O.0.dx)**: Starting potential map file for oxygen density
+- **Refined KH potential map (kh.O.dx)**: Evolved potential map file after RISM calculations
+- **Map type**: Analysis method to use (e.g., blobsper for blobs per unit volume)
+- **Species**: Solvent species to place (e.g., O WAT for water oxygens)
+- **Bulk concentration**: Bulk concentration value in mol/L (default: 55.55 for water)
+- **Placement threshold**: Density threshold for site selection (default: 0.5)
+
+-----
+
+**Outputs**
+
+- **Placement information file**: Details of identified solvent placement sites
+- **PDB structure file**: PDB file with placed solvent molecules at identified locations
+
+-----
+
+**Notes**
+
+- This tool requires KH potential maps generated from RISM calculations
+- The threshold value significantly affects the number of detected sites
+- Output PDB file can be used directly in molecular dynamics simulations
+- Bulk concentration should match the actual solvent conditions
+
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+          @article{Case2023,
+              title = {AmberTools},
+              volume = {63},
+              ISSN = {1549-960X},
+              url = {http://dx.doi.org/10.1021/acs.jcim.3c01153},
+              DOI = {10.1021/acs.jcim.3c01153},
+              number = {20},
+              journal = {Journal of Chemical Information and Modeling},
+              publisher = {American Chemical Society (ACS)},
+              author = {Case,  David A. and Aktulga,  Hasan Metin and Belfon,  Kellon and Cerutti,  David S. and Cisneros,  G. Andrés and Cruzeiro,  Vinícius Wilian D. and Forouzesh,  Negin and Giese,  Timothy J. and G\"{o}tz,  Andreas W. and Gohlke,  Holger and Izadi,  Saeed and Kasavajhala,  Koushik and Kaymak,  Mehmet C. and King,  Edward and Kurtzman,  Tom and Lee,  Tai-Sung and Li,  Pengfei and Liu,  Jian and Luchko,  Tyler and Luo,  Ray and Manathunga,  Madushanka and Machado,  Matias R. and Nguyen,  Hai Minh and O’Hearn,  Kurt A. and Onufriev,  Alexey V. and Pan,  Feng and Pantano,  Sergio and Qi,  Ruxi and Rahnamoun,  Ali and Risheh,  Ali and Schott-Verdugo,  Stephan and Shajan,  Akhil and Swails,  Jason and Wang,  Junmei and Wei,  Haixin and Wu,  Xiongwu and Wu,  Yongxian and Zhang,  Shi and Zhao,  Shiji and Zhu,  Qiang and Cheatham,  Thomas E. and Roe,  Daniel R. and Roitberg,  Adrian and Simmerling,  Carlos and York,  Darrin M. and Nagan,  Maria C. and Merz,  Kenneth M.},
+              year = {2023},
+              month = oct,
+              pages = {6183–6191}
+            }
+        </citation>
+      </citations>
+</tool>
+
+

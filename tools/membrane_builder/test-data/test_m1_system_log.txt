@@ -1,0 +1,80 @@
+01/29/2026 01:08:38 PM:DEBUG:
+Execution line:     /home/joshij/softwares/galaxy/database/dependencies/_conda/envs/__ambertools@24.8/bin/packmol-memgen --pdb inputfile.pdb --lipids POPC --ratio 1 --preoriented --keepligs --solvents WAT --solvent_ratio 1 --nloop 3 --nloop_all 5 --tolerance 2.5 --prot_rad 2.0 --writeout 1 --random --packall --movebadrandom --charge_imbalance 1 --imbalance_ion cat --dist 11 --dist_wat 15 --notprotonate --nottrim --output out.pdb --log /home/joshij/softwares/galaxy/database/objects/9/e/7/dataset_9e7d08d6-2ca6-42de-9554-7bd72c9f5b82.dat
+01/29/2026 01:08:38 PM:DEBUG:
+Water model was not set. Using tip3p for ff14SB
+01/29/2026 01:08:38 PM:ERROR:
+ERROR:
+    You specified a charge imbalance, but not the salt flag. No charge imbalance will be applied
+01/29/2026 01:08:38 PM:INFO:
+Preprocessing inputfile.pdb. This might take a minute.
+01/29/2026 01:08:38 PM:DEBUG:
+Estimating the volume by building a grid (PDBREMIX)...
+01/29/2026 01:08:48 PM:DEBUG:
+
+     Estimated values for input protein:
+    
+     Input PDB                = inputfile.pdb
+     Charge                   = 17       
+     Mass                     = 50584.75100000225    Da
+     Density                  = 0.85         Da/A^3
+     Estimated volume         = 45409.38     A^3
+         in upper leaflet     = 1154.88      A^3
+         in lower leaflet     = 0.0          A^3
+         in upper water box   = 44254        A^3
+         in lower water box   = 0.0          A^3
+                
+01/29/2026 01:08:48 PM:INFO:
+
+     Information for packing:
+    
+     Input PDB(s)                     = ['inputfile.pdb']
+     Output PDB                       = out.pdb  
+     Packmol output and log prefix    = packmol  
+     Lipids                           = ['POPC'] 
+     Lipid ratio                      = ['1']    
+     Solvents                         = WAT      
+     Solvent ratio                    = 1        
+     Salt concentration            (M)= 0        
+     Distance to boundaries        (A)= 11.0     
+     Minimum water distance        (A)= 15.0     
+     Packmol loops                    = 3        
+     Packmol loops for All-together   = 5        
+01/29/2026 01:08:48 PM:DEBUG:
+
+     Box information:
+     x_min                    = -50.6341902732033
+     x_max                    = 50.6341902732033
+     x_len                    = 101.2683805464066
+    
+     y_min                    = -50.6341902732033
+     y_max                    = 50.6341902732033
+     y_len                    = 101.2683805464066
+    
+     z_min                    = -38.0    
+     z_max                    = 119.463  
+     z_len                    = 157.463  
+     
+01/29/2026 01:08:48 PM:DEBUG:
+Experimental value for POPC volume not available in parm file. Using estimated 1227 A^3 instead...
+01/29/2026 01:08:48 PM:DEBUG:
+
+                Lower water box vol    = 153829.27 A^3
+                Upper water box vol    = 945001.05 A^3
+                Mem. upper leaflet vol = 244125.37 A^3
+                Mem. lower leaflet vol = 245280.24 A^3
+    
+                
+01/29/2026 01:08:48 PM:DEBUG:
+Script for packmol written to packmol.inp
+01/29/2026 01:08:48 PM:INFO:
+
+Running Packmol...
+01/29/2026 01:08:51 PM:DEBUG:
+
+Individual packing processes complete. Initiating all-together packing. This might take a while!
+01/29/2026 01:11:20 PM:INFO:
+Transforming to AMBER
+01/29/2026 01:11:21 PM:DEBUG:
+Deleting temporary files...
+01/29/2026 01:11:21 PM:INFO:
+#Packing process finished. Check your final structure, particularly for lipids inserted in proteins, protein tunnels or piercing rings!#

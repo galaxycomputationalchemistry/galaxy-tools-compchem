@@ -1,0 +1,99 @@
+<tool id="shift_membrane" name="Shift Membrane" version="0.1.0" python_template_version="3.10">
+	<description>Shift protein coordinates to align with a reference membrane-protein complex</description>
+  
+    <requirements>
+        <requirement type="package" version="3.10">python</requirement>
+        <requirement type="package" version="2.2.5">numpy</requirement>
+    </requirements>
+
+    <command detect_errors="exit_code"><![CDATA[
+
+        python '$__tool_directory__/shift_membrane.py'  -i '$protein' -m '$mem_protein' -o $shifted_protein
+    ]]></command>
+
+    <inputs>
+        <!-- <repeat name="queries" title="Dataset" min="1">  -->
+    <param type="data" name="protein" format="pdb" label="Protein PDB file" help="Upload the PDB file of the protein structure to be shifted relative to the membrane." optional="true"/>
+    <param type="data" name="mem_protein" format="pdb" label="Reference membrane-protein complex PDB file" help="Upload the PDB file of the reference membrane-protein complex to use as alignment reference for shifting." optional="true"/>
+        <!-- </repeat> -->
+    </inputs>
+
+    <outputs>   
+        <data name="shifted_protein" format='pdb' label="${tool.name}: Shifted protein structure (.pdb)" from_work_dir="out.pdb"/>
+    </outputs>
+
+    <tests>
+        <test expect_num_outputs="1">
+            <param name="protein" value="protein.pdb" />
+            <param name="mem_protein" value="system.pdb" />
+            <output name="shifted_protein" file="output.pdb" >
+                <assert_contents>
+                    <has_text text="HETATM"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+ 
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+
+Shifts protein coordinates to align with a reference membrane-protein complex structure. This tool is useful when you have a protein and a membrane-protein complex and need to position the protein at the same location and orientation as the reference complex.
+
+-----
+
+**Inputs**
+
+- **Protein PDB file**: The PDB file of the protein to be shifted
+- **Reference membrane-protein complex PDB file**: The PDB file containing the reference membrane-protein complex for alignment
+
+-----
+
+**Outputs**
+
+- **Shifted protein PDB file**: The protein coordinates shifted and aligned to match the reference complex structure
+
+-----
+
+**How it works**
+
+The tool performs structural alignment by:
+
+1. Reading both the input protein and reference complex structures
+2. Identifying corresponding atoms or residues for alignment
+3. Computing the optimal translation and rotation transformation
+4. Applying the transformation to the protein coordinates
+5. Writing the shifted structure to output
+
+-----
+
+**Notes**
+
+- Both input files should be in PDB format
+- Ensure protein structures are properly formatted before use
+- The alignment quality depends on structural similarity between proteins
+- Output retains all atom information from the input structure
+
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+          @article{Case2023,
+              title = {AmberTools},
+              volume = {63},
+              ISSN = {1549-960X},
+              url = {http://dx.doi.org/10.1021/acs.jcim.3c01153},
+              DOI = {10.1021/acs.jcim.3c01153},
+              number = {20},
+              journal = {Journal of Chemical Information and Modeling},
+              publisher = {American Chemical Society (ACS)},
+              author = {Case,  David A. and Aktulga,  Hasan Metin and Belfon,  Kellon and Cerutti,  David S. and Cisneros,  G. Andrés and Cruzeiro,  Vinícius Wilian D. and Forouzesh,  Negin and Giese,  Timothy J. and G\"{o}tz,  Andreas W. and Gohlke,  Holger and Izadi,  Saeed and Kasavajhala,  Koushik and Kaymak,  Mehmet C. and King,  Edward and Kurtzman,  Tom and Lee,  Tai-Sung and Li,  Pengfei and Liu,  Jian and Luchko,  Tyler and Luo,  Ray and Manathunga,  Madushanka and Machado,  Matias R. and Nguyen,  Hai Minh and O’Hearn,  Kurt A. and Onufriev,  Alexey V. and Pan,  Feng and Pantano,  Sergio and Qi,  Ruxi and Rahnamoun,  Ali and Risheh,  Ali and Schott-Verdugo,  Stephan and Shajan,  Akhil and Swails,  Jason and Wang,  Junmei and Wei,  Haixin and Wu,  Xiongwu and Wu,  Yongxian and Zhang,  Shi and Zhao,  Shiji and Zhu,  Qiang and Cheatham,  Thomas E. and Roe,  Daniel R. and Roitberg,  Adrian and Simmerling,  Carlos and York,  Darrin M. and Nagan,  Maria C. and Merz,  Kenneth M.},
+              year = {2023},
+              month = oct,
+              pages = {6183–6191}
+            }
+        </citation>
+      </citations>
+ 
+
+</tool>

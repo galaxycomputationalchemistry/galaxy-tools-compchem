@@ -1,0 +1,90 @@
+{
+    "summary": {
+        "num_errors": 0,
+        "num_failures": 0,
+        "num_skips": 0,
+        "num_tests": 1
+    },
+    "tests": [
+        {
+            "data": {
+                "inputs": {
+                    "inpcrd": {
+                        "id": "bb0fd317bb5e6afd",
+                        "src": "hda"
+                    },
+                    "prmtop": {
+                        "id": "9f5cd54df0c2fe60",
+                        "src": "hda"
+                    }
+                },
+                "job": {
+                    "command_line": null,
+                    "command_version": "",
+                    "copied_from_job_id": null,
+                    "create_time": "2026-08-20T20:42:19.604859",
+                    "dependencies": [],
+                    "exit_code": 0,
+                    "external_id": null,
+                    "galaxy_version": "25.1",
+                    "handler": null,
+                    "history_id": "bc339828b9a45763",
+                    "id": "d958e88be680a013",
+                    "inputs": {
+                        "inpcrd": {
+                            "id": "bb0fd317bb5e6afd",
+                            "src": "hda",
+                            "uuid": "7bf6c29c-8ec5-43db-92fe-3525dbdb1f8f"
+                        },
+                        "prmtop": {
+                            "id": "9f5cd54df0c2fe60",
+                            "src": "hda",
+                            "uuid": "a93d318f-d8e1-4838-8dfb-9376df78b130"
+                        }
+                    },
+                    "job_messages": [],
+                    "job_metrics": null,
+                    "job_runner_name": null,
+                    "job_stderr": "",
+                    "job_stdout": "",
+                    "model_class": "Job",
+                    "output_collections": {},
+                    "outputs": {
+                        "output_gro": {
+                            "id": "011e43cd846fe91f",
+                            "src": "hda",
+                            "uuid": "36825d0f-83d6-48e1-804e-d09b2f6bed95"
+                        },
+                        "output_top": {
+                            "id": "9700e50d20f7b53d",
+                            "src": "hda",
+                            "uuid": "312baf73-12a3-4360-b13c-6b09ea7fc1c8"
+                        }
+                    },
+                    "params": {
+                        "__input_ext": "\"txt\"",
+                        "chromInfo": "\"/data/home/joshij/software/galaxy_25_1/tool-data/shared/ucsc/chrom/?.len\"",
+                        "dbkey": "\"?\""
+                    },
+                    "state": "ok",
+                    "stderr": "",
+                    "stdout": "",
+                    "tool_id": "amber_to_gromacs",
+                    "tool_stderr": "",
+                    "tool_stdout": "",
+                    "update_time": "2026-08-20T20:42:35.651237",
+                    "user_email": null,
+                    "user_id": "f597429621d6eb2b"
+                },
+                "status": "success",
+                "test_index": 0,
+                "time_seconds": 29.810683965682983,
+                "tool_id": "amber_to_gromacs",
+                "tool_version": "0.0.1"
+            },
+            "has_data": true,
+            "id": "amber_to_gromacs-0"
+        }
+    ],
+    "version": "0.1"
+}
