@@ -2,7 +2,7 @@
   <description>- Amber's parameter checker</description>
   <macros>
     <import>macros.xml</import>
-    <token name="@GALAXY_VERSION@">0</token>
+    <token name="@GALAXY_VERSION@">1</token>
   </macros>
   <expand macro="requirements"></expand>
   <command detect_errors="exit_code">
