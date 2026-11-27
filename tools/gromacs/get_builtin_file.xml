@@ -2,7 +2,7 @@
     <description>from built-in datasets</description>
     <macros>
         <import>macros.xml</import>
-        <token name="@GALAXY_VERSION@">0</token>
+        <token name="@GALAXY_VERSION@">1</token>
     </macros>
 
     <expand macro="requirements" />
@@ -459,7 +459,7 @@
         </data>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="1">
             <param name="filename" value="oplsaa.ff/tip4p.itp" />
             <output name="output1" file="oplsaa.ff-tip4p.itp" ftype="itp" />
         </test>
