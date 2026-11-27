@@ -7,7 +7,7 @@ on:
     types: [run-all-tool-tests-command]
 env:
   GALAXY_FORK: galaxyproject
-  GALAXY_BRANCH: release_25.0
+  GALAXY_BRANCH: release_26.1
   MAX_CHUNKS: 40
 jobs:
   setup:
@@ -19,6 +19,7 @@ jobs:
       fork: ${{ steps.get-fork-branch.outputs.fork }}
       branch: ${{ steps.get-fork-branch.outputs.branch }}
       repository-list: ${{ steps.discover.outputs.repository-list }}
+      tool-list: ${{ steps.discover.outputs.tool-list }}
       chunk-count: ${{ steps.discover.outputs.chunk-count }}
       chunk-list: ${{ steps.discover.outputs.chunk-list }}
     strategy:
@@ -32,17 +33,26 @@ jobs:
         token: ${{ secrets.PAT }}
         repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
         comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
-        reaction-type: hooray
+        reactions: hooray
     - name: Set galaxy fork and branch
       id: get-fork-branch
+      env:
+        REQUESTED_GALAXY_FORK: ${{ github.event.client_payload.slash_command.args.named.fork }}
+        REQUESTED_GALAXY_BRANCH: ${{ github.event.client_payload.slash_command.args.named.branch }}
       run: |
-        TMP="${{ github.event.client_payload.slash_command.args.named.fork }}"
-        echo "fork=${TMP:-$GALAXY_FORK}" >> $GITHUB_OUTPUT
-        TMP="${{ github.event.client_payload.slash_command.args.named.branch }}"
-        echo "branch=${TMP:-$GALAXY_BRANCH}" >> $GITHUB_OUTPUT
+        echo "fork=${REQUESTED_GALAXY_FORK:-$GALAXY_FORK}" >> "$GITHUB_OUTPUT"
+        echo "branch=${REQUESTED_GALAXY_BRANCH:-$GALAXY_BRANCH}" >> "$GITHUB_OUTPUT"
     - name: Determine latest commit in the Galaxy repo
       id: get-galaxy-sha
-      run: echo "galaxy-head-sha=$(git ls-remote https://github.com/${{ steps.get-fork-branch.outputs.fork }}/galaxy refs/heads/${{ steps.get-fork-branch.outputs.branch }} | cut -f1)" >> $GITHUB_OUTPUT
+      env:
+        RESOLVE_GALAXY_FORK: ${{ steps.get-fork-branch.outputs.fork }}
+        RESOLVE_GALAXY_BRANCH: ${{ steps.get-fork-branch.outputs.branch }}
+      run: |
+        set -euo pipefail
+        galaxy_sha=$(git ls-remote "https://github.com/$RESOLVE_GALAXY_FORK/galaxy" "refs/heads/$RESOLVE_GALAXY_BRANCH" | cut -f1)
+        [[ "$galaxy_sha" =~ ^[0-9a-f]{40}$ ]]
+        echo "galaxy-head-sha=$galaxy_sha" >> "$GITHUB_OUTPUT"
+        echo "Galaxy commit: $galaxy_sha" >> "$GITHUB_STEP_SUMMARY"
     - uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
@@ -63,11 +73,14 @@ jobs:
       uses: galaxyproject/planemo-ci-action@v1
       id: discover
       with:
-        create-cache: ${{ steps.cache-pip.outputs.cache-hit != 'true' || steps.cache-planemo.outputs.cache-hit != 'true' }}
+        # Cached git clones require a branch name; tests download the resolved SHA.
+        create-cache: false
         galaxy-fork: ${{ steps.get-fork-branch.outputs.fork }}
-        galaxy-branch: ${{ steps.get-fork-branch.outputs.branch }}
+        galaxy-branch: ${{ steps.get-galaxy-sha.outputs.galaxy-head-sha }}
         max-chunks: ${{ env.MAX_CHUNKS }}
         python-version: ${{ matrix.python-version }}
+    - name: Validate CI report completeness checks
+      run: python -m unittest discover -s .github -p 'test_check_test_reports.py' -v
     - name: Show repository list
       run: echo '${{ steps.discover.outputs.repository-list }}'
     - name: Show chunks
@@ -96,6 +109,13 @@ jobs:
       with:
         path: ~/.cache/pip
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}
+    - name: Load upstream Galaxy datatype registry
+      env:
+        REGISTRY_GALAXY_FORK: ${{ needs.setup.outputs.fork }}
+        REGISTRY_GALAXY_SHA: ${{ needs.setup.outputs.galaxy-head-sha }}
+      run: |
+        bash .github/prepare_datatypes.sh "$REGISTRY_GALAXY_FORK" "$REGISTRY_GALAXY_SHA" "$RUNNER_TEMP/datatypes_conf.xml"
+        echo "DATATYPES_CONF=$RUNNER_TEMP/datatypes_conf.xml" >> "$GITHUB_ENV"
     - name: Planemo lint
       uses: galaxyproject/planemo-ci-action@v1
       id: lint
@@ -157,13 +177,21 @@ jobs:
         mode: test
         repository-list: ${{ needs.setup.outputs.repository-list }}
         galaxy-fork: ${{ needs.setup.outputs.fork }}
-        galaxy-branch: ${{ needs.setup.outputs.branch }}
+        galaxy-branch: ${{ needs.setup.outputs.galaxy-head-sha }}
+        additional-planemo-options: --no_cache_galaxy
         chunk: ${{ matrix.chunk }}
         chunk-count: ${{ needs.setup.outputs.chunk-count }}
         galaxy-slots: ${{ steps.cpu-cores.outputs.count }}
         # Limit each test to 15 minutes
         test_timeout: 900
+    - name: Preserve and validate each tool-group report
+      run: |
+        mkdir -p upload/raw-reports
+        cp tool_list_chunk.txt upload/tool-groups.txt
+        cp json_output/*.json upload/raw-reports/
+        python .github/check_test_reports.py chunk upload
     - uses: actions/upload-artifact@v4
+      if: ${{ always() }}
       with:
         name: 'Tool test output ${{ matrix.chunk }}'
         path: upload
@@ -182,6 +210,9 @@ jobs:
     # This job runs on Linux
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
     - uses: actions/download-artifact@v4
       with:
         path: artifacts
@@ -200,15 +231,24 @@ jobs:
       with:
         mode: combine
         html-report: true
+        markdown-report: true
+    - name: Require every selected tool test and chunk report
+      env:
+        EXPECTED_REPOSITORIES: ${{ needs.setup.outputs.repository-list }}
+        EXPECTED_CHUNKS: ${{ needs.setup.outputs.chunk-count }}
+      run: |
+        printf '%s\n' "$EXPECTED_REPOSITORIES" > expected-repositories.txt
+        python .github/check_test_reports.py combined --repositories expected-repositories.txt --artifacts artifacts --report upload/tool_test_output.json --chunks "$EXPECTED_CHUNKS"
     - uses: actions/upload-artifact@v4
+      if: ${{ always() }}
       with:
         name: 'All tool test results'
         path: upload
-    - run: cat upload/tool_test_output.md >> $GITHUB_STEP_SUMMARY
+    - run: cat upload/tool_test_output.md >> "$GITHUB_STEP_SUMMARY"
     - name: Create URL to the run output
       if: ${{ github.event.client_payload.slash_command.command == 'run-all-tool-tests' }}
       id: vars
-      run: echo "run-url=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_OUTPUT
+      run: echo "run-url=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> "$GITHUB_OUTPUT"
 
     - name: Create comment
       if: ${{ github.event.client_payload.slash_command.command == 'run-all-tool-tests' }}
